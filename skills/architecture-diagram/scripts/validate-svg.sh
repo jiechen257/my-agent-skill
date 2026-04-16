@@ -44,7 +44,7 @@ if re.search(r'd="[^"]*[CQ][^"]*"', text):
     raise SystemExit("curved path commands found; keep routed paths explicit in templates")
 PY
 
-TMP_PNG="$(mktemp /tmp/architecture-diagram-validate-XXXXXX.png)"
+TMP_PNG="$(mktemp -t architecture-diagram-validate)"
 "$RSVG_BIN" "$SVG_FILE" -o "$TMP_PNG" >/dev/null 2>&1 || fail "rsvg-convert failed: $SVG_FILE"
 rm -f "$TMP_PNG"
 
