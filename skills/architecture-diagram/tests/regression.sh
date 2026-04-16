@@ -14,6 +14,7 @@ grep -q "默认输出语言：中文" "$SKILL_MD" || fail "missing Chinese defau
 grep -q "默认风格：\`claude-official\`" "$SKILL_MD" || fail "missing claude-official default guidance"
 grep -q "默认不生成 \`.html\`" "$SKILL_MD" || fail "missing no-html guidance"
 grep -q "默认不生成 \`.png\`" "$SKILL_MD" || fail "missing no-png guidance"
+grep -q "默认不在图内写出风格名称" "$SKILL_MD" || fail "missing no-style-metadata guidance"
 
 echo "Checking supported diagram types..."
 for type in architecture flowchart data-flow sequence state-machine timeline comparison-matrix use-case; do
@@ -53,6 +54,7 @@ for template in \
   "$SKILL_DIR/templates/use-case.svg"; do
   [ -f "$template" ] || fail "missing template: $template"
 done
+! grep -q "claude-official 共用布局" "$SKILL_DIR/assets/template.svg" || fail "template.svg still exposes style metadata"
 
 echo "Checking template placeholders..."
 grep -q "\[系统名称\] 架构图" "$SKILL_DIR/templates/architecture.svg" || fail "architecture template missing placeholder"

@@ -33,6 +33,7 @@ This skill intentionally supports only two visual styles:
 - 默认交付物：单个 `.svg`
 - 默认不生成 `.html`
 - 默认不生成 `.png`
+- 默认不在图内写出风格名称、配色说明或 token 元信息
 
 Technical terms may stay in English when they read better, such as `VNode`, `effect`, `scheduler`, `Fiber`, `queueJob`.
 
@@ -242,3 +243,4 @@ Use `rsvg-convert` for local verification only. The canonical deliverable remain
 - Do not generate PNG by default
 - Keep default copy in Chinese
 - Keep default style at `claude-official`
+- Keep style selection implicit inside the SVG; do not print `claude-official`, `default`, palette notes, or style metadata unless the user explicitly asks for style annotation or comparison

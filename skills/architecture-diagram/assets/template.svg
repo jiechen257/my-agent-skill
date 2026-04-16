@@ -115,7 +115,7 @@
 
   <rect x="170" y="128" width="790" height="470" rx="16" class="phase-band"/>
   <rect x="188" y="112" width="148" height="26" rx="12" class="phase-pill"/>
-  <text x="262" y="129" class="section" text-anchor="middle">默认风格 / claude-official 共用布局</text>
+  <text x="262" y="129" class="section" text-anchor="middle">核心结构区</text>
 
   <rect x="474" y="260" width="220" height="124" rx="12" class="subpanel"/>
   <text x="490" y="278" class="legend">局部子流程 / subpanel</text>
