@@ -10,7 +10,38 @@ skills/
     SKILL.md
     assets/
     tests/
+  research-note-wrap/
+    SKILL.md
+  session-wrap/
+    SKILL.md
+  commit-daily-summary/
+    SKILL.md
+  project-daily-summary/
+    SKILL.md
+  worktree-closeout/
+    SKILL.md
 ```
+
+## 当前收录
+
+- `architecture-diagram`
+- `research-note-wrap`
+- `session-wrap`
+- `commit-daily-summary`
+- `project-daily-summary`
+- `worktree-closeout`
+
+## 来源
+
+- `architecture-diagram`：仓库原有 skill
+- `research-note-wrap`
+- `session-wrap`
+- `commit-daily-summary`
+- `project-daily-summary`
+- `worktree-closeout`
+
+以上 5 个 workflow skills 依据 LINUX DO 帖子整理入库：
+<https://linux.do/t/topic/1854180>
 
 ## 约定
 
