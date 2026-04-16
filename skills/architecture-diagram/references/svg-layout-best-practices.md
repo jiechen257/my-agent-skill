@@ -7,6 +7,10 @@ Apply these rules across all types.
 - Keep all primary content inside the `viewBox`
 - Reserve at least 24px right and bottom padding
 - Put summary notes in a top note rail or bottom legend rail
+- Keep note cards fully inside the inner frame with at least 40px right inset
+- Keep legend rows fully inside the inner frame with at least 56px bottom inset
+- If a top note needs more than two body lines, widen the card or move it left before adding more text
+- If a legend row cannot fit cleanly inside the safe rail, wrap it into two rows instead of pushing it downward or outside the frame
 
 ## Text
 
@@ -34,6 +38,7 @@ Apply these rules across all types.
 - Region boundaries should read stronger than node borders
 - Use phase bands, system boundaries, matrix headers, or timeline lanes as the main grouping device
 - Keep at least 28px vertical separation between stacked regions
+- Keep decorative pills, legends, and note rails aligned to the same inner safe area as the main regions
 
 ## Shape Variety
 

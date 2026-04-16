@@ -122,6 +122,8 @@ All diagram types must obey these base rules:
 
 - Keep all essential content inside the `viewBox`
 - Use a top note rail for summary notes; never float long note cards inside the routing core
+- Keep note cards fully inside the inner frame; keep at least 40px right inset and expand leftward before text overflows
+- Keep legend content inside a bottom safe rail; keep at least 56px bottom inset and wrap to two rows when one row is too wide
 - Keep labels on opaque chips or dedicated header areas
 - Use visible connection ports; arrowheads must land on node edges, lifelines, state borders, or matrix cells
 - Keep competing lines on separate corridors
