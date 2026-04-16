@@ -1,6 +1,6 @@
 ---
 name: architecture-diagram
-description: Create professional, light-themed architecture diagrams by default as standalone SVG deliverables. Use when the user asks for system architecture diagrams, infrastructure diagrams, cloud architecture visualizations, security diagrams, network topology diagrams, or any technical diagram showing system components and their relationships. Default output language is Chinese, with English technical terms preserved when clearer. Support dark mode when the user asks for it.
+description: Use when the user asks for system architecture diagrams, technical flowcharts, framework principle diagrams, infrastructure diagrams, cloud architecture visualizations, security diagrams, network topology diagrams, or any technical diagram showing system components and their relationships as a standalone SVG deliverable.
 license: MIT
 metadata:
   version: "1.0"
@@ -9,13 +9,25 @@ metadata:
 
 # Architecture Diagram Skill
 
-Create professional technical architecture diagrams as standalone SVG files.
+Create professional technical architecture diagrams and flowcharts as standalone SVG files.
 
 ## Design System
 
 ### Theme Modes
 
 Default to **light mode**. Use **dark mode** only when the prompt explicitly asks for a dark theme, dark background, slate theme, or presentation mode.
+
+### Supported Style Profiles
+
+Support two named style profiles.
+
+- `default`: semantic phase colors, visible title pills, subpanels, grid background, and semantic connector colors. Use this for most architecture diagrams, framework flows, and system maps.
+- `claude-official`: warm cream canvas, muted semantic fills, dark gray strokes, thicker borders, softer shadows, and neutral connector color. Use this when the prompt mentions Claude 官方风格, Anthropic, editorial card tone, or warm technical blog style.
+
+Use `default` when the prompt does not specify a style.
+Map vague requests such as “简洁技术风格” or “默认风格” to `default`.
+Apply dark mode only to `default`.
+Keep `claude-official` as a warm light deliverable.
 
 ### Output Language
 
@@ -25,6 +37,8 @@ Default to **light mode**. Use **dark mode** only when the prompt explicitly ask
 - Keep well-known technical terms in English when they are clearer or more standard, such as `VNode`, `render`, `patch`, `effect`, `scheduler`, `setup()`
 - Avoid mixed-language duplication such as `响应式 Reactive`; choose one phrase that reads naturally
 - If the user explicitly asks for English, switch the entire diagram copy to English
+
+### Default Style Tokens
 
 **Light mode defaults:**
 
@@ -49,6 +63,27 @@ Default to **light mode**. Use **dark mode** only when the prompt explicitly ask
 - Grid stroke: `#1e293b`
 - Arrowhead / neutral connector: `#64748b`
 - Opaque mask behind transparent component fills: `#0f172a`
+
+### Claude Official Style Tokens
+
+When style is `claude-official`, use these tokens:
+
+- Page background: `#f8f6f3`
+- Surface background: `#fffdf8`
+- Surface border: `#d9d3ca`
+- Primary text: `#1a1a1a`
+- Secondary text: `#6a6a6a`
+- Subtle text: `#5a5a5a`
+- Grid stroke: `#ddd6cc`
+- Arrowhead / neutral connector: `#5a5a5a`
+- Opaque mask behind transparent component fills: `#fffdf8`
+- Input / source fill: `#a8c5e6`
+- Process / agent fill: `#9dd4c7`
+- Infrastructure fill: `#f4e4c1`
+- Storage / state fill: `#e8e6e3`
+- Box stroke: `#4a4a4a`
+- Preferred radius: `12`
+- Preferred node stroke width: `2` to `2.5`
 
 ### Color Palette
 
@@ -85,6 +120,33 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
 - Keep summary note cards within 180-240px width and within two lines of body text
 - Place node-specific callouts only when they add real explanatory value; anchor them with a leader line to the referenced node or edge
 - Prefer moving excess explanation into the subtitle or footer note instead of adding a dense floating card in the core diagram area
+
+### Shape Vocabulary
+
+Use a small **shape vocabulary** so the diagram reads as a system map instead of a wall of identical rounded rectangles.
+
+- **Phase band**: large rounded container with tinted fill for top-level sections
+- **Title pill**: compact filled chip sitting on the band edge for section names
+- **Standard node**: rounded rectangle for normal processing steps
+- **Terminal node**: softer capsule or larger-radius box for inputs, bundles, DOM, external outputs
+- **Subpanel**: dashed or softly tinted container for a local sub-flow such as compiler split, hook queue, or diff strategy
+- **Decision node**: reserved for explicit binary branching in flowcharts; use it sparingly and only when the branch condition is central
+- **Label chip**: tiny pill for edge labels, merge points, or lane markers
+- **Note card**: compact callout in the note rail, never floating in the core routing corridor
+
+Keep the number of shape types low, but make the semantic differences visible.
+
+### Flowchart Layout Strategy
+
+Use the same layout discipline for architecture diagrams and framework/process flowcharts.
+
+- Build the page from 3 to 5 horizontal phase bands or vertical swimlanes before placing nodes
+- Keep same-layer nodes aligned on a shared baseline
+- Reserve one feedback corridor above or below each main row before drawing return edges
+- Use terminal nodes for source and sink, standard nodes for process, subpanels for local detail, decision nodes for true branch points, and note cards for commentary
+- Split long return edges onto top and bottom ports so forward flow and feedback flow can terminate cleanly on the same node
+- Prefer one strong explanatory note card per major area over many floating annotations
+- Keep edge labels on dedicated chips and keep local explanations inside subpanels when the section has dense detail
 
 ### Visual Elements
 
@@ -126,6 +188,8 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
 - Keep every arrowhead attached to a visible node port; corridor-only endpoints and whitespace endpoints are invalid
 - Keep every edge label centered on a real rendered segment; labels floating in blank space are invalid
 - Name the source and target mentally before drawing the path, for example `scheduleUpdateOnFiber.right -> renderRoot.left`
+- When multiple edges connect to the same node, split them across **opposite sides** or distinct ports such as `top` and `bottom`; opposing flows should not terminate on the same border point
+- Two unrelated edges must not share the same **corridor segment**; reserve separate lanes when the flows are semantically different
 
 **Arrow labels need their own lane.** Do not place labels directly on top of a node title or subtitle.
 
@@ -156,6 +220,17 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
   <tspan x="732" dy="12">长句拆成两行，避免压到主流程。</tspan>
 </text>
 ```
+
+### Region Clarity Rules
+
+**CRITICAL:** Top-level regions need stronger separation than a thin dashed outline.
+
+- Use a tinted background fill strong enough to distinguish adjacent phase bands at a glance
+- Use a **title pill** or colored label chip at the top-left of each region so the section name stays readable over the grid
+- Keep at least 28px vertical space between neighboring phase bands
+- Use thicker or more saturated borders for region boundaries than for node borders
+- Keep note cards fully outside the band border unless the note belongs to a local subpanel inside that region
+- Prefer one local **subpanel** over several floating notes when a section needs extra explanation
 
 ### Anti-Truncation Rules
 
@@ -224,7 +299,7 @@ SVG viewBox height: at least 560 to fit legend
 
 1. **Title row** - Title and subtitle inside the SVG canvas
 2. **Note rail** - Optional note cards above the top phase band or below the legend
-3. **Main diagram area** - Boundaries, nodes, and routed edges
+3. **Main diagram area** - Phase bands, title pills, nodes, subpanels, and routed edges
 4. **Footer metadata** - Optional minimal metadata line inside the `viewBox`
 
 ### Component Box Pattern
@@ -239,16 +314,18 @@ SVG viewBox height: at least 560 to fit legend
 
 Copy and customize the SVG template:
 
-- `assets/template.svg` for the export-safe image version
+- `assets/template.svg` for the `default` style
+- `assets/template-claude.svg` for the `claude-official` style
 
 Key customization points:
 
 1. Update the title and subtitle in the SVG file
 2. Modify the SVG `viewBox` dimensions if needed
-3. Add, remove, or reposition component boxes
+3. Add, remove, or reposition phase bands, title pills, nodes, and subpanels
 4. Draw connection arrows between components with anchored orthogonal routing and label lanes
-5. Keep note cards in the note rail and keep node callouts anchored with leader lines
-6. Keep legends, labels, and footer notes inside the `viewBox`
+5. Split competing edges across opposite sides or separate corridors
+6. Keep note cards in the note rail and keep node callouts anchored with leader lines
+7. Keep legends, labels, and footer notes inside the `viewBox`
 
 ## Output
 
@@ -262,8 +339,14 @@ Output rules:
 - The `.svg` file must render correctly with `rsvg-convert`
 - Do not generate `.html` files by default
 - Do not generate `.png` files by default
+- Support `default` and `claude-official` as the two named style profiles
+- Use `default` when the style is unspecified
 - The default edge style is anchored orthogonal routing with opaque label chips
 - Every arrow must terminate on a visible node port
+- Competing in/out flows should use opposite sides of the node or separate named ports
+- Distinct flows should not overlap on the same corridor segment
+- Regions should use tinted phase bands with title pills
+- Use at least one additional shape type such as subpanel or terminal node when the diagram has 8 or more nodes
 - Summary notes belong in the note rail, not in the core routing corridor
 - Default to Chinese unless the user explicitly asks for English
 - Default to light mode unless the user explicitly asks for dark mode
