@@ -23,6 +23,11 @@ Apply these rules across all types.
 - Keep unrelated edges off the same corridor segment
 - Split competing in/out traffic across opposite sides or distinct ports
 - Put every edge label on a chip with an opaque fill
+- For horizontal segments, place the label chip **above the segment** by default
+- For vertical segments, place the label chip on the outer side of the corridor, not over the line itself
+- The full label chip must fit inside a real straight segment after reserving at least 10px endpoint padding
+- If a segment is too short for the label chip, reroute the edge to create a longer label lane
+- Label chips must not overlap arrowheads, icons, node borders, or node copy
 
 ## Regions
 
