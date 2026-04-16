@@ -127,6 +127,7 @@ All diagram types must obey these base rules:
 - Keep labels on opaque chips or dedicated header areas
 - Use visible connection ports; arrowheads must land on node edges, lifelines, state borders, or matrix cells
 - Keep competing lines on separate corridors
+- When one shared trunk feeds multiple branches, every branch label must sit on a branch-owned segment; never spread different branch labels across one uninterrupted trunk
 - Avoid unrelated edge overlap on the same corridor segment
 - Reserve one extra lane for feedback or return flow
 - Use a small shape vocabulary with visible semantic differences

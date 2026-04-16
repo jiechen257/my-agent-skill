@@ -29,6 +29,9 @@ Apply these rules across all types.
 - Put every edge label on a chip with an opaque fill
 - For horizontal segments, place the label chip **above the segment** by default
 - For vertical segments, place the label chip on the outer side of the corridor, not over the line itself
+- When a shared trunk fans out into multiple branches, place each label chip on the branch-owned segment after the split or immediately beside that branch's vertical drop
+- Never place different branch labels on the same uninterrupted trunk segment when they describe different downstream drops
+- If a shared trunk does not provide distinct branch-owned segments, add elbows, short stubs, or leader ticks so every label has an unambiguous one-to-one anchor
 - The full label chip must fit inside a real straight segment after reserving at least 10px endpoint padding
 - If a segment is too short for the label chip, reroute the edge to create a longer label lane
 - Label chips must not overlap arrowheads, icons, node borders, or node copy

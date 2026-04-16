@@ -29,6 +29,7 @@ for ref in \
   [ -f "$ref" ] || fail "missing reference file: $ref"
 done
 grep -q "above the segment" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing edge label placement rule"
+grep -q "branch-owned segment" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing branched trunk label ownership rule"
 grep -q "segment is too short" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing short-segment reroute rule"
 
 echo "Checking scripts..."
