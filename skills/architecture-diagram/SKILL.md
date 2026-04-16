@@ -1,6 +1,6 @@
 ---
 name: architecture-diagram
-description: Create professional, light-themed architecture diagrams by default as standalone HTML and SVG deliverables. Use when the user asks for system architecture diagrams, infrastructure diagrams, cloud architecture visualizations, security diagrams, network topology diagrams, or any technical diagram showing system components and their relationships. Default output language is Chinese, with English technical terms preserved when clearer. Support dark mode when the user asks for it.
+description: Create professional, light-themed architecture diagrams by default as standalone SVG deliverables. Use when the user asks for system architecture diagrams, infrastructure diagrams, cloud architecture visualizations, security diagrams, network topology diagrams, or any technical diagram showing system components and their relationships. Default output language is Chinese, with English technical terms preserved when clearer. Support dark mode when the user asks for it.
 license: MIT
 metadata:
   version: "1.0"
@@ -9,7 +9,7 @@ metadata:
 
 # Architecture Diagram Skill
 
-Create professional technical architecture diagrams as self-contained HTML files with inline SVG graphics and CSS styling.
+Create professional technical architecture diagrams as standalone SVG files.
 
 ## Design System
 
@@ -19,7 +19,7 @@ Default to **light mode**. Use **dark mode** only when the prompt explicitly ask
 
 ### Output Language
 
-**默认使用中文**：标题、标签、图例、副标题、摘要卡片、页脚文案默认都使用中文。
+**默认使用中文**：标题、标签、图例、副标题、注释、页脚文案默认都使用中文。
 
 - Prefer concise Chinese phrasing for structural concepts such as "编译阶段", "运行时", "响应式更新"
 - Keep well-known technical terms in English when they are clearer or more standard, such as `VNode`, `render`, `patch`, `effect`, `scheduler`, `setup()`
@@ -66,9 +66,9 @@ Use these semantic colors for component types. In light mode, prefer pale fills 
 
 ### Typography
 
-Use JetBrains Mono for all text (monospace, technical aesthetic):
-```html
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+Use a renderer-safe font stack directly in the SVG so the asset stays self-contained:
+```svg
+<text style="font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;">
 ```
 
 Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7px for tiny labels.
@@ -140,8 +140,8 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
 - Keep every essential node, arrow, label, legend, and footer inside the SVG `viewBox`
 - Reserve at least 24px of right and bottom padding inside the `viewBox`
 - If the diagram is dense, increase the `viewBox` size or split the content into two diagrams instead of letting content run off the edge
-- When generating previews, PNGs, or images for sharing, prefer rendering from the standalone `.svg` file instead of an HTML page thumbnail
-- The standalone `.svg` is the canonical image/export asset; the `.html` is the presentation wrapper with header, cards, and footer
+- Keep the standalone `.svg` as the canonical deliverable and source of truth
+- Use `rsvg-convert` only for local verification or when the user explicitly asks for a bitmap export
 
 **Masking arrows behind transparent fills:** Since component boxes use semi-transparent fills, arrows behind them will show through. To fully mask arrows, draw an opaque background rect at the same position before drawing the semi-transparent styled rect on top. Use `fill="#ffffff"` in light mode and `fill="#0f172a"` in dark mode:
 ```svg
@@ -195,12 +195,12 @@ SVG viewBox height: at least 560 to fit legend
 **Wrong:** Legend at y=470 inside a cluster boundary that ends at y=490
 **Right:** Legend at y=510, below the cluster boundary, with viewBox height extended
 
-### Layout Structure
+### SVG Structure
 
-1. **Header** - Title with pulsing dot indicator, subtitle
-2. **Main SVG diagram** - Contained in rounded border card
-3. **Summary cards** - Grid of 3 cards below diagram with key details
-4. **Footer** - Minimal metadata line
+1. **Title row** - Title and subtitle inside the SVG canvas
+2. **Main diagram area** - Boundaries, nodes, and routed edges
+3. **Legend / notes** - Compact legend and any required notes inside the same SVG
+4. **Footer metadata** - Optional minimal metadata line inside the `viewBox`
 
 ### Component Box Pattern
 
@@ -210,49 +210,33 @@ SVG viewBox height: at least 560 to fit legend
 <text x="CENTER_X" y="Y+36" fill="SECONDARY_TEXT" font-size="9" text-anchor="middle">sublabel</text>
 ```
 
-### Info Card Pattern
-
-```html
-<div class="card">
-  <div class="card-header">
-    <div class="card-dot COLOR"></div>
-    <h3>Title</h3>
-  </div>
-  <ul>
-    <li>• Item one</li>
-    <li>• Item two</li>
-  </ul>
-</div>
-```
-
 ## Template
 
-Copy and customize both templates:
+Copy and customize the SVG template:
 
-- `assets/template.html` for the presentation version
 - `assets/template.svg` for the export-safe image version
 
 Key customization points:
 
-1. Update the title and subtitle in both files
+1. Update the title and subtitle in the SVG file
 2. Modify the SVG `viewBox` dimensions if needed
 3. Add, remove, or reposition component boxes
 4. Draw connection arrows between components with anchored orthogonal routing and label lanes
 5. Keep legends and labels inside the `viewBox`
-6. Update the three summary cards and footer in the HTML version
+6. Update the legend and footer notes inside the SVG when needed
 
 ## Output
 
-Always produce these deliverables by default:
+Always produce this deliverable by default:
 
-1. A self-contained `.html` file with embedded CSS and inline SVG
-2. A matching standalone `.svg` file for export, preview generation, and image conversion
+1. A standalone `.svg` file
 
 Output rules:
 
-- Embedded CSS only; no JavaScript required
+- Embedded `<style>` inside the SVG is allowed; no JavaScript required
 - The `.svg` file must render correctly with `rsvg-convert`
-- The `.html` file must not rely on horizontal scrolling to reveal core diagram content
+- Do not generate `.html` files by default
+- Do not generate `.png` files by default
 - The default edge style is anchored orthogonal routing with opaque label chips
 - Default to Chinese unless the user explicitly asks for English
 - Default to light mode unless the user explicitly asks for dark mode

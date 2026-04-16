@@ -3,7 +3,6 @@ set -euo pipefail
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL_MD="$SKILL_DIR/SKILL.md"
-HTML_TEMPLATE="$SKILL_DIR/assets/template.html"
 SVG_TEMPLATE="$SKILL_DIR/assets/template.svg"
 RSVG_BIN="$(command -v rsvg-convert || true)"
 
@@ -22,27 +21,18 @@ grep -q "默认使用中文" "$SKILL_MD" || fail "SKILL.md missing default Chine
 echo "Checking standalone SVG guidance..."
 grep -q "\.svg" "$SKILL_MD" || fail "SKILL.md missing standalone SVG guidance"
 
+echo "Checking SVG-only output guidance..."
+grep -q "Do not generate \`.html\` files by default" "$SKILL_MD" || fail "SKILL.md missing no-html default guidance"
+grep -q "Do not generate \`.png\` files by default" "$SKILL_MD" || fail "SKILL.md missing no-png default guidance"
+
 echo "Checking routed-edge guidance..."
 grep -q "端口锚点" "$SKILL_MD" || fail "SKILL.md missing port anchor guidance"
 grep -q "正交走线" "$SKILL_MD" || fail "SKILL.md missing orthogonal routing guidance"
 grep -q "标签" "$SKILL_MD" || fail "SKILL.md missing label routing guidance"
 
-echo "Checking HTML template does not rely on horizontal scroll..."
-if grep -q "overflow-x: auto" "$HTML_TEMPLATE"; then
-  fail "template.html still relies on overflow-x auto"
-fi
-
-echo "Checking HTML template does not force min-width clipping..."
-if grep -q "min-width:" "$HTML_TEMPLATE"; then
-  fail "template.html still contains min-width"
-fi
-
-echo "Checking HTML template defaults to Chinese..."
-grep -q 'lang="zh-CN"' "$HTML_TEMPLATE" || fail "template.html missing zh-CN language tag"
-grep -q "\[项目名称\] 架构图" "$HTML_TEMPLATE" || fail "template.html missing Chinese title placeholder"
-grep -q "不透明底" "$HTML_TEMPLATE" || fail "template.html missing label background guidance"
-if grep -Eq 'd="[^"]*[CQ][^"]*"' "$HTML_TEMPLATE"; then
-  fail "template.html still contains curved path commands"
+echo "Checking HTML template is absent..."
+if [ -e "$SKILL_DIR/assets/template.html" ]; then
+  fail "assets/template.html should not exist in SVG-only mode"
 fi
 
 echo "Checking SVG template exists..."
