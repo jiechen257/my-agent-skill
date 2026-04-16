@@ -42,6 +42,16 @@
       font-weight: 500;
       fill: #475569;
     }
+    .note-card {
+      fill: #fff7ed;
+      stroke: #f59e0b;
+      stroke-width: 1;
+    }
+    .note-text {
+      font-size: 8px;
+      font-weight: 500;
+      fill: #9a3412;
+    }
     .edge {
       fill: none;
       stroke-width: 1.5;
@@ -73,17 +83,28 @@
 
   <text x="60" y="58" class="title">[项目名称] 架构图</text>
   <text x="60" y="78" class="subtitle">[默认中文说明，技术术语可保留 English]</text>
+  <rect x="720" y="84" width="220" height="28" rx="6" class="note-card"/>
+  <text x="732" y="97" class="note-text">
+    <tspan x="732" dy="0">说明进上方 note rail，正文保持两行内。</tspan>
+    <tspan x="732" dy="11">节点批注要有 leader line，主流程区留给节点和箭头。</tspan>
+  </text>
 
   <!-- 边界 -->
   <rect x="170" y="120" width="790" height="460" rx="12" fill="rgba(251, 191, 36, 0.06)" stroke="#d97706" stroke-width="1" stroke-dasharray="8,4"/>
   <text x="186" y="140" class="section">部署区域 / 逻辑边界</text>
 
   <!-- 先画箭头：使用端口锚点与正交走线 -->
+  <!-- edge: user.right -> entry.left -->
   <path d="M 130 330 H 220" class="edge edge-cyan"/>
+  <!-- edge: entry.right -> service.left -->
   <path d="M 400 330 H 490" class="edge edge-emerald"/>
+  <!-- edge: service.right -> datastore.left -->
   <path d="M 660 330 H 750" class="edge edge-violet"/>
+  <!-- edge: service.bottom -> async.top -->
   <path d="M 575 370 V 470" class="edge edge-amber"/>
+  <!-- edge: auth.bottom -> entry.top -->
   <path d="M 105 210 V 250 H 280 V 290" class="edge edge-rose"/>
+  <!-- edge: async.bottom -> entry.bottom -->
   <path d="M 580 550 V 610 H 310 V 370" class="edge edge-amber"/>
 
   <!-- 节点：先画遮罩底，再画半透明卡片 -->

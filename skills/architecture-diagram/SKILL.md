@@ -73,6 +73,19 @@ Use a renderer-safe font stack directly in the SVG so the asset stays self-conta
 
 Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7px for tiny labels.
 
+### Text Layout Rules
+
+**CRITICAL:** Keep text on predictable rails. Node copy, annotation copy, and callout copy each need their own space budget.
+
+- Node titles should stay on one line when possible; split into two lines only when the label clearly exceeds the box width
+- Node sublabels should stay within two lines and use concise phrases instead of sentence-style prose
+- Use `<tspan>` for every manual line break in notes or wrapped labels
+- Keep at least 12px between any text block and the nearest border, edge corridor, or neighboring text block
+- Reserve a dedicated **note rail** above the top phase band or below the legend for summary notes
+- Keep summary note cards within 180-240px width and within two lines of body text
+- Place node-specific callouts only when they add real explanatory value; anchor them with a leader line to the referenced node or edge
+- Prefer moving excess explanation into the subtitle or footer note instead of adding a dense floating card in the core diagram area
+
 ### Visual Elements
 
 **Background:** In light mode use `#f8fafc` with a subtle grid. In dark mode use `#020617` with the same pattern.
@@ -110,6 +123,9 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
 - Dependency edges such as `track()` / `trigger()` must terminate on the semantically correct node, not on the nearest empty space
 - Keep parallel edges on separate lanes with at least 12px of lane separation
 - Keep arrow endpoints 6-12px away from rounded corners; prefer side midpoints over corners
+- Keep every arrowhead attached to a visible node port; corridor-only endpoints and whitespace endpoints are invalid
+- Keep every edge label centered on a real rendered segment; labels floating in blank space are invalid
+- Name the source and target mentally before drawing the path, for example `scheduleUpdateOnFiber.right -> renderRoot.left`
 
 **Arrow labels need their own lane.** Do not place labels directly on top of a node title or subtitle.
 
@@ -130,6 +146,15 @@ Font sizes: 12px for component names, 9px for sublabels, 8px for annotations, 7p
 <path d="M 760 230 V 270 H 240 V 330" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrowhead)"/>
 <rect x="766" y="246" width="34" height="16" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8"/>
 <text x="783" y="257" fill="#475569" font-size="9" text-anchor="middle">加载</text>
+```
+
+**Preferred note-callout pattern:**
+```svg
+<rect x="720" y="84" width="210" height="34" rx="6" fill="#fff7ed" stroke="#f59e0b" stroke-width="1"/>
+<text x="732" y="97" fill="#9a3412" font-size="8">
+  <tspan x="732" dy="0">说明放进上方 note rail，节点批注用 leader line。</tspan>
+  <tspan x="732" dy="12">长句拆成两行，避免压到主流程。</tspan>
+</text>
 ```
 
 ### Anti-Truncation Rules
@@ -198,8 +223,8 @@ SVG viewBox height: at least 560 to fit legend
 ### SVG Structure
 
 1. **Title row** - Title and subtitle inside the SVG canvas
-2. **Main diagram area** - Boundaries, nodes, and routed edges
-3. **Legend / notes** - Compact legend and any required notes inside the same SVG
+2. **Note rail** - Optional note cards above the top phase band or below the legend
+3. **Main diagram area** - Boundaries, nodes, and routed edges
 4. **Footer metadata** - Optional minimal metadata line inside the `viewBox`
 
 ### Component Box Pattern
@@ -222,8 +247,8 @@ Key customization points:
 2. Modify the SVG `viewBox` dimensions if needed
 3. Add, remove, or reposition component boxes
 4. Draw connection arrows between components with anchored orthogonal routing and label lanes
-5. Keep legends and labels inside the `viewBox`
-6. Update the legend and footer notes inside the SVG when needed
+5. Keep note cards in the note rail and keep node callouts anchored with leader lines
+6. Keep legends, labels, and footer notes inside the `viewBox`
 
 ## Output
 
@@ -238,5 +263,7 @@ Output rules:
 - Do not generate `.html` files by default
 - Do not generate `.png` files by default
 - The default edge style is anchored orthogonal routing with opaque label chips
+- Every arrow must terminate on a visible node port
+- Summary notes belong in the note rail, not in the core routing corridor
 - Default to Chinese unless the user explicitly asks for English
 - Default to light mode unless the user explicitly asks for dark mode

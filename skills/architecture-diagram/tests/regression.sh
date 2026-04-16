@@ -29,6 +29,12 @@ echo "Checking routed-edge guidance..."
 grep -q "端口锚点" "$SKILL_MD" || fail "SKILL.md missing port anchor guidance"
 grep -q "正交走线" "$SKILL_MD" || fail "SKILL.md missing orthogonal routing guidance"
 grep -q "标签" "$SKILL_MD" || fail "SKILL.md missing label routing guidance"
+grep -q "visible node port" "$SKILL_MD" || fail "SKILL.md missing visible node port guidance"
+
+echo "Checking text-layout guidance..."
+grep -q "note rail" "$SKILL_MD" || fail "SKILL.md missing note rail guidance"
+grep -q "leader line" "$SKILL_MD" || fail "SKILL.md missing leader line guidance"
+grep -q "<tspan>" "$SKILL_MD" || fail "SKILL.md missing tspan wrapping guidance"
 
 echo "Checking HTML template is absent..."
 if [ -e "$SKILL_DIR/assets/template.html" ]; then
@@ -47,6 +53,9 @@ rm -f "$TMP_PNG"
 echo "Checking SVG template defaults to Chinese..."
 grep -q "\[项目名称\] 架构图" "$SVG_TEMPLATE" || fail "template.svg missing Chinese title placeholder"
 grep -q "edge-label-bg" "$SVG_TEMPLATE" || fail "template.svg missing label background class"
+grep -q "note-card" "$SVG_TEMPLATE" || fail "template.svg missing note-card class"
+grep -q "<tspan" "$SVG_TEMPLATE" || fail "template.svg missing wrapped note text"
+grep -q "edge: user.right -> entry.left" "$SVG_TEMPLATE" || fail "template.svg missing explicit edge endpoint example"
 if grep -Eq 'd="[^"]*[CQ][^"]*"' "$SVG_TEMPLATE"; then
   fail "template.svg still contains curved path commands"
 fi
