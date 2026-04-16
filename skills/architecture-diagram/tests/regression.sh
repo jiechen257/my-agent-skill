@@ -3,89 +3,61 @@ set -euo pipefail
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL_MD="$SKILL_DIR/SKILL.md"
-SVG_TEMPLATE="$SKILL_DIR/assets/template.svg"
-CLAUDE_TEMPLATE="$SKILL_DIR/assets/template-claude.svg"
-RSVG_BIN="$(command -v rsvg-convert || true)"
-
-if [ -z "$RSVG_BIN" ] && [ -x /opt/homebrew/bin/rsvg-convert ]; then
-  RSVG_BIN=/opt/homebrew/bin/rsvg-convert
-fi
 
 fail() {
   echo "FAIL: $1" >&2
   exit 1
 }
 
-validate_svg_template() {
-  local template_path="$1"
-  local label="$2"
+echo "Checking default output rules..."
+grep -q "默认输出语言：中文" "$SKILL_MD" || fail "missing Chinese default guidance"
+grep -q "默认风格：\`claude-official\`" "$SKILL_MD" || fail "missing claude-official default guidance"
+grep -q "默认不生成 \`.html\`" "$SKILL_MD" || fail "missing no-html guidance"
+grep -q "默认不生成 \`.png\`" "$SKILL_MD" || fail "missing no-png guidance"
 
-  test -f "$template_path" || fail "$label missing"
-  test -n "$RSVG_BIN" || fail "rsvg-convert not found"
+echo "Checking supported diagram types..."
+for type in architecture flowchart data-flow sequence state-machine timeline comparison-matrix use-case; do
+  grep -q "\`$type\`" "$SKILL_MD" || fail "missing type in SKILL.md: $type"
+done
 
-  TMP_PNG="$(mktemp /tmp/architecture-diagram-svg-XXXXXX.png)"
-  "$RSVG_BIN" "$template_path" -o "$TMP_PNG" >/dev/null 2>&1 || fail "$label failed rsvg-convert validation"
-  rm -f "$TMP_PNG"
+echo "Checking references..."
+for ref in \
+  "$SKILL_DIR/references/diagram-type-matrix.md" \
+  "$SKILL_DIR/references/style-claude-official.md" \
+  "$SKILL_DIR/references/style-default.md" \
+  "$SKILL_DIR/references/svg-layout-best-practices.md"; do
+  [ -f "$ref" ] || fail "missing reference file: $ref"
+done
 
-  grep -q "\[项目名称\] 架构图" "$template_path" || fail "$label missing Chinese title placeholder"
-  grep -q "edge-label-bg" "$template_path" || fail "$label missing label background class"
-  grep -q "note-card" "$template_path" || fail "$label missing note-card class"
-  grep -q "phase-pill" "$template_path" || fail "$label missing phase-pill class"
-  grep -q "subpanel" "$template_path" || fail "$label missing subpanel example"
-  grep -q "terminal-node" "$template_path" || fail "$label missing terminal-node class"
-  grep -q "<tspan" "$template_path" || fail "$label missing wrapped note text"
+echo "Checking scripts..."
+for script in \
+  "$SKILL_DIR/scripts/validate-svg.sh" \
+  "$SKILL_DIR/scripts/test-templates.sh"; do
+  [ -f "$script" ] || fail "missing script: $script"
+done
 
-  if grep -Eq 'd="[^"]*[CQ][^"]*"' "$template_path"; then
-    fail "$label still contains curved path commands"
-  fi
-}
+echo "Checking templates..."
+for template in \
+  "$SKILL_DIR/assets/template.svg" \
+  "$SKILL_DIR/assets/template-default.svg" \
+  "$SKILL_DIR/templates/architecture.svg" \
+  "$SKILL_DIR/templates/flowchart.svg" \
+  "$SKILL_DIR/templates/data-flow.svg" \
+  "$SKILL_DIR/templates/sequence.svg" \
+  "$SKILL_DIR/templates/state-machine.svg" \
+  "$SKILL_DIR/templates/timeline.svg" \
+  "$SKILL_DIR/templates/comparison-matrix.svg" \
+  "$SKILL_DIR/templates/use-case.svg"; do
+  [ -f "$template" ] || fail "missing template: $template"
+done
 
-echo "Checking default Chinese output guidance..."
-grep -q "默认使用中文" "$SKILL_MD" || fail "SKILL.md missing default Chinese output guidance"
+echo "Checking template placeholders..."
+grep -q "\[系统名称\] 架构图" "$SKILL_DIR/templates/architecture.svg" || fail "architecture template missing placeholder"
+grep -q "\[流程名称\] 流程图" "$SKILL_DIR/templates/flowchart.svg" || fail "flowchart template missing placeholder"
+grep -q "\[交互主题\] 时序图" "$SKILL_DIR/templates/sequence.svg" || fail "sequence template missing placeholder"
+grep -q "\[系统名称\] 用例图" "$SKILL_DIR/templates/use-case.svg" || fail "use-case template missing placeholder"
 
-echo "Checking supported styles guidance..."
-grep -q "Supported Style Profiles" "$SKILL_MD" || fail "SKILL.md missing supported styles section"
-grep -q "\`default\`" "$SKILL_MD" || fail "SKILL.md missing default style guidance"
-grep -q "\`claude-official\`" "$SKILL_MD" || fail "SKILL.md missing claude-official style guidance"
-
-echo "Checking standalone SVG guidance..."
-grep -q "\.svg" "$SKILL_MD" || fail "SKILL.md missing standalone SVG guidance"
-
-echo "Checking SVG-only output guidance..."
-grep -q "Do not generate \`.html\` files by default" "$SKILL_MD" || fail "SKILL.md missing no-html default guidance"
-grep -q "Do not generate \`.png\` files by default" "$SKILL_MD" || fail "SKILL.md missing no-png default guidance"
-
-echo "Checking routed-edge guidance..."
-grep -q "端口锚点" "$SKILL_MD" || fail "SKILL.md missing port anchor guidance"
-grep -q "正交走线" "$SKILL_MD" || fail "SKILL.md missing orthogonal routing guidance"
-grep -q "标签" "$SKILL_MD" || fail "SKILL.md missing label routing guidance"
-grep -q "visible node port" "$SKILL_MD" || fail "SKILL.md missing visible node port guidance"
-grep -q "opposite sides" "$SKILL_MD" || fail "SKILL.md missing opposite-side port guidance"
-grep -q "corridor segment" "$SKILL_MD" || fail "SKILL.md missing corridor overlap guidance"
-
-echo "Checking text-layout guidance..."
-grep -q "note rail" "$SKILL_MD" || fail "SKILL.md missing note rail guidance"
-grep -q "leader line" "$SKILL_MD" || fail "SKILL.md missing leader line guidance"
-grep -q "<tspan>" "$SKILL_MD" || fail "SKILL.md missing tspan wrapping guidance"
-
-echo "Checking region and shape guidance..."
-grep -q "title pill" "$SKILL_MD" || fail "SKILL.md missing title pill guidance"
-grep -q "shape vocabulary" "$SKILL_MD" || fail "SKILL.md missing shape vocabulary guidance"
-grep -q "subpanel" "$SKILL_MD" || fail "SKILL.md missing subpanel guidance"
-
-echo "Checking HTML template is absent..."
-if [ -e "$SKILL_DIR/assets/template.html" ]; then
-  fail "assets/template.html should not exist in SVG-only mode"
-fi
-
-echo "Validating default SVG template..."
-validate_svg_template "$SVG_TEMPLATE" "template.svg"
-grep -q "edge: user.right -> entry.left" "$SVG_TEMPLATE" || fail "template.svg missing explicit edge endpoint example"
-
-echo "Validating claude SVG template..."
-validate_svg_template "$CLAUDE_TEMPLATE" "template-claude.svg"
-grep -q "edge: user.right -> gateway.left" "$CLAUDE_TEMPLATE" || fail "template-claude.svg missing explicit edge endpoint example"
-grep -q "shadow-soft" "$CLAUDE_TEMPLATE" || fail "template-claude.svg missing claude shadow token"
-grep -q "#f8f6f3" "$CLAUDE_TEMPLATE" || fail "template-claude.svg missing claude background token"
+echo "Running template validation suite..."
+bash "$SKILL_DIR/scripts/test-templates.sh" || fail "template validation suite failed"
 
 echo "PASS: architecture-diagram regression checks"

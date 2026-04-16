@@ -1,199 +1,197 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760">
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    <marker id="arrow-claude" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#5a5a5a"/>
     </marker>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#cbd5e1" stroke-width="0.5"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
     </pattern>
+    <filter id="shadow-soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#00000012"/>
+    </filter>
   </defs>
 
   <style>
     text {
-      font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
     .title {
       font-size: 28px;
       font-weight: 700;
-      fill: #0f172a;
+      fill: #1a1a1a;
     }
     .subtitle {
       font-size: 14px;
       font-weight: 400;
-      fill: #475569;
+      fill: #6a6a6a;
     }
     .section {
       font-size: 11px;
       font-weight: 700;
-      fill: #b45309;
+      fill: #5a4635;
+    }
+    .phase-band {
+      fill: rgba(244, 228, 193, 0.42);
+      stroke: #b89a6a;
+      stroke-width: 1.6;
     }
     .phase-pill {
-      fill: #fff7ed;
-      stroke: #f59e0b;
-      stroke-width: 1;
+      fill: #f4e4c1;
+      stroke: #8f7350;
+      stroke-width: 1.4;
     }
     .node-title {
       font-size: 12px;
       font-weight: 700;
-      fill: #0f172a;
+      fill: #1a1a1a;
     }
     .node-sub {
       font-size: 9px;
       font-weight: 400;
-      fill: #475569;
+      fill: #5a5a5a;
     }
     .legend {
       font-size: 9px;
       font-weight: 500;
-      fill: #475569;
+      fill: #5a5a5a;
     }
     .note-card {
-      fill: #fff7ed;
-      stroke: #f59e0b;
-      stroke-width: 1;
+      fill: #dff3ef;
+      stroke: #72b8ab;
+      stroke-width: 1.4;
+    }
+    .note-title {
+      font-size: 10px;
+      font-weight: 700;
+      fill: #2d5a52;
     }
     .note-text {
       font-size: 8px;
-      font-weight: 500;
-      fill: #9a3412;
+      fill: #3f6d66;
     }
     .subpanel {
-      fill: rgba(255, 255, 255, 0.65);
-      stroke: #94a3b8;
-      stroke-width: 1;
+      fill: rgba(255, 253, 248, 0.88);
+      stroke: #b8b0a5;
+      stroke-width: 1.2;
       stroke-dasharray: 5,4;
     }
     .edge {
       fill: none;
-      stroke-width: 1.5;
-      marker-end: url(#arrowhead);
+      stroke: #5a5a5a;
+      stroke-width: 2;
+      marker-end: url(#arrow-claude);
     }
-    .edge-cyan { stroke: #0891b2; }
-    .edge-emerald { stroke: #059669; }
-    .edge-violet { stroke: #7c3aed; }
-    .edge-amber { stroke: #d97706; }
-    .edge-rose {
-      stroke: #e11d48;
-      stroke-dasharray: 5,5;
+    .edge-dashed {
+      stroke-dasharray: 5,3;
     }
     .edge-label-bg {
-      fill: #ffffff;
-      stroke: #e2e8f0;
-      stroke-width: 0.8;
+      fill: #fffdf8;
+      stroke: #d9d3ca;
+      stroke-width: 0.9;
     }
     .edge-label {
       font-size: 9px;
       font-weight: 500;
-      fill: #475569;
+      fill: #5a5a5a;
     }
     .terminal-node {
       rx: 12;
     }
   </style>
 
-  <rect width="1000" height="760" fill="#f8fafc"/>
-  <rect x="20" y="20" width="960" height="720" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <rect width="1000" height="760" fill="#f8f6f3"/>
+  <rect x="20" y="20" width="960" height="720" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
   <rect x="40" y="96" width="920" height="620" fill="url(#grid)"/>
 
   <text x="60" y="58" class="title">[项目名称] 架构图</text>
   <text x="60" y="78" class="subtitle">[默认中文说明，技术术语可保留 English]</text>
-  <rect x="720" y="84" width="220" height="28" rx="6" class="note-card"/>
-  <text x="732" y="97" class="note-text">
-    <tspan x="732" dy="0">说明进上方 note rail，正文保持两行内。</tspan>
-    <tspan x="732" dy="11">节点批注要有 leader line，主流程区留给节点和箭头。</tspan>
+  <rect x="710" y="84" width="230" height="30" rx="8" class="note-card"/>
+  <text x="724" y="98" class="note-title">
+    <tspan x="724" dy="0">关键说明放进上方 note rail。</tspan>
+  </text>
+  <text x="724" y="111" class="note-text">
+    <tspan x="724" dy="0">主流程区保留给节点、子分区与正交走线。</tspan>
   </text>
 
-  <!-- 边界 -->
-  <rect x="170" y="128" width="790" height="470" rx="14" fill="rgba(251, 191, 36, 0.10)" stroke="#d97706" stroke-width="1.4" stroke-dasharray="8,4"/>
-  <rect x="186" y="112" width="126" height="24" rx="10" class="phase-pill"/>
-  <text x="249" y="128" class="section" text-anchor="middle">部署区域 / 逻辑边界</text>
+  <rect x="170" y="128" width="790" height="470" rx="16" class="phase-band"/>
+  <rect x="188" y="112" width="148" height="26" rx="12" class="phase-pill"/>
+  <text x="262" y="129" class="section" text-anchor="middle">默认风格 / claude-official 共用布局</text>
 
-  <!-- subpanel: 编译与运行时拆分 -->
-  <rect x="470" y="260" width="220" height="120" rx="10" class="subpanel"/>
-  <text x="486" y="278" class="legend">局部子流程 / subpanel</text>
+  <rect x="474" y="260" width="220" height="124" rx="12" class="subpanel"/>
+  <text x="490" y="278" class="legend">局部子流程 / subpanel</text>
 
-  <!-- 先画箭头：使用端口锚点与正交走线 -->
-  <!-- edge: user.right -> entry.left -->
-  <path d="M 130 330 H 220" class="edge edge-cyan"/>
-  <!-- edge: entry.right -> service.left -->
-  <path d="M 400 330 H 490" class="edge edge-emerald"/>
-  <!-- edge: service.right -> datastore.left -->
-  <path d="M 660 330 H 750" class="edge edge-violet"/>
-  <!-- edge: service.bottom -> async.top -->
-  <path d="M 575 370 V 470" class="edge edge-amber"/>
-  <!-- edge: auth.bottom -> entry.top -->
-  <path d="M 105 210 V 250 H 280 V 290" class="edge edge-rose"/>
-  <!-- edge: async.bottom -> entry.bottom ; opposite sides avoid head-on conflict -->
-  <path d="M 580 550 V 622 H 310 V 370" class="edge edge-amber"/>
+  <!-- edge: user.right -> gateway.left -->
+  <path d="M 130 330 H 220" class="edge"/>
+  <!-- edge: gateway.right -> service.left -->
+  <path d="M 400 330 H 490" class="edge"/>
+  <!-- edge: service.right -> state.left -->
+  <path d="M 660 330 H 750" class="edge"/>
+  <!-- edge: service.bottom -> worker.top -->
+  <path d="M 575 370 V 470" class="edge edge-dashed"/>
+  <!-- edge: auth.bottom -> gateway.top -->
+  <path d="M 105 210 V 250 H 280 V 290" class="edge edge-dashed"/>
+  <!-- edge: worker.bottom -> gateway.bottom ; opposite sides avoid head-on conflict -->
+  <path d="M 580 550 V 622 H 310 V 370" class="edge"/>
 
-  <!-- 节点：先画遮罩底，再画半透明卡片 -->
-  <rect x="40" y="300" width="90" height="60" rx="6" fill="#ffffff"/>
-  <rect x="40" y="300" width="90" height="60" class="terminal-node" fill="rgba(148, 163, 184, 0.16)" stroke="#64748b" stroke-width="1.5"/>
+  <rect x="40" y="300" width="90" height="60" rx="12" fill="#fffdf8"/>
+  <rect x="40" y="300" width="90" height="60" class="terminal-node" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
   <text x="85" y="325" class="node-title" text-anchor="middle">用户</text>
   <text x="85" y="342" class="node-sub" text-anchor="middle">浏览器 / App</text>
 
-  <rect x="50" y="150" width="110" height="60" rx="6" fill="#ffffff"/>
-  <rect x="50" y="150" width="110" height="60" rx="6" fill="rgba(251, 113, 133, 0.12)" stroke="#e11d48" stroke-width="1.5"/>
-  <text x="105" y="175" class="node-title" text-anchor="middle">认证服务</text>
+  <rect x="50" y="150" width="110" height="60" rx="12" fill="#fffdf8"/>
+  <rect x="50" y="150" width="110" height="60" rx="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="105" y="175" class="node-title" text-anchor="middle">认证</text>
   <text x="105" y="192" class="node-sub" text-anchor="middle">OAuth / SSO</text>
 
-  <rect x="220" y="290" width="180" height="80" rx="8" fill="#ffffff"/>
-  <rect x="220" y="290" width="180" height="80" rx="8" fill="rgba(34, 211, 238, 0.12)" stroke="#0891b2" stroke-width="1.5"/>
+  <rect x="220" y="290" width="180" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="220" y="290" width="180" height="80" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
   <text x="310" y="315" class="node-title" text-anchor="middle">入口层</text>
   <text x="310" y="333" class="node-sub" text-anchor="middle">Web / Gateway / BFF</text>
   <text x="310" y="351" class="node-sub" text-anchor="middle">在这里填主要入口</text>
 
-  <rect x="490" y="290" width="170" height="80" rx="8" fill="#ffffff"/>
-  <rect x="490" y="290" width="170" height="80" rx="8" fill="rgba(52, 211, 153, 0.12)" stroke="#059669" stroke-width="1.5"/>
-  <text x="575" y="315" class="node-title" text-anchor="middle">服务层</text>
-  <text x="575" y="333" class="node-sub" text-anchor="middle">API / Service / Worker</text>
-  <text x="575" y="351" class="node-sub" text-anchor="middle">在这里填核心处理逻辑</text>
+  <rect x="490" y="290" width="170" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="490" y="290" width="170" height="80" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="575" y="315" class="node-title" text-anchor="middle">处理层</text>
+  <text x="575" y="333" class="node-sub" text-anchor="middle">Service / Agent / Worker</text>
+  <text x="575" y="351" class="node-sub" text-anchor="middle">在这里填核心逻辑</text>
 
-  <rect x="750" y="290" width="170" height="80" rx="8" fill="#ffffff"/>
-  <rect x="750" y="290" width="170" height="80" class="terminal-node" fill="rgba(167, 139, 250, 0.12)" stroke="#7c3aed" stroke-width="1.5"/>
-  <text x="835" y="315" class="node-title" text-anchor="middle">数据层</text>
-  <text x="835" y="333" class="node-sub" text-anchor="middle">DB / Cache / MQ</text>
+  <rect x="750" y="290" width="170" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="750" y="290" width="170" height="80" class="terminal-node" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="835" y="315" class="node-title" text-anchor="middle">状态层</text>
+  <text x="835" y="333" class="node-sub" text-anchor="middle">DB / Cache / State</text>
   <text x="835" y="351" class="node-sub" text-anchor="middle">在这里填存储</text>
 
-  <rect x="490" y="470" width="180" height="80" rx="8" fill="#ffffff"/>
-  <rect x="490" y="470" width="180" height="80" rx="8" fill="rgba(251, 191, 36, 0.18)" stroke="#d97706" stroke-width="1.5"/>
+  <rect x="490" y="470" width="180" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="490" y="470" width="180" height="80" rx="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
   <text x="580" y="495" class="node-title" text-anchor="middle">异步处理</text>
-  <text x="580" y="513" class="node-sub" text-anchor="middle">Queue / Worker / Cron</text>
-  <text x="580" y="531" class="node-sub" text-anchor="middle">在这里填事件与后台任务</text>
+  <text x="580" y="513" class="node-sub" text-anchor="middle">Queue / Scheduler / Cron</text>
+  <text x="580" y="531" class="node-sub" text-anchor="middle">在这里填批处理与后台任务</text>
 
-  <!-- 标签：使用独立 lane 与不透明底片 -->
-  <rect x="156" y="306" width="36" height="16" rx="4" class="edge-label-bg"/>
+  <rect x="156" y="306" width="36" height="16" rx="5" class="edge-label-bg"/>
   <text x="174" y="317" class="edge-label" text-anchor="middle">请求</text>
 
-  <rect x="430" y="306" width="34" height="16" rx="4" class="edge-label-bg"/>
+  <rect x="430" y="306" width="34" height="16" rx="5" class="edge-label-bg"/>
   <text x="447" y="317" class="edge-label" text-anchor="middle">处理</text>
 
-  <rect x="691" y="306" width="34" height="16" rx="4" class="edge-label-bg"/>
-  <text x="708" y="317" class="edge-label" text-anchor="middle">查询</text>
+  <rect x="691" y="306" width="34" height="16" rx="5" class="edge-label-bg"/>
+  <text x="708" y="317" class="edge-label" text-anchor="middle">读取</text>
 
-  <rect x="589" y="404" width="34" height="16" rx="4" class="edge-label-bg"/>
+  <rect x="589" y="404" width="34" height="16" rx="5" class="edge-label-bg"/>
   <text x="606" y="415" class="edge-label" text-anchor="middle">事件</text>
 
-  <rect x="182" y="242" width="58" height="16" rx="4" class="edge-label-bg"/>
+  <rect x="182" y="242" width="58" height="16" rx="5" class="edge-label-bg"/>
   <text x="211" y="253" class="edge-label" text-anchor="middle">认证回调</text>
 
-  <rect x="582" y="594" width="58" height="16" rx="4" class="edge-label-bg"/>
+  <rect x="582" y="594" width="58" height="16" rx="5" class="edge-label-bg"/>
   <text x="611" y="605" class="edge-label" text-anchor="middle">结果回传</text>
 
-  <!-- 图例 -->
   <text x="60" y="688" class="node-title">图例</text>
-  <rect x="110" y="680" width="16" height="10" rx="2" fill="rgba(34, 211, 238, 0.12)" stroke="#0891b2" stroke-width="1"/>
-  <text x="132" y="688" class="legend">入口 / 前端</text>
-
-  <rect x="220" y="680" width="16" height="10" rx="2" fill="rgba(52, 211, 153, 0.12)" stroke="#059669" stroke-width="1"/>
-  <text x="242" y="688" class="legend">服务 / 运行时</text>
-
-  <rect x="340" y="680" width="16" height="10" rx="2" fill="rgba(167, 139, 250, 0.12)" stroke="#7c3aed" stroke-width="1"/>
-  <text x="362" y="688" class="legend">数据 / 存储</text>
-
-  <rect x="460" y="680" width="16" height="10" rx="2" fill="rgba(251, 191, 36, 0.18)" stroke="#d97706" stroke-width="1"/>
-  <text x="482" y="688" class="legend">事件 / 异步</text>
-
-  <rect x="570" y="680" width="16" height="10" rx="2" fill="rgba(251, 113, 133, 0.12)" stroke="#e11d48" stroke-width="1"/>
-  <text x="592" y="688" class="legend">认证 / 安全</text>
+  <rect x="110" y="680" width="16" height="10" rx="3" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="132" y="688" class="legend">输入 / Source</text>
+  <rect x="224" y="680" width="16" height="10" rx="3" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="246" y="688" class="legend">处理 / Process</text>
+  <rect x="350" y="680" width="16" height="10" rx="3" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="372" y="688" class="legend">状态 / Storage</text>
+  <rect x="480" y="680" width="16" height="10" rx="3" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="502" y="688" class="legend">基础设施 / Infra</text>
 </svg>
