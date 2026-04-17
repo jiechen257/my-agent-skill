@@ -28,6 +28,10 @@ skills/
     SKILL.md
   project-daily-summary/
     SKILL.md
+  weekly-report-template/
+    SKILL.md
+    agents/
+    references/
   worktree-closeout/
     SKILL.md
 ```
@@ -39,6 +43,7 @@ skills/
 - `session-wrap`
 - `commit-daily-summary`
 - `project-daily-summary`
+- `weekly-report-template`
 - `worktree-closeout`
 
 ## 来源
@@ -50,6 +55,7 @@ skills/
 - `session-wrap`：<https://github.com/leonsong09/session-wrap>
 - `commit-daily-summary`：<https://github.com/leonsong09/commit-daily-summary>
 - `project-daily-summary`：<https://github.com/leonsong09/project-daily-summary>
+- `weekly-report-template`：本仓库内维护的 repo-scoped 周报生成 skill
 - `worktree-closeout`：<https://github.com/leonsong09/worktree-closeout>
 
 以上 5 个 workflow skills 的整理入口参考：

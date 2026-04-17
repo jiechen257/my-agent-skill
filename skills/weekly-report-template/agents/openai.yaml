@@ -1,0 +1,7 @@
+interface:
+  display_name: "周报模板整理"
+  short_description: "基于指定仓库一周 git 提交生成符合模板要求的结构化周报"
+  default_prompt: "Use $weekly-report-template to generate a weekly report from git commits for the specified repositories and format it to match the required structure."
+
+policy:
+  allow_implicit_invocation: true
