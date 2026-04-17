@@ -62,7 +62,8 @@ skills/
 
 ### 本地 Superpowers bundle
 
-以下 skills 当前来自本机 `~/.codex/superpowers/skills/`：
+以下 skills 当前来自本机 `~/.codex/superpowers/skills/`，对应 GitHub 来源：
+<https://github.com/obra/superpowers/tree/main/skills>
 
 - `brainstorming`
 - `writing-plans`
