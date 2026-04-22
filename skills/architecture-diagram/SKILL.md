@@ -7,9 +7,7 @@ description: Use when the user asks for architecture diagrams, technical flowcha
 
 Create production-grade technical diagrams as standalone SVG files.
 
-## Scope
-
-This skill covers a **standard refactor** subset of the broader `fireworks-tech-graph` idea:
+Supported types:
 
 - `architecture`
 - `flowchart`
@@ -20,10 +18,10 @@ This skill covers a **standard refactor** subset of the broader `fireworks-tech-
 - `comparison-matrix`
 - `use-case`
 
-This skill intentionally supports only two visual styles:
+Supported styles:
 
-- `claude-official`
 - `default`
+- `claude-official`
 
 ## Output Defaults
 
@@ -41,25 +39,14 @@ Technical terms may stay in English when they read better, such as `VNode`, `eff
 
 Always follow this order:
 
-1. **Classify the diagram type** using [diagram-type-matrix.md](references/diagram-type-matrix.md)
-2. **Extract the structure**:
-   - architecture: layers, services, stores, external systems
-   - flowchart: start, process, decision, I/O, end
-   - data-flow: producers, transforms, stores, consumers, payload labels
-   - sequence: participants, messages, frames, activation windows
-   - state-machine: states, transitions, guards, initial/final nodes
-   - timeline: phases, durations, milestones, dependencies
-   - comparison-matrix: columns, rows, criteria, cell semantics
-   - use-case: actors, system boundary, use cases, include/extend relations
-3. **Choose the style**:
-   - use `claude-official` unless the user explicitly asks for `default`
-4. **Start from the matching template** in `templates/`
-5. **Apply layout rules** from [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
-6. **Apply style tokens** from:
-   - [style-claude-official.md](references/style-claude-official.md)
-   - [style-default.md](references/style-default.md)
-7. **Validate the SVG** with `scripts/validate-svg.sh`
-8. **Optionally render a local preview** for verification only
+1. Classify the type with [diagram-type-matrix.md](references/diagram-type-matrix.md)
+2. Extract only the structure that matters for that type
+3. Choose `claude-official` unless the user explicitly asks for `default`
+4. Start from the matching template in `templates/`
+5. Apply [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
+6. Apply the matching style reference
+7. Validate with `scripts/validate-svg.sh`
+8. Render a local preview only when density or branching makes visual review necessary
 
 ## Type Selection
 
@@ -76,106 +63,38 @@ Use these rules when the user gives a vague request:
 
 Framework principle diagrams should usually start from `flowchart` or `data-flow`, not `architecture`.
 
-## Style System
-
-### `claude-official`
-
-Use this when the prompt does not specify a style.
-
-Characteristics:
-
-- warm cream page background
-- darker gray outline system
-- soft muted fills
-- thicker strokes
-- softer shadows
-- restrained connector colors
-- stronger editorial-card feeling
-
-This style works well for:
-
-- framework principle diagrams
-- architecture overviews
-- documentation-ready diagrams
-- comparison matrices
-- timelines
-
-### `default`
-
-Use this only when the user explicitly asks for:
-
-- `default`
-- 彩色分区
-- 更强语义色
-- 流程阶段配色
-
-Characteristics:
-
-- neutral light canvas
-- semantic phase colors
-- clearer category-coded arrows
-- stronger region tint differences
-- more visible flow segmentation
-
-## Shared Layout Rules
-
-All diagram types must obey these base rules:
+## Global Rules
 
 - Keep all essential content inside the `viewBox`
-- Use a top note rail for summary notes; never float long note cards inside the routing core
-- Keep note cards fully inside the inner frame; keep at least 40px right inset and expand leftward before text overflows
-- Keep legend content inside a bottom safe rail; keep at least 56px bottom inset and wrap to two rows when one row is too wide
-- Keep labels on opaque chips or dedicated header areas
-- Use visible connection ports; arrowheads must land on node edges, lifelines, state borders, or matrix cells
-- Keep competing lines on separate corridors
-- When one shared trunk feeds multiple branches, every branch label must sit on a branch-owned segment; never spread different branch labels across one uninterrupted trunk
-- Avoid unrelated edge overlap on the same corridor segment
-- Reserve one extra lane for feedback or return flow
-- Use a small shape vocabulary with visible semantic differences
-- Keep region boundaries stronger than node borders
+- Keep visible safety gaps between regions, nodes, labels, and routed edges
+- Use a top note rail for summary notes and a bottom safe rail for legends
+- Keep labels on chips or dedicated headers; do not let chips read like floating comments
+- For labeled edges, use `edge id + data-edge-id` as the default ownership contract
+- Use visible connection ports and keep arrowheads landing on real targets
+- Prefer simple shape vocabularies and stronger region boundaries than node borders
 
-## Shape Vocabulary
+Style details live in:
 
-Use only the shapes needed by the chosen type.
+- [style-claude-official.md](references/style-claude-official.md)
+- [style-default.md](references/style-default.md)
 
-- **Phase band**: top-level section container
-- **Title pill**: section title chip
-- **Standard node**: normal processing box
-- **Terminal node**: input, output, external endpoint, or final result
-- **Decision node**: diamond for explicit branch points
-- **I/O node**: slanted parallelogram for request/response or file input/output
-- **Subpanel**: local sub-flow or explanatory inset
-- **Label chip**: arrow label, lane label, merge label
-- **Note card**: note rail callout
-- **Lifeline**: sequence participant vertical guide
-- **Activation bar**: active execution window on a lifeline
-- **State node**: rounded state block
-- **Milestone marker**: diamond or circle on a timeline
-- **Matrix cell**: comparison table cell with semantic fill
-- **Use-case ellipse**: capability inside a system boundary
+Layout and semantic contracts live in:
+
+- [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
 
 ## Type Rules
 
 ### Architecture
 
-- Organize services into 2 to 5 layers
-- Keep cross-layer edges orthogonal
-- Use phase bands or dashed grouping containers
-- Put stores and external systems on visually distinct shapes
+- Organize services into 2 to 5 layers and keep cross-layer edges orthogonal
 
 ### Flowchart
 
-- Prefer top-to-bottom flow
-- Use `terminal -> process -> decision -> process -> end`
-- Keep decisions sparse and explicit
-- Split branch labels onto dedicated chips
+- Prefer top-to-bottom flow with sparse decisions and branch-owned labels
 
 ### Data Flow
 
-- Label every major arrow with the payload
-- Use wider primary paths for the main data stream
-- Separate control flow from data flow
-- Keep transforms and stores visually distinct
+- Label major arrows with payloads and keep data/control lanes visually distinct
 
 ### Sequence
 
@@ -183,30 +102,25 @@ Use only the shapes needed by the chosen type.
 - Messages advance downward in time
 - Lifelines stay vertically aligned
 - Activation bars show local execution windows
+- Keep phase bands inside the time area
+- Keep endpoints and activations aligned to lifelines
+- For multi-branch frames, use `data-frame-id` and `data-branch`
 
 ### State Machine
 
-- Initial and final nodes must be visually distinct
-- Guards belong on transition labels
-- Keep main loop readable before adding side transitions
+- Keep initial/final states distinct and put guards on transition labels
 
 ### Timeline
 
-- Time axis stays horizontal
-- Bars align to one scale
-- Milestones sit above or below the axis with clear labels
+- Keep one horizontal time scale and align bars to it
 
 ### Comparison Matrix
 
-- Limit columns to a readable count
-- Use alternating row fills
-- Use semantic fills for `支持 / 部分支持 / 不支持`
+- Limit columns to a readable count and keep semantic fills consistent
 
 ### Use Case
 
-- Actors stay outside the system boundary
-- Use cases stay inside the boundary
-- `include` and `extend` must be labeled on dashed relations
+- Keep actors outside the boundary and label `include` / `extend` on dashed relations
 
 ## Templates
 
@@ -225,6 +139,7 @@ Compatibility templates:
 
 - [assets/template.svg](assets/template.svg) = default `claude-official` starter
 - [assets/template-default.svg](assets/template-default.svg) = explicit `default` starter
+- [assets/template-claude-official.svg](assets/template-claude-official.svg) = explicit `claude-official` starter
 
 ## Validation
 
@@ -233,7 +148,7 @@ Use these local scripts:
 - `scripts/validate-svg.sh <svg-file>`
 - `scripts/test-templates.sh`
 
-Use `rsvg-convert` for local verification only. The canonical deliverable remains the standalone `.svg`.
+Use `rsvg-convert` only for local verification. The canonical deliverable remains the standalone `.svg`.
 
 ## Deliverable Rules
 

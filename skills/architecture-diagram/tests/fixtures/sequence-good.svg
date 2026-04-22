@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" width="720" height="520">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="5.6" markerHeight="5.6" refX="4.8" refY="2.8" orient="auto">
+      <polyline points="0 0, 5.6 2.8, 0 5.6" fill="none" stroke="#5a5a5a" stroke-width="1.1"/>
+    </marker>
+  </defs>
+  <style>
+    .participant { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
+    .service { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .lifeline { stroke: #8f8a83; stroke-width: 1.2; stroke-dasharray: 6,5; }
+    .activation { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.1; }
+    .msg { stroke: #5a5a5a; stroke-width: 1.9; marker-end: url(#arrow); }
+    .async { stroke: #5a5a5a; stroke-width: 1.8; stroke-dasharray: 8,6; marker-end: url(#arrow-open); }
+    .note-card { fill: #dff3ef; stroke: #a8cfc6; stroke-width: 1.2; }
+    .phase-band { fill: #e9f2fb; }
+    .phase-pill { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.1; }
+    .frame { fill: none; stroke: #938c81; stroke-width: 1.2; stroke-dasharray: 8,6; }
+    .frame-sep { stroke: #938c81; stroke-width: 1; stroke-dasharray: 8,6; }
+    .frame-pill { fill: #e8e6e3; stroke: #bcb5ab; stroke-width: 0.9; }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.9; }
+    .legend { font-size: 11px; fill: #6a6a6a; }
+  </style>
+  <rect width="720" height="520" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="672" height="472" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="60" y="72" width="260" height="92" rx="14" class="note-card"/>
+  <text x="82" y="98" font-size="12">关键约束</text>
+  <text x="82" y="118" font-size="10">1. 事件只通知最终态。</text>
+  <text x="82" y="136" font-size="10">2. 成功与失败分支分别归属。</text>
+  <rect x="52" y="242" width="616" height="30" rx="14" class="phase-band"/>
+  <rect x="74" y="247" width="150" height="20" rx="10" class="phase-pill"/>
+  <text x="149" y="261" text-anchor="middle" font-size="11">阶段一：支付确认</text>
+  <rect x="74" y="180" width="104" height="44" rx="12" class="participant"/>
+  <rect x="308" y="180" width="104" height="44" rx="12" class="service"/>
+  <rect x="542" y="180" width="104" height="44" rx="12" class="store"/>
+  <line x1="126" y1="224" x2="126" y2="450" class="lifeline"/>
+  <line x1="360" y1="224" x2="360" y2="450" class="lifeline"/>
+  <line x1="594" y1="224" x2="594" y2="450" class="lifeline"/>
+  <rect x="352" y="304" width="16" height="86" class="activation"/>
+  <rect x="586" y="332" width="16" height="40" class="activation"/>
+  <line x1="126" y1="312" x2="360" y2="312" class="msg"/>
+  <line x1="360" y1="340" x2="594" y2="340" class="async"/>
+  <line x1="594" y1="368" x2="360" y2="368" class="async"/>
+  <rect x="346" y="288" width="260" height="118" rx="12" class="frame" data-frame-id="settle"/>
+  <rect x="362" y="296" width="34" height="16" rx="5" class="frame-pill"/>
+  <text x="379" y="307" text-anchor="middle" font-size="10">alt</text>
+  <text x="412" y="308" font-size="11" data-frame-id="settle" data-branch="1">[支付成功]</text>
+  <line x1="362" y1="352" x2="590" y2="352" class="frame-sep" data-frame-id="settle"/>
+  <text x="412" y="374" font-size="11" data-frame-id="settle" data-branch="2">[支付失败]</text>
+  <line x1="360" y1="328" x2="594" y2="328" class="async" data-frame-id="settle" data-branch="1"/>
+  <line x1="594" y1="380" x2="360" y2="380" class="async" data-frame-id="settle" data-branch="2"/>
+  <text x="60" y="436" class="legend">图例：实线 = 同步请求，虚线 = 异步通知，激活条 = 处理窗口。</text>
+</svg>

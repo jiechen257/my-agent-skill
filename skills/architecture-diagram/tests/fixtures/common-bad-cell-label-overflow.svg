@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420">
+  <style>
+    .yes { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 1.2; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+  </style>
+  <rect width="760" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="712" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="120" y="140" width="120" height="60" class="yes"/>
+  <text x="180" y="176" class="label" text-anchor="middle">这个单元格文字已经明显超过 cell 的可用宽度</text>
+</svg>

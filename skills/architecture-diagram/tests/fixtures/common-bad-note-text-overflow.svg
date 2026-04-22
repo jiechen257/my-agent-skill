@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420">
+  <style>
+    .note-card { fill: #dff3ef; stroke: #a8cfc6; stroke-width: 1.2; }
+    .note-title { font-size: 13px; font-weight: 700; fill: #24443d; }
+    .note-text { font-size: 11px; fill: #355650; }
+  </style>
+  <rect width="720" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="672" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="60" y="72" width="210" height="84" rx="14" class="note-card"/>
+  <text x="84" y="98" class="note-title">关键约束</text>
+  <text x="84" y="120" class="note-text">这行说明没有换行，但是长度已经明显超过 note card 的可用宽度。</text>
+</svg>

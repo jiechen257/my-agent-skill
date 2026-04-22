@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420">
+  <style>
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+  </style>
+  <rect width="760" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="712" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="220" y="180" width="84" height="16" rx="5" class="chip"/>
+  <text x="262" y="191" class="label" text-anchor="middle">第一个标签</text>
+  <rect x="286" y="180" width="84" height="16" rx="5" class="chip"/>
+  <text x="328" y="191" class="label" text-anchor="middle">第二个标签</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" width="640" height="520">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    .terminal { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
+    .decision { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+  </style>
+  <rect width="640" height="520" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="592" height="472" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="240" y="80" width="160" height="60" rx="20" class="terminal"/>
+  <path d="M 320 140 V 222" class="edge" id="edge-main"/>
+  <path d="M 320 222 L 410 284 L 320 346 L 230 284 Z" class="decision"/>
+  <rect x="418" y="206" width="42" height="16" rx="5" class="chip" data-edge-id="edge-main"/>
+  <text x="439" y="217" class="label" text-anchor="middle" data-edge-id="edge-main">进入判断</text>
+</svg>

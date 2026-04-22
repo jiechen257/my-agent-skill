@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420">
+  <style>
+    .usecase { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 1.8; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+  </style>
+  <rect width="760" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="712" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <ellipse cx="380" cy="180" rx="90" ry="34" class="usecase"/>
+  <text x="380" y="185" class="node-title" text-anchor="middle">这个用例标题比椭圆主体宽很多而且没有换行</text>
+</svg>

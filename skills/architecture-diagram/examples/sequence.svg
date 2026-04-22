@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 860" width="1160" height="860">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="5.6" markerHeight="5.6" refX="4.8" refY="2.8" orient="auto">
+      <polyline points="0 0, 5.6 2.8, 0 5.6" fill="none" stroke="#5a5a5a" stroke-width="1.1"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .note-card { fill: #dff3ef; stroke: #a8cfc6; stroke-width: 1.2; }
+    .note-title { font-size: 13px; font-weight: 700; fill: #24443d; }
+    .note-text { font-size: 11px; fill: #355650; }
+    .phase-band { stroke: none; }
+    .phase-pill { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.1; }
+    .phase-text { font-size: 12px; font-weight: 700; fill: #4c4c4c; }
+    .participant { stroke: #4a4a4a; stroke-width: 2; }
+    .source { fill: #a8c5e6; }
+    .process { fill: #9dd4c7; }
+    .store { fill: #e8e6e3; }
+    .lifeline { stroke: #8f8a83; stroke-width: 1.2; stroke-dasharray: 6,5; }
+    .activation { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.1; }
+    .msg { stroke: #5a5a5a; stroke-width: 1.9; marker-end: url(#arrow); }
+    .async { stroke: #5a5a5a; stroke-width: 1.8; stroke-dasharray: 8,6; marker-end: url(#arrow-open); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.9; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .frame { fill: none; stroke: #938c81; stroke-width: 1.2; stroke-dasharray: 8,6; }
+    .frame-sep { stroke: #938c81; stroke-width: 1; stroke-dasharray: 8,6; }
+    .frame-pill { fill: #e8e6e3; stroke: #bcb5ab; stroke-width: 0.9; }
+    .frame-title { font-size: 10px; font-weight: 700; fill: #5a5a5a; }
+    .branch-title { font-size: 11px; font-weight: 700; fill: #5a5a5a; }
+    .legend { font-size: 11px; fill: #6a6a6a; }
+  </style>
+
+  <rect width="1160" height="860" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="1112" height="812" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+
+  <text x="60" y="64" class="title">[交互主题] 时序图</text>
+  <text x="60" y="88" class="subtitle">[在这里填写参与者、阶段、关键消息与分支处理]</text>
+
+  <rect x="60" y="112" width="400" height="104" rx="14" class="note-card"/>
+  <text x="84" y="136" class="note-title">关键约束</text>
+  <text x="84" y="158" class="note-text">
+    <tspan x="84" dy="0">1. 关键说明放在顶部 note rail，保持紧凑。</tspan>
+    <tspan x="84" dy="15">2. 阶段标题放在参与者下方的时序区域。</tspan>
+    <tspan x="84" dy="15">3. 分支消息要通过 data-frame-id / data-branch 标注归属。</tspan>
+  </text>
+
+  <rect x="60" y="292" width="1040" height="32" rx="14" fill="#e9f2fb" class="phase-band"/>
+  <rect x="84" y="298" width="194" height="20" rx="10" class="phase-pill"/>
+  <text x="181" y="312" text-anchor="middle" class="phase-text">阶段一：请求与确认</text>
+
+  <rect x="72" y="230" width="140" height="48" rx="12" class="participant source"/>
+  <rect x="326" y="230" width="140" height="48" rx="12" class="participant process"/>
+  <rect x="580" y="230" width="140" height="48" rx="12" class="participant process"/>
+  <rect x="834" y="230" width="140" height="48" rx="12" class="participant store"/>
+
+  <text x="142" y="259" class="node-title" text-anchor="middle">调用方</text>
+  <text x="396" y="259" class="node-title" text-anchor="middle">业务服务</text>
+  <text x="650" y="259" class="node-title" text-anchor="middle">编排服务</text>
+  <text x="904" y="259" class="node-title" text-anchor="middle">通知服务</text>
+
+  <line x1="142" y1="278" x2="142" y2="742" class="lifeline"/>
+  <line x1="396" y1="278" x2="396" y2="742" class="lifeline"/>
+  <line x1="650" y1="278" x2="650" y2="742" class="lifeline"/>
+  <line x1="904" y1="278" x2="904" y2="742" class="lifeline"/>
+
+  <rect x="388" y="356" width="16" height="252" class="activation"/>
+  <rect x="642" y="432" width="16" height="180" class="activation"/>
+  <rect x="896" y="560" width="16" height="46" class="activation"/>
+
+  <line x1="142" y1="372" x2="396" y2="372" class="msg"/>
+  <rect x="232" y="356" width="78" height="16" rx="5" class="chip"/>
+  <text x="271" y="367" text-anchor="middle" class="label">1. 发起请求</text>
+
+  <line x1="396" y1="444" x2="650" y2="444" class="msg"/>
+  <rect x="488" y="428" width="74" height="16" rx="5" class="chip"/>
+  <text x="525" y="439" text-anchor="middle" class="label">2. 创建任务</text>
+
+  <rect x="632" y="474" width="260" height="190" rx="12" class="frame" data-frame-id="status-alt"/>
+  <rect x="648" y="482" width="34" height="16" rx="5" class="frame-pill"/>
+  <text x="665" y="493" text-anchor="middle" class="frame-title">alt</text>
+  <text x="696" y="494" class="branch-title" data-frame-id="status-alt" data-branch="1">[成功确认]</text>
+  <line x1="648" y1="556" x2="876" y2="556" class="frame-sep" data-frame-id="status-alt"/>
+  <text x="696" y="578" class="branch-title" data-frame-id="status-alt" data-branch="2">[失败关闭]</text>
+
+  <line x1="650" y1="522" x2="904" y2="522" class="async" data-frame-id="status-alt" data-branch="1"/>
+  <rect x="734" y="506" width="86" height="16" rx="5" class="chip"/>
+  <text x="777" y="517" text-anchor="middle" class="label">3. 发布成功通知</text>
+
+  <line x1="904" y1="592" x2="650" y2="592" class="async" data-frame-id="status-alt" data-branch="2"/>
+  <rect x="734" y="576" width="86" height="16" rx="5" class="chip"/>
+  <text x="777" y="587" text-anchor="middle" class="label">4. 发布关闭通知</text>
+
+  <line x1="650" y1="668" x2="396" y2="668" class="msg"/>
+  <rect x="488" y="652" width="76" height="16" rx="5" class="chip"/>
+  <text x="526" y="663" text-anchor="middle" class="label">5. 返回结果</text>
+
+  <text x="60" y="776" class="legend">图例：实线 = 同步请求，虚线 = 异步回调 / 事件通知，激活条 = 处理窗口。</text>
+</svg>

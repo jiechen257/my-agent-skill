@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420">
+  <style>
+    .service { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+  </style>
+  <rect width="760" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="712" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="100" y="140" width="140" height="72" rx="12" class="service"/>
+  <text x="170" y="168" class="node-title" text-anchor="middle">这个节点标题已经明显超过矩形节点的安全宽度</text>
+</svg>

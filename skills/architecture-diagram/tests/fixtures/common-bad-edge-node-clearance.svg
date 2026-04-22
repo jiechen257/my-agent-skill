@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" width="640" height="320">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    .process { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+  </style>
+  <rect width="640" height="320" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="592" height="272" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <path d="M 160 140 H 480" class="edge" id="edge-main"/>
+  <rect x="60" y="110" width="100" height="60" rx="12" class="process"/>
+  <rect x="480" y="110" width="100" height="60" rx="12" class="process"/>
+  <rect x="270" y="96" width="100" height="88" rx="12" class="process"/>
+  <text x="110" y="144" class="node-title" text-anchor="middle">入口</text>
+  <text x="530" y="144" class="node-title" text-anchor="middle">出口</text>
+  <text x="320" y="144" class="node-title" text-anchor="middle">阻塞节点</text>
+</svg>

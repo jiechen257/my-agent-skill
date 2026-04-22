@@ -1,199 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">[项目名称] 技术图</title>
+  <desc id="diagram-desc">default 风格的轻量 starter，用于搭建简洁技术图的标题区、主画布和最小关系示例。</desc>
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    <marker id="arrowhead" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#475569"/>
     </marker>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#cbd5e1" stroke-width="0.5"/>
-    </pattern>
   </defs>
-
   <style>
     text {
-      font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
-    .title {
-      font-size: 28px;
-      font-weight: 700;
-      fill: #0f172a;
-    }
-    .subtitle {
-      font-size: 14px;
-      font-weight: 400;
-      fill: #475569;
-    }
-    .section {
-      font-size: 11px;
-      font-weight: 700;
-      fill: #b45309;
-    }
-    .phase-pill {
-      fill: #fff7ed;
-      stroke: #f59e0b;
-      stroke-width: 1;
-    }
-    .node-title {
-      font-size: 12px;
-      font-weight: 700;
-      fill: #0f172a;
-    }
-    .node-sub {
-      font-size: 9px;
-      font-weight: 400;
-      fill: #475569;
-    }
-    .legend {
-      font-size: 9px;
-      font-weight: 500;
-      fill: #475569;
-    }
-    .note-card {
-      fill: #fff7ed;
-      stroke: #f59e0b;
-      stroke-width: 1;
-    }
-    .note-text {
-      font-size: 8px;
-      font-weight: 500;
-      fill: #9a3412;
-    }
-    .subpanel {
-      fill: rgba(255, 255, 255, 0.65);
-      stroke: #94a3b8;
-      stroke-width: 1;
-      stroke-dasharray: 5,4;
-    }
-    .edge {
-      fill: none;
-      stroke-width: 1.5;
-      marker-end: url(#arrowhead);
-    }
-    .edge-cyan { stroke: #0891b2; }
-    .edge-emerald { stroke: #059669; }
-    .edge-violet { stroke: #7c3aed; }
-    .edge-amber { stroke: #d97706; }
-    .edge-rose {
-      stroke: #e11d48;
-      stroke-dasharray: 5,5;
-    }
-    .edge-label-bg {
-      fill: #ffffff;
-      stroke: #e2e8f0;
-      stroke-width: 0.8;
-    }
-    .edge-label {
-      font-size: 9px;
-      font-weight: 500;
-      fill: #475569;
-    }
-    .terminal-node {
-      rx: 12;
-    }
+    .title { font-size: 28px; font-weight: 700; fill: #0f172a; }
+    .subtitle { font-size: 14px; fill: #475569; }
+    .guide { fill: rgba(255, 255, 255, 0.76); stroke: #cbd5e1; stroke-width: 1.1; stroke-dasharray: 8,6; }
+    .badge { fill: #fff7ed; stroke: #f59e0b; stroke-width: 1; }
+    .badge-text { font-size: 10px; font-weight: 700; fill: #9a3412; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #0f172a; }
+    .node-sub { font-size: 10px; fill: #475569; }
+    .edge { fill: none; stroke: #0891b2; stroke-width: 1.8; marker-end: url(#arrowhead); }
+    .edge-label-bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 0.8; }
+    .edge-label { font-size: 9px; fill: #475569; }
   </style>
 
-  <rect width="1000" height="760" fill="#f8fafc"/>
-  <rect x="20" y="20" width="960" height="720" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
-  <rect x="40" y="96" width="920" height="620" fill="url(#grid)"/>
+  <rect width="1000" height="720" fill="#f8fafc"/>
+  <rect x="24" y="24" width="952" height="672" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="60" y="64" class="title">[项目名称] 技术图</text>
+  <text x="60" y="88" class="subtitle">[在这里填写场景、时间范围或结构摘要]</text>
 
-  <text x="60" y="58" class="title">[项目名称] 架构图</text>
-  <text x="60" y="78" class="subtitle">[默认中文说明，技术术语可保留 English]</text>
-  <rect x="720" y="84" width="220" height="28" rx="6" class="note-card"/>
-  <text x="732" y="97" class="note-text">
-    <tspan x="732" dy="0">说明进上方 note rail，正文保持两行内。</tspan>
-    <tspan x="732" dy="11">节点批注要有 leader line，主流程区留给节点和箭头。</tspan>
-  </text>
+  <rect x="60" y="122" width="148" height="24" rx="10" class="badge"/>
+  <text x="134" y="138" class="badge-text" text-anchor="middle">starter canvas</text>
 
-  <!-- 边界 -->
-  <rect x="170" y="128" width="790" height="470" rx="14" fill="rgba(251, 191, 36, 0.10)" stroke="#d97706" stroke-width="1.4" stroke-dasharray="8,4"/>
-  <rect x="186" y="112" width="126" height="24" rx="10" class="phase-pill"/>
-  <text x="249" y="128" class="section" text-anchor="middle">部署区域 / 逻辑边界</text>
+  <rect x="60" y="162" width="880" height="474" rx="18" class="guide"/>
+  <rect x="146" y="308" width="176" height="76" rx="10" fill="rgba(34, 211, 238, 0.12)" stroke="#0891b2" stroke-width="1.5"/>
+  <rect x="532" y="308" width="220" height="76" rx="10" fill="rgba(52, 211, 153, 0.12)" stroke="#059669" stroke-width="1.5"/>
+  <text x="234" y="342" class="node-title" text-anchor="middle">起点块</text>
+  <text x="234" y="362" class="node-sub" text-anchor="middle">[留给第一个实体]</text>
+  <text x="642" y="342" class="node-title" text-anchor="middle">扩展块</text>
+  <text x="642" y="362" class="node-sub" text-anchor="middle">[留给下游结构]</text>
 
-  <!-- subpanel: 编译与运行时拆分 -->
-  <rect x="470" y="260" width="220" height="120" rx="10" class="subpanel"/>
-  <text x="486" y="278" class="legend">局部子流程 / subpanel</text>
-
-  <!-- 先画箭头：使用端口锚点与正交走线 -->
-  <!-- edge: user.right -> entry.left -->
-  <path d="M 130 330 H 220" class="edge edge-cyan"/>
-  <!-- edge: entry.right -> service.left -->
-  <path d="M 400 330 H 490" class="edge edge-emerald"/>
-  <!-- edge: service.right -> datastore.left -->
-  <path d="M 660 330 H 750" class="edge edge-violet"/>
-  <!-- edge: service.bottom -> async.top -->
-  <path d="M 575 370 V 470" class="edge edge-amber"/>
-  <!-- edge: auth.bottom -> entry.top -->
-  <path d="M 105 210 V 250 H 280 V 290" class="edge edge-rose"/>
-  <!-- edge: async.bottom -> entry.bottom ; opposite sides avoid head-on conflict -->
-  <path d="M 580 550 V 622 H 310 V 370" class="edge edge-amber"/>
-
-  <!-- 节点：先画遮罩底，再画半透明卡片 -->
-  <rect x="40" y="300" width="90" height="60" rx="6" fill="#ffffff"/>
-  <rect x="40" y="300" width="90" height="60" class="terminal-node" fill="rgba(148, 163, 184, 0.16)" stroke="#64748b" stroke-width="1.5"/>
-  <text x="85" y="325" class="node-title" text-anchor="middle">用户</text>
-  <text x="85" y="342" class="node-sub" text-anchor="middle">浏览器 / App</text>
-
-  <rect x="50" y="150" width="110" height="60" rx="6" fill="#ffffff"/>
-  <rect x="50" y="150" width="110" height="60" rx="6" fill="rgba(251, 113, 133, 0.12)" stroke="#e11d48" stroke-width="1.5"/>
-  <text x="105" y="175" class="node-title" text-anchor="middle">认证服务</text>
-  <text x="105" y="192" class="node-sub" text-anchor="middle">OAuth / SSO</text>
-
-  <rect x="220" y="290" width="180" height="80" rx="8" fill="#ffffff"/>
-  <rect x="220" y="290" width="180" height="80" rx="8" fill="rgba(34, 211, 238, 0.12)" stroke="#0891b2" stroke-width="1.5"/>
-  <text x="310" y="315" class="node-title" text-anchor="middle">入口层</text>
-  <text x="310" y="333" class="node-sub" text-anchor="middle">Web / Gateway / BFF</text>
-  <text x="310" y="351" class="node-sub" text-anchor="middle">在这里填主要入口</text>
-
-  <rect x="490" y="290" width="170" height="80" rx="8" fill="#ffffff"/>
-  <rect x="490" y="290" width="170" height="80" rx="8" fill="rgba(52, 211, 153, 0.12)" stroke="#059669" stroke-width="1.5"/>
-  <text x="575" y="315" class="node-title" text-anchor="middle">服务层</text>
-  <text x="575" y="333" class="node-sub" text-anchor="middle">API / Service / Worker</text>
-  <text x="575" y="351" class="node-sub" text-anchor="middle">在这里填核心处理逻辑</text>
-
-  <rect x="750" y="290" width="170" height="80" rx="8" fill="#ffffff"/>
-  <rect x="750" y="290" width="170" height="80" class="terminal-node" fill="rgba(167, 139, 250, 0.12)" stroke="#7c3aed" stroke-width="1.5"/>
-  <text x="835" y="315" class="node-title" text-anchor="middle">数据层</text>
-  <text x="835" y="333" class="node-sub" text-anchor="middle">DB / Cache / MQ</text>
-  <text x="835" y="351" class="node-sub" text-anchor="middle">在这里填存储</text>
-
-  <rect x="490" y="470" width="180" height="80" rx="8" fill="#ffffff"/>
-  <rect x="490" y="470" width="180" height="80" rx="8" fill="rgba(251, 191, 36, 0.18)" stroke="#d97706" stroke-width="1.5"/>
-  <text x="580" y="495" class="node-title" text-anchor="middle">异步处理</text>
-  <text x="580" y="513" class="node-sub" text-anchor="middle">Queue / Worker / Cron</text>
-  <text x="580" y="531" class="node-sub" text-anchor="middle">在这里填事件与后台任务</text>
-
-  <!-- 标签：使用独立 lane 与不透明底片 -->
-  <rect x="156" y="306" width="36" height="16" rx="4" class="edge-label-bg"/>
-  <text x="174" y="317" class="edge-label" text-anchor="middle">请求</text>
-
-  <rect x="430" y="306" width="34" height="16" rx="4" class="edge-label-bg"/>
-  <text x="447" y="317" class="edge-label" text-anchor="middle">处理</text>
-
-  <rect x="691" y="306" width="34" height="16" rx="4" class="edge-label-bg"/>
-  <text x="708" y="317" class="edge-label" text-anchor="middle">查询</text>
-
-  <rect x="589" y="404" width="34" height="16" rx="4" class="edge-label-bg"/>
-  <text x="606" y="415" class="edge-label" text-anchor="middle">事件</text>
-
-  <rect x="182" y="242" width="58" height="16" rx="4" class="edge-label-bg"/>
-  <text x="211" y="253" class="edge-label" text-anchor="middle">认证回调</text>
-
-  <rect x="582" y="594" width="58" height="16" rx="4" class="edge-label-bg"/>
-  <text x="611" y="605" class="edge-label" text-anchor="middle">结果回传</text>
-
-  <!-- 图例 -->
-  <text x="60" y="688" class="node-title">图例</text>
-  <rect x="110" y="680" width="16" height="10" rx="2" fill="rgba(34, 211, 238, 0.12)" stroke="#0891b2" stroke-width="1"/>
-  <text x="132" y="688" class="legend">入口 / 前端</text>
-
-  <rect x="220" y="680" width="16" height="10" rx="2" fill="rgba(52, 211, 153, 0.12)" stroke="#059669" stroke-width="1"/>
-  <text x="242" y="688" class="legend">服务 / 运行时</text>
-
-  <rect x="340" y="680" width="16" height="10" rx="2" fill="rgba(167, 139, 250, 0.12)" stroke="#7c3aed" stroke-width="1"/>
-  <text x="362" y="688" class="legend">数据 / 存储</text>
-
-  <rect x="460" y="680" width="16" height="10" rx="2" fill="rgba(251, 191, 36, 0.18)" stroke="#d97706" stroke-width="1"/>
-  <text x="482" y="688" class="legend">事件 / 异步</text>
-
-  <rect x="570" y="680" width="16" height="10" rx="2" fill="rgba(251, 113, 133, 0.12)" stroke="#e11d48" stroke-width="1"/>
-  <text x="592" y="688" class="legend">认证 / 安全</text>
+  <path d="M 322 346 H 532" class="edge" id="edge-main"/>
+  <rect x="402" y="330" width="48" height="16" rx="4" class="edge-label-bg" data-edge-id="edge-main"/>
+  <text x="426" y="341" class="edge-label" text-anchor="middle" data-edge-id="edge-main">关系</text>
 </svg>

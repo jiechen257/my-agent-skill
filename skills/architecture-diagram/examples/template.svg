@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760">
+  <defs>
+    <marker id="arrow-claude" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
+    </pattern>
+    <filter id="shadow-soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#00000012"/>
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      fill: #1a1a1a;
+    }
+    .subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      fill: #6a6a6a;
+    }
+    .section {
+      font-size: 11px;
+      font-weight: 700;
+      fill: #5a4635;
+    }
+    .phase-band {
+      fill: rgba(244, 228, 193, 0.42);
+      stroke: #b89a6a;
+      stroke-width: 1.6;
+    }
+    .phase-pill {
+      fill: #f4e4c1;
+      stroke: #8f7350;
+      stroke-width: 1.4;
+    }
+    .node-title {
+      font-size: 12px;
+      font-weight: 700;
+      fill: #1a1a1a;
+    }
+    .node-sub {
+      font-size: 9px;
+      font-weight: 400;
+      fill: #5a5a5a;
+    }
+    .legend {
+      font-size: 9px;
+      font-weight: 500;
+      fill: #5a5a5a;
+    }
+    .note-card {
+      fill: #dff3ef;
+      stroke: #72b8ab;
+      stroke-width: 1.4;
+    }
+    .note-title {
+      font-size: 10px;
+      font-weight: 700;
+      fill: #2d5a52;
+    }
+    .note-text {
+      font-size: 8px;
+      fill: #3f6d66;
+    }
+    .subpanel {
+      fill: rgba(255, 253, 248, 0.88);
+      stroke: #b8b0a5;
+      stroke-width: 1.2;
+      stroke-dasharray: 5,4;
+    }
+    .edge {
+      fill: none;
+      stroke: #5a5a5a;
+      stroke-width: 2;
+      marker-end: url(#arrow-claude);
+    }
+    .edge-dashed {
+      stroke-dasharray: 5,3;
+    }
+    .edge-label-bg {
+      fill: #fffdf8;
+      stroke: #d9d3ca;
+      stroke-width: 0.9;
+    }
+    .edge-label {
+      font-size: 9px;
+      font-weight: 500;
+      fill: #5a5a5a;
+    }
+    .terminal-node {
+      rx: 12;
+    }
+  </style>
+
+  <rect width="1000" height="760" fill="#f8f6f3"/>
+  <rect x="20" y="20" width="960" height="720" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="40" y="96" width="920" height="620" fill="url(#grid)"/>
+
+  <text x="60" y="58" class="title">[项目名称] 架构图</text>
+  <text x="60" y="78" class="subtitle">[默认中文说明，技术术语可保留 English]</text>
+  <rect x="688" y="84" width="252" height="44" rx="8" class="note-card"/>
+  <text x="724" y="98" class="note-title">
+    <tspan x="724" dy="0">关键说明放进上方 note rail。</tspan>
+  </text>
+  <text x="712" y="111" class="note-text">
+    <tspan x="712" dy="0">主流程区保留给节点、子分区</tspan>
+    <tspan x="712" dy="11">与正交走线。</tspan>
+  </text>
+
+  <rect x="170" y="128" width="790" height="470" rx="16" class="phase-band"/>
+  <rect x="188" y="112" width="148" height="26" rx="12" class="phase-pill"/>
+  <text x="262" y="129" class="section" text-anchor="middle">核心结构区</text>
+
+  <rect x="474" y="260" width="220" height="124" rx="12" class="subpanel"/>
+  <text x="490" y="278" class="legend">局部子流程 / subpanel</text>
+
+  <!-- edge: user.right -> gateway.left -->
+  <path d="M 130 330 H 220" class="edge" id="edge-user-entry"/>
+  <!-- edge: gateway.right -> service.left -->
+  <path d="M 400 330 H 490" class="edge" id="edge-entry-service"/>
+  <!-- edge: service.right -> state.left -->
+  <path d="M 660 330 H 750" class="edge" id="edge-service-state"/>
+  <!-- edge: service.bottom -> worker.top -->
+  <path d="M 575 370 V 470" class="edge edge-dashed" id="edge-service-async"/>
+  <!-- edge: auth.bottom -> gateway.top -->
+  <path d="M 105 210 V 250 H 280 V 290" class="edge edge-dashed" id="edge-auth-entry"/>
+  <!-- edge: worker.bottom -> gateway.bottom ; opposite sides avoid head-on conflict -->
+  <path d="M 580 550 V 622 H 310 V 370" class="edge" id="edge-async-entry"/>
+
+  <rect x="40" y="300" width="90" height="60" rx="12" fill="#fffdf8"/>
+  <rect x="40" y="300" width="90" height="60" class="terminal-node" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="85" y="325" class="node-title" text-anchor="middle">用户</text>
+  <text x="85" y="342" class="node-sub" text-anchor="middle">浏览器 / App</text>
+
+  <rect x="50" y="150" width="110" height="60" rx="12" fill="#fffdf8"/>
+  <rect x="50" y="150" width="110" height="60" rx="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="105" y="175" class="node-title" text-anchor="middle">认证</text>
+  <text x="105" y="192" class="node-sub" text-anchor="middle">OAuth / SSO</text>
+
+  <rect x="220" y="290" width="180" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="220" y="290" width="180" height="80" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="310" y="315" class="node-title" text-anchor="middle">入口层</text>
+  <text x="310" y="333" class="node-sub" text-anchor="middle">Web / Gateway / BFF</text>
+  <text x="310" y="351" class="node-sub" text-anchor="middle">在这里填主要入口</text>
+
+  <rect x="490" y="290" width="170" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="490" y="290" width="170" height="80" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="575" y="315" class="node-title" text-anchor="middle">处理层</text>
+  <text x="575" y="333" class="node-sub" text-anchor="middle">Service / Agent / Worker</text>
+  <text x="575" y="351" class="node-sub" text-anchor="middle">在这里填核心逻辑</text>
+
+  <rect x="750" y="290" width="170" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="750" y="290" width="170" height="80" class="terminal-node" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="835" y="315" class="node-title" text-anchor="middle">状态层</text>
+  <text x="835" y="333" class="node-sub" text-anchor="middle">DB / Cache / State</text>
+  <text x="835" y="351" class="node-sub" text-anchor="middle">在这里填存储</text>
+
+  <rect x="490" y="470" width="180" height="80" rx="12" fill="#fffdf8"/>
+  <rect x="490" y="470" width="180" height="80" rx="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.2" filter="url(#shadow-soft)"/>
+  <text x="580" y="495" class="node-title" text-anchor="middle">异步处理</text>
+  <text x="580" y="513" class="node-sub" text-anchor="middle">Queue / Scheduler / Cron</text>
+  <text x="580" y="531" class="node-sub" text-anchor="middle">在这里填批处理与后台任务</text>
+
+  <rect x="156" y="306" width="36" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-user-entry"/>
+  <text x="174" y="317" class="edge-label" text-anchor="middle" data-edge-id="edge-user-entry">请求</text>
+
+  <rect x="430" y="306" width="34" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-entry-service"/>
+  <text x="447" y="317" class="edge-label" text-anchor="middle" data-edge-id="edge-entry-service">处理</text>
+
+  <rect x="691" y="306" width="34" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-service-state"/>
+  <text x="708" y="317" class="edge-label" text-anchor="middle" data-edge-id="edge-service-state">读取</text>
+
+  <rect x="589" y="404" width="34" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-service-async"/>
+  <text x="606" y="415" class="edge-label" text-anchor="middle" data-edge-id="edge-service-async">事件</text>
+
+  <rect x="182" y="242" width="58" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-auth-entry"/>
+  <text x="211" y="253" class="edge-label" text-anchor="middle" data-edge-id="edge-auth-entry">认证回调</text>
+
+  <rect x="582" y="594" width="58" height="16" rx="5" class="edge-label-bg" data-edge-id="edge-async-entry"/>
+  <text x="611" y="605" class="edge-label" text-anchor="middle" data-edge-id="edge-async-entry">结果回传</text>
+
+  <text x="60" y="688" class="node-title">图例</text>
+  <rect x="110" y="680" width="16" height="10" rx="3" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="132" y="676" class="legend">输入 / Source</text>
+  <rect x="224" y="680" width="16" height="10" rx="3" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="246" y="676" class="legend">处理 / Process</text>
+  <rect x="350" y="680" width="16" height="10" rx="3" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="372" y="676" class="legend">状态 / Storage</text>
+  <rect x="480" y="680" width="16" height="10" rx="3" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="502" y="676" class="legend">基础设施 / Infra</text>
+</svg>

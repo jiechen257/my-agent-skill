@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420">
+  <style>
+    .legend { font-size: 11px; fill: #6a6a6a; }
+  </style>
+  <rect width="720" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="672" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="340" class="legend">图例：这一行图例被故意写得非常长，而且没有手动换成两行，因此在真实渲染里会越过右侧内容边界并破坏底部 safe rail 的可读性。</text>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .source { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
+    .transform { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .sink { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+  </style>
+  <rect width="1000" height="760" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="952" height="712" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="58" class="title">[数据主题] 数据流图</text>
+  <text x="60" y="80" class="subtitle">[在这里填写数据来源、变换、存储和消费链路]</text>
+  <path d="M 200 330 H 320" class="edge" id="edge-source-transform"/>
+  <path d="M 500 330 H 620" class="edge" id="edge-transform-store"/>
+  <path d="M 800 330 H 860" class="edge" id="edge-store-sink"/>
+  <path d="M 710 390 V 500 H 410 V 560" class="edge" id="edge-store-feedback"/>
+  <rect x="80" y="290" width="120" height="80" rx="12" class="source"/>
+  <text x="140" y="318" class="node-title" text-anchor="middle">数据源</text>
+  <text x="140" y="337" class="node-sub" text-anchor="middle">事件 / 文件 / 请求</text>
+  <rect x="320" y="280" width="180" height="100" rx="12" class="transform"/>
+  <text x="410" y="314" class="node-title" text-anchor="middle">变换逻辑</text>
+  <text x="410" y="333" class="node-sub" text-anchor="middle">清洗 / 解析 / 富化</text>
+  <rect x="620" y="280" width="180" height="100" rx="12" class="store"/>
+  <text x="710" y="314" class="node-title" text-anchor="middle">存储层</text>
+  <text x="710" y="333" class="node-sub" text-anchor="middle">DB / Cache / Index</text>
+  <rect x="860" y="290" width="80" height="80" rx="12" class="sink"/>
+  <text x="900" y="318" class="node-title" text-anchor="middle">消费端</text>
+  <text x="900" y="337" class="node-sub" text-anchor="middle">API</text>
+  <rect x="320" y="560" width="180" height="80" rx="12" class="sink"/>
+  <text x="410" y="588" class="node-title" text-anchor="middle">回传结果</text>
+  <text x="410" y="607" class="node-sub" text-anchor="middle">报告 / 通知 / 响应</text>
+  <rect x="226" y="306" width="76" height="16" rx="5" class="chip" data-edge-id="edge-source-transform"/>
+  <text x="264" y="317" class="label" text-anchor="middle" data-edge-id="edge-source-transform">原始 payload</text>
+  <rect x="530" y="306" width="76" height="16" rx="5" class="chip" data-edge-id="edge-transform-store"/>
+  <text x="568" y="317" class="label" text-anchor="middle" data-edge-id="edge-transform-store">结构化数据</text>
+  <rect x="820" y="306" width="30" height="16" rx="5" class="chip" data-edge-id="edge-store-sink"/>
+  <text x="835" y="317" class="label" text-anchor="middle" data-edge-id="edge-store-sink">读取</text>
+  <rect x="636" y="470" width="50" height="16" rx="5" class="chip" data-edge-id="edge-store-feedback"/>
+  <text x="661" y="481" class="label" text-anchor="middle" data-edge-id="edge-store-feedback">回流结果</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.2; }
+    .region { fill: rgba(244, 228, 193, 0.42); stroke: #b89a6a; stroke-width: 1.4; }
+    .service { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .source { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .label-bg { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+  </style>
+  <rect width="1000" height="720" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="952" height="672" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="44" y="104" width="912" height="560" fill="url(#grid)"/>
+  <text x="60" y="58" class="title">[系统名称] 架构图</text>
+  <text x="60" y="80" class="subtitle">[在这里填写系统边界、核心模块和上下游关系]</text>
+  <rect x="80" y="132" width="840" height="120" rx="16" class="region"/>
+  <rect x="96" y="116" width="80" height="24" rx="12" class="pill"/>
+  <text x="136" y="132" class="label" text-anchor="middle">接入层</text>
+  <rect x="80" y="292" width="840" height="140" rx="16" class="region"/>
+  <rect x="96" y="276" width="80" height="24" rx="12" class="pill"/>
+  <text x="136" y="292" class="label" text-anchor="middle">处理层</text>
+  <rect x="80" y="472" width="840" height="120" rx="16" class="region"/>
+  <rect x="96" y="456" width="80" height="24" rx="12" class="pill"/>
+  <text x="136" y="472" class="label" text-anchor="middle">数据层</text>
+  <path d="M 220 191 H 300" class="edge" id="edge-entry-gateway"/>
+  <path d="M 470 191 H 550" class="edge" id="edge-gateway-core"/>
+  <path d="M 720 191 H 744 V 252 H 220 V 332" class="edge" id="edge-core-queue"/>
+  <path d="M 470 372 V 442 H 720 V 512" class="edge" id="edge-worker-store"/>
+  <rect x="110" y="161" width="110" height="60" rx="12" class="source"/>
+  <text x="165" y="186" class="node-title" text-anchor="middle">用户入口</text>
+  <text x="165" y="203" class="node-sub" text-anchor="middle">Web / App / API</text>
+  <rect x="300" y="151" width="170" height="80" rx="12" class="service"/>
+  <text x="385" y="178" class="node-title" text-anchor="middle">接入与网关</text>
+  <text x="385" y="197" class="node-sub" text-anchor="middle">Gateway / Auth / BFF</text>
+  <rect x="550" y="151" width="170" height="80" rx="12" class="service"/>
+  <text x="635" y="178" class="node-title" text-anchor="middle">核心服务</text>
+  <text x="635" y="197" class="node-sub" text-anchor="middle">Service / Worker / Rule</text>
+  <rect x="110" y="332" width="220" height="80" rx="12" class="service"/>
+  <text x="220" y="359" class="node-title" text-anchor="middle">异步与任务系统</text>
+  <text x="220" y="378" class="node-sub" text-anchor="middle">Queue / Scheduler / Job</text>
+  <rect x="610" y="512" width="220" height="60" rx="12" class="store"/>
+  <text x="720" y="537" class="node-title" text-anchor="middle">数据库与缓存</text>
+  <text x="720" y="554" class="node-sub" text-anchor="middle">DB / Cache / Search Index</text>
+  <rect x="240" y="176" width="40" height="16" rx="5" class="label-bg" data-edge-id="edge-entry-gateway"/>
+  <text x="260" y="187" class="label" text-anchor="middle" data-edge-id="edge-entry-gateway">请求</text>
+  <rect x="495" y="176" width="40" height="16" rx="5" class="label-bg" data-edge-id="edge-gateway-core"/>
+  <text x="515" y="187" class="label" text-anchor="middle" data-edge-id="edge-gateway-core">处理</text>
+  <rect x="726" y="226" width="48" height="16" rx="5" class="label-bg" data-edge-id="edge-core-queue"/>
+  <text x="750" y="237" class="label" text-anchor="middle" data-edge-id="edge-core-queue">分发任务</text>
+  <rect x="536" y="442" width="54" height="16" rx="5" class="label-bg" data-edge-id="edge-worker-store"/>
+  <text x="563" y="453" class="label" text-anchor="middle" data-edge-id="edge-worker-store">写入状态</text>
+</svg>

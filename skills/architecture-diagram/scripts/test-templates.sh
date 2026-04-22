@@ -7,6 +7,7 @@ VALIDATOR="$ROOT_DIR/scripts/validate-svg.sh"
 TEMPLATES=(
   "$ROOT_DIR/assets/template.svg"
   "$ROOT_DIR/assets/template-default.svg"
+  "$ROOT_DIR/assets/template-claude-official.svg"
   "$ROOT_DIR/templates/architecture.svg"
   "$ROOT_DIR/templates/flowchart.svg"
   "$ROOT_DIR/templates/data-flow.svg"

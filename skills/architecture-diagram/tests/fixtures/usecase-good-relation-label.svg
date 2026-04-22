@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420">
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    .usecase { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 1.8; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 1.8; marker-end: url(#arrow); }
+    .label { font-size: 10px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+  </style>
+  <rect width="760" height="420" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="712" height="372" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <ellipse cx="260" cy="170" rx="110" ry="34" class="usecase"/>
+  <ellipse cx="500" cy="250" rx="120" ry="34" class="usecase"/>
+  <text x="260" y="175" class="node-title" text-anchor="middle">创建业务请求</text>
+  <text x="500" y="255" class="node-title" text-anchor="middle">查看处理结果</text>
+  <path d="M 370 170 H 500 V 216" class="edge" id="edge-include"/>
+  <text x="462" y="194" class="label" text-anchor="middle" data-edge-id="edge-include">&lt;&lt;include&gt;&gt;</text>
+</svg>

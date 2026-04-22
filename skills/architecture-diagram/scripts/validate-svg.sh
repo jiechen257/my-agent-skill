@@ -8,6 +8,7 @@ fi
 
 SVG_FILE="$1"
 RSVG_BIN="$(command -v rsvg-convert || true)"
+SEMANTIC_CHECKER="$(cd "$(dirname "$0")" && pwd)/semantic-svg-checks.py"
 
 if [ -z "$RSVG_BIN" ] && [ -x /opt/homebrew/bin/rsvg-convert ]; then
   RSVG_BIN=/opt/homebrew/bin/rsvg-convert
@@ -20,6 +21,7 @@ fail() {
 
 [ -f "$SVG_FILE" ] || fail "file not found: $SVG_FILE"
 [ -n "$RSVG_BIN" ] || fail "rsvg-convert not found"
+[ -f "$SEMANTIC_CHECKER" ] || fail "semantic checker not found: $SEMANTIC_CHECKER"
 
 if command -v xmllint >/dev/null 2>&1; then
   xmllint --noout "$SVG_FILE" >/dev/null 2>&1 || fail "xmllint validation failed: $SVG_FILE"
@@ -43,6 +45,8 @@ if missing:
 if re.search(r'd="[^"]*[CQ][^"]*"', text):
     raise SystemExit("curved path commands found; keep routed paths explicit in templates")
 PY
+
+python3 "$SEMANTIC_CHECKER" "$SVG_FILE" || fail "semantic validation failed: $SVG_FILE"
 
 TMP_PNG="$(mktemp -t architecture-diagram-validate)"
 "$RSVG_BIN" "$SVG_FILE" -o "$TMP_PNG" >/dev/null 2>&1 || fail "rsvg-convert failed: $SVG_FILE"

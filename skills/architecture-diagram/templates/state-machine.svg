@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">[状态主题] 状态机图</title>
+  <desc id="diagram-desc">轻量状态机 starter：展示初始、主状态、异常状态和终态，保留清晰迁移 corridor。</desc>
   <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-      <polygon points="0 0, 8 4, 0 8" fill="#5a5a5a"/>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
     </marker>
   </defs>
   <style>
@@ -16,32 +18,38 @@
     .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     .node-sub { font-size: 9px; fill: #5a5a5a; }
   </style>
-  <rect width="1000" height="760" fill="#f8f6f3"/>
-  <rect x="24" y="24" width="952" height="712" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
-  <text x="60" y="58" class="title">[状态主题] 状态机图</text>
-  <text x="60" y="80" class="subtitle">[在这里填写状态、迁移事件和守卫条件]</text>
-  <circle cx="140" cy="230" r="12" fill="#1a1a1a"/>
-  <circle cx="860" cy="540" r="18" fill="#fffdf8" stroke="#1a1a1a" stroke-width="2"/>
-  <circle cx="860" cy="540" r="10" fill="#1a1a1a"/>
-  <path d="M 152 230 H 280" class="edge"/>
-  <path d="M 430 230 H 570" class="edge"/>
-  <path d="M 720 230 V 540 H 842" class="edge"/>
-  <path d="M 350 290 V 430 H 650 V 480" class="edge"/>
-  <rect x="280" y="190" width="150" height="80" rx="16" class="state"/>
-  <text x="355" y="220" class="node-title" text-anchor="middle">待处理</text>
-  <text x="355" y="239" class="node-sub" text-anchor="middle">entry / 初始化上下文</text>
-  <rect x="570" y="190" width="150" height="80" rx="16" class="state"/>
-  <text x="645" y="220" class="node-title" text-anchor="middle">执行中</text>
-  <text x="645" y="239" class="node-sub" text-anchor="middle">do / 核心处理</text>
-  <rect x="575" y="480" width="150" height="80" rx="16" class="passive"/>
-  <text x="650" y="510" class="node-title" text-anchor="middle">失败重试</text>
-  <text x="650" y="529" class="node-sub" text-anchor="middle">exit / 记录错误</text>
-  <rect x="210" y="224" width="42" height="16" rx="5" class="chip"/>
-  <text x="231" y="235" class="label" text-anchor="middle">开始</text>
-  <rect x="478" y="224" width="42" height="16" rx="5" class="chip"/>
-  <text x="499" y="235" class="label" text-anchor="middle">submit</text>
-  <rect x="732" y="360" width="56" height="16" rx="5" class="chip"/>
-  <text x="760" y="371" class="label" text-anchor="middle">done [ok]</text>
-  <rect x="438" y="420" width="62" height="16" rx="5" class="chip"/>
-  <text x="469" y="431" class="label" text-anchor="middle">error [retry]</text>
+
+  <rect width="1000" height="720" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="952" height="672" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="64" class="title">[状态主题] 状态机图</text>
+  <text x="60" y="88" class="subtitle">[在这里填写状态、迁移事件和异常处理状态]</text>
+
+  <circle cx="140" cy="216" r="12" fill="#1a1a1a"/>
+  <circle cx="890" cy="216" r="18" fill="#fffdf8" stroke="#1a1a1a" stroke-width="2"/>
+  <circle cx="890" cy="216" r="10" fill="#1a1a1a"/>
+
+  <rect x="250" y="180" width="180" height="72" rx="16" class="state"/>
+  <rect x="570" y="180" width="190" height="72" rx="16" class="state"/>
+  <rect x="570" y="410" width="190" height="72" rx="16" class="passive"/>
+
+  <text x="340" y="211" class="node-title" text-anchor="middle">待处理</text>
+  <text x="340" y="230" class="node-sub" text-anchor="middle">entry / 初始化上下文</text>
+  <text x="665" y="211" class="node-title" text-anchor="middle">执行中</text>
+  <text x="665" y="230" class="node-sub" text-anchor="middle">do / 处理主逻辑</text>
+  <text x="665" y="441" class="node-title" text-anchor="middle">失败重试</text>
+  <text x="665" y="460" class="node-sub" text-anchor="middle">exit / 记录错误</text>
+
+  <path d="M 152 216 H 250" class="edge" id="edge-init-pending"/>
+  <path d="M 430 216 H 570" class="edge" id="edge-pending-running"/>
+  <path d="M 760 216 H 872" class="edge" id="edge-running-done"/>
+  <path d="M 665 252 V 410" class="edge" id="edge-running-retry"/>
+
+  <rect x="184" y="200" width="42" height="16" rx="5" class="chip" data-edge-id="edge-init-pending"/>
+  <text x="205" y="211" class="label" text-anchor="middle" data-edge-id="edge-init-pending">开始</text>
+  <rect x="486" y="200" width="58" height="16" rx="5" class="chip" data-edge-id="edge-pending-running"/>
+  <text x="515" y="211" class="label" text-anchor="middle" data-edge-id="edge-pending-running">submit</text>
+  <rect x="794" y="200" width="50" height="16" rx="5" class="chip" data-edge-id="edge-running-done"/>
+  <text x="819" y="211" class="label" text-anchor="middle" data-edge-id="edge-running-done">done</text>
+  <rect x="675" y="316" width="44" height="16" rx="5" class="chip" data-edge-id="edge-running-retry"/>
+  <text x="697" y="327" class="label" text-anchor="middle" data-edge-id="edge-running-retry">error</text>
 </svg>
