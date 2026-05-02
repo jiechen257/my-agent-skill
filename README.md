@@ -32,6 +32,9 @@ skills/
     SKILL.md
     agents/
     references/
+  colawd-ui-style/
+    SKILL.md
+    agents/
   worktree-closeout/
     SKILL.md
 ```
@@ -44,6 +47,7 @@ skills/
 - `commit-daily-summary`
 - `project-daily-summary`
 - `weekly-report-template`
+- `colawd-ui-style`
 - `worktree-closeout`
 
 ## 来源
@@ -56,9 +60,10 @@ skills/
 - `commit-daily-summary`：<https://github.com/leonsong09/commit-daily-summary>
 - `project-daily-summary`：<https://github.com/leonsong09/project-daily-summary>
 - `weekly-report-template`：本仓库内维护的 repo-scoped 周报生成 skill
+- `colawd-ui-style`：本仓库内维护的 colawd 截图风格 UI 设计 skill
 - `worktree-closeout`：<https://github.com/leonsong09/worktree-closeout>
 
-以上 5 个 workflow skills 的整理入口参考：
+`research-note-wrap`、`session-wrap`、`commit-daily-summary`、`project-daily-summary` 与 `worktree-closeout` 这 5 个 workflow skills 的整理入口参考：
 <https://linux.do/t/topic/1854180>
 
 ### 全局 rules 依赖但未 vendored 到本仓库
