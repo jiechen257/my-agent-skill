@@ -1,91 +1,138 @@
 # my-agent-skill
 
-这个仓库用于集中存放多个 agent skill 源码。
-
-## 全局 rules
-
-仓库根目录的 [`AGENTS.md`](./AGENTS.md) 保存当前使用中的全局 rules。
-
-其中两个历史别名已对齐为本地实际 skill 名：
-
-- `daily-commit-summary` -> `commit-daily-summary`
-- `codex-project-daily-summary` -> `project-daily-summary`
+这个仓库集中存放个人 Codex / Agent skills，采用分域目录组织，便于同步、检索和接入不同 Agent 工具。
 
 ## 目录结构
 
 ```text
-AGENTS.md
-skills/
-  architecture-diagram/
-    SKILL.md
-    assets/
-    tests/
-  research-note-wrap/
-    SKILL.md
-  session-wrap/
-    SKILL.md
-  commit-daily-summary/
-    SKILL.md
-  project-daily-summary/
-    SKILL.md
-  weekly-report-template/
-    SKILL.md
-    agents/
-    references/
-  colawd-ui-style/
-    SKILL.md
-    agents/
-  worktree-closeout/
-    SKILL.md
+my-agent-skill/
+├── README.md
+├── AGENTS.md
+├── skills/
+│   ├── automation/
+│   ├── content/
+│   ├── design/
+│   ├── development/
+│   └── research/
+│       └── <skill-name>/
+│           ├── SKILL.md
+│           ├── agents/       (可选)
+│           ├── references/   (可选)
+│           ├── scripts/      (可选)
+│           └── assets/       (可选)
+└── templates/
+    ├── SKILL.template.md
+    └── SKILL.with-references.template.md
 ```
 
-## 当前收录
+## 约定
 
-- `architecture-diagram`
-- `research-note-wrap`
-- `session-wrap`
-- `commit-daily-summary`
-- `project-daily-summary`
-- `weekly-report-template`
-- `colawd-ui-style`
-- `worktree-closeout`
+- 真实可用的 skill 只放在 `skills/` 下。
+- 每个 skill 使用独立目录：`skills/<domain>/<skill-name>/`。
+- 每个 skill 必须包含一个 `SKILL.md`，可按需附带 `agents/`、`references/`、`scripts/`、`assets/`。
+- `templates/` 只放可复用骨架，不作为 active skill。
+- domain 只表达稳定分类，避免把临时项目名放到 domain 层。
+- skill 文件里不写密钥、token、机器专属凭证。
+- 部分 vendored skill 保留上游 `README.md`、`LICENSE` 或 `.gitignore`，这些文件不影响 Agent 发现 `SKILL.md`。
+
+## Skills
+
+### Automation
+
+重复性 shell 工作流、会话收尾、日报、交接和跨会话整理。
+
+| Skill | 用途 |
+| --- | --- |
+| [`commit-daily-summary`](skills/automation/commit-daily-summary/SKILL.md) | 基于当天 git commits 生成中文提交总结或日报。 |
+| [`project-daily-summary`](skills/automation/project-daily-summary/SKILL.md) | 汇总当天 Codex 会话、提交和未提交改动，按项目输出工作日报。 |
+| [`session-handoff`](skills/automation/session-handoff/SKILL.md) | 生成可交给新 Agent 继续工作的完整 handoff prompt。 |
+| [`session-wrap`](skills/automation/session-wrap/SKILL.md) | 收尾当前 coding session，整理完成项、遗留问题和后续建议。 |
+| [`weekly-report-template`](skills/automation/weekly-report-template/SKILL.md) | 按指定仓库和日期范围，从 git 记录生成周报。 |
+| [`worktree-closeout`](skills/automation/worktree-closeout/SKILL.md) | 只读扫描多 worktree / branch 收口状态，输出合并与清理建议。 |
+
+### Development
+
+Trellis 管理的开发流程、任务状态、项目规范注入和质量门禁。
+
+| Skill | 用途 |
+| --- | --- |
+| [`trellis-start`](skills/development/trellis-start/SKILL.md) | 启动 Trellis session，加载当前任务、工作流、git 状态和项目规范。 |
+| [`trellis-continue`](skills/development/trellis-continue/SKILL.md) | 继续 Trellis 当前任务，按 workflow phase 定位下一步。 |
+| [`trellis-brainstorm`](skills/development/trellis-brainstorm/SKILL.md) | 在实现前做需求发现、PRD 梳理、MVP 收敛和任务创建。 |
+| [`trellis-before-dev`](skills/development/trellis-before-dev/SKILL.md) | 写代码前读取 `.trellis/spec/` 中适用的项目规范和 checklist。 |
+| [`trellis-check`](skills/development/trellis-check/SKILL.md) | 完成代码后做 spec compliance、lint、type-check、tests 和跨层检查。 |
+| [`trellis-break-loop`](skills/development/trellis-break-loop/SKILL.md) | bug 修复后分析根因、失败原因和预防机制，沉淀可复用经验。 |
+| [`trellis-update-spec`](skills/development/trellis-update-spec/SKILL.md) | 将调试、实现或讨论中获得的规范与契约写回 `.trellis/spec/`。 |
+| [`trellis-finish-work`](skills/development/trellis-finish-work/SKILL.md) | 结束 Trellis 任务，校验提交状态、归档任务并记录 session journal。 |
+| [`trellis-meta`](skills/development/trellis-meta/SKILL.md) | 理解和定制项目内 Trellis 架构、平台文件、hooks、skills 和 workflow。 |
+
+### Content
+
+内容生成、图形输出和可交付制品。
+
+| Skill | 用途 |
+| --- | --- |
+| [`architecture-diagram`](skills/content/architecture-diagram/SKILL.md) | 生成架构图、流程图、数据流、时序图、状态机等 standalone SVG 技术图。 |
+
+### Design
+
+产品界面风格、视觉系统和前端实现约束。
+
+| Skill | 用途 |
+| --- | --- |
+| [`colawd-ui-style`](skills/design/colawd-ui-style/SKILL.md) | 复刻 colawd 风格工作台 UI：黑色 terminal shell、浅黄网格、粗边框和高饱和状态色。 |
+
+### Research
+
+调研整理、分析纪要和知识库沉淀。
+
+| Skill | 用途 |
+| --- | --- |
+| [`research-note-wrap`](skills/research/research-note-wrap/SKILL.md) | 将当前会话或当天相关会话整理成可读的 Obsidian 中文研究笔记。 |
+
+## Agent 集成
+
+Copilot CLI 风格的 `.agent/` 与 Claude Code 风格的 `.claude/` 都使用扁平 symlink 接入 skill。每个 Agent 只发现一层目录：
+
+```text
+.agent/skills/
+└── <skill-name> -> ../../skills/<domain>/<skill-name>
+.claude/skills/
+└── <skill-name> -> ../../skills/<domain>/<skill-name>
+```
+
+不要把整个 `skills/` 目录直接 symlink 到 Agent 目录。嵌套 domain 会导致 Agent 无法发现 `SKILL.md`。
+
+## 新增 Skill
+
+1. 选择稳定 domain，例如 `automation`、`development`、`research`、`content`、`design`。
+2. 创建目录：`skills/<domain>/<skill-name>/`。
+3. 复制模板：`templates/SKILL.template.md` 或 `templates/SKILL.with-references.template.md` 到新目录并命名为 `SKILL.md`。
+4. 填写 frontmatter 的 `name` 和 `description`，正文保持短而可执行。
+5. 只有在能明显提高复用性时，才新增 `references/`、`scripts/`、`assets/`。
+6. 在本 README 的对应 domain 表格里添加一行。
+7. 创建扁平 symlink：
+
+```bash
+ln -sf ../../skills/<domain>/<skill-name> .agent/skills/<skill-name>
+ln -sf ../../skills/<domain>/<skill-name> .claude/skills/<skill-name>
+```
+
+## 命名建议
+
+- 目录名使用小写 kebab-case。
+- `name` 保持稳定、清晰、可触发。
+- 名称优先表达对象和动作，例如 `session-handoff`、`trellis-update-spec`、`worktree-closeout`。
+- 分类不够确定时，优先放到最贴近触发场景的 domain，再在 README 里写清用途。
 
 ## 来源
 
-### 仓库内已收录
-
-- `architecture-diagram`：仓库原有 skill
+- `session-handoff`：<https://github.com/Innei/SKILL/tree/main/skills/automation/session-handoff>
+- Trellis 系列：来自本机 `/Users/jiechen/per-pro/personal-kb/.agents/skills/trellis-*`
 - `research-note-wrap`：<https://github.com/leonsong09/research-note-wrap>
 - `session-wrap`：<https://github.com/leonsong09/session-wrap>
 - `commit-daily-summary`：<https://github.com/leonsong09/commit-daily-summary>
 - `project-daily-summary`：<https://github.com/leonsong09/project-daily-summary>
-- `weekly-report-template`：本仓库内维护的 repo-scoped 周报生成 skill
-- `colawd-ui-style`：本仓库内维护的 colawd 截图风格 UI 设计 skill
 - `worktree-closeout`：<https://github.com/leonsong09/worktree-closeout>
 
-`research-note-wrap`、`session-wrap`、`commit-daily-summary`、`project-daily-summary` 与 `worktree-closeout` 这 5 个 workflow skills 的整理入口参考：
-<https://linux.do/t/topic/1854180>
-
-### 全局 rules 依赖但未 vendored 到本仓库
-
-- `ui-ux-pro-max`：<https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-ux-pro-max>
-- `codex-parallel-collab`：<https://github.com/mci77777/codex-parallel-collab>
-
-### 本地 Superpowers bundle
-
-以下 skills 当前来自本机 `~/.codex/superpowers/skills/`，对应 GitHub 来源：
-<https://github.com/obra/superpowers/tree/main/skills>
-
-- `brainstorming`
-- `writing-plans`
-- `systematic-debugging`
-- `requesting-code-review`
-- `receiving-code-review`
-- `verification-before-completion`
-- `test-driven-development`
-
-## 约定
-
-- 每个 skill 使用独立目录：`skills/<skill-name>/`
-- skill 说明文件固定为 `SKILL.md`
-- 模板、脚本、测试等资源跟随各自 skill 目录存放
+`session-handoff` 已同时安装到全局 Codex skills 目录：`/Users/jiechen/.codex/skills/session-handoff`。重启 Codex 后可被全局 skill 索引发现。
