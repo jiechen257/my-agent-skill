@@ -1,6 +1,8 @@
 # 全局 Agent 规则
 
-本文件用于约束自动化代理在本机工作区中的默认工作方式，并将 Superpowers 作为主工作流体系按需激活。
+> 标注：这是 Trellis workflow 使用的 Codex 本地全局 AGENTS.md。
+
+本文件用于约束自动化代理在本机工作区中的默认工作方式，并将 Trellis 作为主工作流体系按需激活。
 
 ## 语言风格
 
@@ -78,9 +80,14 @@ GOOD: 这是一个创始人筛选框架
 1. 当前会话中用户的明确要求
 2. 仓库自身规则、文档与约定
 3. 本 `AGENTS.md`
-4. 相关 Superpowers / skill 流程定义
+4. 相关 Trellis / skill 流程定义
 
-- 默认以 **Superpowers** 作为主工作流体系，但不默认启用 full Superpowers。
+- 默认以 **Trellis** 作为主工作流体系；轻量任务保持 inline，复杂任务按项目级 Trellis 路由。
+- 若当前项目存在 `.trellis/`，按项目 `.trellis/workflow.md` 与运行时注入规则分流。
+- 若当前项目没有 `.trellis/`，轻量任务按本文件直接执行；中大型实现任务先说明是否需要初始化 Trellis。
+- Trellis 的具体阶段、检查顺序、代理派发和任务文件细节由项目 `.trellis/` 或运行时规则决定，本文件只保留全局原则。
+- Superpowers 默认处于停用 discovery 状态，仅作为历史源码和禁用入口记录：源码位于 `~/.codex/superpowers`，当前 discovery 入口位于 `~/.agents/skills-disabled/superpowers`。
+- 默认工作流候选只包含 Trellis 和当前会话实际暴露的专项 skills。
 - 本文件保留个人硬门禁、环境约束、交付偏好与沟通方式。
 - 只读分析任务可不进入完整实现流程，但结论必须清晰、可追溯。
 - 若用户明确要求 `continue nonstop`，默认持续推进，直到满足验收标准或出现真实阻塞。
@@ -93,18 +100,19 @@ GOOD: 这是一个创始人筛选框架
 - 默认先判断任务是否适合并行；适合则优先并行，不适合再串行。
 - 能直接完成并验证的，不升级为更重流程。
 - 能用轻量 planning 解决的小任务，不升级为重文档流程。
-- 能用单一专项 skill 解决的问题，不扩展为 full Superpowers。
+- 能用单一专项 skill 解决的问题，不扩展为完整 Trellis task workflow。
 
-### 轻量任务默认策略（Codex / Superpowers）
+### 轻量任务默认策略
 
 - 轻量任务：单文件或小范围修改、明确 bug 修复、配置 / 文案调整、小测试补充、局部文档修改。
-- 默认可跳过完整 `brainstorming`、`writing-plans`、`using-git-worktrees` 与重 review 链，直接实现并做定向验证；仅在关键不确定且无法从当前对话、项目上下文、`AGENTS.md`、现有代码回答时才提问。
+- 默认可跳过完整 Trellis task workflow，直接实现并做定向验证；仅在关键不确定且无法从当前对话、项目上下文、`AGENTS.md`、现有代码回答时才提问。
+- 当前项目已有 `.trellis/` 时，按项目 Trellis 路由和当前会话可用质量门禁处理。
 - 提问：轻量任务首次最多问 1 个关键问题；中任务优先一次性给出 2 到 3 个方案与推荐；已有上下文可回答的信息不重复提问；若未获回复且风险可控，应说明假设后继续推进。
 - 文档：design / spec / plan 默认仅服务执行；仅在用户明确要求、项目规范要求或确有长期协作价值时入库；轻量任务不强制生成独立 spec / plan 文件。
 - 默认授权边界：当前分支内可默认修改与任务直接相关的应用代码、测试、局部文档，并新增少量配套文件。
 - 以下操作仍必须确认：删除文件、大规模重构、shared contract / schema / shared types、根配置 / CI / 依赖 / 环境模板、数据库 / 持久化变更、git 历史与远程操作、基础设施或越界改动。
-- 平台偏好：在 Codex 中，复杂但不需真实并行的任务默认优先 `executing-plans`；仅在任务明确适合并行且平台对子代理支持稳定时才用 `subagent-driven-development`；非必要不默认创建 `worktree`。
-- 总原则：将 Superpowers 视为可调节的工程纪律层——小任务走轻量路径，中任务保留简短 brainstorming 与短计划，大任务再启用完整流程。
+- 平台偏好：在 Codex 中，复杂但不需真实并行的任务默认优先 Trellis task workflow；并行仅用于边界清晰且平台支持稳定的子任务；非必要不默认创建 `worktree`。
+- 总原则：将 Trellis 视为可调节的工程纪律层。小任务走 inline 路径，中任务保留简短需求澄清与短计划，大任务进入完整 task workflow。
 
 ### 流程升级 / 降级
 
@@ -116,13 +124,13 @@ GOOD: 这是一个创始人筛选框架
 ### 只读任务
 
 - 分析、解释、架构说明、代码阅读、纯信息型问答及其他不改文件的只读审查，可直接处理。
-- 真实问题排查但尚未进入修改时，优先使用 `systematic-debugging`。
+- 真实问题排查但尚未进入修改时，优先做系统化排查；反复出现的问题使用项目 Trellis 的根因分析路径。
 
 ### 实现任务与质量门禁
 
 - 适用：新功能、bug 修复、行为变更、重构，以及页面 / 组件 / API / 脚本 / 数据处理逻辑改动。
-- 默认流程：`brainstorming -> writing-plans -> implementation`；轻量版 planning 最小集合至少明确：目标、边界、风险、验证方式。
-- Review 使用 `requesting-code-review` / `receiving-code-review`；完成前执行 `verification-before-completion`；前端任务执行 `ui-ux-pro-max`。
+- 默认先明确目标、边界、风险、验证方式；具体 Trellis 阶段和检查顺序按项目 workflow 执行。
+- Review 与完成前验证遵循当前项目质量门禁；前端任务执行 `ui-ux-pro-max`。
 
 ## 推进与验证
 
@@ -185,6 +193,8 @@ GOOD: 这是一个创始人筛选框架
 
 - 计划、目标、约束、关键决策、经验教训、步骤或进度变化时，应同步更新相关文档。
 - 对反复证明有价值的经验，应沉淀到项目级 `AGENTS.md`。
+- 日报和项目总结文档，默认输出到 `~/work-pro/daily-report/` 项目下的 `daily` 或 `project` 目录
+- 会话总结或者调研报告，默认输出到 `~/work-pro/agent-space` 目录下的  `${项目名称}` 文件夹
 - 经验模板最小包含：标题、触发信号、根因 / 约束、正确做法、验证方式、适用范围。
 
 ### 执行原则
@@ -196,7 +206,7 @@ GOOD: 这是一个创始人筛选框架
 
 ### Bug / Test / Code / Refactor
 
-- Bug 报告应写清现象、触发条件、预期、实际、影响范围、严重程度及日志 / 堆栈 / 环境信息；真实 bug 默认优先 `systematic-debugging`，先确认根因再修复。
+- Bug 报告应写清现象、触发条件、预期、实际、影响范围、严重程度及日志 / 堆栈 / 环境信息；真实 bug 默认先系统化确认根因再修复，反复修复失败时进入项目级根因分析流程。
 - 测试优先覆盖关键路径、边界情况和错误路径；断言优先 expected 在前、actual 在后。
 - 编码遵循 SOLID、DRY、关注点分离、YAGNI；命名清晰，边界条件显式处理。
 - 代码硬性上限：函数 ≤ 50 行、文件 ≤ 300 行、嵌套 ≤ 3、位置参数 ≤ 3、圈复杂度 ≤ 10、禁止魔法数字。
@@ -281,60 +291,25 @@ GOOD: 这是一个创始人筛选框架
 
 ## 多代理与并行协作
 
-### 子代理派发策略
-
-- 任何 `spawn_agent` 调用都必须显式设置 `model` 与 `reasoning_effort`。
-- 子代理模型仅允许使用 `gpt-5.4` 与 `gpt-5.3-codex`；默认使用 `gpt-5.4`。
-- 仅当任务以代码实现、测试修复、局部重构、单模块阅读与分析为主，且不需要复杂跨模块推理时，才可使用 `gpt-5.3-codex`。
-- `reasoning_effort` 仅允许使用 `high` 或 `xhigh`；复杂度有歧义时，一律上调为 `xhigh`。
-- 派发前应先判断是否确有委派价值，并在回复中说明所选模型与推理等级原因。
-
-### 并行开发总控
-
-#### 默认执行模式
-
-- 默认先判断是否适合并行；适合时优先使用当前会话内子代理并行，只有在用户明确要求外部多 Codex / worktree，或任务确需独立分支隔离、长期运行、跨终端协作时，才切换到 external worktree 模式。
-- 当前会话内并行默认持续推进并持续跟踪在途子任务，不因礼貌性确认中断。
-- 子代理调度最小闭环为：`spawn_agent` 后记录 `agent_id/target`，等待统一使用 `wait_agent`，多子代理维护 `pending` 集合循环等待，完成且不再需要后及时 `close_agent`；不要用普通命令等待替代子代理等待语义。
-- 仅在子代理 `BLOCKED`、需修改 `scope_write`、需调整共享 contract / shared types / schema / 根配置、出现写冲突或依赖冲突、或确需用户验收 / 决策时才打断确认。
-
-#### 并行准入
-
-- 仅当任务可自然拆为 2 到 4 个边界清晰、`scope_write` / `scope_read` 明确、可独立验证且无明显同文件写冲突的子任务时，才适合并行写入。
-- 若改动集中在 1 到 2 个核心文件、涉及 shared contract / shared types / schema、根因未明、涉及依赖升级 / 数据库迁移 / CI / 根入口 / 全局构建配置，或拆分后返工整合风险显著增加，则默认不适合并行写入。
-
-#### Ownership / Blocked / Worktree
-
-- 默认禁止两个子任务修改同一文件、同一配置源、同一 contract 或同一 shared types 文件；`package.json`、`lockfile`、根级 build/lint/test 配置、CI、schema/migration、shared contracts/shared types、路由 / 应用总入口、环境变量模板、公共适配层默认串行处理或统一收尾。
-- 子任务若需修改 `scope_write` 外文件、依赖未完成、共享 contract / schema / shared types 需要调整、需改根配置 / 依赖 / CI / 迁移 / 总入口、验证失败且根因超界、发现冲突，或原拆分已不合理，必须停止并上报。
-- 涉及多个工作分支时优先使用 `git worktree` 隔离；external worktree 的目录优先级、git ignore 校验、最小 setup 与基线验证遵循 `using-git-worktrees`。
-- 未经用户明确要求，子任务不得自行 merge / rebase / push / 删除 worktree / 清理其他 worktree。
-
-#### 收尾整合
-
-- 所有子任务完成后必须统一收尾，不得默认认为“子任务完成 = 项目完成”。
-- 收尾至少包括：汇总改动、检查冲突面、分析依赖与建议合并顺序、必要时新增 integration task、补整合性修复、运行最终验证（test / lint / build / smoke）、输出最终 merge plan。
-
-#### 外部并行规划输出
-
-- 仅当用户明确要求“worktree 方案”“多 Codex 提示词”“外部并行规划”，或任务确实需要外部隔离、长期运行、跨终端协作时使用。
-- 输出至少包含：是否适合并行开发、任务拆分与 branch / worktree 方案、子任务执行提示或任务包入口、收尾整合与验证方式。
-- 若不适合并行，则输出：不适合并行结论、原因说明、单线程方案、验证与收尾方式。
+- 并行开发仅用于 2 到 4 个边界清晰、写入范围不冲突、可独立验证的子任务。
+- 涉及 shared contract / schema / shared types、根配置、依赖、CI、迁移、公共入口或同文件写入时，默认串行处理或统一收尾。
+- 子代理派发遵循当前平台可用工具、项目 `.trellis/workflow.md` 和运行时注入规则；全局规则只要求明确 scope、验证方式、阻塞条件和合并顺序。
+- 当前会话内并行适合短周期独立子任务；外部 worktree 适合用户明确要求或确需分支隔离、长期运行、跨终端协作的任务。
+- 子任务发现越界写入、共享契约变化、依赖冲突、验证失败且根因超界、或拆分不合理时，应停止并回到统一规划。
+- 所有并行子任务完成后必须统一收尾：汇总改动、检查冲突面、补整合性修复、运行最终验证、输出合并顺序。
 
 ## 技能（Skills）
 
-- 技能存放位置：`~/.codex/skills/`（个人）与 `.codex/skills/`（项目共享，可选）。
+- 技能存放位置：`~/.codex/skills/`（个人）、`.codex/skills/`（项目共享，可选）与 `.agents/skills/`（Trellis / 多 Agent 工具共享入口）。
 - 开始任务前，应优先判断是否命中对应 skill；命中时阅读 `SKILL.md` 并按流程执行。
-- 本文件默认采用以下主干整合方式：
-  - 实现前：`brainstorming -> writing-plans`
-  - debug：`systematic-debugging`
-  - review：`requesting-code-review` / `receiving-code-review`
-  - 完成前：`verification-before-completion`
-  - 高风险行为变更：`test-driven-development`
+- Trellis 是默认主工作流；具体 `trellis-*` skill 由项目 `.trellis/workflow.md`、当前任务和运行时注入规则决定。
+- Superpowers 当前 discovery 入口位于 `~/.agents/skills-disabled/superpowers`，默认排除为 skill 列表项或工作流入口。
+- 常用专项 skills：
   - 前端设计：`ui-ux-pro-max`
-- 会话收尾：`session-wrap`
-- 提交总结 / 日报：`commit-daily-summary`
-- 项目级日报：`project-daily-summary`
-- 并行开发规划 / 多 worktree 协作：`codex-parallel-collab`
-- 流程图 / 架构图 / 画图：`architecture-diagram`
+  - 会话收尾：`session-wrap`
+  - 提交总结 / 日报：`commit-daily-summary`
+  - 项目级日报：`project-daily-summary`
+  - 并行开发规划 / 多 worktree 协作：`codex-parallel-collab`
+  - 流程图 / 架构图 / 画图：`architecture-diagram`
+  - 钉钉文档：`dingtalk-doc-rw`
 - 在回复中声明本次使用了哪些技能。
