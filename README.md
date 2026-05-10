@@ -8,6 +8,7 @@
 my-agent-skill/
 ├── README.md
 ├── AGENTS.md
+├── AGENTS.trellis.md
 ├── skills/
 │   ├── automation/
 │   ├── content/
@@ -27,6 +28,7 @@ my-agent-skill/
 
 ## 约定
 
+- `AGENTS.trellis.md` 保存本机 Codex 全局 Trellis 规则快照，避免覆盖仓库自身的 `AGENTS.md`。
 - 真实可用的 skill 只放在 `skills/` 下。
 - 每个 skill 使用独立目录：`skills/<domain>/<skill-name>/`。
 - 每个 skill 必须包含一个 `SKILL.md`，可按需附带 `agents/`、`references/`、`scripts/`、`assets/`。
