@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>architecture-diagram before/after</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #f5f3ee; color: #1a1a1a; }
+  header { padding: 18px 24px; background: #fffdf8; border-bottom: 1px solid #d9d3ca; position: sticky; top: 0; z-index: 10; }
+  header h1 { margin: 0 0 4px 0; font-size: 18px; }
+  header p { margin: 0; font-size: 12px; color: #6a6a6a; }
+  main { padding: 24px; }
+  .case { background: #fff; border: 1px solid #e3ddd2; border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
+  .case-head { padding: 12px 18px; background: #fbf7ef; border-bottom: 1px solid #e3ddd2; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .case-head h2 { margin: 0; font-size: 15px; }
+  .case-head .meta { font-size: 12px; color: #6a6a6a; }
+  .case-head .pill { display: inline-block; padding: 2px 8px; border-radius: 8px; background: #f1e5d3; font-size: 11px; margin-left: 8px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { padding: 16px; }
+  .pane h3 { margin: 0 0 8px 0; font-size: 12px; color: #6a6a6a; text-transform: uppercase; letter-spacing: 0.05em; }
+  .pane.before { border-right: 1px solid #e3ddd2; }
+  .pane img { max-width: 100%; height: auto; display: block; border: 1px dashed #d9d3ca; border-radius: 6px; background: #fafaf7; }
+  .missing { padding: 40px; text-align: center; color: #b85644; background: #fff3f1; border: 1px dashed #b85644; border-radius: 6px; font-size: 13px; }
+  .rubric { padding: 12px 18px; background: #fbf7ef; border-top: 1px solid #e3ddd2; font-size: 12px; color: #5a5a5a; }
+  .rubric label { margin-right: 16px; }
+  .rubric input[type=number] { width: 48px; padding: 2px 4px; border: 1px solid #d9d3ca; border-radius: 4px; font-size: 12px; }
+  .rubric textarea { width: 100%; min-height: 40px; margin-top: 8px; padding: 6px 8px; border: 1px solid #d9d3ca; border-radius: 4px; font-family: inherit; font-size: 12px; resize: vertical; }
+  .prompt { padding: 12px 18px; font-size: 11px; color: #6a6a6a; background: #fafaf7; border-bottom: 1px solid #e3ddd2; max-height: 120px; overflow: auto; white-space: pre-wrap; font-family: ui-monospace, monospace; }
+  .actions { padding: 12px 24px; }
+  button { padding: 6px 12px; border: 1px solid #d9d3ca; background: #fff; border-radius: 6px; cursor: pointer; font-size: 12px; }
+  button:hover { background: #fffdf8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>architecture-diagram skill — before / after 视觉对比</h1>
+  <p>左 = 重构前 skill 输出，右 = 重构后 skill 输出。每个 case 下方填写 1–5 分人工评分。</p>
+</header>
+<div class="actions">
+  <button onclick="exportRubric()">导出评分 JSON</button>
+  <button onclick="loadRubric()">从剪贴板导入</button>
+</div>
+<main id="cases"></main>
+<script>
+const CASES = [{"id":"arch-qclaw-functional","expected_type":"architecture","prompt":"用 architecture-diagram skill 画 QClaw 功能架构图。分四层从上到下：\n1. 入口层：QWork Chat、SSR Pipeline、Bridge\n2. QClaw Runtime 层：业务意图归一、Adapter Registry、Runtime Selector、Session Lane、Event Bus\n3. Adapter 层：SSR React Adapter、Card Mock Adapter、后续业务 Adapter（占位）\n4. 工具与产物层：Skills/MCP、Memory/Workspace、本地 Claude / 云端宝子 executor、产物存储\n\n要求：\n- 跨层调用用实线箭头，同层依赖用虚线\n- 在 Runtime 层和 Adapter 层之间标注协议契约（A2UI schema、React props、Mock data schema）\n- 受众是工程师，需要看到模块边界和依赖关系，不需要实现细节\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"architecture"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"legend_present_if_mixed_edges"},{"kind":"regions_count_in","min":2,"max":5}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"dataflow-card-render","expected_type":"data-flow","prompt":"用 architecture-diagram skill 画千问卡片数据流图。\n\n数据从源头到渲染：\n1. 业务后端 API（卡片数据接口）→ payload: { schema, props, slot_data }\n2. SSR Server 拉取 → 经 React Adapter 归一 → payload: { normalized_props, server_state }\n3. 写入 Edge Cache（带 TTL 和 invalidation 标记）\n4. 客户端拉取 → 经 Hydration 层（注入 client state）\n5. 最终 React 渲染层消费\n\n并行的控制面：\n- A2UI Schema Validator 在 Adapter 出入口拦截做契约校验\n- 错误回流到 Observability Sink\n\n要求：\n- 数据流和控制流分两条 lane，颜色/线型区分\n- 每条主箭头标注 payload 摘要\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"data-flow"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"edges_have_payload_labels"},{"kind":"legend_present_if_mixed_edges"}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"flow-qclaw-user","expected_type":"flowchart","prompt":"用 architecture-diagram skill 画 QClaw 用户使用流程图。从上到下分四阶段：\n1. 入口与任务归一：用户通过 QWork Chat 或 SSR Pipeline 发起业务请求 → QClaw 把请求归一为 intent / scene / operation / context\n2. Adapter 选择：读取业务上下文 → 决策节点「业务场景？」分三路 SSR / Mock / 扩展，分别走 SSR React Adapter、Card Mock Adapter、后续业务 Adapter\n3. 执行与确认：三路汇聚 → 创建 run 并锁定 session lane → Runtime Selector 选择执行器 → Agent Loop 调用 Skills/MCP\n4. 收尾：决策节点「需要确认？」分两路：Yes 回到 QWork 交互让用户补充信息，No 输出事件与产物（代码、部署、Mock、模板）\n\n要求：\n- 决策菱形的每条出边必须标 label（SSR / Mock / 扩展，Yes / No）\n- 多分支汇聚到同一节点时使用 bus/lane，不要交叉穿越\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"flowchart"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"decision_branches_labeled"},{"kind":"legend_present_if_mixed_edges"}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"matrix-shared-capability","expected_type":"comparison-matrix","prompt":"用 architecture-diagram skill 画千问宝子 vs OpenClaw 共享能力对比矩阵，落地为 QWork 通用业务 Agent Runtime 的复用清单。\n\n表格列：\n| 模块 | 千问宝子参考 | OpenClaw 参考 | QWork 通用 Runtime 使用方式 | 状态/优先级 |\n\n行（10 行）：\n1. Agent Loop（执行环）\n2. Model Router（模型选择）\n3. Event Protocol（事件协议）\n4. Skills / MCP（能力扩展）\n5. Gateway（接入面）\n6. Queue / Session（会话队列）\n7. Workspace / Memory（上下文记忆）\n8. Hooks / Policy（治理扩展）\n9. Pairing / Scope（配对授权）\n10. Validator（契约校验）\n\n优先级 chip：P0（红橙）/ P1（蓝）/ P2（紫）/ 已有基础（青）\n\n顶部加目标定位 banner，底部加「P0 → P1 → P2」三段式建设顺序流程条。\n\n要求：\n- 对比矩阵主体，不要再混入流程或架构\n- 每行高度一致，跨行格子用配色斑马\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"comparison-matrix"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"matrix_rows_count_in","min":8,"max":12},{"kind":"matrix_cols_count_in","min":4,"max":6}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"seq-mock-protocol","expected_type":"sequence","prompt":"用 architecture-diagram skill 画 Mock 调试场景的调用时序图。\n\n参与方（顶部从左到右）：\n用户 / ChatUI / QClaw Runtime / MockAdapter / ToolService / Mock 数据存储\n\n按时间从上到下：\n1. 用户在 ChatUI 输入「打开卡片 Mock 模式，切换到状态 X」\n2. ChatUI → QClaw Runtime：发送 intent\n3. QClaw Runtime → MockAdapter：dispatch(intent='switch_mock_state', target='X')\n4. MockAdapter → ToolService：read_schema(card_id)\n5. ToolService → MockAdapter：返回 schema\n6. MockAdapter → Mock 数据存储：load_mock_state('X')\n7. Mock 数据存储 → MockAdapter：返回 state payload\n8. MockAdapter → QClaw Runtime：emit event mock.state.applied\n9. QClaw Runtime → ChatUI：stream event\n10. ChatUI → 用户：渲染状态切换确认\n\n要求：\n- 每个参与方一条 lifeline\n- 消息标注操作名 + 关键参数\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"sequence"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"participants_count_in","min":4,"max":8}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"state-task-lifecycle","expected_type":"state-machine","prompt":"用 architecture-diagram skill 画 QClaw 任务（run）的生命周期状态机。\n\n状态：\n- pending（初始）\n- running\n- confirming（等待用户确认）\n- retrying\n- done（终态）\n- failed（终态）\n- cancelled（终态）\n\n迁移：\n- pending → running：guard=context_ready\n- running → confirming：guard=needs_user_confirm\n- confirming → running：用户 approve\n- confirming → cancelled：用户 reject\n- running → retrying：guard=transient_error & retries < 3\n- retrying → running：自动重试\n- running → done：success\n- running → failed：guard=fatal_error or retries >= 3\n- 任意非终态 → cancelled：用户主动 cancel\n\n要求：\n- 初始状态用单圈，终态用双圈\n- 每条迁移边标 guard / event\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"state-machine"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"transitions_have_guards"},{"kind":"has_initial_and_final_states"}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"timeline-q2-roadmap","expected_type":"timeline","prompt":"用 architecture-diagram skill 画 QClaw 业务 Adapter 的 Q2 路线图。\n\n时间轴：2026 年 5 月 ~ 7 月，按月分三段。\n\n5 月（SSR Adapter MVP）：\n- 5/01-5/15：协议契约定义 + Adapter Registry 落地\n- 5/16-5/31：SSR React Adapter 开发，接入 1 个真实业务卡片\n\n6 月（Mock Adapter 接入）：\n- 6/01-6/15：Card Mock 协议梳理 + 数据 Schema\n- 6/16-6/30：Mock Adapter 开发 + 调试能力联调\n\n7 月（A2UI 接入 + 治理）：\n- 7/01-7/15：A2UI Schema 接入 SSR Adapter\n- 7/16-7/31：Hooks/Policy 治理面、监控、QA\n\n关键里程碑（标注红色 marker）：\n- 5/31：SSR Adapter 灰度\n- 6/30：Mock Adapter 全量\n- 7/31：Q2 收官评审\n\n要求：\n- 横向时间轴，每月一段\n- 任务条按起止日期对齐\n- 里程碑独立 marker\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"timeline"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}},{"id":"usecase-qwork-actors","expected_type":"use-case","prompt":"用 architecture-diagram skill 画 QWork 平台用例图。\n\n角色（actors，画在系统边界外）：\n- 业务开发者（左侧）\n- 卡片审核者（左侧）\n- QClaw Runtime（右侧，系统角色）\n- 业务后端 API（右侧，系统角色）\n\n系统边界内的用例（椭圆）：\n- 发起 SSR 卡片开发请求\n- 切换 Mock 调试状态\n- 查看任务历史\n- 审核卡片产物\n- 回滚到上一版本\n- 接收事件流（被 QClaw Runtime 包含）\n- 推送数据 schema（被业务后端 API 包含）\n\n关系：\n- 开发者 → 发起 SSR / 切换 Mock / 查看历史\n- 审核者 → 审核 / 回滚\n- 「审核卡片产物」 «include» 「查看任务历史」\n- 「回滚到上一版本」 «extend» 「审核卡片产物」\n- QClaw Runtime → 接收事件流\n- 业务后端 API → 推送数据 schema\n\n要求：\n- actors 在边界外，用例在边界内\n- include/extend 用虚线，边上标注关系名\n- 中文输出，warm-beige 主题","automated_checks":[{"kind":"spec_block_present"},{"kind":"spec_type_equals","value":"use-case"},{"kind":"viewBox_format"},{"kind":"palette_subset","palette":"warm-beige"},{"kind":"font_weight_in","allowed":[400,600,700]},{"kind":"no_text_overflow"},{"kind":"edge_ids_stable"},{"kind":"actors_outside_boundary"}],"human_rubric":{"visual_balance":null,"information_density":null,"type_appropriateness":null,"notes":""}}];
+
+function caseHtml(c) {
+  const beforeUrl = `out/before/${c.id}.svg`;
+  const afterUrl = `out/after/${c.id}.svg`;
+  return `
+    <div class="case" data-id="${c.id}">
+      <div class="case-head">
+        <h2>${c.id}<span class="pill">${c.expected_type}</span></h2>
+        <div class="meta">${c.automated_checks.length} automated checks</div>
+      </div>
+      <div class="prompt">${escapeHtml(c.prompt)}</div>
+      <div class="grid">
+        <div class="pane before">
+          <h3>BEFORE</h3>
+          <img src="${beforeUrl}" alt="before" onerror="this.outerHTML='<div class=missing>before SVG 缺失</div>'">
+        </div>
+        <div class="pane after">
+          <h3>AFTER</h3>
+          <img src="${afterUrl}" alt="after" onerror="this.outerHTML='<div class=missing>after SVG 缺失</div>'">
+        </div>
+      </div>
+      <div class="rubric" data-rubric="${c.id}">
+        <label>visual_balance <input type="number" min="1" max="5" data-key="visual_balance"></label>
+        <label>information_density <input type="number" min="1" max="5" data-key="information_density"></label>
+        <label>type_appropriateness <input type="number" min="1" max="5" data-key="type_appropriateness"></label>
+        <textarea data-key="notes" placeholder="备注（差异、问题、亮点）..."></textarea>
+      </div>
+    </div>`;
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+document.getElementById('cases').innerHTML = CASES.map(caseHtml).join('');
+
+function collectRubric() {
+  const out = {};
+  document.querySelectorAll('.rubric').forEach(r => {
+    const id = r.dataset.rubric;
+    out[id] = {};
+    r.querySelectorAll('[data-key]').forEach(el => {
+      const k = el.dataset.key;
+      const v = el.value.trim();
+      out[id][k] = v === '' ? null : (el.type === 'number' ? Number(v) : v);
+    });
+  });
+  return out;
+}
+
+function exportRubric() {
+  const data = collectRubric();
+  const text = JSON.stringify(data, null, 2);
+  navigator.clipboard.writeText(text).then(() => alert('已复制到剪贴板'));
+}
+
+async function loadRubric() {
+  try {
+    const text = await navigator.clipboard.readText();
+    const data = JSON.parse(text);
+    document.querySelectorAll('.rubric').forEach(r => {
+      const id = r.dataset.rubric;
+      if (!data[id]) return;
+      r.querySelectorAll('[data-key]').forEach(el => {
+        const k = el.dataset.key;
+        if (data[id][k] != null) el.value = data[id][k];
+      });
+    });
+    alert('已恢复');
+  } catch (e) { alert('剪贴板内容不是合法 JSON'); }
+}
+</script>
+</body>
+</html>

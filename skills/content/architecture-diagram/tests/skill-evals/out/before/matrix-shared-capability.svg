@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1520" width="1700" height="1520" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">QWork 业务 Agent Runtime 的共享能力与可插拔复用矩阵</title>
+  <desc id="diagram-desc">按 QWork 通用业务 Agent Runtime 的建设目标，列出千问宝子和 OpenClaw 中可参考、可迁移、可插拔复用的能力模块，并说明它们如何服务 SSR React 卡片业务与 Card Mock 业务。</desc>
+  <defs>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="7.2" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#427858"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="7.2" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1f7584"/>
+    </marker>
+    <marker id="arrow-coral" markerWidth="8" markerHeight="8" refX="7.2" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#c6503f"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 34px; font-weight: 780; fill: #211a14; }
+    .subtitle { font-size: 16px; fill: #655a4d; }
+    .section-title { font-size: 20px; font-weight: 760; fill: #211a14; }
+    .section-sub { font-size: 13px; fill: #655a4d; }
+    .cell-title { font-size: 14px; font-weight: 740; fill: #211a14; }
+    .cell-sub { font-size: 11.2px; fill: #655a4d; }
+    .tiny { font-size: 10.2px; fill: #8c7d68; }
+    .small { font-size: 12px; fill: #655a4d; }
+    .frame { fill: #fffaf2; stroke: #d8cbb9; stroke-width: 1.4; }
+    .panel { fill: #fffdf8; stroke: #d8cbb9; stroke-width: 1.15; }
+    .panel-soft { fill: #fbf7ef; stroke: #d8cbb9; stroke-width: 1.1; }
+    .source-blue { fill: #edf7f8; stroke: #1f7584; stroke-width: 1.35; }
+    .source-coral { fill: #fff0eb; stroke: #c6503f; stroke-width: 1.35; }
+    .source-green { fill: #edf7f1; stroke: #427858; stroke-width: 1.45; }
+    .header { fill: #f1e5d3; stroke: #d8cbb9; stroke-width: 1.1; }
+    .row-bg { fill: #fffaf2; stroke: #e4d8c7; stroke-width: 1; }
+    .row-alt { fill: #fbf7ef; stroke: #e4d8c7; stroke-width: 1; }
+    .chip-p0 { fill: #daf0e1; stroke: #427858; stroke-width: 1; }
+    .chip-p1 { fill: #f6dfcd; stroke: #c7663d; stroke-width: 1; }
+    .chip-p2 { fill: #ece7fb; stroke: #6d5aa7; stroke-width: 1; }
+    .chip-current { fill: #dceff2; stroke: #1f7584; stroke-width: 1; }
+    .flow-green { fill: none; stroke: #427858; stroke-width: 2; marker-end: url(#arrow-green); }
+    .ref-blue { fill: none; stroke: #1f7584; stroke-width: 2.1; stroke-dasharray: 8 7; marker-end: url(#arrow-blue); }
+    .ref-coral { fill: none; stroke: #c6503f; stroke-width: 2.1; stroke-dasharray: 8 7; marker-end: url(#arrow-coral); }
+  </style>
+
+  <rect width="1700" height="1520" fill="#f7f1e7"/>
+  <rect x="34" y="34" width="1632" height="1452" rx="26" class="frame"/>
+
+  <text x="76" y="88" class="title">QWork 业务 Agent Runtime 的共享能力与可插拔复用矩阵</text>
+  <text x="76" y="118" class="subtitle">从千问宝子与 OpenClaw 抽取可插拔子模块，沉淀为 QWork 通用业务 Agent Runtime。</text>
+
+  <rect x="76" y="158" width="1548" height="206" rx="22" class="panel-soft"/>
+  <text x="108" y="196" class="section-title">目标定位</text>
+  <text x="108" y="222" class="section-sub">QWork 当前已具备 React 卡片开发链路；目标是抽象通用业务 Runtime，统一服务 SSR React 卡片业务与 Card Mock 业务。</text>
+
+  <rect x="110" y="256" width="394" height="70" rx="18" class="source-blue"/>
+  <text x="307" y="282" class="cell-title" text-anchor="middle">千问宝子可复用</text>
+  <text x="307" y="304" class="cell-sub" text-anchor="middle">Agent loop、AgentEvent、ModelRouter、ToolResolver、Skills/MCP、Memory</text>
+
+  <rect x="654" y="256" width="394" height="70" rx="18" class="source-coral"/>
+  <text x="851" y="282" class="cell-title" text-anchor="middle">OpenClaw 可复用</text>
+  <text x="851" y="304" class="cell-sub" text-anchor="middle">Gateway、Pairing、Queue、Workspace、Hooks、Capability、Scope、Replay</text>
+
+  <rect x="1200" y="256" width="390" height="70" rx="18" class="source-green"/>
+  <text x="1395" y="282" class="cell-title" text-anchor="middle">QWork 目标沉淀</text>
+  <text x="1395" y="304" class="cell-sub" text-anchor="middle">业务意图路由、Adapter Registry、A2UI/React 产物治理</text>
+
+  <path d="M 504 291 H 654" class="ref-blue"/>
+  <path d="M 1048 291 H 1200" class="ref-coral"/>
+
+  <!-- Matrix -->
+  <rect x="76" y="398" width="1548" height="902" rx="22" class="frame"/>
+  <text x="108" y="436" class="section-title">可插拔模块复用矩阵</text>
+  <text x="108" y="462" class="section-sub">优先级表示进入 QWork 通用业务 Runtime 的建设顺序：P0 是最小可用闭环，P1 是稳定运行面，P2 是治理与扩展。</text>
+
+  <!-- Header -->
+  <rect x="108" y="502" width="196" height="54" rx="12" class="header"/>
+  <text x="206" y="535" class="cell-title" text-anchor="middle">模块</text>
+  <rect x="320" y="502" width="318" height="54" rx="12" class="header"/>
+  <text x="479" y="535" class="cell-title" text-anchor="middle">千问宝子参考</text>
+  <rect x="654" y="502" width="318" height="54" rx="12" class="header"/>
+  <text x="813" y="535" class="cell-title" text-anchor="middle">OpenClaw 参考</text>
+  <rect x="988" y="502" width="414" height="54" rx="12" class="header"/>
+  <text x="1195" y="535" class="cell-title" text-anchor="middle">QWork 通用 Runtime 使用方式</text>
+  <rect x="1418" y="502" width="174" height="54" rx="12" class="header"/>
+  <text x="1505" y="535" class="cell-title" text-anchor="middle">状态 / 优先级</text>
+
+  <!-- Row 1 -->
+  <rect x="108" y="578" width="1484" height="62" rx="12" class="row-bg"/>
+  <text x="128" y="603" class="cell-title">Agent Loop</text>
+  <text x="128" y="623" class="cell-sub">执行环</text>
+  <text x="340" y="603" class="cell-sub">AgentRuntime 基于 streamText、工具调用</text>
+  <text x="340" y="623" class="cell-sub">和 AgentEvent 输出。</text>
+  <text x="674" y="603" class="cell-sub">Embedded runtime 负责 intake、context、</text>
+  <text x="674" y="623" class="cell-sub">model、tool、stream、persistence。</text>
+  <text x="1008" y="603" class="cell-sub">将 business intent 送入通用执行环，输出</text>
+  <text x="1008" y="623" class="cell-sub">runtime events、tool events、artifacts。</text>
+  <rect x="1442" y="594" width="54" height="24" rx="8" class="chip-p0"/><text x="1469" y="611" class="tiny" text-anchor="middle">P0</text>
+  <rect x="1506" y="594" width="62" height="24" rx="8" class="chip-p0"/><text x="1537" y="611" class="tiny" text-anchor="middle">目标</text>
+
+  <!-- Row 2 -->
+  <rect x="108" y="650" width="1484" height="62" rx="12" class="row-alt"/>
+  <text x="128" y="675" class="cell-title">Model Router</text>
+  <text x="128" y="695" class="cell-sub">模型选择</text>
+  <text x="340" y="675" class="cell-sub">ModelRouter 支持优先级、能力要求、</text>
+  <text x="340" y="695" class="cell-sub">失败退避和 fallback。</text>
+  <text x="674" y="675" class="cell-sub">Model refs 与 hooks 可在模型解析前</text>
+  <text x="674" y="695" class="cell-sub">覆盖 provider/model。</text>
+  <text x="1008" y="675" class="cell-sub">Runtime Selector 在本地 Claude Code 与</text>
+  <text x="1008" y="695" class="cell-sub">云端千问宝子 API 间选择。</text>
+  <rect x="1442" y="666" width="54" height="24" rx="8" class="chip-p0"/><text x="1469" y="683" class="tiny" text-anchor="middle">P0</text>
+  <rect x="1506" y="666" width="62" height="24" rx="8" class="chip-current"/><text x="1537" y="683" class="tiny" text-anchor="middle">已有基础</text>
+
+  <!-- Row 3 -->
+  <rect x="108" y="722" width="1484" height="62" rx="12" class="row-bg"/>
+  <text x="128" y="747" class="cell-title">Event Protocol</text>
+  <text x="128" y="767" class="cell-sub">事件协议</text>
+  <text x="340" y="747" class="cell-sub">AgentEvent + SSE 是 Gateway 与 daemon</text>
+  <text x="340" y="767" class="cell-sub">之间的稳定事件契约。</text>
+  <text x="674" y="747" class="cell-sub">agent stream 区分 assistant、tool、</text>
+  <text x="674" y="767" class="cell-sub">lifecycle 和 command result。</text>
+  <text x="1008" y="747" class="cell-sub">定义 biz.intent、runtime.step、ssr.artifact、</text>
+  <text x="1008" y="767" class="cell-sub">mock.data、mock.render、runtime.error。</text>
+  <rect x="1442" y="738" width="54" height="24" rx="8" class="chip-p0"/><text x="1469" y="755" class="tiny" text-anchor="middle">P0</text>
+  <rect x="1506" y="738" width="62" height="24" rx="8" class="chip-p0"/><text x="1537" y="755" class="tiny" text-anchor="middle">目标</text>
+
+  <!-- Row 4 -->
+  <rect x="108" y="794" width="1484" height="62" rx="12" class="row-alt"/>
+  <text x="128" y="819" class="cell-title">Skills / MCP</text>
+  <text x="128" y="839" class="cell-sub">能力扩展</text>
+  <text x="340" y="819" class="cell-sub">SkillLifecycle、SkillProvider、MCPProvider、</text>
+  <text x="340" y="839" class="cell-sub">meta tools 管理工具扩展。</text>
+  <text x="674" y="819" class="cell-sub">skills snapshot、workspace skills、</text>
+  <text x="674" y="839" class="cell-sub">plugin hooks 管理生命周期。</text>
+  <text x="1008" y="819" class="cell-sub">同时承载 SSR 开发工具 skill 与 Mock 状态</text>
+  <text x="1008" y="839" class="cell-sub">数据 skill，支持不同业务 adapter。</text>
+  <rect x="1442" y="810" width="54" height="24" rx="8" class="chip-p0"/><text x="1469" y="827" class="tiny" text-anchor="middle">P0</text>
+  <rect x="1506" y="810" width="62" height="24" rx="8" class="chip-current"/><text x="1537" y="827" class="tiny" text-anchor="middle">已有管理</text>
+
+  <!-- Row 5 -->
+  <rect x="108" y="866" width="1484" height="62" rx="12" class="row-bg"/>
+  <text x="128" y="891" class="cell-title">Gateway</text>
+  <text x="128" y="911" class="cell-sub">接入面</text>
+  <text x="340" y="891" class="cell-sub">qianwen-ai-works 提供 Channel API、</text>
+  <text x="340" y="911" class="cell-sub">BotEngine、SessionRouter、SandboxManager。</text>
+  <text x="674" y="891" class="cell-sub">Gateway daemon 统一消息面、WS API、</text>
+  <text x="674" y="911" class="cell-sub">nodes、pairing。</text>
+  <text x="1008" y="891" class="cell-sub">沿用现有 QWork Gateway 承载 A2UI chat、</text>
+  <text x="1008" y="911" class="cell-sub">SSR pipeline、Bridge、Mock 入口和事件下发。</text>
+  <rect x="1442" y="882" width="54" height="24" rx="8" class="chip-p1"/><text x="1469" y="899" class="tiny" text-anchor="middle">P1</text>
+  <rect x="1506" y="882" width="62" height="24" rx="8" class="chip-current"/><text x="1537" y="899" class="tiny" text-anchor="middle">已有基础</text>
+
+  <!-- Row 6 -->
+  <rect x="108" y="938" width="1484" height="62" rx="12" class="row-alt"/>
+  <text x="128" y="963" class="cell-title">Queue / Session</text>
+  <text x="128" y="983" class="cell-sub">会话队列</text>
+  <text x="340" y="963" class="cell-sub">SessionRouter 绑定 daemon session，</text>
+  <text x="340" y="983" class="cell-sub">支持连接复用与健康检查。</text>
+  <text x="674" y="963" class="cell-sub">session lane FIFO 保证同一 session</text>
+  <text x="674" y="983" class="cell-sub">单活跃 run。</text>
+  <text x="1008" y="963" class="cell-sub">同一卡片业务会话串行 SSR run 与 mock run，</text>
+  <text x="1008" y="983" class="cell-sub">避免开发动作和状态切换写乱上下文。</text>
+  <rect x="1442" y="954" width="54" height="24" rx="8" class="chip-p1"/><text x="1469" y="971" class="tiny" text-anchor="middle">P1</text>
+  <rect x="1506" y="954" width="62" height="24" rx="8" class="chip-p1"/><text x="1537" y="971" class="tiny" text-anchor="middle">目标</text>
+
+  <!-- Row 7 -->
+  <rect x="108" y="1010" width="1484" height="62" rx="12" class="row-bg"/>
+  <text x="128" y="1035" class="cell-title">Workspace / Memory</text>
+  <text x="128" y="1055" class="cell-sub">上下文记忆</text>
+  <text x="340" y="1035" class="cell-sub">项目记忆、conversation summary、</text>
+  <text x="340" y="1055" class="cell-sub">memory context 注入。</text>
+  <text x="674" y="1035" class="cell-sub">Agent workspace 注入 AGENTS、SOUL、</text>
+  <text x="674" y="1055" class="cell-sub">TOOLS、USER、memory、skills。</text>
+  <text x="1008" y="1035" class="cell-sub">为每张卡片建立业务 context：schema、</text>
+  <text x="1008" y="1055" class="cell-sub">设计稿、代码分支、mock 状态、截图。</text>
+  <rect x="1442" y="1026" width="54" height="24" rx="8" class="chip-p1"/><text x="1469" y="1043" class="tiny" text-anchor="middle">P1</text>
+  <rect x="1506" y="1026" width="62" height="24" rx="8" class="chip-p1"/><text x="1537" y="1043" class="tiny" text-anchor="middle">目标</text>
+
+  <!-- Row 8 -->
+  <rect x="108" y="1082" width="1484" height="62" rx="12" class="row-alt"/>
+  <text x="128" y="1107" class="cell-title">Hooks / Policy</text>
+  <text x="128" y="1127" class="cell-sub">治理扩展</text>
+  <text x="340" y="1107" class="cell-sub">PolicyEngine、capability snapshot、</text>
+  <text x="340" y="1127" class="cell-sub">permission state。</text>
+  <text x="674" y="1107" class="cell-sub">plugin hooks 可拦截 prompt、model、</text>
+  <text x="674" y="1127" class="cell-sub">tool、session、message。</text>
+  <text x="1008" y="1107" class="cell-sub">在业务执行前后做权限、字段脱敏、</text>
+  <text x="1008" y="1127" class="cell-sub">schema 校验、产物落盘和审计。</text>
+  <rect x="1442" y="1098" width="54" height="24" rx="8" class="chip-p2"/><text x="1469" y="1115" class="tiny" text-anchor="middle">P2</text>
+  <rect x="1506" y="1098" width="62" height="24" rx="8" class="chip-p2"/><text x="1537" y="1115" class="tiny" text-anchor="middle">目标</text>
+
+  <!-- Row 9 -->
+  <rect x="108" y="1154" width="1484" height="62" rx="12" class="row-bg"/>
+  <text x="128" y="1179" class="cell-title">Pairing / Scope</text>
+  <text x="128" y="1199" class="cell-sub">配对授权</text>
+  <text x="340" y="1179" class="cell-sub">配对码、本地 daemon 连接、agent registry</text>
+  <text x="340" y="1199" class="cell-sub">路由可作为企业侧参考。</text>
+  <text x="674" y="1179" class="cell-sub">device pairing、auth token、capabilities</text>
+  <text x="674" y="1199" class="cell-sub">与 permissions 声明。</text>
+  <text x="1008" y="1179" class="cell-sub">沿用 Bridge 单设备能力，后续升级到多设备</text>
+  <text x="1008" y="1199" class="cell-sub">或多 scope 控制面。</text>
+  <rect x="1442" y="1170" width="54" height="24" rx="8" class="chip-p2"/><text x="1469" y="1187" class="tiny" text-anchor="middle">P2</text>
+  <rect x="1506" y="1170" width="62" height="24" rx="8" class="chip-current"/><text x="1537" y="1187" class="tiny" text-anchor="middle">参考</text>
+
+  <!-- Row 10 -->
+  <rect x="108" y="1226" width="1484" height="62" rx="12" class="row-alt"/>
+  <text x="128" y="1251" class="cell-title">Validator</text>
+  <text x="128" y="1271" class="cell-sub">契约校验</text>
+  <text x="340" y="1251" class="cell-sub">协议与 capability 对输入输出做 schema</text>
+  <text x="340" y="1271" class="cell-sub">和状态快照。</text>
+  <text x="674" y="1251" class="cell-sub">TypeBox / JSON Schema 约束 WS protocol</text>
+  <text x="674" y="1271" class="cell-sub">和 node capability。</text>
+  <text x="1008" y="1251" class="cell-sub">SSR 产物与 Mock data 都经过 A2UI schema、</text>
+  <text x="1008" y="1271" class="cell-sub">React props 和服务端接口契约校验。</text>
+  <rect x="1442" y="1242" width="54" height="24" rx="8" class="chip-p0"/><text x="1469" y="1259" class="tiny" text-anchor="middle">P0</text>
+  <rect x="1506" y="1242" width="62" height="24" rx="8" class="chip-p1"/><text x="1537" y="1259" class="tiny" text-anchor="middle">P1</text>
+
+  <!-- Implementation rail -->
+  <rect x="76" y="1324" width="1548" height="92" rx="22" class="panel-soft"/>
+  <text x="108" y="1362" class="section-title">建议建设顺序</text>
+  <rect x="320" y="1342" width="250" height="44" rx="15" class="chip-p0"/>
+  <text x="445" y="1360" class="cell-title" text-anchor="middle">P0 最小闭环</text>
+  <text x="445" y="1378" class="cell-sub" text-anchor="middle">intent / adapter / events / validator</text>
+  <path d="M 570 1364 H 654" class="flow-green"/>
+  <rect x="654" y="1342" width="250" height="44" rx="15" class="chip-p1"/>
+  <text x="779" y="1360" class="cell-title" text-anchor="middle">P1 稳定运行面</text>
+  <text x="779" y="1378" class="cell-sub" text-anchor="middle">gateway / queue / memory / skills</text>
+  <path d="M 904 1364 H 988" class="flow-green"/>
+  <rect x="988" y="1342" width="250" height="44" rx="15" class="chip-p2"/>
+  <text x="1113" y="1360" class="cell-title" text-anchor="middle">P2 治理扩展</text>
+  <text x="1113" y="1378" class="cell-sub" text-anchor="middle">hooks / policy / pairing / scope</text>
+
+  <rect x="76" y="1440" width="1548" height="36" rx="13" class="panel"/>
+  <text x="100" y="1463" class="tiny">结论：QWork 应沉淀通用业务 Agent Runtime；SSR React 与 Card Mock 作为业务 adapter 接入同一执行环。</text>
+</svg>

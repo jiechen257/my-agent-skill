@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1100" width="1480" height="1100" role="img" aria-labelledby="t d">
+  <!-- spec
+  type: architecture
+  title: QClaw 功能架构
+  style: claude-official
+  direction: top-to-bottom
+  regions:
+    - id: r1
+      label: 入口层
+    - id: r2
+      label: QClaw Runtime
+    - id: r3
+      label: Adapter 层
+    - id: r4
+      label: 工具与产物层
+  nodes:
+    - id: n_chat
+      label: QWork Chat
+      shape: source
+      region: r1
+    - id: n_pipeline
+      label: SSR Pipeline
+      shape: source
+      region: r1
+    - id: n_bridge
+      label: Bridge
+      shape: source
+      region: r1
+    - id: n_intent
+      label: 业务意图归一
+      shape: process
+      region: r2
+    - id: n_registry
+      label: Adapter Registry
+      shape: process
+      region: r2
+    - id: n_selector
+      label: Runtime Selector
+      shape: process
+      region: r2
+    - id: n_lane
+      label: Session Lane
+      shape: process
+      region: r2
+    - id: n_bus
+      label: Event Bus
+      shape: process
+      region: r2
+    - id: n_ssr
+      label: SSR React Adapter
+      shape: infra
+      region: r3
+    - id: n_mock
+      label: Card Mock Adapter
+      shape: infra
+      region: r3
+    - id: n_future
+      label: 后续业务 Adapter
+      shape: passive
+      region: r3
+    - id: n_skills
+      label: Skills / MCP
+      shape: store
+      region: r4
+    - id: n_memory
+      label: Memory / Workspace
+      shape: store
+      region: r4
+    - id: n_local
+      label: 本地 Claude
+      shape: store
+      region: r4
+    - id: n_cloud
+      label: 云端宝子 Executor
+      shape: store
+      region: r4
+    - id: n_artifact
+      label: 产物存储
+      shape: store
+      region: r4
+  edges:
+    - id: e1
+      from: n_chat
+      to: n_intent
+      style: solid
+    - id: e2
+      from: n_pipeline
+      to: n_intent
+      style: solid
+    - id: e3
+      from: n_bridge
+      to: n_intent
+      style: solid
+    - id: e4
+      from: n_intent
+      to: n_registry
+      style: dashed
+    - id: e5
+      from: n_registry
+      to: n_selector
+      style: dashed
+    - id: e6
+      from: n_selector
+      to: n_lane
+      style: dashed
+    - id: e7
+      from: n_lane
+      to: n_bus
+      style: dashed
+    - id: e8
+      from: n_registry
+      to: n_ssr
+      style: solid
+    - id: e9
+      from: n_registry
+      to: n_mock
+      style: solid
+    - id: e10
+      from: n_registry
+      to: n_future
+      style: solid
+    - id: e11
+      from: n_ssr
+      to: n_skills
+      style: solid
+    - id: e12
+      from: n_mock
+      to: n_skills
+      style: solid
+    - id: e13
+      from: n_selector
+      to: n_local
+      style: solid
+    - id: e14
+      from: n_selector
+      to: n_cloud
+      style: solid
+    - id: e15
+      from: n_bus
+      to: n_artifact
+      style: solid
+  notes:
+    - 协议契约：A2UI schema / React props / Mock data schema 在 Runtime 与 Adapter 之间约束
+  -->
+  <title id="t">QClaw 功能架构</title>
+  <desc id="d">从入口到工具层的四层结构与跨层依赖。</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="5" markerHeight="5" refX="4.4" refY="2.5" orient="auto">
+      <polygon points="0 0, 5 2.5, 0 5" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arrow-soft" markerWidth="5" markerHeight="5" refX="4.4" refY="2.5" orient="auto">
+      <polygon points="0 0, 5 2.5, 0 5" fill="#8a8178"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <style>
+    text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 15px; fill: #6a6a6a; }
+    .region-label { font-size: 12px; font-weight: 700; fill: #5a5a5a; letter-spacing: 0.05em; }
+    .node-title { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .source { fill: #a8c5e6; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .process { fill: #9dd4c7; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .infra { fill: #f4e4c1; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .store { fill: #e8e6e3; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .passive { fill: #e8e6e3; stroke: #d9d3ca; stroke-width: 1.6; stroke-dasharray: 6 5; filter: url(#shadow); }
+    .region { fill: rgba(248,246,243,0.72); stroke: #d9d3ca; stroke-width: 1.6; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .edge-soft { fill: none; stroke: #8a8178; stroke-width: 1.7; stroke-dasharray: 6 5; marker-end: url(#arrow-soft); }
+    .legend-chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1; }
+    .legend-text { font-size: 11px; fill: #5a5a5a; }
+    .protocol-band { fill: #dff3ef; stroke: #d9d3ca; stroke-width: 1.2; }
+    .protocol-text { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+  </style>
+
+  <rect width="1480" height="1100" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="1432" height="1052" rx="14" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="68" class="title">QClaw 功能架构</text>
+  <text x="60" y="92" class="subtitle">从入口、Runtime、Adapter 到工具层的四层结构与跨层依赖</text>
+
+  <!-- Region 1: Entry -->
+  <rect x="60" y="120" width="1360" height="120" rx="14" class="region"/>
+  <text x="80" y="146" class="region-label">入口层</text>
+  <rect id="n_chat" x="220" y="158" width="280" height="62" rx="12" class="source"/>
+  <text x="360" y="194" class="node-title" text-anchor="middle">QWork Chat</text>
+  <rect id="n_pipeline" x="600" y="158" width="280" height="62" rx="12" class="source"/>
+  <text x="740" y="194" class="node-title" text-anchor="middle">SSR Pipeline</text>
+  <rect id="n_bridge" x="980" y="158" width="280" height="62" rx="12" class="source"/>
+  <text x="1120" y="194" class="node-title" text-anchor="middle">Bridge</text>
+
+  <!-- Region 2: Runtime -->
+  <rect x="60" y="270" width="1360" height="180" rx="14" class="region"/>
+  <text x="80" y="296" class="region-label">QCLAW RUNTIME</text>
+  <rect id="n_intent" x="100" y="320" width="220" height="62" rx="12" class="process"/>
+  <text x="210" y="356" class="node-title" text-anchor="middle">业务意图归一</text>
+  <rect id="n_registry" x="360" y="320" width="220" height="62" rx="12" class="process"/>
+  <text x="470" y="356" class="node-title" text-anchor="middle">Adapter Registry</text>
+  <rect id="n_selector" x="620" y="320" width="220" height="62" rx="12" class="process"/>
+  <text x="730" y="356" class="node-title" text-anchor="middle">Runtime Selector</text>
+  <rect id="n_lane" x="880" y="320" width="220" height="62" rx="12" class="process"/>
+  <text x="990" y="356" class="node-title" text-anchor="middle">Session Lane</text>
+  <rect id="n_bus" x="1140" y="320" width="240" height="62" rx="12" class="process"/>
+  <text x="1260" y="356" class="node-title" text-anchor="middle">Event Bus</text>
+
+  <!-- Protocol band between R2 and R3 -->
+  <rect x="60" y="468" width="1360" height="36" rx="10" class="protocol-band"/>
+  <text x="740" y="491" class="protocol-text" text-anchor="middle">协议契约：A2UI schema / React props / Mock data schema</text>
+
+  <!-- Region 3: Adapter -->
+  <rect x="60" y="524" width="1360" height="130" rx="14" class="region"/>
+  <text x="80" y="550" class="region-label">ADAPTER 层</text>
+  <rect id="n_ssr" x="180" y="568" width="320" height="68" rx="12" class="infra"/>
+  <text x="340" y="606" class="node-title" text-anchor="middle">SSR React Adapter</text>
+  <rect id="n_mock" x="580" y="568" width="320" height="68" rx="12" class="infra"/>
+  <text x="740" y="606" class="node-title" text-anchor="middle">Card Mock Adapter</text>
+  <rect id="n_future" x="980" y="568" width="320" height="68" rx="12" class="passive"/>
+  <text x="1140" y="606" class="node-title" text-anchor="middle">后续业务 Adapter（占位）</text>
+
+  <!-- Region 4: Tools -->
+  <rect x="60" y="684" width="1360" height="160" rx="14" class="region"/>
+  <text x="80" y="710" class="region-label">工具与产物层</text>
+  <rect id="n_skills" x="100" y="730" width="240" height="92" rx="12" class="store"/>
+  <text x="220" y="782" class="node-title" text-anchor="middle">Skills / MCP</text>
+  <rect id="n_memory" x="380" y="730" width="240" height="92" rx="12" class="store"/>
+  <text x="500" y="782" class="node-title" text-anchor="middle">Memory / Workspace</text>
+  <rect id="n_local" x="660" y="730" width="240" height="92" rx="12" class="store"/>
+  <text x="780" y="782" class="node-title" text-anchor="middle">本地 Claude Executor</text>
+  <rect id="n_cloud" x="940" y="730" width="240" height="92" rx="12" class="store"/>
+  <text x="1060" y="782" class="node-title" text-anchor="middle">云端宝子 Executor</text>
+  <rect id="n_artifact" x="1220" y="730" width="200" height="92" rx="12" class="store"/>
+  <text x="1320" y="782" class="node-title" text-anchor="middle">产物存储</text>
+
+  <!-- Edges (cross-layer solid, same-layer dashed) -->
+  <path id="e1" data-edge-id="e1" class="edge" d="M 360 220 L 360 280 L 210 280 L 210 320"/>
+  <path id="e2" data-edge-id="e2" class="edge" d="M 740 220 L 740 280 L 220 280" />
+  <path id="e3" data-edge-id="e3" class="edge" d="M 1120 220 L 1120 280 L 240 280"/>
+  <path id="e4" data-edge-id="e4" class="edge-soft" d="M 320 351 L 360 351"/>
+  <path id="e5" data-edge-id="e5" class="edge-soft" d="M 580 351 L 620 351"/>
+  <path id="e6" data-edge-id="e6" class="edge-soft" d="M 840 351 L 880 351"/>
+  <path id="e7" data-edge-id="e7" class="edge-soft" d="M 1100 351 L 1140 351"/>
+  <path id="e8" data-edge-id="e8" class="edge" d="M 470 382 L 470 504 L 340 504 L 340 568"/>
+  <path id="e9" data-edge-id="e9" class="edge" d="M 470 382 L 470 504 L 740 504 L 740 568"/>
+  <path id="e10" data-edge-id="e10" class="edge" d="M 470 382 L 470 504 L 1140 504 L 1140 568"/>
+  <path id="e11" data-edge-id="e11" class="edge" d="M 340 636 L 340 684 L 220 684 L 220 730"/>
+  <path id="e12" data-edge-id="e12" class="edge" d="M 740 636 L 740 684 L 500 684 L 500 730"/>
+  <path id="e13" data-edge-id="e13" class="edge" d="M 730 382 L 730 660 L 780 660 L 780 730"/>
+  <path id="e14" data-edge-id="e14" class="edge" d="M 730 382 L 730 660 L 1060 660 L 1060 730"/>
+  <path id="e15" data-edge-id="e15" class="edge" d="M 1260 382 L 1260 660 L 1320 660 L 1320 730"/>
+
+  <!-- Legend -->
+  <rect x="60" y="876" width="1360" height="48" rx="12" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.2"/>
+  <line x1="86" y1="900" x2="126" y2="900" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="140" y="904" class="legend-text">实线（edge）：跨层调用 / 数据上传</text>
+  <line x1="510" y1="900" x2="550" y2="900" stroke="#8a8178" stroke-width="1.7" stroke-dasharray="6 5" marker-end="url(#arrow-soft)"/>
+  <text x="564" y="904" class="legend-text">虚线（edge-soft）：同层依赖 / 内部状态流</text>
+  <rect x="982" y="892" width="14" height="14" rx="3" fill="#e8e6e3" stroke="#d9d3ca" stroke-width="1" stroke-dasharray="6 5"/>
+  <text x="1004" y="904" class="legend-text">虚线节点：未实现的占位</text>
+</svg>

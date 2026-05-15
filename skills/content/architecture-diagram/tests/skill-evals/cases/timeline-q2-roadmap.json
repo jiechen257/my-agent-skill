@@ -1,0 +1,20 @@
+{
+  "id": "timeline-q2-roadmap",
+  "expected_type": "timeline",
+  "prompt": "用 architecture-diagram skill 画 QClaw 业务 Adapter 的 Q2 路线图。\n\n时间轴：2026 年 5 月 ~ 7 月，按月分三段。\n\n5 月（SSR Adapter MVP）：\n- 5/01-5/15：协议契约定义 + Adapter Registry 落地\n- 5/16-5/31：SSR React Adapter 开发，接入 1 个真实业务卡片\n\n6 月（Mock Adapter 接入）：\n- 6/01-6/15：Card Mock 协议梳理 + 数据 Schema\n- 6/16-6/30：Mock Adapter 开发 + 调试能力联调\n\n7 月（A2UI 接入 + 治理）：\n- 7/01-7/15：A2UI Schema 接入 SSR Adapter\n- 7/16-7/31：Hooks/Policy 治理面、监控、QA\n\n关键里程碑（标注红色 marker）：\n- 5/31：SSR Adapter 灰度\n- 6/30：Mock Adapter 全量\n- 7/31：Q2 收官评审\n\n要求：\n- 横向时间轴，每月一段\n- 任务条按起止日期对齐\n- 里程碑独立 marker\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "timeline"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

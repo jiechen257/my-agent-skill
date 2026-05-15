@@ -1,0 +1,21 @@
+{
+  "id": "usecase-qwork-actors",
+  "expected_type": "use-case",
+  "prompt": "用 architecture-diagram skill 画 QWork 平台用例图。\n\n角色（actors，画在系统边界外）：\n- 业务开发者（左侧）\n- 卡片审核者（左侧）\n- QClaw Runtime（右侧，系统角色）\n- 业务后端 API（右侧，系统角色）\n\n系统边界内的用例（椭圆）：\n- 发起 SSR 卡片开发请求\n- 切换 Mock 调试状态\n- 查看任务历史\n- 审核卡片产物\n- 回滚到上一版本\n- 接收事件流（被 QClaw Runtime 包含）\n- 推送数据 schema（被业务后端 API 包含）\n\n关系：\n- 开发者 → 发起 SSR / 切换 Mock / 查看历史\n- 审核者 → 审核 / 回滚\n- 「审核卡片产物」 «include» 「查看任务历史」\n- 「回滚到上一版本」 «extend» 「审核卡片产物」\n- QClaw Runtime → 接收事件流\n- 业务后端 API → 推送数据 schema\n\n要求：\n- actors 在边界外，用例在边界内\n- include/extend 用虚线，边上标注关系名\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "use-case"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"},
+    {"kind": "actors_outside_boundary"}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 860" width="1320" height="860" role="img" aria-labelledby="t d">
+  <!-- spec
+  type: state-machine
+  title: QClaw run 生命周期状态机
+  style: claude-official
+  direction: left-to-right
+  nodes:
+    - id: initial
+      label: initial
+    - id: pending
+      label: pending
+    - id: running
+      label: running
+    - id: confirming
+      label: confirming
+    - id: retrying
+      label: retrying
+    - id: done
+      label: done
+    - id: failed
+      label: failed
+    - id: cancelled
+      label: cancelled
+  edges:
+    - id: edge_initial_pending
+      from: initial
+      to: pending
+      label: start
+    - id: edge_pending_running
+      from: pending
+      to: running
+      label: context_ready
+    - id: edge_running_confirming
+      from: running
+      to: confirming
+      label: needs_user_confirm
+    - id: edge_confirming_running
+      from: confirming
+      to: running
+      label: approve
+    - id: edge_confirming_cancelled
+      from: confirming
+      to: cancelled
+      label: reject
+    - id: edge_running_retrying
+      from: running
+      to: retrying
+      label: transient_error
+    - id: edge_retrying_running
+      from: retrying
+      to: running
+      label: auto retry
+    - id: edge_running_done
+      from: running
+      to: done
+      label: success
+    - id: edge_running_failed
+      from: running
+      to: failed
+      label: fatal_error
+    - id: edge_any_cancelled
+      from: non-final
+      to: cancelled
+      label: cancel
+  -->
+  <title id="t">QClaw run 生命周期状态机</title>
+  <desc id="d">pending 到 running、confirming、retrying 以及三个终态的迁移与 guard。</desc>
+  <defs><marker id="arrow" markerWidth="5" markerHeight="5" refX="4.4" refY="2.5" orient="auto"><polygon points="0 0, 5 2.5, 0 5" fill="#5a5a5a"/></marker><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.07"/></filter></defs>
+  <style>
+    text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 15px; fill: #6a6a6a; }
+    .state { fill: #9dd4c7; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .passive { fill: #e8e6e3; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .initial { fill: #1a1a1a; }
+    .final { fill: #fffdf8; stroke: #1a1a1a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 1.9; marker-end: url(#arrow); }
+    .node-title { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-text { font-size: 10px; font-weight: 600; fill: #1a1a1a; }
+  </style>
+  <rect width="1320" height="860" fill="#f8f6f3"/><rect x="24" y="24" width="1272" height="812" rx="14" fill="#fffdf8" stroke="#d9d3ca"/>
+  <text x="60" y="70" class="title">QClaw 任务 run 生命周期</text><text x="60" y="96" class="subtitle">每条迁移边保留 guard / event，终态用双圈表达</text>
+  <circle id="initial" cx="100" cy="258" r="13" class="initial"/>
+  <rect id="pending" x="190" y="224" width="150" height="68" rx="16" class="state"/><text x="265" y="264" text-anchor="middle" class="node-title">pending</text>
+  <rect id="running" x="460" y="224" width="150" height="68" rx="16" class="state"/><text x="535" y="264" text-anchor="middle" class="node-title">running</text>
+  <rect id="confirming" x="730" y="224" width="170" height="68" rx="16" class="state"/><text x="815" y="264" text-anchor="middle" class="node-title">confirming</text>
+  <rect id="retrying" x="460" y="464" width="150" height="68" rx="16" class="state"/><text x="535" y="504" text-anchor="middle" class="node-title">retrying</text>
+  <circle id="done" cx="1100" cy="162" r="24" class="final"/><circle cx="1100" cy="162" r="14" fill="#1a1a1a"/><text x="1100" y="206" text-anchor="middle" class="node-title">done</text>
+  <circle id="failed" cx="1100" cy="320" r="24" class="final"/><circle cx="1100" cy="320" r="14" fill="#1a1a1a"/><text x="1100" y="364" text-anchor="middle" class="node-title">failed</text>
+  <circle id="cancelled" cx="1100" cy="510" r="24" class="final"/><circle cx="1100" cy="510" r="14" fill="#1a1a1a"/><text x="1100" y="554" text-anchor="middle" class="node-title">cancelled</text>
+  <path id="edge_initial_pending" data-edge-id="edge_initial_pending" data-guard="start" d="M 113 258 H 190" class="edge"/><rect x="128" y="238" width="44" height="20" rx="6" class="chip"/><text x="150" y="252" text-anchor="middle" class="chip-text">start</text>
+  <path id="edge_pending_running" data-edge-id="edge_pending_running" data-guard="context_ready" d="M 340 258 H 460" class="edge"/><rect x="356" y="238" width="94" height="20" rx="6" class="chip"/><text x="403" y="252" text-anchor="middle" class="chip-text">context_ready</text>
+  <path id="edge_running_confirming" data-edge-id="edge_running_confirming" data-guard="needs_user_confirm" d="M 610 258 H 730" class="edge"/><rect x="626" y="238" width="126" height="20" rx="6" class="chip"/><text x="689" y="252" text-anchor="middle" class="chip-text">needs_user_confirm</text>
+  <path id="edge_confirming_running" data-edge-id="edge_confirming_running" data-guard="user_approve" d="M 730 292 H 650 V 320 H 535 V 292" class="edge"/><rect x="622" y="304" width="58" height="20" rx="6" class="chip"/><text x="651" y="318" text-anchor="middle" class="chip-text">approve</text>
+  <path id="edge_confirming_cancelled" data-edge-id="edge_confirming_cancelled" data-guard="user_reject" d="M 900 258 H 974 V 510 H 1076" class="edge"/><rect x="930" y="382" width="50" height="20" rx="6" class="chip"/><text x="955" y="396" text-anchor="middle" class="chip-text">reject</text>
+  <path id="edge_running_retrying" data-edge-id="edge_running_retrying" data-guard="transient_error &amp; retries &lt; 3" d="M 535 292 V 464" class="edge"/><rect x="548" y="360" width="118" height="20" rx="6" class="chip"/><text x="607" y="374" text-anchor="middle" class="chip-text">transient_error</text>
+  <path id="edge_retrying_running" data-edge-id="edge_retrying_running" data-guard="auto_retry" d="M 460 498 H 410 V 258 H 460" class="edge"/><rect x="362" y="372" width="72" height="20" rx="6" class="chip"/><text x="398" y="386" text-anchor="middle" class="chip-text">auto retry</text>
+  <path id="edge_running_done" data-edge-id="edge_running_done" data-guard="success" d="M 610 238 H 1000 V 162 H 1076" class="edge"/><rect x="768" y="218" width="58" height="20" rx="6" class="chip"/><text x="797" y="232" text-anchor="middle" class="chip-text">success</text>
+  <path id="edge_running_failed" data-edge-id="edge_running_failed" data-guard="fatal_error or retries &gt;= 3" d="M 610 278 H 1000 V 320 H 1076" class="edge"/><rect x="740" y="284" width="132" height="20" rx="6" class="chip"/><text x="806" y="298" text-anchor="middle" class="chip-text">fatal_error / retries</text>
+  <path id="edge_any_cancelled" data-edge-id="edge_any_cancelled" data-guard="user_cancel" d="M 265 292 V 642 H 1100 V 534" class="edge"/><rect x="570" y="622" width="78" height="20" rx="6" class="chip"/><text x="609" y="636" text-anchor="middle" class="chip-text">user cancel</text>
+</svg>

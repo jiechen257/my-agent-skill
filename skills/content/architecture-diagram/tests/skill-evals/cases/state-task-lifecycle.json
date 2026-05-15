@@ -1,0 +1,22 @@
+{
+  "id": "state-task-lifecycle",
+  "expected_type": "state-machine",
+  "prompt": "用 architecture-diagram skill 画 QClaw 任务（run）的生命周期状态机。\n\n状态：\n- pending（初始）\n- running\n- confirming（等待用户确认）\n- retrying\n- done（终态）\n- failed（终态）\n- cancelled（终态）\n\n迁移：\n- pending → running：guard=context_ready\n- running → confirming：guard=needs_user_confirm\n- confirming → running：用户 approve\n- confirming → cancelled：用户 reject\n- running → retrying：guard=transient_error & retries < 3\n- retrying → running：自动重试\n- running → done：success\n- running → failed：guard=fatal_error or retries >= 3\n- 任意非终态 → cancelled：用户主动 cancel\n\n要求：\n- 初始状态用单圈，终态用双圈\n- 每条迁移边标 guard / event\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "state-machine"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"},
+    {"kind": "transitions_have_guards"},
+    {"kind": "has_initial_and_final_states"}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

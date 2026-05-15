@@ -1,0 +1,22 @@
+{
+  "id": "arch-qclaw-functional",
+  "expected_type": "architecture",
+  "prompt": "用 architecture-diagram skill 画 QClaw 功能架构图。分四层从上到下：\n1. 入口层：QWork Chat、SSR Pipeline、Bridge\n2. QClaw Runtime 层：业务意图归一、Adapter Registry、Runtime Selector、Session Lane、Event Bus\n3. Adapter 层：SSR React Adapter、Card Mock Adapter、后续业务 Adapter（占位）\n4. 工具与产物层：Skills/MCP、Memory/Workspace、本地 Claude / 云端宝子 executor、产物存储\n\n要求：\n- 跨层调用用实线箭头，同层依赖用虚线\n- 在 Runtime 层和 Adapter 层之间标注协议契约（A2UI schema、React props、Mock data schema）\n- 受众是工程师，需要看到模块边界和依赖关系，不需要实现细节\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "architecture"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"},
+    {"kind": "legend_present_if_mixed_edges"},
+    {"kind": "regions_count_in", "min": 2, "max": 5}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

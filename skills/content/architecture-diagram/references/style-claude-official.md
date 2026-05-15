@@ -21,6 +21,7 @@ Use this as the default style profile.
 - Infrastructure / Timeline bar: `#f4e4c1`
 - Storage / State / Passive area: `#e8e6e3`
 - Note card: `#dff3ef`
+- Decision node: `#fff7e8`
 
 ## Geometry
 
@@ -28,6 +29,12 @@ Use this as the default style profile.
 - Primary stroke width: `2` to `2.4`
 - Region stroke width: `1.6`
 - Label chip radius: `5` to `6`
+
+## Typography
+
+- Font weight is restricted to `400`, `600`, or `700`. Do not emit values like `740`, `760`, `780` — most fonts round them to the nearest 100, flattening the visual hierarchy.
+- Sizes (px): title `30`, subtitle `15`, region label `12`, node title `14`, node subtitle `11`, tiny chip `10–11`.
+- Use `<foreignObject>` with `xmlns="http://www.w3.org/1999/xhtml"` when CJK copy exceeds 8 characters; do not hand-break CJK across multiple `<text>` lines.
 
 ## Tone
 

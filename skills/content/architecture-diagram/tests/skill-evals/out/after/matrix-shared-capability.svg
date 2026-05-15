@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1480" width="1700" height="1480" role="img" aria-labelledby="t d">
+  <!-- spec
+  type: comparison-matrix
+  title: QWork 业务 Agent Runtime 共享能力矩阵
+  style: claude-official
+  direction: top-to-bottom
+  regions:
+    - id: r1
+      label: 目标定位
+    - id: r2
+      label: 复用矩阵
+    - id: r3
+      label: 建设顺序
+  nodes:
+    - id: row1
+      label: Agent Loop
+      shape: row
+      region: r2
+    - id: row2
+      label: Model Router
+      shape: row
+      region: r2
+    - id: row3
+      label: Event Protocol
+      shape: row
+      region: r2
+    - id: row4
+      label: Skills / MCP
+      shape: row
+      region: r2
+    - id: row5
+      label: Gateway
+      shape: row
+      region: r2
+    - id: row6
+      label: Queue / Session
+      shape: row
+      region: r2
+    - id: row7
+      label: Workspace / Memory
+      shape: row
+      region: r2
+    - id: row8
+      label: Hooks / Policy
+      shape: row
+      region: r2
+    - id: row9
+      label: Pairing / Scope
+      shape: row
+      region: r2
+    - id: row10
+      label: Validator
+      shape: row
+      region: r2
+  edges:
+    - id: ep0
+      from: stage_p0
+      to: stage_p1
+    - id: ep1
+      from: stage_p1
+      to: stage_p2
+  -->
+  <title id="t">QWork 业务 Agent Runtime 共享能力矩阵</title>
+  <desc id="d">从千问宝子与 OpenClaw 抽取可复用模块，沉淀为 QWork 通用业务 Agent Runtime 的优先级矩阵。</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="5" markerHeight="5" refX="4.4" refY="2.5" orient="auto">
+      <polygon points="0 0, 5 2.5, 0 5" fill="#5a5a5a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <style>
+    text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    body, div { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #1a1a1a; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 15px; fill: #6a6a6a; }
+    .region-label { font-size: 12px; font-weight: 700; fill: #5a5a5a; letter-spacing: 0.05em; }
+    .header-text { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .row-key { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .row-sub { font-size: 11px; fill: #5a5a5a; }
+    .cell-text { font-size: 11px; line-height: 1.45; color: #1a1a1a; }
+    .frame { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.4; }
+    .panel { fill: rgba(248,246,243,0.72); stroke: #d9d3ca; stroke-width: 1.6; }
+    .header { fill: #f4e4c1; stroke: #d9d3ca; stroke-width: 1; }
+    .row-bg { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1; }
+    .row-alt { fill: #f8f6f3; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-p0 { fill: #a8c5e6; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-p1 { fill: #f4e4c1; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-p2 { fill: #e8e6e3; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-status { fill: #dff3ef; stroke: #d9d3ca; stroke-width: 1; }
+    .chip-text { font-size: 11px; font-weight: 700; fill: #1a1a1a; }
+    .legend-text { font-size: 11px; fill: #5a5a5a; }
+    .stage-p0 { fill: #a8c5e6; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .stage-p1 { fill: #f4e4c1; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .stage-p2 { fill: #e8e6e3; stroke: #d9d3ca; stroke-width: 1.6; filter: url(#shadow); }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .source-box { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.6; }
+    .source-title { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .source-sub { font-size: 11px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1700" height="1480" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="1652" height="1432" rx="14" class="frame"/>
+  <text x="60" y="68" class="title">QWork 业务 Agent Runtime 共享能力矩阵</text>
+  <text x="60" y="92" class="subtitle">从千问宝子与 OpenClaw 抽取可插拔子模块，沉淀为 QWork 通用业务 Agent Runtime</text>
+
+  <!-- Region 1: 目标定位 -->
+  <rect x="60" y="120" width="1580" height="172" rx="14" class="panel"/>
+  <text x="80" y="146" class="region-label">目标定位</text>
+  <foreignObject x="100" y="156" width="1500" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text" style="font-size:13px;line-height:1.5;">
+      QWork 当前已具备 React 卡片开发链路；目标是抽象通用业务 Runtime，统一服务 SSR React 卡片业务与 Card Mock 业务。
+    </div>
+  </foreignObject>
+  <rect x="100" y="216" width="450" height="64" rx="14" class="source-box"/>
+  <text x="325" y="244" class="source-title" text-anchor="middle">千问宝子可复用</text>
+  <text x="325" y="266" class="source-sub" text-anchor="middle">Agent loop / AgentEvent / ModelRouter / Skills</text>
+  <rect x="620" y="216" width="460" height="64" rx="14" class="source-box"/>
+  <text x="850" y="244" class="source-title" text-anchor="middle">OpenClaw 可复用</text>
+  <text x="850" y="266" class="source-sub" text-anchor="middle">Gateway / Pairing / Queue / Workspace / Hooks</text>
+  <rect x="1150" y="216" width="450" height="64" rx="14" class="source-box"/>
+  <text x="1375" y="244" class="source-title" text-anchor="middle">QWork 目标沉淀</text>
+  <text x="1375" y="266" class="source-sub" text-anchor="middle">业务意图路由 / Adapter Registry / 产物治理</text>
+
+  <!-- Region 2: 矩阵 -->
+  <rect x="60" y="316" width="1580" height="912" rx="14" class="panel"/>
+  <text x="80" y="342" class="region-label">可插拔模块复用矩阵</text>
+
+  <!-- Header -->
+  <rect x="80" y="358" width="220" height="50" rx="10" class="header"/>
+  <text x="190" y="389" class="header-text" text-anchor="middle">模块</text>
+  <rect x="312" y="358" width="340" height="50" rx="10" class="header"/>
+  <text x="482" y="389" class="header-text" text-anchor="middle">千问宝子参考</text>
+  <rect x="664" y="358" width="340" height="50" rx="10" class="header"/>
+  <text x="834" y="389" class="header-text" text-anchor="middle">OpenClaw 参考</text>
+  <rect x="1016" y="358" width="416" height="50" rx="10" class="header"/>
+  <text x="1224" y="389" class="header-text" text-anchor="middle">QWork 通用 Runtime 使用方式</text>
+  <rect x="1444" y="358" width="176" height="50" rx="10" class="header"/>
+  <text x="1532" y="389" class="header-text" text-anchor="middle">状态 / 优先级</text>
+
+  <!-- Helper: rows -->
+  <!-- row 1 Agent Loop -->
+  <rect x="80" y="420" width="1540" height="74" rx="10" class="row-bg"/>
+  <text x="100" y="448" class="row-key">Agent Loop</text>
+  <text x="100" y="466" class="row-sub">执行环</text>
+  <foreignObject x="312" y="428" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">AgentRuntime 基于 streamText、工具调用和 AgentEvent 输出。</div>
+  </foreignObject>
+  <foreignObject x="664" y="428" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">Embedded runtime 负责 intake / context / model / tool / stream / persistence。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="428" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">将 business intent 送入通用执行环，输出 runtime events / tool events / artifacts。</div>
+  </foreignObject>
+  <rect x="1456" y="438" width="50" height="24" rx="8" class="chip-p0"/>
+  <text x="1481" y="455" class="chip-text" text-anchor="middle">P0</text>
+  <rect x="1518" y="438" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="455" class="chip-text" text-anchor="middle">目标</text>
+
+  <!-- row 2 Model Router -->
+  <rect x="80" y="500" width="1540" height="74" rx="10" class="row-alt"/>
+  <text x="100" y="528" class="row-key">Model Router</text>
+  <text x="100" y="546" class="row-sub">模型选择</text>
+  <foreignObject x="312" y="508" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">ModelRouter 支持优先级、能力要求、失败退避和 fallback。</div>
+  </foreignObject>
+  <foreignObject x="664" y="508" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">Model refs 与 hooks 可在模型解析前覆盖 provider/model。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="508" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">Runtime Selector 在本地 Claude 与云端千问宝子 API 之间选择。</div>
+  </foreignObject>
+  <rect x="1456" y="518" width="50" height="24" rx="8" class="chip-p0"/>
+  <text x="1481" y="535" class="chip-text" text-anchor="middle">P0</text>
+  <rect x="1518" y="518" width="76" height="24" rx="8" class="chip-status"/>
+  <text x="1556" y="535" class="chip-text" text-anchor="middle">已有基础</text>
+
+  <!-- row 3 Event Protocol -->
+  <rect x="80" y="580" width="1540" height="74" rx="10" class="row-bg"/>
+  <text x="100" y="608" class="row-key">Event Protocol</text>
+  <text x="100" y="626" class="row-sub">事件协议</text>
+  <foreignObject x="312" y="588" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">AgentEvent + SSE 是 Gateway 与 daemon 之间的稳定事件契约。</div>
+  </foreignObject>
+  <foreignObject x="664" y="588" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">agent stream 区分 assistant / tool / lifecycle / command result。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="588" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">定义 biz.intent / runtime.step / ssr.artifact / mock.data / runtime.error。</div>
+  </foreignObject>
+  <rect x="1456" y="598" width="50" height="24" rx="8" class="chip-p0"/>
+  <text x="1481" y="615" class="chip-text" text-anchor="middle">P0</text>
+  <rect x="1518" y="598" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="615" class="chip-text" text-anchor="middle">目标</text>
+
+  <!-- row 4 Skills / MCP -->
+  <rect x="80" y="660" width="1540" height="74" rx="10" class="row-alt"/>
+  <text x="100" y="688" class="row-key">Skills / MCP</text>
+  <text x="100" y="706" class="row-sub">能力扩展</text>
+  <foreignObject x="312" y="668" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">SkillLifecycle / SkillProvider / MCPProvider / meta tools 管理工具扩展。</div>
+  </foreignObject>
+  <foreignObject x="664" y="668" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">skills snapshot / workspace skills / plugin hooks 管理生命周期。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="668" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">同时承载 SSR 开发工具 skill 与 Mock 状态数据 skill，支持不同 adapter。</div>
+  </foreignObject>
+  <rect x="1456" y="678" width="50" height="24" rx="8" class="chip-p0"/>
+  <text x="1481" y="695" class="chip-text" text-anchor="middle">P0</text>
+  <rect x="1518" y="678" width="76" height="24" rx="8" class="chip-status"/>
+  <text x="1556" y="695" class="chip-text" text-anchor="middle">已有管理</text>
+
+  <!-- row 5 Gateway -->
+  <rect x="80" y="740" width="1540" height="74" rx="10" class="row-bg"/>
+  <text x="100" y="768" class="row-key">Gateway</text>
+  <text x="100" y="786" class="row-sub">接入面</text>
+  <foreignObject x="312" y="748" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">qianwen-ai-works 提供 Channel API、BotEngine、SessionRouter、SandboxManager。</div>
+  </foreignObject>
+  <foreignObject x="664" y="748" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">Gateway daemon 统一消息面、WS API、nodes、pairing。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="748" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">沿用 QWork Gateway 承载 A2UI chat / SSR pipeline / Bridge / Mock 入口。</div>
+  </foreignObject>
+  <rect x="1456" y="758" width="50" height="24" rx="8" class="chip-p1"/>
+  <text x="1481" y="775" class="chip-text" text-anchor="middle">P1</text>
+  <rect x="1518" y="758" width="76" height="24" rx="8" class="chip-status"/>
+  <text x="1556" y="775" class="chip-text" text-anchor="middle">已有基础</text>
+
+  <!-- row 6 Queue / Session -->
+  <rect x="80" y="820" width="1540" height="74" rx="10" class="row-alt"/>
+  <text x="100" y="848" class="row-key">Queue / Session</text>
+  <text x="100" y="866" class="row-sub">会话队列</text>
+  <foreignObject x="312" y="828" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">SessionRouter 绑定 daemon session，支持连接复用与健康检查。</div>
+  </foreignObject>
+  <foreignObject x="664" y="828" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">session lane FIFO 保证同一 session 单活跃 run。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="828" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">同卡片业务会话串行 SSR run 与 mock run，避免上下文写乱。</div>
+  </foreignObject>
+  <rect x="1456" y="838" width="50" height="24" rx="8" class="chip-p1"/>
+  <text x="1481" y="855" class="chip-text" text-anchor="middle">P1</text>
+  <rect x="1518" y="838" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="855" class="chip-text" text-anchor="middle">目标</text>
+
+  <!-- row 7 Workspace / Memory -->
+  <rect x="80" y="900" width="1540" height="74" rx="10" class="row-bg"/>
+  <text x="100" y="928" class="row-key">Workspace / Memory</text>
+  <text x="100" y="946" class="row-sub">上下文记忆</text>
+  <foreignObject x="312" y="908" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">项目记忆 / conversation summary / memory context 注入。</div>
+  </foreignObject>
+  <foreignObject x="664" y="908" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">Agent workspace 注入 AGENTS / SOUL / TOOLS / memory / skills。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="908" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">为每张卡片建立 schema / 设计稿 / 代码分支 / mock 状态业务 context。</div>
+  </foreignObject>
+  <rect x="1456" y="918" width="50" height="24" rx="8" class="chip-p1"/>
+  <text x="1481" y="935" class="chip-text" text-anchor="middle">P1</text>
+  <rect x="1518" y="918" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="935" class="chip-text" text-anchor="middle">目标</text>
+
+  <!-- row 8 Hooks / Policy -->
+  <rect x="80" y="980" width="1540" height="74" rx="10" class="row-alt"/>
+  <text x="100" y="1008" class="row-key">Hooks / Policy</text>
+  <text x="100" y="1026" class="row-sub">治理扩展</text>
+  <foreignObject x="312" y="988" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">PolicyEngine / capability snapshot / permission state。</div>
+  </foreignObject>
+  <foreignObject x="664" y="988" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">plugin hooks 可拦截 prompt / model / tool / session / message。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="988" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">在业务执行前后做权限、字段脱敏、schema 校验、产物落盘和审计。</div>
+  </foreignObject>
+  <rect x="1456" y="998" width="50" height="24" rx="8" class="chip-p2"/>
+  <text x="1481" y="1015" class="chip-text" text-anchor="middle">P2</text>
+  <rect x="1518" y="998" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="1015" class="chip-text" text-anchor="middle">目标</text>
+
+  <!-- row 9 Pairing / Scope -->
+  <rect x="80" y="1060" width="1540" height="74" rx="10" class="row-bg"/>
+  <text x="100" y="1088" class="row-key">Pairing / Scope</text>
+  <text x="100" y="1106" class="row-sub">配对授权</text>
+  <foreignObject x="312" y="1068" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">配对码 / 本地 daemon 连接 / agent registry 路由（企业侧参考）。</div>
+  </foreignObject>
+  <foreignObject x="664" y="1068" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">device pairing / auth token / capabilities &amp; permissions 声明。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="1068" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">沿用 Bridge 单设备，后续升级到多设备或多 scope 控制面。</div>
+  </foreignObject>
+  <rect x="1456" y="1078" width="50" height="24" rx="8" class="chip-p2"/>
+  <text x="1481" y="1095" class="chip-text" text-anchor="middle">P2</text>
+  <rect x="1518" y="1078" width="60" height="24" rx="8" class="chip-status"/>
+  <text x="1548" y="1095" class="chip-text" text-anchor="middle">参考</text>
+
+  <!-- row 10 Validator -->
+  <rect x="80" y="1140" width="1540" height="74" rx="10" class="row-alt"/>
+  <text x="100" y="1168" class="row-key">Validator</text>
+  <text x="100" y="1186" class="row-sub">契约校验</text>
+  <foreignObject x="312" y="1148" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">协议与 capability 对输入输出做 schema 与状态快照。</div>
+  </foreignObject>
+  <foreignObject x="664" y="1148" width="332" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">TypeBox / JSON Schema 约束 WS protocol 与 node capability。</div>
+  </foreignObject>
+  <foreignObject x="1016" y="1148" width="408" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="cell-text">SSR 产物与 Mock data 都经过 A2UI schema、props、接口契约校验。</div>
+  </foreignObject>
+  <rect x="1456" y="1158" width="50" height="24" rx="8" class="chip-p0"/>
+  <text x="1481" y="1175" class="chip-text" text-anchor="middle">P0</text>
+  <rect x="1518" y="1158" width="50" height="24" rx="8" class="chip-p1"/>
+  <text x="1543" y="1175" class="chip-text" text-anchor="middle">P1</text>
+
+  <!-- Region 3: 建设顺序 -->
+  <rect x="60" y="1252" width="1580" height="120" rx="14" class="panel"/>
+  <text x="80" y="1278" class="region-label">建议建设顺序</text>
+  <rect id="stage_p0" x="160" y="1294" width="380" height="56" rx="14" class="stage-p0"/>
+  <text x="350" y="1322" class="header-text" text-anchor="middle">P0 最小闭环</text>
+  <text x="350" y="1340" class="row-sub" text-anchor="middle">intent / adapter / events / validator</text>
+  <rect id="stage_p1" x="660" y="1294" width="380" height="56" rx="14" class="stage-p1"/>
+  <text x="850" y="1322" class="header-text" text-anchor="middle">P1 稳定运行面</text>
+  <text x="850" y="1340" class="row-sub" text-anchor="middle">gateway / queue / memory / skills</text>
+  <rect id="stage_p2" x="1160" y="1294" width="380" height="56" rx="14" class="stage-p2"/>
+  <text x="1350" y="1322" class="header-text" text-anchor="middle">P2 治理扩展</text>
+  <text x="1350" y="1340" class="row-sub" text-anchor="middle">hooks / policy / pairing / scope</text>
+  <path id="ep0" data-edge-id="ep0" class="edge" d="M 540 1322 L 660 1322"/>
+  <path id="ep1" data-edge-id="ep1" class="edge" d="M 1040 1322 L 1160 1322"/>
+
+  <!-- Legend -->
+  <rect x="60" y="1392" width="1580" height="44" rx="12" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.2"/>
+  <rect x="86" y="1404" width="50" height="22" rx="7" class="chip-p0"/>
+  <text x="111" y="1419" class="chip-text" text-anchor="middle">P0</text>
+  <text x="148" y="1419" class="legend-text">最小闭环</text>
+  <rect x="240" y="1404" width="50" height="22" rx="7" class="chip-p1"/>
+  <text x="265" y="1419" class="chip-text" text-anchor="middle">P1</text>
+  <text x="302" y="1419" class="legend-text">稳定运行面</text>
+  <rect x="400" y="1404" width="50" height="22" rx="7" class="chip-p2"/>
+  <text x="425" y="1419" class="chip-text" text-anchor="middle">P2</text>
+  <text x="462" y="1419" class="legend-text">治理扩展</text>
+  <rect x="560" y="1404" width="76" height="22" rx="7" class="chip-status"/>
+  <text x="598" y="1419" class="chip-text" text-anchor="middle">已有基础</text>
+  <text x="648" y="1419" class="legend-text">QWork 已具备的能力</text>
+</svg>

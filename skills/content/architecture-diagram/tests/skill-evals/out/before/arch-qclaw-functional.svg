@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1180" width="1440" height="1180" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">QWork / QClaw 功能架构图</title>
+  <desc id="diagram-desc">QWork 是终端产品，QClaw 是 QWork 内的通用 Agent Runtime。产品入口收敛为 QWork Chat 与 SSR Pipeline，业务 Adapter 是 QClaw Runtime 内的插件层，由 Runtime 选择和调用。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 15px; fill: #6a6a6a; }
+    .product { fill: rgba(223, 243, 239, 0.28); stroke: #a8c9c2; stroke-width: 1.8; }
+    .region { fill: rgba(248, 246, 243, 0.72); stroke: #d9d3ca; stroke-width: 1.6; }
+    .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.1; }
+    .source { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .process { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .infra { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .sink { fill: #dff3ef; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .node-title { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 11px; fill: #5a5a5a; }
+    .region-label { font-size: 12px; font-weight: 700; fill: #5a5a5a; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .edge-soft { fill: none; stroke: #8a8178; stroke-width: 1.7; marker-end: url(#arrow); }
+    .note-card { fill: #dff3ef; stroke: #a8c9c2; stroke-width: 1.1; }
+    .note-title { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+    .note-text { font-size: 11px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1440" height="1180" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="1392" height="1132" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="66" class="title">QWork / QClaw 功能架构图</text>
+  <text x="60" y="94" class="subtitle">QWork 是大的终端产品；QClaw 是其中的通用 Agent Runtime 能力</text>
+
+  <rect x="1034" y="54" width="330" height="72" rx="12" class="note-card"/>
+  <text x="1064" y="78" class="note-title">作用域关系</text>
+  <text x="1064" y="98" class="note-text">QWork 承载 Chat 与 SSR pipeline 入口</text>
+  <text x="1064" y="116" class="note-text">QClaw 承载 Agent 运行时</text>
+
+  <rect x="60" y="130" width="1320" height="1000" rx="20" class="product"/>
+  <rect x="84" y="144" width="164" height="28" rx="14" class="pill"/>
+  <text x="166" y="163" class="region-label" text-anchor="middle">QWork 终端产品</text>
+
+  <rect x="92" y="182" width="1256" height="120" rx="16" class="region"/>
+  <rect x="112" y="194" width="104" height="26" rx="13" class="pill"/>
+  <text x="164" y="212" class="region-label" text-anchor="middle">产品入口层</text>
+
+  <rect x="238" y="226" width="260" height="52" rx="12" class="source"/>
+  <text x="368" y="248" class="node-title" text-anchor="middle">QWork Chat</text>
+  <text x="368" y="266" class="node-sub" text-anchor="middle">自然语言 / A2UI / Mock 入口</text>
+
+  <rect x="798" y="226" width="260" height="52" rx="12" class="source"/>
+  <text x="928" y="248" class="node-title" text-anchor="middle">SSR Pipeline</text>
+  <text x="928" y="266" class="node-sub" text-anchor="middle">SSR 卡片开发流水线入口</text>
+
+  <rect x="92" y="350" width="1256" height="540" rx="18" class="region"/>
+  <rect x="112" y="364" width="218" height="26" rx="13" class="pill"/>
+  <text x="221" y="382" class="region-label" text-anchor="middle">QClaw Agent Runtime</text>
+
+  <rect x="360" y="364" width="112" height="26" rx="13" class="pill"/>
+  <text x="416" y="382" class="region-label" text-anchor="middle">Runtime Core</text>
+
+  <rect x="128" y="410" width="170" height="60" rx="12" class="process"/>
+  <text x="213" y="433" class="node-title" text-anchor="middle">业务意图识别</text>
+  <text x="213" y="451" class="node-sub" text-anchor="middle">intent / operation</text>
+
+  <rect x="350" y="410" width="170" height="60" rx="12" class="process"/>
+  <text x="435" y="433" class="node-title" text-anchor="middle">场景路由</text>
+  <text x="435" y="451" class="node-sub" text-anchor="middle">选择 Adapter</text>
+
+  <rect x="572" y="410" width="170" height="60" rx="12" class="process"/>
+  <text x="657" y="433" class="node-title" text-anchor="middle">Run / Session</text>
+  <text x="657" y="451" class="node-sub" text-anchor="middle">lane / replay</text>
+
+  <rect x="794" y="410" width="170" height="60" rx="12" class="store"/>
+  <text x="879" y="433" class="node-title" text-anchor="middle">Context Memory</text>
+  <text x="879" y="451" class="node-sub" text-anchor="middle">schema / code / mock</text>
+
+  <rect x="1016" y="410" width="180" height="60" rx="12" class="process"/>
+  <text x="1106" y="433" class="node-title" text-anchor="middle">Runtime Selector</text>
+  <text x="1106" y="451" class="node-sub" text-anchor="middle">选择执行器</text>
+
+  <rect x="960" y="506" width="170" height="46" rx="12" class="infra"/>
+  <text x="1045" y="526" class="node-title" text-anchor="middle">本地 Claude</text>
+  <text x="1045" y="543" class="node-sub" text-anchor="middle">local executor</text>
+
+  <rect x="1160" y="506" width="170" height="46" rx="12" class="infra"/>
+  <text x="1245" y="526" class="node-title" text-anchor="middle">云端宝子</text>
+  <text x="1245" y="543" class="node-sub" text-anchor="middle">cloud executor</text>
+
+  <rect x="178" y="590" width="210" height="60" rx="12" class="infra"/>
+  <text x="283" y="613" class="node-title" text-anchor="middle">Skill / Tool Registry</text>
+  <text x="283" y="631" class="node-sub" text-anchor="middle">skills / MCP / tools</text>
+
+  <rect x="454" y="590" width="210" height="60" rx="12" class="infra"/>
+  <text x="559" y="613" class="node-title" text-anchor="middle">Policy / Validator</text>
+  <text x="559" y="631" class="node-sub" text-anchor="middle">权限 / 契约校验</text>
+
+  <rect x="774" y="574" width="210" height="56" rx="12" class="sink"/>
+  <text x="879" y="596" class="node-title" text-anchor="middle">Event / Artifact Stream</text>
+  <text x="879" y="614" class="node-sub" text-anchor="middle">progress / artifact</text>
+
+  <rect x="774" y="650" width="210" height="46" rx="12" class="store"/>
+  <text x="879" y="670" class="node-title" text-anchor="middle">Audit / 运行记录</text>
+  <text x="879" y="687" class="node-sub" text-anchor="middle">run record</text>
+
+  <rect x="112" y="720" width="1216" height="140" rx="16" class="region"/>
+  <rect x="132" y="734" width="194" height="26" rx="13" class="pill"/>
+  <text x="229" y="752" class="region-label" text-anchor="middle">业务 Adapter 层</text>
+
+  <rect x="160" y="784" width="300" height="56" rx="12" class="process"/>
+  <text x="310" y="807" class="node-title" text-anchor="middle">SSR React Adapter</text>
+  <text x="310" y="825" class="node-sub" text-anchor="middle">业务状态机 / 产物协议</text>
+
+  <rect x="570" y="784" width="300" height="56" rx="12" class="process"/>
+  <text x="720" y="807" class="node-title" text-anchor="middle">Card Mock Adapter</text>
+  <text x="720" y="825" class="node-sub" text-anchor="middle">协议理解 / 场景矩阵 / 配置</text>
+
+  <rect x="980" y="784" width="300" height="56" rx="12" class="process"/>
+  <text x="1130" y="807" class="node-title" text-anchor="middle">后续业务 Adapter</text>
+  <text x="1130" y="825" class="node-sub" text-anchor="middle">协议对接 / 排查 / 治理</text>
+
+  <rect x="92" y="920" width="1256" height="112" rx="16" class="region"/>
+  <rect x="112" y="932" width="148" height="26" rx="13" class="pill"/>
+  <text x="186" y="950" class="region-label" text-anchor="middle">工具与 MCP 能力</text>
+
+  <rect x="195" y="966" width="230" height="46" rx="12" class="infra"/>
+  <text x="310" y="994" class="node-title" text-anchor="middle">代码 / 部署工具</text>
+
+  <rect x="475" y="966" width="230" height="46" rx="12" class="infra"/>
+  <text x="590" y="994" class="node-title" text-anchor="middle">QWork DevTools 能力</text>
+
+  <rect x="725" y="966" width="230" height="46" rx="12" class="infra"/>
+  <text x="840" y="994" class="node-title" text-anchor="middle">二三方平台 MCP</text>
+
+  <rect x="1015" y="966" width="230" height="46" rx="12" class="infra"/>
+  <text x="1130" y="994" class="node-title" text-anchor="middle">场景资产能力</text>
+
+  <rect x="92" y="1066" width="1256" height="42" rx="14" class="sink"/>
+  <text x="720" y="1093" class="node-title" text-anchor="middle">输出：代码 / 部署 / 截图 / Mock 数据 / 调试入口 / 场景模板 / 运行记录 / 后续建议</text>
+
+  <path d="M 368 278 V 322 H 213 V 410" class="edge-soft"/>
+  <path d="M 928 278 V 322 H 213 V 410" class="edge-soft"/>
+
+  <path d="M 298 440 H 350" class="edge"/>
+  <path d="M 520 440 H 572" class="edge"/>
+  <path d="M 742 440 H 794" class="edge"/>
+  <path d="M 964 440 H 1016" class="edge"/>
+  <path d="M 1106 470 V 490 H 1045 V 506" class="edge-soft"/>
+  <path d="M 1106 470 V 490 H 1245 V 506" class="edge-soft"/>
+  <path d="M 435 470 V 560 H 283 V 590" class="edge-soft"/>
+  <path d="M 657 470 V 560 H 559 V 590" class="edge-soft"/>
+  <path d="M 879 470 V 574" class="edge-soft"/>
+  <path d="M 879 630 V 650" class="edge-soft"/>
+
+  <path d="M 435 470 V 762 H 310 V 784" class="edge-soft"/>
+  <path d="M 435 470 V 762 H 720 V 784" class="edge"/>
+  <path d="M 435 470 V 762 H 1130 V 784" class="edge-soft"/>
+
+  <path d="M 310 840 V 966" class="edge-soft"/>
+  <path d="M 310 840 V 884 H 590 V 966" class="edge-soft"/>
+  <path d="M 720 840 V 890 H 840 V 966" class="edge"/>
+  <path d="M 720 840 V 906 H 1130 V 966" class="edge-soft"/>
+  <path d="M 1130 840 V 966" class="edge-soft"/>
+
+  <path d="M 310 1012 V 1048 H 720 V 1066" class="edge-soft"/>
+  <path d="M 590 1012 V 1048 H 720 V 1066" class="edge-soft"/>
+  <path d="M 840 1012 V 1048 H 720 V 1066" class="edge"/>
+  <path d="M 1130 1012 V 1048 H 720 V 1066" class="edge-soft"/>
+</svg>

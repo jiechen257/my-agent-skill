@@ -1,0 +1,22 @@
+{
+  "id": "flow-qclaw-user",
+  "expected_type": "flowchart",
+  "prompt": "用 architecture-diagram skill 画 QClaw 用户使用流程图。从上到下分四阶段：\n1. 入口与任务归一：用户通过 QWork Chat 或 SSR Pipeline 发起业务请求 → QClaw 把请求归一为 intent / scene / operation / context\n2. Adapter 选择：读取业务上下文 → 决策节点「业务场景？」分三路 SSR / Mock / 扩展，分别走 SSR React Adapter、Card Mock Adapter、后续业务 Adapter\n3. 执行与确认：三路汇聚 → 创建 run 并锁定 session lane → Runtime Selector 选择执行器 → Agent Loop 调用 Skills/MCP\n4. 收尾：决策节点「需要确认？」分两路：Yes 回到 QWork 交互让用户补充信息，No 输出事件与产物（代码、部署、Mock、模板）\n\n要求：\n- 决策菱形的每条出边必须标 label（SSR / Mock / 扩展，Yes / No）\n- 多分支汇聚到同一节点时使用 bus/lane，不要交叉穿越\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "flowchart"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"},
+    {"kind": "decision_branches_labeled"},
+    {"kind": "legend_present_if_mixed_edges"}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

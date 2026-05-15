@@ -38,6 +38,12 @@ grep -q "message endpoints must land" "$SKILL_DIR/references/svg-layout-best-pra
 grep -q "activation bar must overlap" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing activation overlap rule"
 grep -q "data-frame-id" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing frame semantic attribute rule"
 grep -q "data-edge-id" "$SKILL_DIR/references/svg-layout-best-practices.md" || fail "missing edge label ownership attribute rule"
+[ -f "$SKILL_DIR/references/spec-block-and-self-review.md" ] || fail "missing reference: spec-block-and-self-review.md"
+grep -q "spec-block-and-self-review.md" "$SKILL_MD" || fail "SKILL.md must link spec-block-and-self-review.md"
+grep -q "Self-Review Checklist" "$SKILL_DIR/references/spec-block-and-self-review.md" || fail "spec-block-and-self-review.md must include Self-Review Checklist section"
+grep -q "Spec Block" "$SKILL_DIR/references/spec-block-and-self-review.md" || fail "spec-block-and-self-review.md must include Spec Block section"
+grep -q "Font weight is restricted" "$SKILL_DIR/references/style-claude-official.md" || fail "style-claude-official.md must declare font-weight restriction"
+grep -q "data-edge-label" "$SKILL_MD" || fail "SKILL.md must reference data-edge-label contract"
 LAYOUT_WORDS="$(wc -w < "$SKILL_DIR/references/svg-layout-best-practices.md" | tr -d ' ')"
 [ "$LAYOUT_WORDS" -le 1100 ] || fail "svg-layout-best-practices.md too long; keep reference compact"
 

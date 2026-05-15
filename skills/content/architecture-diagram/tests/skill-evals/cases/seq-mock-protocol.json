@@ -1,0 +1,21 @@
+{
+  "id": "seq-mock-protocol",
+  "expected_type": "sequence",
+  "prompt": "用 architecture-diagram skill 画 Mock 调试场景的调用时序图。\n\n参与方（顶部从左到右）：\n用户 / ChatUI / QClaw Runtime / MockAdapter / ToolService / Mock 数据存储\n\n按时间从上到下：\n1. 用户在 ChatUI 输入「打开卡片 Mock 模式，切换到状态 X」\n2. ChatUI → QClaw Runtime：发送 intent\n3. QClaw Runtime → MockAdapter：dispatch(intent='switch_mock_state', target='X')\n4. MockAdapter → ToolService：read_schema(card_id)\n5. ToolService → MockAdapter：返回 schema\n6. MockAdapter → Mock 数据存储：load_mock_state('X')\n7. Mock 数据存储 → MockAdapter：返回 state payload\n8. MockAdapter → QClaw Runtime：emit event mock.state.applied\n9. QClaw Runtime → ChatUI：stream event\n10. ChatUI → 用户：渲染状态切换确认\n\n要求：\n- 每个参与方一条 lifeline\n- 消息标注操作名 + 关键参数\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "sequence"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "edge_ids_stable"},
+    {"kind": "participants_count_in", "min": 4, "max": 8}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

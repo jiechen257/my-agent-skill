@@ -1,0 +1,21 @@
+{
+  "id": "matrix-shared-capability",
+  "expected_type": "comparison-matrix",
+  "prompt": "用 architecture-diagram skill 画千问宝子 vs OpenClaw 共享能力对比矩阵，落地为 QWork 通用业务 Agent Runtime 的复用清单。\n\n表格列：\n| 模块 | 千问宝子参考 | OpenClaw 参考 | QWork 通用 Runtime 使用方式 | 状态/优先级 |\n\n行（10 行）：\n1. Agent Loop（执行环）\n2. Model Router（模型选择）\n3. Event Protocol（事件协议）\n4. Skills / MCP（能力扩展）\n5. Gateway（接入面）\n6. Queue / Session（会话队列）\n7. Workspace / Memory（上下文记忆）\n8. Hooks / Policy（治理扩展）\n9. Pairing / Scope（配对授权）\n10. Validator（契约校验）\n\n优先级 chip：P0（红橙）/ P1（蓝）/ P2（紫）/ 已有基础（青）\n\n顶部加目标定位 banner，底部加「P0 → P1 → P2」三段式建设顺序流程条。\n\n要求：\n- 对比矩阵主体，不要再混入流程或架构\n- 每行高度一致，跨行格子用配色斑马\n- 中文输出，warm-beige 主题",
+  "automated_checks": [
+    {"kind": "spec_block_present"},
+    {"kind": "spec_type_equals", "value": "comparison-matrix"},
+    {"kind": "viewBox_format"},
+    {"kind": "palette_subset", "palette": "warm-beige"},
+    {"kind": "font_weight_in", "allowed": [400, 600, 700]},
+    {"kind": "no_text_overflow"},
+    {"kind": "matrix_rows_count_in", "min": 8, "max": 12},
+    {"kind": "matrix_cols_count_in", "min": 4, "max": 6}
+  ],
+  "human_rubric": {
+    "visual_balance": null,
+    "information_density": null,
+    "type_appropriateness": null,
+    "notes": ""
+  }
+}

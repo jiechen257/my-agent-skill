@@ -5,7 +5,7 @@ description: Use when the user asks for architecture diagrams, technical flowcha
 
 # Architecture Diagram
 
-Create production-grade technical diagrams as standalone SVG files.
+Create production-grade technical diagrams as standalone SVG files. Always commit to a structured spec first, then render against fixed tokens, then self-review before delivering.
 
 Supported types:
 
@@ -40,13 +40,15 @@ Technical terms may stay in English when they read better, such as `VNode`, `eff
 Always follow this order:
 
 1. Classify the type with [diagram-type-matrix.md](references/diagram-type-matrix.md)
-2. Extract only the structure that matters for that type
-3. Choose `claude-official` unless the user explicitly asks for `default`
-4. Start from the matching template in `templates/`
-5. Apply [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
-6. Apply the matching style reference
-7. Validate with `scripts/validate-svg.sh`
-8. Render a local preview only when density or branching makes visual review necessary
+2. Clarify only when audience, depth, direction, or whether to split is genuinely unset (see [spec-block-and-self-review.md](references/spec-block-and-self-review.md))
+3. Emit the structured **spec block** before any path; embed it as `<!-- spec ... -->` immediately inside the `<svg>` open tag
+4. Choose `claude-official` unless the user explicitly asks for `default`
+5. Start from the matching template in `templates/`
+6. Apply [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
+7. Apply the matching style reference (typography weights are restricted there)
+8. Walk the **self-review checklist** in [spec-block-and-self-review.md](references/spec-block-and-self-review.md)
+9. Validate with `scripts/validate-svg.sh`
+10. Render a local preview only when density or branching makes visual review necessary
 
 ## Type Selection
 
@@ -70,17 +72,21 @@ Framework principle diagrams should usually start from `flowchart` or `data-flow
 - Use a top note rail for summary notes and a bottom safe rail for legends
 - Keep labels on chips or dedicated headers; do not let chips read like floating comments
 - For labeled edges, use `edge id + data-edge-id` as the default ownership contract
+- Every decision branch must carry `data-edge-label`; never leave a forking edge unlabeled
 - Use visible connection ports and keep arrowheads landing on real targets
 - Prefer simple shape vocabularies and stronger region boundaries than node borders
+- Restrict `font-weight` to `400`, `600`, `700`; never emit non-standard values like `740`
+- Use `<foreignObject>` with XHTML for paragraphs longer than ~8 CJK characters; never hand-break CJK across multiple `<text>` lines
 
 Style details live in:
 
 - [style-claude-official.md](references/style-claude-official.md)
 - [style-default.md](references/style-default.md)
 
-Layout and semantic contracts live in:
+Layout, spec block, and self-review contracts live in:
 
 - [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
+- [spec-block-and-self-review.md](references/spec-block-and-self-review.md)
 
 ## Type Rules
 
@@ -91,10 +97,12 @@ Layout and semantic contracts live in:
 ### Flowchart
 
 - Prefer top-to-bottom flow with sparse decisions and branch-owned labels
+- Multi-branch convergence into a shared node uses bus/lane folds, never diagonal entries
 
 ### Data Flow
 
-- Label major arrows with payloads and keep data/control lanes visually distinct
+- Label major arrows with payloads via `data-edge-label`
+- Keep data and control lanes visually distinct
 
 ### Sequence
 
@@ -108,7 +116,7 @@ Layout and semantic contracts live in:
 
 ### State Machine
 
-- Keep initial/final states distinct and put guards on transition labels
+- Keep initial/final states distinct and put guards on transition labels via `data-guard`
 
 ### Timeline
 
@@ -145,8 +153,9 @@ Compatibility templates:
 
 Use these local scripts:
 
-- `scripts/validate-svg.sh <svg-file>`
-- `scripts/test-templates.sh`
+- `scripts/validate-svg.sh <svg-file>` for layout / semantic checks
+- `scripts/test-templates.sh` for template smoke tests
+- `tests/skill-evals/check.mjs` for prompt-level eval against case fixtures
 
 Use `rsvg-convert` only for local verification. The canonical deliverable remains the standalone `.svg`.
 
@@ -159,3 +168,4 @@ Use `rsvg-convert` only for local verification. The canonical deliverable remain
 - Keep default copy in Chinese
 - Keep default style at `claude-official`
 - Keep style selection implicit inside the SVG; do not print `claude-official`, `default`, palette notes, or style metadata unless the user explicitly asks for style annotation or comparison
+- If self-review flags a failure, fix in place and state which items now pass before delivering

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 1320" width="1180" height="1320" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">QClaw 用户使用流程图</title>
+  <desc id="diagram-desc">用户通过 QWork Chat 或 SSR Pipeline 发起业务请求，QClaw 完成任务归一、业务 Adapter 选择、运行执行、确认回流和产物输出。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 15px; fill: #6a6a6a; }
+    .terminal { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .process { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .io { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .decision { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; filter: url(#soft-shadow); }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .edge-soft { fill: none; stroke: #8a8178; stroke-width: 1.7; marker-end: url(#arrow); }
+    .phase { fill: rgba(248, 246, 243, 0.72); stroke: #d9d3ca; stroke-width: 1.2; }
+    .phase-title { font-size: 12px; font-weight: 700; fill: #5a5a5a; }
+    .node-title { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 11px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1180" height="1320" fill="#f8f6f3"/>
+  <rect x="24" y="24" width="1132" height="1272" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="60" y="66" class="title">QClaw 用户使用流程图</text>
+  <text x="60" y="94" class="subtitle">从业务请求到 Adapter 执行、工具调用、产物回传和继续迭代</text>
+
+  <rect x="72" y="132" width="1036" height="186" rx="16" class="phase"/>
+  <text x="96" y="160" class="phase-title">入口与任务归一</text>
+  <rect x="400" y="164" width="380" height="58" rx="20" class="terminal"/>
+  <text x="590" y="189" class="node-title" text-anchor="middle">用户通过 QWork Chat / SSR Pipeline 发起请求</text>
+  <text x="590" y="208" class="node-sub" text-anchor="middle">Chat 覆盖 A2UI、Mock、验证、排查；Pipeline 承接 SSR 开发</text>
+  <rect x="400" y="252" width="380" height="58" rx="12" class="process"/>
+  <text x="590" y="277" class="node-title" text-anchor="middle">QClaw 归一化任务</text>
+  <text x="590" y="296" class="node-sub" text-anchor="middle">intent / scene / operation / current context</text>
+
+  <rect x="72" y="356" width="1036" height="390" rx="16" class="phase"/>
+  <text x="96" y="384" class="phase-title">QClaw Runtime：Adapter 选择</text>
+  <rect x="400" y="396" width="380" height="64" rx="12" class="process"/>
+  <text x="590" y="422" class="node-title" text-anchor="middle">读取业务上下文</text>
+  <text x="590" y="442" class="node-sub" text-anchor="middle">schema / design / code / protocol / history mock</text>
+  <path d="M 590 500 L 720 568 L 590 636 L 460 568 Z" class="decision"/>
+  <text x="590" y="564" class="node-title" text-anchor="middle">业务场景？</text>
+  <text x="590" y="584" class="node-sub" text-anchor="middle">SSR / Mock / 扩展</text>
+  <rect x="104" y="662" width="270" height="62" rx="12" class="io"/>
+  <text x="239" y="688" class="node-title" text-anchor="middle">SSR React Adapter</text>
+  <text x="239" y="707" class="node-sub" text-anchor="middle">需求到代码、部署、截图验证</text>
+  <rect x="455" y="662" width="270" height="62" rx="12" class="io"/>
+  <text x="590" y="688" class="node-title" text-anchor="middle">Card Mock Adapter</text>
+  <text x="590" y="707" class="node-sub" text-anchor="middle">协议理解、场景矩阵、Mock 配置</text>
+  <rect x="806" y="662" width="270" height="62" rx="12" class="io"/>
+  <text x="941" y="688" class="node-title" text-anchor="middle">后续业务 Adapter</text>
+  <text x="941" y="707" class="node-sub" text-anchor="middle">协议对接、排查、治理</text>
+
+  <rect x="72" y="776" width="1036" height="492" rx="16" class="phase"/>
+  <text x="96" y="804" class="phase-title">QClaw Runtime：执行与确认</text>
+  <rect x="400" y="820" width="380" height="58" rx="12" class="process"/>
+  <text x="590" y="845" class="node-title" text-anchor="middle">创建 run 并锁定 session lane</text>
+  <text x="590" y="864" class="node-sub" text-anchor="middle">runId / sessionId / cancel / replay</text>
+  <rect x="400" y="918" width="380" height="58" rx="12" class="process"/>
+  <text x="590" y="943" class="node-title" text-anchor="middle">Runtime Selector 选择执行器</text>
+  <text x="590" y="962" class="node-sub" text-anchor="middle">本地 Claude / 云端宝子 / 后续 executor</text>
+  <rect x="400" y="1016" width="380" height="58" rx="12" class="process"/>
+  <text x="590" y="1041" class="node-title" text-anchor="middle">Agent Loop 调用 Skills / MCP</text>
+  <text x="590" y="1060" class="node-sub" text-anchor="middle">tool events / artifact events / policy checks</text>
+  <path d="M 590 1108 L 710 1168 L 590 1228 L 470 1168 Z" class="decision"/>
+  <text x="590" y="1164" class="node-title" text-anchor="middle">需要确认？</text>
+  <text x="590" y="1184" class="node-sub" text-anchor="middle">澄清 / 审批 / 风险</text>
+  <rect x="88" y="1138" width="270" height="64" rx="12" class="io"/>
+  <text x="223" y="1165" class="node-title" text-anchor="middle">回到 QWork 交互</text>
+  <text x="223" y="1185" class="node-sub" text-anchor="middle">用户补充信息或确认继续</text>
+  <rect x="812" y="1138" width="270" height="64" rx="12" class="terminal"/>
+  <text x="947" y="1165" class="node-title" text-anchor="middle">输出事件与业务产物</text>
+  <text x="947" y="1185" class="node-sub" text-anchor="middle">代码、部署、Mock、入口、模板、记录</text>
+
+  <path d="M 590 222 V 252" class="edge"/>
+  <path d="M 590 310 V 396" class="edge"/>
+  <path d="M 590 460 V 500" class="edge"/>
+  <path d="M 460 568 H 239 V 662" class="edge-soft"/>
+  <path d="M 590 636 V 662" class="edge"/>
+  <path d="M 720 568 H 941 V 662" class="edge-soft"/>
+  <path d="M 239 724 V 754 H 590 V 820" class="edge-soft"/>
+  <path d="M 590 724 V 820" class="edge"/>
+  <path d="M 941 724 V 754 H 590 V 820" class="edge-soft"/>
+  <path d="M 590 878 V 918" class="edge"/>
+  <path d="M 590 976 V 1016" class="edge"/>
+  <path d="M 590 1074 V 1108" class="edge"/>
+  <path d="M 470 1168 H 358" class="edge-soft"/>
+  <path d="M 358 1170 H 382 V 1045 H 400" class="edge-soft"/>
+  <path d="M 710 1168 H 812" class="edge"/>
+</svg>
