@@ -1,6 +1,12 @@
 # Claude Official Style
 
-Use this as the default style profile.
+Use this as the default style profile for new diagrams.
+
+## Restyle Boundary
+
+When revising an existing SVG, preserve its current UI language first: palette, radius, shadows, stroke weights, typography, and spacing rhythm. Fix structure, routing, labels, and containment without replacing the visual style.
+
+Do not add glassmorphism, neumorphism, backdrop blur, gradients, decorative glow, or a new shadow system unless the user asks for a restyle.
 
 ## Tokens
 
@@ -22,6 +28,8 @@ Use this as the default style profile.
 - Storage / State / Passive area: `#e8e6e3`
 - Note card: `#dff3ef`
 - Decision node: `#fff7e8`
+
+For architecture diagrams, prefer layer fills over semantic fills: all node bodies inside one layer share the same fill. Use badges, strokes, dash, or small labels for status differences.
 
 ## Geometry
 

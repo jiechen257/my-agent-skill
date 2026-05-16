@@ -9,6 +9,8 @@ Apply these rules across all types.
 - Keep at least 28px inner safety distance between any region boundary and the nearest node body, label chip, or routed edge; use 36px+ when a region also carries feedback lanes
 - Put summary notes in a top note rail or bottom legend rail
 - Keep note cards fully inside the inner frame with at least 40px right inset
+- Keep every line of note-card text at least 10px above the card bottom border
+- Keep top note cards at least 16px above the next major region boundary
 - Prefer compact note cards over full-width top rails; for sequence diagrams, widen modestly and wrap early instead of spanning most of the canvas
 - Keep legend rows fully inside the inner frame with at least 56px bottom inset
 - If a top note needs more than two body lines, widen the card or move it left before adding more text
@@ -28,10 +30,13 @@ Apply these rules across all types.
 ## Edges
 
 - Use visible ports
+- For architecture diagrams, every directed route should declare `data-from` and `data-to` with node ids; the first and last point must land on the source and target borders
+- Do not use one `<path>` with multiple `M` subpaths for a directed edge; split it into separate routes or a dedicated bus plus directed branches
 - Keep arrowheads visually subordinate to nodes and labels; for typical `1.5-2px` edges, start around `4.8 x 4.8` markers and only scale up when density or stroke weight requires it
 - Prefer orthogonal routing unless the type needs direct message arrows
 - Keep unrelated edges off the same corridor segment
 - Split competing in/out traffic across opposite sides or distinct ports
+- For fan-in or fan-out, draw an `edge-bus` trunk with no arrowhead, then attach short directed `edge` branches with clear ownership
 - Put every edge label on a chip with an opaque fill
 - Give every labeled edge a stable `id`, then annotate the owning chip and its text with the same `data-edge-id`
 - For text-only relation labels such as `<<include>>` or `<<extend>>`, attach the text to the edge with `data-edge-id` and keep it close to the routed relation
@@ -55,6 +60,15 @@ Apply these rules across all types.
 - Use phase bands, system boundaries, matrix headers, or timeline lanes as the main grouping device
 - Keep at least 28px vertical separation between stacked regions
 - Keep decorative pills, legends, and note rails aligned to the same inner safe area as the main regions
+- In architecture diagrams, mark each layer region with `data-layer-id` and give every node body in that layer the same `data-layer-id`
+- Keep one node body fill per `data-layer-id`; badges, dashed borders, or text can carry status, while the layer keeps visual consistency
+- Every layer node body must sit fully inside the matching region with at least 24px inset unless the region is an intentionally tight table or swimlane
+
+## Style Preservation
+
+- When editing an existing SVG, preserve the source palette, radius, shadows, stroke weights, and typography unless the user asks for a restyle
+- Fix geometry and routing before changing visual styling
+- Do not introduce glassmorphism, neumorphism, backdrop blur, gradients, or decorative glow into an existing plain SVG
 
 ## Shape Variety
 

@@ -12,15 +12,18 @@ Before drawing any path, decide the structure as a YAML-shaped spec, then embed 
   type: flowchart
   title: QClaw 用户使用流程图
   style: claude-official
+  style_mode: preserve-existing
   direction: top-to-bottom
   regions:
     - id: r1
       label: 入口与任务归一
+      layer_id: entry
   nodes:
     - id: n1
       label: 用户发起请求
       shape: terminal
       region: r1
+      layer_id: entry
   edges:
     - id: e1
       from: n1
@@ -33,7 +36,7 @@ Before drawing any path, decide the structure as a YAML-shaped spec, then embed 
 </svg>
 ```
 
-Required fields: `type`, `title`, `style`, `nodes[]`, `edges[]`. Optional: `regions[]`, `notes[]`, `direction`.
+Required fields: `type`, `title`, `style`, `nodes[]`, `edges[]`. Optional: `regions[]`, `notes[]`, `direction`, `style_mode`, `layer_id`.
 
 Keep the spec compact — names and ids only, no commentary. The spec is the contract; the SVG is its render. If the SVG output diverges from the spec, fix the SVG, not the spec.
 
@@ -55,7 +58,10 @@ If the prompt already pins these, skip the question and emit the spec.
 - Decision diamonds with multiple outgoing edges but no `data-edge-label` per branch
 - Decision nodes with more than 3 outgoing branches; split or insert a grouping bus
 - Mixing palettes inside one diagram
+- Mixing node body fills inside one architecture layer
+- Replacing an existing SVG's working UI with glassmorphism, neumorphism, gradients, or a new shadow system during a layout fix
 - Mixing `edge` and `edge-soft` styles without a legend
+- Multi-subpath directed edges such as `M ... M ...` instead of explicit bus/trunk routing
 - Multi-branch convergence that lets edges cross through unrelated regions
 - A single diagram trying to express architecture + flow + sequence + state at once — split it
 - Arrowheads landing in node centers or on whitespace instead of the node border
@@ -69,10 +75,14 @@ Walk through every item before delivering. If any item fails, fix in place and r
 - [ ] viewBox covers all content with no element clipped at the edges
 - [ ] Every `<text>` is fully inside the viewBox; no manual CJK line breaks for paragraphs
 - [ ] Palette is exactly one of `claude-official` or `default` — no foreign hex values
+- [ ] Existing SVG edits preserve the source visual language unless the user requested restyling
+- [ ] Architecture regions and node bodies carry matching `data-layer-id`
+- [ ] Nodes inside the same architecture layer use one shared fill
 - [ ] Every `font-weight` is one of `400`, `600`, `700`
 - [ ] Every decision node has `data-edge-label` on each outgoing edge
 - [ ] When both `edge` and `edge-soft` styles appear, a legend row sits in the bottom safe rail
 - [ ] Every routed edge has stable `id` and `data-edge-id`; chips reference the same `data-edge-id`
+- [ ] Architecture edges use `data-from` / `data-to` and terminate on node borders
 - [ ] Arrowheads land on real node borders, not on whitespace or chip backgrounds
 - [ ] If the diagram mixes architecture and flow, it has been split into two SVGs
 

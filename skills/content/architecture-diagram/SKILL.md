@@ -5,7 +5,7 @@ description: Use when the user asks for architecture diagrams, technical flowcha
 
 # Architecture Diagram
 
-Create production-grade technical diagrams as standalone SVG files. Always commit to a structured spec first, then render against fixed tokens, then self-review before delivering.
+Create production-grade technical diagrams as standalone SVG files. Preserve an existing SVG's visual language when revising one; use the style tokens only for new diagrams. Always commit to a structured spec first, render against fixed contracts, then self-review before delivering.
 
 Supported types:
 
@@ -41,14 +41,15 @@ Always follow this order:
 
 1. Classify the type with [diagram-type-matrix.md](references/diagram-type-matrix.md)
 2. Clarify only when audience, depth, direction, or whether to split is genuinely unset (see [spec-block-and-self-review.md](references/spec-block-and-self-review.md))
-3. Emit the structured **spec block** before any path; embed it as `<!-- spec ... -->` immediately inside the `<svg>` open tag
-4. Choose `claude-official` unless the user explicitly asks for `default`
-5. Start from the matching template in `templates/`
-6. Apply [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
-7. Apply the matching style reference (typography weights are restricted there)
-8. Walk the **self-review checklist** in [spec-block-and-self-review.md](references/spec-block-and-self-review.md)
-9. Validate with `scripts/validate-svg.sh`
-10. Render a local preview only when density or branching makes visual review necessary
+3. If editing an existing SVG, inventory its palette, stroke widths, radius, shadows, typography, and spacing; keep them unless the user asks for a restyle
+4. Emit the structured **spec block** before any path; embed it as `<!-- spec ... -->` immediately inside the `<svg>` open tag
+5. Choose `claude-official` only for new diagrams unless the user explicitly asks for `default`
+6. Start from the matching template in `templates/`
+7. Apply [svg-layout-best-practices.md](references/svg-layout-best-practices.md)
+8. Apply the matching style reference (typography weights and restyle boundaries are restricted there)
+9. Walk the **self-review checklist** in [spec-block-and-self-review.md](references/spec-block-and-self-review.md)
+10. Validate with `scripts/validate-svg.sh`
+11. Render a local preview when editing an existing SVG or when density / branching makes visual review necessary
 
 ## Type Selection
 
@@ -72,9 +73,12 @@ Framework principle diagrams should usually start from `flowchart` or `data-flow
 - Use a top note rail for summary notes and a bottom safe rail for legends
 - Keep labels on chips or dedicated headers; do not let chips read like floating comments
 - For labeled edges, use `edge id + data-edge-id` as the default ownership contract
+- For routed architecture edges, add `data-from` and `data-to`; endpoints must land on the source and target borders
 - Every decision branch must carry `data-edge-label`; never leave a forking edge unlabeled
 - Use visible connection ports and keep arrowheads landing on real targets
+- Use explicit bus/trunk segments for fan-in or fan-out; bus paths use `edge-bus` and no arrowhead, directed branches use `edge`
 - Prefer simple shape vocabularies and stronger region boundaries than node borders
+- Do not introduce glassmorphism, neumorphism, gradients, backdrop blur, or new shadow systems when the source SVG already has a working UI style
 - Restrict `font-weight` to `400`, `600`, `700`; never emit non-standard values like `740`
 - Use `<foreignObject>` with XHTML for paragraphs longer than ~8 CJK characters; never hand-break CJK across multiple `<text>` lines
 
@@ -93,6 +97,9 @@ Layout, spec block, and self-review contracts live in:
 ### Architecture
 
 - Organize services into 2 to 5 layers and keep cross-layer edges orthogonal
+- Give every layer region and node body a matching `data-layer-id`
+- Use one node body fill per layer; express status or implementation state with badges, stroke, dash, or text, not mixed node backgrounds inside the same layer
+- Keep node bodies fully inside their layer region with visible inset on all sides
 
 ### Flowchart
 
@@ -155,7 +162,6 @@ Use these local scripts:
 
 - `scripts/validate-svg.sh <svg-file>` for layout / semantic checks
 - `scripts/test-templates.sh` for template smoke tests
-- `tests/skill-evals/check.mjs` for prompt-level eval against case fixtures
 
 Use `rsvg-convert` only for local verification. The canonical deliverable remains the standalone `.svg`.
 

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 760" width="1080" height="760" role="img" aria-labelledby="diagram-title diagram-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 760" width="1080" height="760" role="img" aria-labelledby="diagram-title diagram-desc" data-diagram-type="architecture">
   <title id="diagram-title">[系统名称] 架构图</title>
-  <desc id="diagram-desc">分层 starter：保留层边界、连接 corridor 和最少量节点示例，便于后续扩展为真实架构图。</desc>
+  <desc id="diagram-desc">分层 starter：每层统一节点填色，边只从节点边界出入，并保留清晰的连接 corridor。</desc>
   <defs>
     <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
       <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
@@ -10,11 +10,12 @@
     text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
     .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
     .subtitle { font-size: 14px; fill: #6a6a6a; }
-    .region { fill: rgba(248, 246, 243, 0.72); stroke: #d9d3ca; stroke-width: 1.2; }
+    .region { fill: rgba(248, 246, 243, 0.72); stroke: #d9d3ca; stroke-width: 1.4; }
     .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.1; }
-    .source { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
-    .service { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
-    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .node-body { stroke: #4a4a4a; stroke-width: 2; }
+    .layer-entry { fill: #a8c5e6; }
+    .layer-processing { fill: #9dd4c7; }
+    .layer-data { fill: #e8e6e3; }
     .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     .node-sub { font-size: 9px; fill: #5a5a5a; }
     .label { font-size: 9px; fill: #5a5a5a; }
@@ -27,48 +28,48 @@
   <text x="60" y="64" class="title">[系统名称] 架构图</text>
   <text x="60" y="88" class="subtitle">[在这里填写系统边界、层次划分和主要依赖方向]</text>
 
-  <rect x="80" y="146" width="920" height="110" rx="16" class="region"/>
+  <rect x="80" y="146" width="920" height="110" rx="16" class="region" data-layer-id="entry"/>
   <rect x="96" y="130" width="92" height="24" rx="12" class="pill"/>
   <text x="142" y="146" class="label" text-anchor="middle">入口层</text>
 
-  <rect x="80" y="314" width="920" height="130" rx="16" class="region"/>
+  <rect x="80" y="314" width="920" height="150" rx="16" class="region" data-layer-id="processing"/>
   <rect x="96" y="298" width="92" height="24" rx="12" class="pill"/>
   <text x="142" y="314" class="label" text-anchor="middle">处理层</text>
 
-  <rect x="80" y="492" width="920" height="110" rx="16" class="region"/>
-  <rect x="96" y="476" width="92" height="24" rx="12" class="pill"/>
-  <text x="142" y="492" class="label" text-anchor="middle">数据层</text>
+  <rect x="80" y="512" width="920" height="110" rx="16" class="region" data-layer-id="data"/>
+  <rect x="96" y="496" width="92" height="24" rx="12" class="pill"/>
+  <text x="142" y="512" class="label" text-anchor="middle">数据层</text>
 
-  <rect x="100" y="173" width="120" height="56" rx="12" class="source"/>
-  <rect x="320" y="165" width="200" height="72" rx="12" class="service"/>
-  <rect x="310" y="343" width="220" height="72" rx="12" class="service"/>
-  <rect x="690" y="343" width="180" height="72" rx="12" class="source"/>
-  <rect x="350" y="516" width="220" height="64" rx="12" class="store"/>
+  <rect id="client" x="120" y="173" width="160" height="56" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <rect id="gateway" x="360" y="173" width="200" height="56" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <rect id="core" x="350" y="350" width="220" height="64" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="dependency" x="700" y="350" width="180" height="64" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="store" x="380" y="536" width="220" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
 
-  <text x="160" y="205" class="node-title" text-anchor="middle">客户端</text>
-  <text x="420" y="194" class="node-title" text-anchor="middle">入口网关</text>
-  <text x="420" y="213" class="node-sub" text-anchor="middle">Gateway / Auth / BFF</text>
-  <text x="420" y="372" class="node-title" text-anchor="middle">核心服务</text>
-  <text x="420" y="391" class="node-sub" text-anchor="middle">Service / Worker / Rule</text>
-  <text x="780" y="372" class="node-title" text-anchor="middle">外部依赖</text>
-  <text x="780" y="391" class="node-sub" text-anchor="middle">Partner / SaaS</text>
-  <text x="460" y="543" class="node-title" text-anchor="middle">状态与存储</text>
-  <text x="460" y="562" class="node-sub" text-anchor="middle">DB / Cache / Search</text>
+  <text x="200" y="205" class="node-title" text-anchor="middle">客户端</text>
+  <text x="460" y="198" class="node-title" text-anchor="middle">入口网关</text>
+  <text x="460" y="215" class="node-sub" text-anchor="middle">Gateway / Auth / BFF</text>
+  <text x="460" y="376" class="node-title" text-anchor="middle">核心服务</text>
+  <text x="460" y="395" class="node-sub" text-anchor="middle">Service / Worker / Rule</text>
+  <text x="790" y="376" class="node-title" text-anchor="middle">外部依赖</text>
+  <text x="790" y="395" class="node-sub" text-anchor="middle">Partner / SaaS</text>
+  <text x="490" y="562" class="node-title" text-anchor="middle">状态与存储</text>
+  <text x="490" y="581" class="node-sub" text-anchor="middle">DB / Cache / Search</text>
 
-  <path d="M 220 201 H 320" class="edge" id="edge-entry-gateway"/>
-  <path d="M 420 237 V 343" class="edge" id="edge-gateway-core"/>
-  <path d="M 530 379 H 690" class="edge" id="edge-core-dependency"/>
-  <path d="M 420 415 V 468 H 460 V 516" class="edge" id="edge-core-state"/>
+  <path d="M 280 201 H 360" class="edge" id="edge-client-gateway" data-edge-id="edge-client-gateway" data-from="client" data-to="gateway"/>
+  <path d="M 460 229 V 350" class="edge" id="edge-gateway-core" data-edge-id="edge-gateway-core" data-from="gateway" data-to="core"/>
+  <path d="M 570 382 H 700" class="edge" id="edge-core-dependency" data-edge-id="edge-core-dependency" data-from="core" data-to="dependency"/>
+  <path d="M 460 414 V 488 H 490 V 536" class="edge" id="edge-core-store" data-edge-id="edge-core-store" data-from="core" data-to="store"/>
 
-  <rect x="248" y="185" width="48" height="16" rx="5" class="label-bg" data-edge-id="edge-entry-gateway"/>
-  <text x="272" y="196" class="label" text-anchor="middle" data-edge-id="edge-entry-gateway">接入</text>
+  <rect x="306" y="185" width="34" height="16" rx="5" class="label-bg" data-edge-id="edge-client-gateway"/>
+  <text x="323" y="196" class="label" text-anchor="middle" data-edge-id="edge-client-gateway">接入</text>
 
-  <rect x="430" y="274" width="58" height="16" rx="5" class="label-bg" data-edge-id="edge-gateway-core"/>
-  <text x="459" y="285" class="label" text-anchor="middle" data-edge-id="edge-gateway-core">鉴权后转发</text>
+  <rect x="472" y="276" width="58" height="16" rx="5" class="label-bg" data-edge-id="edge-gateway-core"/>
+  <text x="501" y="287" class="label" text-anchor="middle" data-edge-id="edge-gateway-core">鉴权转发</text>
 
-  <rect x="574" y="363" width="54" height="16" rx="5" class="label-bg" data-edge-id="edge-core-dependency"/>
-  <text x="601" y="374" class="label" text-anchor="middle" data-edge-id="edge-core-dependency">同步调用</text>
+  <rect x="602" y="366" width="54" height="16" rx="5" class="label-bg" data-edge-id="edge-core-dependency"/>
+  <text x="629" y="377" class="label" text-anchor="middle" data-edge-id="edge-core-dependency">同步调用</text>
 
-  <rect x="430" y="436" width="54" height="16" rx="5" class="label-bg" data-edge-id="edge-core-state"/>
-  <text x="457" y="447" class="label" text-anchor="middle" data-edge-id="edge-core-state">写入状态</text>
+  <rect x="472" y="458" width="54" height="16" rx="5" class="label-bg" data-edge-id="edge-core-store"/>
+  <text x="499" y="469" class="label" text-anchor="middle" data-edge-id="edge-core-store">写入状态</text>
 </svg>
