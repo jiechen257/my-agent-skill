@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1040" width="1500" height="1040" role="img" aria-labelledby="diagram-title diagram-desc">
+  <!-- spec
+  type: data-flow
+  title: RAG 知识运营数据流图
+  style: claude-official
+  direction: left-to-right
+  nodes:
+    - id: docs
+      label: 产品文档
+      shape: source
+    - id: tickets
+      label: 工单与反馈
+      shape: source
+    - id: webhook
+      label: Webhook 事件
+      shape: source
+    - id: normalize
+      label: 数据归一化
+      shape: transform
+    - id: pii
+      label: 脱敏与权限裁剪
+      shape: transform
+    - id: chunk
+      label: Chunk 与元数据
+      shape: transform
+    - id: embed
+      label: Embedding 生成
+      shape: transform
+    - id: vector
+      label: 向量索引
+      shape: store
+    - id: metadata
+      label: 元数据存储
+      shape: store
+    - id: query
+      label: 用户问题
+      shape: source
+    - id: retriever
+      label: 检索编排
+      shape: transform
+    - id: llm
+      label: LLM 生成
+      shape: transform
+    - id: answer
+      label: 答案与引用
+      shape: sink
+    - id: eval
+      label: 质量评估
+      shape: sink
+  edges:
+    - id: edge-docs-normalize
+      from: docs
+      to: normalize
+      label: markdown/html
+    - id: edge-tickets-normalize
+      from: tickets
+      to: normalize
+      label: ticket payload
+    - id: edge-webhook-normalize
+      from: webhook
+      to: normalize
+      label: event batch
+    - id: edge-normalize-pii
+      from: normalize
+      to: pii
+      label: canonical text
+    - id: edge-pii-chunk
+      from: pii
+      to: chunk
+      label: allowed content
+    - id: edge-chunk-vector
+      from: chunk
+      to: vector
+      label: chunk docs
+    - id: edge-chunk-embed
+      from: chunk
+      to: embed
+      label: text chunks
+    - id: edge-embed-metadata
+      from: embed
+      to: metadata
+      label: vectors + ids
+    - id: edge-query-retriever
+      from: query
+      to: retriever
+      label: question
+    - id: edge-retriever-vector
+      from: retriever
+      to: vector
+      label: similarity search
+    - id: edge-retriever-llm
+      from: retriever
+      to: llm
+      label: context pack
+    - id: edge-llm-answer
+      from: llm
+      to: answer
+      label: response
+    - id: edge-answer-eval
+      from: answer
+      to: eval
+      label: traces
+    - id: edge-eval-normalize
+      from: eval
+      to: normalize
+      label: bad cases
+  -->
+  <title id="diagram-title">RAG 知识运营数据流图</title>
+  <desc id="diagram-desc">包含多源摄取、脱敏、索引、检索、生成、评估反馈的复杂数据流。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .source { fill: #a8c5e6; stroke: #4a4a4a; stroke-width: 2; }
+    .transform { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .store { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .sink { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .feedback { stroke-dasharray: 8,6; }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1500" height="1040" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1444" height="984" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">RAG 知识运营数据流图</text>
+  <text x="70" y="96" class="subtitle">多源摄取、索引、检索生成与评估反馈闭环</text>
+
+  <rect id="docs" x="80" y="180" width="180" height="70" rx="12" class="source"/>
+  <text x="170" y="210" class="node-title" text-anchor="middle">产品文档</text>
+  <text x="170" y="230" class="node-sub" text-anchor="middle">Markdown / HTML</text>
+
+  <rect id="tickets" x="80" y="320" width="180" height="70" rx="12" class="source"/>
+  <text x="170" y="350" class="node-title" text-anchor="middle">工单与反馈</text>
+  <text x="170" y="370" class="node-sub" text-anchor="middle">Issue / Ticket</text>
+
+  <rect id="webhook" x="80" y="460" width="180" height="70" rx="12" class="source"/>
+  <text x="170" y="490" class="node-title" text-anchor="middle">Webhook 事件</text>
+  <text x="170" y="510" class="node-sub" text-anchor="middle">变更 / 删除 / 回滚</text>
+
+  <rect id="normalize" x="360" y="270" width="210" height="90" rx="12" class="transform"/>
+  <text x="465" y="306" class="node-title" text-anchor="middle">数据归一化</text>
+  <text x="465" y="328" class="node-sub" text-anchor="middle">解析 / 清洗 / 去重</text>
+
+  <rect id="pii" x="650" y="270" width="210" height="90" rx="12" class="transform"/>
+  <text x="755" y="306" class="node-title" text-anchor="middle">脱敏与权限裁剪</text>
+  <text x="755" y="328" class="node-sub" text-anchor="middle">PII / ACL / Tenant</text>
+
+  <rect id="chunk" x="940" y="270" width="210" height="90" rx="12" class="transform"/>
+  <text x="1045" y="306" class="node-title" text-anchor="middle">Chunk 与元数据</text>
+  <text x="1045" y="328" class="node-sub" text-anchor="middle">切片 / 来源 / 版本</text>
+
+  <rect id="vector" x="1210" y="270" width="200" height="90" rx="12" class="store"/>
+  <text x="1310" y="306" class="node-title" text-anchor="middle">向量索引</text>
+  <text x="1310" y="328" class="node-sub" text-anchor="middle">Vector DB / Hybrid</text>
+
+  <rect id="embed" x="940" y="440" width="210" height="90" rx="12" class="transform"/>
+  <text x="1045" y="476" class="node-title" text-anchor="middle">Embedding 生成</text>
+  <text x="1045" y="498" class="node-sub" text-anchor="middle">模型批处理</text>
+
+  <rect id="metadata" x="1210" y="440" width="200" height="90" rx="12" class="store"/>
+  <text x="1310" y="476" class="node-title" text-anchor="middle">元数据存储</text>
+  <text x="1310" y="498" class="node-sub" text-anchor="middle">Doc ID / ACL / TTL</text>
+
+  <rect id="query" x="80" y="660" width="180" height="70" rx="12" class="source"/>
+  <text x="170" y="690" class="node-title" text-anchor="middle">用户问题</text>
+  <text x="170" y="710" class="node-sub" text-anchor="middle">Query / Intent</text>
+
+  <rect id="retriever" x="360" y="640" width="210" height="90" rx="12" class="transform"/>
+  <text x="465" y="676" class="node-title" text-anchor="middle">检索编排</text>
+  <text x="465" y="698" class="node-sub" text-anchor="middle">Rewrite / Rerank / Filter</text>
+
+  <rect id="llm" x="940" y="640" width="210" height="90" rx="12" class="transform"/>
+  <text x="1045" y="676" class="node-title" text-anchor="middle">LLM 生成</text>
+  <text x="1045" y="698" class="node-sub" text-anchor="middle">Answer / Citation</text>
+
+  <rect id="answer" x="1210" y="640" width="200" height="90" rx="12" class="sink"/>
+  <text x="1310" y="676" class="node-title" text-anchor="middle">答案与引用</text>
+  <text x="1310" y="698" class="node-sub" text-anchor="middle">Response / Sources</text>
+
+  <rect id="eval" x="650" y="840" width="210" height="90" rx="12" class="sink"/>
+  <text x="755" y="876" class="node-title" text-anchor="middle">质量评估</text>
+  <text x="755" y="898" class="node-sub" text-anchor="middle">Trace / Golden / Review</text>
+
+  <path d="M 260 215 H 316 V 300 H 360" class="edge" id="edge-docs-normalize"/>
+  <path d="M 260 355 H 316 V 320 H 360" class="edge" id="edge-tickets-normalize"/>
+  <path d="M 260 495 H 330 V 340 H 360" class="edge" id="edge-webhook-normalize"/>
+  <path d="M 570 315 H 650" class="edge" id="edge-normalize-pii"/>
+  <path d="M 860 315 H 940" class="edge" id="edge-pii-chunk"/>
+  <path d="M 1150 315 H 1210" class="edge" id="edge-chunk-vector"/>
+  <path d="M 1045 360 V 440" class="edge" id="edge-chunk-embed"/>
+  <path d="M 1150 485 H 1210" class="edge" id="edge-embed-metadata"/>
+  <path d="M 260 695 H 360" class="edge" id="edge-query-retriever"/>
+  <path d="M 570 662 H 610 V 385 H 1310 V 360" class="edge" id="edge-retriever-vector"/>
+  <path d="M 570 700 H 940" class="edge" id="edge-retriever-llm"/>
+  <path d="M 1150 685 H 1210" class="edge" id="edge-llm-answer"/>
+  <path d="M 1310 730 V 800 H 755 V 840" class="edge feedback" id="edge-answer-eval"/>
+  <path d="M 650 885 H 610 V 382 H 465 V 360" class="edge feedback" id="edge-eval-normalize"/>
+
+  <rect x="286" y="236" width="84" height="18" rx="5" class="chip" data-edge-id="edge-docs-normalize"/>
+  <text x="328" y="249" class="label" text-anchor="middle" data-edge-id="edge-docs-normalize">markdown/html</text>
+  <rect x="262" y="342" width="42" height="18" rx="5" class="chip" data-edge-id="edge-tickets-normalize"/>
+  <text x="283" y="355" class="label" text-anchor="middle" data-edge-id="edge-tickets-normalize">工单</text>
+  <rect x="272" y="476" width="74" height="18" rx="5" class="chip" data-edge-id="edge-webhook-normalize"/>
+  <text x="309" y="489" class="label" text-anchor="middle" data-edge-id="edge-webhook-normalize">event batch</text>
+  <rect x="592" y="296" width="48" height="18" rx="5" class="chip" data-edge-id="edge-normalize-pii"/>
+  <text x="616" y="309" class="label" text-anchor="middle" data-edge-id="edge-normalize-pii">规范文本</text>
+  <rect x="880" y="296" width="48" height="18" rx="5" class="chip" data-edge-id="edge-pii-chunk"/>
+  <text x="904" y="309" class="label" text-anchor="middle" data-edge-id="edge-pii-chunk">授权内容</text>
+  <rect x="1164" y="296" width="42" height="18" rx="5" class="chip" data-edge-id="edge-chunk-vector"/>
+  <text x="1185" y="309" class="label" text-anchor="middle" data-edge-id="edge-chunk-vector">文档块</text>
+  <rect x="1060" y="404" width="68" height="18" rx="5" class="chip" data-edge-id="edge-chunk-embed"/>
+  <text x="1094" y="417" class="label" text-anchor="middle" data-edge-id="edge-chunk-embed">text chunks</text>
+  <rect x="1162" y="466" width="48" height="18" rx="5" class="chip" data-edge-id="edge-embed-metadata"/>
+  <text x="1186" y="479" class="label" text-anchor="middle" data-edge-id="edge-embed-metadata">向量ID</text>
+  <rect x="292" y="676" width="58" height="18" rx="5" class="chip" data-edge-id="edge-query-retriever"/>
+  <text x="321" y="689" class="label" text-anchor="middle" data-edge-id="edge-query-retriever">question</text>
+  <rect x="700" y="368" width="56" height="18" rx="5" class="chip" data-edge-id="edge-retriever-vector"/>
+  <text x="728" y="381" class="label" text-anchor="middle" data-edge-id="edge-retriever-vector">相似检索</text>
+  <rect x="690" y="680" width="78" height="18" rx="5" class="chip" data-edge-id="edge-retriever-llm"/>
+  <text x="729" y="693" class="label" text-anchor="middle" data-edge-id="edge-retriever-llm">context pack</text>
+  <rect x="1168" y="666" width="36" height="18" rx="5" class="chip" data-edge-id="edge-llm-answer"/>
+  <text x="1186" y="679" class="label" text-anchor="middle" data-edge-id="edge-llm-answer">答案</text>
+  <rect x="1018" y="782" width="44" height="18" rx="5" class="chip" data-edge-id="edge-answer-eval"/>
+  <text x="1040" y="795" class="label" text-anchor="middle" data-edge-id="edge-answer-eval">traces</text>
+  <rect x="502" y="394" width="60" height="18" rx="5" class="chip" data-edge-id="edge-eval-normalize"/>
+  <text x="532" y="407" class="label" text-anchor="middle" data-edge-id="edge-eval-normalize">bad cases</text>
+</svg>

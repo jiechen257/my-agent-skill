@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 840" width="1180" height="840" role="img" aria-labelledby="diagram-title diagram-desc">
+  <!-- spec
+  type: sequence
+  title: 支付确认时序图
+  style: claude-official
+  direction: top-to-bottom
+  nodes:
+    - id: frontend
+      label: 前端
+      shape: participant
+    - id: order
+      label: 订单服务
+      shape: participant
+    - id: payment
+      label: 支付服务
+      shape: participant
+    - id: fulfillment
+      label: 履约服务
+      shape: participant
+    - id: notify
+      label: 用户通知
+      shape: participant
+  edges:
+    - id: msg-submit
+      from: frontend
+      to: order
+      label: 提交支付
+    - id: msg-create
+      from: order
+      to: payment
+      label: 创建支付单
+    - id: msg-callback
+      from: payment
+      to: order
+      label: 支付回调
+    - id: msg-success
+      from: order
+      to: fulfillment
+      label: 通知履约
+    - id: msg-failure
+      from: order
+      to: notify
+      label: 关闭并通知
+  -->
+  <title id="diagram-title">支付确认时序图</title>
+  <desc id="diagram-desc">展示支付回调后的成功和失败 alt 分支，以及各参与者激活条。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="5.6" markerHeight="5.6" refX="4.8" refY="2.8" orient="auto">
+      <polyline points="0 0, 5.6 2.8, 0 5.6" fill="none" stroke="#5a5a5a" stroke-width="1.1"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .participant { stroke: #4a4a4a; stroke-width: 2; }
+    .source { fill: #a8c5e6; }
+    .process { fill: #9dd4c7; }
+    .store { fill: #e8e6e3; }
+    .lifeline { stroke: #8f8a83; stroke-width: 1.2; stroke-dasharray: 6,5; }
+    .activation { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.1; }
+    .phase-band { fill: #e9f2fb; stroke: none; }
+    .phase-pill { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.1; }
+    .phase-text { font-size: 12px; font-weight: 700; fill: #4c4c4c; }
+    .msg { stroke: #5a5a5a; stroke-width: 1.9; marker-end: url(#arrow); }
+    .async { stroke: #5a5a5a; stroke-width: 1.8; stroke-dasharray: 8,6; marker-end: url(#arrow-open); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.9; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .frame { fill: none; stroke: #938c81; stroke-width: 1.2; stroke-dasharray: 8,6; }
+    .frame-sep { stroke: #938c81; stroke-width: 1; stroke-dasharray: 8,6; }
+    .frame-pill { fill: #e8e6e3; stroke: #bcb5ab; stroke-width: 0.9; }
+    .frame-title { font-size: 10px; font-weight: 700; fill: #5a5a5a; }
+    .branch-title { font-size: 11px; font-weight: 700; fill: #5a5a5a; }
+    .legend { font-size: 11px; fill: #6a6a6a; }
+  </style>
+
+  <rect width="1180" height="840" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1124" height="784" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">支付确认时序图</text>
+  <text x="70" y="96" class="subtitle">支付回调后的成功履约和失败关闭分支</text>
+
+  <rect x="70" y="274" width="1040" height="32" rx="14" class="phase-band"/>
+  <rect x="94" y="280" width="170" height="20" rx="10" class="phase-pill"/>
+  <text x="179" y="294" text-anchor="middle" class="phase-text">阶段一：创建支付单</text>
+
+  <rect x="60" y="200" width="140" height="50" rx="12" class="participant source"/>
+  <rect x="290" y="200" width="140" height="50" rx="12" class="participant process"/>
+  <rect x="520" y="200" width="140" height="50" rx="12" class="participant process"/>
+  <rect x="750" y="200" width="140" height="50" rx="12" class="participant process"/>
+  <rect x="980" y="200" width="140" height="50" rx="12" class="participant store"/>
+
+  <text x="130" y="230" class="node-title" text-anchor="middle">前端</text>
+  <text x="360" y="230" class="node-title" text-anchor="middle">订单服务</text>
+  <text x="590" y="230" class="node-title" text-anchor="middle">支付服务</text>
+  <text x="820" y="230" class="node-title" text-anchor="middle">履约服务</text>
+  <text x="1050" y="230" class="node-title" text-anchor="middle">用户通知</text>
+
+  <line x1="130" y1="250" x2="130" y2="740" class="lifeline"/>
+  <line x1="360" y1="250" x2="360" y2="740" class="lifeline"/>
+  <line x1="590" y1="250" x2="590" y2="740" class="lifeline"/>
+  <line x1="820" y1="250" x2="820" y2="740" class="lifeline"/>
+  <line x1="1050" y1="250" x2="1050" y2="740" class="lifeline"/>
+
+  <rect x="352" y="330" width="16" height="360" class="activation"/>
+  <rect x="582" y="410" width="16" height="92" class="activation"/>
+  <rect x="812" y="568" width="16" height="44" class="activation"/>
+  <rect x="1042" y="656" width="16" height="44" class="activation"/>
+
+  <line x1="130" y1="340" x2="360" y2="340" class="msg"/>
+  <rect x="214" y="324" width="62" height="18" rx="5" class="chip"/>
+  <text x="245" y="337" text-anchor="middle" class="label">提交支付</text>
+
+  <line x1="360" y1="420" x2="590" y2="420" class="msg"/>
+  <rect x="444" y="404" width="70" height="18" rx="5" class="chip"/>
+  <text x="479" y="417" text-anchor="middle" class="label">创建支付单</text>
+
+  <line x1="590" y1="492" x2="360" y2="492" class="async"/>
+  <rect x="446" y="476" width="62" height="18" rx="5" class="chip"/>
+  <text x="477" y="489" text-anchor="middle" class="label">支付回调</text>
+
+  <rect x="330" y="520" width="780" height="200" rx="12" class="frame" data-frame-id="payment-alt"/>
+  <rect x="348" y="528" width="34" height="16" rx="5" class="frame-pill"/>
+  <text x="365" y="539" text-anchor="middle" class="frame-title">alt</text>
+  <text x="396" y="540" class="branch-title" data-frame-id="payment-alt" data-branch="1">[支付成功]</text>
+  <line x1="348" y1="620" x2="1092" y2="620" class="frame-sep" data-frame-id="payment-alt"/>
+  <text x="396" y="646" class="branch-title" data-frame-id="payment-alt" data-branch="2">[支付失败]</text>
+
+  <line x1="360" y1="580" x2="820" y2="580" class="msg" data-frame-id="payment-alt" data-branch="1"/>
+  <rect x="556" y="564" width="80" height="18" rx="5" class="chip"/>
+  <text x="596" y="577" text-anchor="middle" class="label">通知履约</text>
+
+  <line x1="360" y1="668" x2="1050" y2="668" class="async" data-frame-id="payment-alt" data-branch="2"/>
+  <rect x="654" y="652" width="86" height="18" rx="5" class="chip"/>
+  <text x="697" y="665" text-anchor="middle" class="label">关闭并通知</text>
+
+  <text x="70" y="748" class="legend">图例：实线 = 同步调用，虚线 = 回调 / 通知，alt 框 = 成功与失败分支。</text>
+</svg>

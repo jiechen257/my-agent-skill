@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="diagram-title diagram-desc">
+  <!-- spec
+  type: comparison-matrix
+  title: 企业 AI 落地方案对比矩阵
+  style: claude-official
+  nodes:
+    - id: direct-copilot
+      label: 内嵌 Copilot
+      shape: matrix-column
+    - id: rag-assistant
+      label: RAG 助手
+      shape: matrix-column
+    - id: workflow-agent
+      label: 工作流 Agent
+      shape: matrix-column
+    - id: autonomous-agent
+      label: 自主执行 Agent
+      shape: matrix-column
+    - id: platform
+      label: Agent Platform
+      shape: matrix-column
+  edges: []
+  -->
+  <title id="diagram-title">企业 AI 落地方案对比矩阵</title>
+  <desc id="diagram-desc">对比五类企业 AI 落地方案在七个维度上的成熟度、风险和投入。</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .header { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.5; }
+    .rowhead { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 1.2; }
+    .yes { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 1.2; }
+    .partial { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.2; }
+    .no { fill: #fffdf8; stroke: #4a4a4a; stroke-width: 1.2; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1600" height="900" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1544" height="844" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">企业 AI 落地方案对比矩阵</text>
+  <text x="70" y="96" class="subtitle">五类方案在数据依赖、权限风险、可控性、上线周期和组织成本上的取舍</text>
+
+  <rect x="80" y="150" width="180" height="58" class="header"/>
+  <rect x="260" y="150" width="250" height="58" class="header"/>
+  <rect x="510" y="150" width="250" height="58" class="header"/>
+  <rect x="760" y="150" width="250" height="58" class="header"/>
+  <rect x="1010" y="150" width="250" height="58" class="header"/>
+  <rect x="1260" y="150" width="250" height="58" class="header"/>
+
+  <text x="170" y="185" class="node-title" text-anchor="middle">评估维度</text>
+  <text x="385" y="185" class="node-title" text-anchor="middle">内嵌 Copilot</text>
+  <text x="635" y="185" class="node-title" text-anchor="middle">RAG 知识助手</text>
+  <text x="885" y="185" class="node-title" text-anchor="middle">工作流 Agent</text>
+  <text x="1135" y="185" class="node-title" text-anchor="middle">自主执行 Agent</text>
+  <text x="1385" y="185" class="node-title" text-anchor="middle">Agent Platform</text>
+
+  <rect x="80" y="208" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="276" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="344" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="412" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="480" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="548" width="180" height="68" class="rowhead"/>
+  <rect x="80" y="616" width="180" height="68" class="rowhead"/>
+
+  <text x="170" y="248" class="node-title" text-anchor="middle">数据准备</text>
+  <text x="170" y="316" class="node-title" text-anchor="middle">权限治理</text>
+  <text x="170" y="384" class="node-title" text-anchor="middle">行为可控性</text>
+  <text x="170" y="452" class="node-title" text-anchor="middle">业务覆盖</text>
+  <text x="170" y="520" class="node-title" text-anchor="middle">上线周期</text>
+  <text x="170" y="588" class="node-title" text-anchor="middle">组织成本</text>
+  <text x="170" y="656" class="node-title" text-anchor="middle">长期扩展</text>
+
+  <rect x="260" y="208" width="250" height="68" class="yes"/>
+  <rect x="510" y="208" width="250" height="68" class="partial"/>
+  <rect x="760" y="208" width="250" height="68" class="partial"/>
+  <rect x="1010" y="208" width="250" height="68" class="no"/>
+  <rect x="1260" y="208" width="250" height="68" class="partial"/>
+
+  <rect x="260" y="276" width="250" height="68" class="partial"/>
+  <rect x="510" y="276" width="250" height="68" class="no"/>
+  <rect x="760" y="276" width="250" height="68" class="partial"/>
+  <rect x="1010" y="276" width="250" height="68" class="no"/>
+  <rect x="1260" y="276" width="250" height="68" class="yes"/>
+
+  <rect x="260" y="344" width="250" height="68" class="yes"/>
+  <rect x="510" y="344" width="250" height="68" class="partial"/>
+  <rect x="760" y="344" width="250" height="68" class="partial"/>
+  <rect x="1010" y="344" width="250" height="68" class="no"/>
+  <rect x="1260" y="344" width="250" height="68" class="partial"/>
+
+  <rect x="260" y="412" width="250" height="68" class="partial"/>
+  <rect x="510" y="412" width="250" height="68" class="partial"/>
+  <rect x="760" y="412" width="250" height="68" class="yes"/>
+  <rect x="1010" y="412" width="250" height="68" class="yes"/>
+  <rect x="1260" y="412" width="250" height="68" class="yes"/>
+
+  <rect x="260" y="480" width="250" height="68" class="yes"/>
+  <rect x="510" y="480" width="250" height="68" class="partial"/>
+  <rect x="760" y="480" width="250" height="68" class="partial"/>
+  <rect x="1010" y="480" width="250" height="68" class="no"/>
+  <rect x="1260" y="480" width="250" height="68" class="no"/>
+
+  <rect x="260" y="548" width="250" height="68" class="yes"/>
+  <rect x="510" y="548" width="250" height="68" class="partial"/>
+  <rect x="760" y="548" width="250" height="68" class="partial"/>
+  <rect x="1010" y="548" width="250" height="68" class="no"/>
+  <rect x="1260" y="548" width="250" height="68" class="no"/>
+
+  <rect x="260" y="616" width="250" height="68" class="partial"/>
+  <rect x="510" y="616" width="250" height="68" class="partial"/>
+  <rect x="760" y="616" width="250" height="68" class="yes"/>
+  <rect x="1010" y="616" width="250" height="68" class="partial"/>
+  <rect x="1260" y="616" width="250" height="68" class="yes"/>
+
+  <text x="385" y="248" class="label" text-anchor="middle">低</text>
+  <text x="635" y="248" class="label" text-anchor="middle">中</text>
+  <text x="885" y="248" class="label" text-anchor="middle">中</text>
+  <text x="1135" y="248" class="label" text-anchor="middle">高</text>
+  <text x="1385" y="248" class="label" text-anchor="middle">中</text>
+
+  <text x="385" y="316" class="label" text-anchor="middle">中</text>
+  <text x="635" y="316" class="label" text-anchor="middle">高</text>
+  <text x="885" y="316" class="label" text-anchor="middle">中</text>
+  <text x="1135" y="316" class="label" text-anchor="middle">高</text>
+  <text x="1385" y="316" class="label" text-anchor="middle">低</text>
+
+  <text x="385" y="384" class="label" text-anchor="middle">高</text>
+  <text x="635" y="384" class="label" text-anchor="middle">中</text>
+  <text x="885" y="384" class="label" text-anchor="middle">中</text>
+  <text x="1135" y="384" class="label" text-anchor="middle">低</text>
+  <text x="1385" y="384" class="label" text-anchor="middle">中</text>
+
+  <text x="385" y="452" class="label" text-anchor="middle">中</text>
+  <text x="635" y="452" class="label" text-anchor="middle">中</text>
+  <text x="885" y="452" class="label" text-anchor="middle">高</text>
+  <text x="1135" y="452" class="label" text-anchor="middle">高</text>
+  <text x="1385" y="452" class="label" text-anchor="middle">高</text>
+
+  <text x="385" y="520" class="label" text-anchor="middle">短</text>
+  <text x="635" y="520" class="label" text-anchor="middle">中</text>
+  <text x="885" y="520" class="label" text-anchor="middle">中</text>
+  <text x="1135" y="520" class="label" text-anchor="middle">长</text>
+  <text x="1385" y="520" class="label" text-anchor="middle">长</text>
+
+  <text x="385" y="588" class="label" text-anchor="middle">低</text>
+  <text x="635" y="588" class="label" text-anchor="middle">中</text>
+  <text x="885" y="588" class="label" text-anchor="middle">中</text>
+  <text x="1135" y="588" class="label" text-anchor="middle">高</text>
+  <text x="1385" y="588" class="label" text-anchor="middle">高</text>
+
+  <text x="385" y="656" class="label" text-anchor="middle">中</text>
+  <text x="635" y="656" class="label" text-anchor="middle">中</text>
+  <text x="885" y="656" class="label" text-anchor="middle">高</text>
+  <text x="1135" y="656" class="label" text-anchor="middle">中</text>
+  <text x="1385" y="656" class="label" text-anchor="middle">高</text>
+</svg>

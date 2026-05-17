@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1180" width="1700" height="1180" role="img" aria-labelledby="diagram-title diagram-desc" data-diagram-type="flowchart">
+  <!-- spec
+  type: flowchart
+  title: Vue3 底层原理流程图
+  style: claude-official
+  direction: left-to-right with update loop
+  nodes:
+    - id: create-app
+      label: 创建应用 createApp
+      shape: terminal
+    - id: mount
+      label: 挂载应用 mount
+      shape: process
+    - id: instance
+      label: 组件实例
+      shape: process
+    - id: setup
+      label: 组件初始化 setup
+      shape: process
+    - id: compiler
+      label: 模板编译器 compiler
+      shape: process
+    - id: render-fn
+      label: 渲染函数 render
+      shape: process
+    - id: render-proxy
+      label: 渲染代理上下文
+      shape: process
+    - id: reactive-proxy
+      label: 响应式代理 reactive
+      shape: process
+    - id: track
+      label: 依赖收集 track
+      shape: store
+    - id: effect
+      label: 响应式副作用 effect
+      shape: process
+    - id: render-call
+      label: 渲染执行 render
+      shape: process
+    - id: vnode-tree
+      label: 虚拟节点树 VNode
+      shape: store
+    - id: mutation
+      label: 状态变更
+      shape: process
+    - id: trigger
+      label: 触发依赖 trigger
+      shape: process
+    - id: scheduler
+      label: 调度器 scheduler
+      shape: process
+    - id: queue
+      label: 任务队列 job queue
+      shape: store
+    - id: update
+      label: 组件更新 update
+      shape: process
+    - id: patch
+      label: 补丁更新 patch
+      shape: process
+    - id: renderer-bus
+      label: 渲染器流水线
+      shape: routing-node
+    - id: diff
+      label: keyed diff 列表对比
+      shape: process
+    - id: props
+      label: 更新属性事件
+      shape: process
+    - id: dom-ops
+      label: DOM 操作
+      shape: process
+    - id: hooks
+      label: 生命周期 hooks
+      shape: process
+    - id: paint
+      label: 浏览器绘制 paint
+      shape: terminal
+  -->
+  <title id="diagram-title">Vue3 底层原理流程图</title>
+  <desc id="diagram-desc">展示 Vue3 从 createApp、组件初始化、模板编译、响应式依赖收集、调度队列、patch diff 到 DOM 提交的复杂运行流程。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .phase-band { fill: rgba(244, 228, 193, 0.26); stroke: #d6c29a; stroke-width: 1.1; }
+    .phase-pill { fill: #fff7e6; stroke: #8f7350; stroke-width: 1.1; }
+    .phase-text { font-size: 11px; font-weight: 700; fill: #5a4a35; }
+    .node-body { stroke: #4a4a4a; stroke-width: 2; }
+    .terminal { fill: #a8c5e6; }
+    .process { fill: #9dd4c7; }
+    .store { fill: #e8e6e3; }
+    .output { fill: #f4e4c1; }
+    .routing { fill: #fff7e6; stroke: #8f7350; stroke-width: 1.4; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .feedback { stroke-dasharray: 8,6; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+    .bus-title { font-size: 10px; font-weight: 700; fill: #4a3924; }
+  </style>
+
+  <rect width="1700" height="1180" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1644" height="1124" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">Vue3 底层原理流程图</text>
+  <text x="70" y="96" class="subtitle">初始化、编译、响应式依赖收集、调度刷新、patch diff 与 DOM 提交闭环</text>
+
+  <rect x="70" y="126" width="1560" height="150" rx="16" class="phase-band"/>
+  <rect x="96" y="112" width="150" height="24" rx="12" class="phase-pill"/>
+  <text x="171" y="128" text-anchor="middle" class="phase-text">应用初始化与编译</text>
+
+  <rect x="70" y="336" width="1560" height="150" rx="16" class="phase-band"/>
+  <rect x="96" y="322" width="160" height="24" rx="12" class="phase-pill"/>
+  <text x="176" y="338" text-anchor="middle" class="phase-text">渲染 effect 与依赖收集</text>
+
+  <rect x="70" y="576" width="1560" height="150" rx="16" class="phase-band"/>
+  <rect x="96" y="562" width="150" height="24" rx="12" class="phase-pill"/>
+  <text x="171" y="578" text-anchor="middle" class="phase-text">更新调度与 patch</text>
+
+  <rect x="70" y="838" width="1560" height="160" rx="16" class="phase-band"/>
+  <rect x="96" y="824" width="152" height="24" rx="12" class="phase-pill"/>
+  <text x="172" y="840" text-anchor="middle" class="phase-text">DOM 提交与生命周期</text>
+
+  <rect id="create-app" x="90" y="160" width="200" height="70" rx="18" class="node-body terminal"/>
+  <text x="190" y="190" class="node-title" text-anchor="middle">创建应用 createApp</text>
+  <text x="190" y="210" class="node-sub" text-anchor="middle">创建 app context</text>
+
+  <rect id="mount" x="350" y="160" width="200" height="70" rx="12" class="node-body process"/>
+  <text x="450" y="190" class="node-title" text-anchor="middle">挂载应用 mount</text>
+  <text x="450" y="210" class="node-sub" text-anchor="middle">定位容器 / 根组件</text>
+
+  <rect id="instance" x="610" y="160" width="200" height="70" rx="12" class="node-body process"/>
+  <text x="710" y="190" class="node-title" text-anchor="middle">组件实例</text>
+  <text x="710" y="210" class="node-sub" text-anchor="middle">props / slots / ctx</text>
+
+  <rect id="setup" x="870" y="160" width="200" height="70" rx="12" class="node-body process"/>
+  <text x="970" y="190" class="node-title" text-anchor="middle">组件初始化 setup</text>
+  <text x="970" y="210" class="node-sub" text-anchor="middle">setup state / proxy</text>
+
+  <rect id="compiler" x="1130" y="160" width="200" height="70" rx="12" class="node-body process"/>
+  <text x="1230" y="190" class="node-title" text-anchor="middle">模板编译器 compiler</text>
+  <text x="1230" y="210" class="node-sub" text-anchor="middle">parse / transform / codegen</text>
+
+  <rect id="render-fn" x="1390" y="160" width="200" height="70" rx="12" class="node-body process"/>
+  <text x="1490" y="190" class="node-title" text-anchor="middle">渲染函数 render</text>
+  <text x="1490" y="210" class="node-sub" text-anchor="middle">with block tree hints</text>
+
+  <rect id="render-proxy" x="90" y="380" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="190" y="414" class="node-title" text-anchor="middle">渲染代理上下文</text>
+  <text x="190" y="436" class="node-sub" text-anchor="middle">proxyRefs / public proxy</text>
+
+  <rect id="reactive-proxy" x="350" y="380" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="450" y="414" class="node-title" text-anchor="middle">响应式代理 reactive</text>
+  <text x="450" y="436" class="node-sub" text-anchor="middle">get / set trap</text>
+
+  <rect id="track" x="610" y="380" width="200" height="80" rx="12" class="node-body store"/>
+  <text x="710" y="414" class="node-title" text-anchor="middle">依赖收集 track</text>
+  <text x="710" y="436" class="node-sub" text-anchor="middle">targetMap -> dep set</text>
+
+  <rect id="effect" x="870" y="380" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="970" y="414" class="node-title" text-anchor="middle">响应式副作用 effect</text>
+  <text x="970" y="436" class="node-sub" text-anchor="middle">activeEffect / deps</text>
+
+  <rect id="render-call" x="1130" y="380" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="1230" y="414" class="node-title" text-anchor="middle">渲染执行 render</text>
+  <text x="1230" y="436" class="node-sub" text-anchor="middle">读取响应式状态</text>
+
+  <rect id="vnode-tree" x="1390" y="380" width="200" height="80" rx="12" class="node-body store"/>
+  <text x="1490" y="414" class="node-title" text-anchor="middle">虚拟节点树 VNode</text>
+  <text x="1490" y="436" class="node-sub" text-anchor="middle">shapeFlag / patchFlag</text>
+
+  <rect id="mutation" x="90" y="620" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="190" y="654" class="node-title" text-anchor="middle">状态变更</text>
+  <text x="190" y="676" class="node-sub" text-anchor="middle">ref.value / proxy.set</text>
+
+  <rect id="trigger" x="350" y="620" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="450" y="654" class="node-title" text-anchor="middle">触发依赖 trigger</text>
+  <text x="450" y="676" class="node-sub" text-anchor="middle">收集待运行 effects</text>
+
+  <rect id="scheduler" x="610" y="620" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="710" y="654" class="node-title" text-anchor="middle">调度器 scheduler</text>
+  <text x="710" y="676" class="node-sub" text-anchor="middle">去重 / 排序 / 合并</text>
+
+  <rect id="queue" x="870" y="620" width="200" height="80" rx="12" class="node-body store"/>
+  <text x="970" y="654" class="node-title" text-anchor="middle">任务队列 job queue</text>
+  <text x="970" y="676" class="node-sub" text-anchor="middle">Promise microtask</text>
+
+  <rect id="update" x="1130" y="620" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="1230" y="654" class="node-title" text-anchor="middle">组件更新 update</text>
+  <text x="1230" y="676" class="node-sub" text-anchor="middle">effect.run()</text>
+
+  <rect id="patch" x="1390" y="620" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="1490" y="654" class="node-title" text-anchor="middle">补丁更新 patch</text>
+  <text x="1490" y="676" class="node-sub" text-anchor="middle">mount / update branch</text>
+
+  <rect id="renderer-bus" x="320" y="790" width="1320" height="36" rx="11" class="routing" data-routing-node="true"/>
+  <text x="980" y="813" class="bus-title" text-anchor="middle">渲染器流水线 Renderer Pipeline</text>
+
+  <rect id="diff" x="350" y="878" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="450" y="912" class="node-title" text-anchor="middle">keyed diff 列表对比</text>
+  <text x="450" y="934" class="node-sub" text-anchor="middle">最长递增子序列</text>
+
+  <rect id="props" x="610" y="878" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="710" y="912" class="node-title" text-anchor="middle">更新属性事件</text>
+  <text x="710" y="934" class="node-sub" text-anchor="middle">class / style / listener</text>
+
+  <rect id="dom-ops" x="870" y="878" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="970" y="912" class="node-title" text-anchor="middle">DOM 操作</text>
+  <text x="970" y="934" class="node-sub" text-anchor="middle">insert / remove / setText</text>
+
+  <rect id="hooks" x="1130" y="878" width="200" height="80" rx="12" class="node-body process"/>
+  <text x="1230" y="912" class="node-title" text-anchor="middle">生命周期 hooks</text>
+  <text x="1230" y="934" class="node-sub" text-anchor="middle">mounted / updated</text>
+
+  <rect id="paint" x="1390" y="878" width="200" height="80" rx="18" class="node-body output"/>
+  <text x="1490" y="912" class="node-title" text-anchor="middle">浏览器绘制 paint</text>
+  <text x="1490" y="934" class="node-sub" text-anchor="middle">用户看到更新</text>
+
+  <path d="M 290 195 H 350" class="edge" id="edge-create-mount"/>
+  <path d="M 550 195 H 610" class="edge" id="edge-mount-instance"/>
+  <path d="M 810 195 H 870" class="edge" id="edge-instance-setup"/>
+  <path d="M 1070 195 H 1130" class="edge" id="edge-setup-compiler"/>
+  <path d="M 1330 195 H 1390" class="edge" id="edge-compiler-render-fn"/>
+  <path d="M 970 230 V 304 H 280 V 380" class="edge" id="edge-setup-render-proxy"/>
+  <path d="M 1490 230 V 304 H 970 V 380" class="edge" id="edge-render-fn-effect"/>
+
+  <path d="M 290 420 H 350" class="edge" id="edge-proxy-reactive"/>
+  <path d="M 550 420 H 610" class="edge" id="edge-reactive-track"/>
+  <path d="M 810 420 H 870" class="edge" id="edge-track-effect"/>
+  <path d="M 1070 420 H 1130" class="edge" id="edge-effect-render"/>
+  <path d="M 1330 420 H 1390" class="edge" id="edge-render-vnode"/>
+  <path d="M 1490 460 V 620" class="edge" id="edge-vnode-patch"/>
+
+  <path d="M 290 660 H 350" class="edge" id="edge-mutation-trigger"/>
+  <path d="M 550 660 H 610" class="edge" id="edge-trigger-scheduler"/>
+  <path d="M 810 660 H 870" class="edge" id="edge-scheduler-queue"/>
+  <path d="M 1070 660 H 1130" class="edge" id="edge-queue-update"/>
+  <path d="M 1330 660 H 1390" class="edge" id="edge-update-patch"/>
+  <path d="M 1230 620 V 460" class="edge feedback" id="edge-update-render-loop"/>
+  <path d="M 450 620 V 540 H 710 V 460" class="edge feedback" id="edge-trigger-track-map"/>
+
+  <path d="M 1490 700 V 790" class="edge" id="edge-patch-renderer-bus"/>
+  <path d="M 450 826 V 878" class="edge" id="edge-bus-diff"/>
+  <path d="M 550 918 H 610" class="edge" id="edge-diff-props"/>
+  <path d="M 810 918 H 870" class="edge" id="edge-props-dom"/>
+  <path d="M 1070 918 H 1130" class="edge" id="edge-dom-hooks"/>
+  <path d="M 1330 918 H 1390" class="edge" id="edge-hooks-paint"/>
+</svg>

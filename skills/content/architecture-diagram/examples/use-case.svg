@@ -12,6 +12,7 @@
     .usecase { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 1.8; }
     .actor { stroke: #4a4a4a; stroke-width: 2; fill: none; }
     .edge { fill: none; stroke: #5a5a5a; stroke-width: 1.8; marker-end: url(#arrow); }
+    .relation { stroke-dasharray: 7,5; }
     .label { font-size: 10px; fill: #5a5a5a; }
     .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
   </style>
@@ -35,8 +36,8 @@
   <text x="430" y="475" class="node-title" text-anchor="middle">补充上下文信息</text>
   <line x1="150" y1="230" x2="340" y2="240" class="actor"/>
   <line x1="150" y1="250" x2="460" y2="470" class="actor"/>
-  <path d="M 554 252 H 580 V 324" class="edge" id="edge-include"/>
-  <path d="M 550 470 H 650 V 396" class="edge" id="edge-extend"/>
+  <path d="M 554 252 H 580 V 324" class="edge relation" id="edge-include"/>
+  <path d="M 550 470 H 580 V 396" class="edge relation" id="edge-extend"/>
   <text x="555" y="282" class="label" text-anchor="middle" data-edge-id="edge-include">&lt;&lt;include&gt;&gt;</text>
   <text x="610" y="450" class="label" text-anchor="middle" data-edge-id="edge-extend">&lt;&lt;extend&gt;&gt;</text>
 </svg>

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 820" width="1120" height="820" role="img" aria-labelledby="diagram-title diagram-desc">
+  <!-- spec
+  type: state-machine
+  title: 任务执行状态机
+  style: claude-official
+  direction: left-to-right
+  nodes:
+    - id: initial
+      label: 初始
+      shape: initial
+    - id: pending
+      label: 待调度
+      shape: state
+    - id: running
+      label: 执行中
+      shape: state
+    - id: retry
+      label: 等待重试
+      shape: state
+    - id: failed
+      label: 已失败
+      shape: state
+    - id: cancelled
+      label: 已取消
+      shape: state
+    - id: done
+      label: 已完成
+      shape: final
+    - id: failed-final
+      label: 失败结束
+      shape: final
+  edges:
+    - id: edge-init-pending
+      from: initial
+      to: pending
+      label: 开始
+    - id: edge-pending-running
+      from: pending
+      to: running
+      label: submit
+    - id: edge-running-done
+      from: running
+      to: done
+      label: success
+    - id: edge-running-retry
+      from: running
+      to: retry
+      label: error [retry]
+    - id: edge-retry-running
+      from: retry
+      to: running
+      label: timer
+    - id: edge-retry-failed
+      from: retry
+      to: failed
+      label: retry exhausted
+    - id: edge-pending-cancel
+      from: pending
+      to: cancelled
+      label: cancel
+    - id: edge-running-cancel
+      from: running
+      to: cancelled
+      label: cancel
+    - id: edge-failed-final
+      from: failed
+      to: failed-final
+      label: close
+  -->
+  <title id="diagram-title">任务执行状态机</title>
+  <desc id="diagram-desc">包含执行、重试、失败、取消和两个终态的复杂状态流转图。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .state { fill: #9dd4c7; stroke: #4a4a4a; stroke-width: 2; }
+    .passive { fill: #e8e6e3; stroke: #4a4a4a; stroke-width: 2; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1120" height="820" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1064" height="764" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">任务执行状态机</text>
+  <text x="70" y="96" class="subtitle">提交、成功、失败重试、取消和终止流转</text>
+
+  <circle cx="110" cy="220" r="12" fill="#1a1a1a"/>
+  <circle cx="900" cy="208" r="18" fill="#fffdf8" stroke="#1a1a1a" stroke-width="2"/>
+  <circle cx="900" cy="208" r="10" fill="#1a1a1a"/>
+  <circle cx="1040" cy="418" r="18" fill="#fffdf8" stroke="#1a1a1a" stroke-width="2"/>
+  <circle cx="1040" cy="418" r="10" fill="#1a1a1a"/>
+
+  <rect x="250" y="170" width="170" height="76" rx="16" class="state"/>
+  <text x="335" y="202" class="node-title" text-anchor="middle">待调度</text>
+  <text x="335" y="222" class="node-sub" text-anchor="middle">entry / 排队</text>
+
+  <rect x="530" y="170" width="170" height="76" rx="16" class="state"/>
+  <text x="615" y="202" class="node-title" text-anchor="middle">执行中</text>
+  <text x="615" y="222" class="node-sub" text-anchor="middle">do / 执行任务</text>
+
+  <rect x="530" y="380" width="170" height="76" rx="16" class="passive"/>
+  <text x="615" y="412" class="node-title" text-anchor="middle">等待重试</text>
+  <text x="615" y="432" class="node-sub" text-anchor="middle">after / 延迟触发</text>
+
+  <rect x="810" y="380" width="170" height="76" rx="16" class="passive"/>
+  <text x="895" y="412" class="node-title" text-anchor="middle">已失败</text>
+  <text x="895" y="432" class="node-sub" text-anchor="middle">exit / 记录错误</text>
+
+  <rect x="250" y="560" width="170" height="76" rx="16" class="passive"/>
+  <text x="335" y="592" class="node-title" text-anchor="middle">已取消</text>
+  <text x="335" y="612" class="node-sub" text-anchor="middle">用户或系统取消</text>
+
+  <path d="M 122 220 H 250" class="edge" id="edge-init-pending"/>
+  <path d="M 420 208 H 530" class="edge" id="edge-pending-running"/>
+  <path d="M 700 208 H 882" class="edge" id="edge-running-done"/>
+  <path d="M 615 246 V 380" class="edge" id="edge-running-retry"/>
+  <path d="M 530 418 H 475 V 208 H 530" class="edge" id="edge-retry-running"/>
+  <path d="M 700 418 H 810" class="edge" id="edge-retry-failed"/>
+  <path d="M 335 246 V 560" class="edge" id="edge-pending-cancel"/>
+  <path d="M 570 246 V 320 H 365 V 560" class="edge" id="edge-running-cancel"/>
+  <path d="M 980 418 H 1022" class="edge" id="edge-failed-final"/>
+
+  <rect x="170" y="204" width="42" height="18" rx="5" class="chip" data-edge-id="edge-init-pending"/>
+  <text x="191" y="217" class="label" text-anchor="middle" data-edge-id="edge-init-pending">开始</text>
+  <rect x="458" y="180" width="54" height="18" rx="5" class="chip" data-edge-id="edge-pending-running"/>
+  <text x="485" y="193" class="label" text-anchor="middle" data-edge-id="edge-pending-running">submit</text>
+  <rect x="734" y="192" width="64" height="18" rx="5" class="chip" data-edge-id="edge-running-done"/>
+  <text x="766" y="205" class="label" text-anchor="middle" data-edge-id="edge-running-done">success</text>
+  <rect x="626" y="300" width="82" height="18" rx="5" class="chip" data-edge-id="edge-running-retry"/>
+  <text x="667" y="313" class="label" text-anchor="middle" data-edge-id="edge-running-retry">error [retry]</text>
+  <rect x="486" y="340" width="44" height="18" rx="5" class="chip" data-edge-id="edge-retry-running"/>
+  <text x="508" y="353" class="label" text-anchor="middle" data-edge-id="edge-retry-running">timer</text>
+  <rect x="724" y="402" width="74" height="18" rx="5" class="chip" data-edge-id="edge-retry-failed"/>
+  <text x="761" y="415" class="label" text-anchor="middle" data-edge-id="edge-retry-failed">耗尽重试</text>
+  <rect x="286" y="380" width="48" height="18" rx="5" class="chip" data-edge-id="edge-pending-cancel"/>
+  <text x="310" y="393" class="label" text-anchor="middle" data-edge-id="edge-pending-cancel">cancel</text>
+  <rect x="380" y="304" width="48" height="18" rx="5" class="chip" data-edge-id="edge-running-cancel"/>
+  <text x="404" y="317" class="label" text-anchor="middle" data-edge-id="edge-running-cancel">cancel</text>
+</svg>

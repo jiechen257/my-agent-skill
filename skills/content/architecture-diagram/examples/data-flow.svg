@@ -25,7 +25,7 @@
   <path d="M 200 330 H 320" class="edge" id="edge-source-transform"/>
   <path d="M 500 330 H 620" class="edge" id="edge-transform-store"/>
   <path d="M 800 330 H 860" class="edge" id="edge-store-sink"/>
-  <path d="M 710 390 V 500 H 410 V 560" class="edge" id="edge-store-feedback"/>
+  <path d="M 710 380 V 500 H 410 V 560" class="edge" id="edge-store-feedback"/>
   <rect x="80" y="290" width="120" height="80" rx="12" class="source"/>
   <text x="140" y="318" class="node-title" text-anchor="middle">数据源</text>
   <text x="140" y="337" class="node-sub" text-anchor="middle">事件 / 文件 / 请求</text>

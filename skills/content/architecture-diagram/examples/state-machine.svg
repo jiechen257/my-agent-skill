@@ -26,7 +26,7 @@
   <path d="M 152 230 H 280" class="edge" id="edge-init-pending"/>
   <path d="M 430 230 H 570" class="edge" id="edge-pending-running"/>
   <path d="M 720 230 H 744 V 540 H 842" class="edge" id="edge-running-done"/>
-  <path d="M 350 290 V 430 H 650 V 480" class="edge" id="edge-pending-retry"/>
+  <path d="M 355 270 V 430 H 650 V 480" class="edge" id="edge-pending-retry"/>
   <rect x="280" y="190" width="150" height="80" rx="16" class="state"/>
   <text x="355" y="220" class="node-title" text-anchor="middle">待处理</text>
   <text x="355" y="239" class="node-sub" text-anchor="middle">entry / 初始化上下文</text>

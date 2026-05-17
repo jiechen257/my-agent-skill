@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1180" width="1700" height="1180" role="img" aria-labelledby="diagram-title diagram-desc" data-diagram-type="architecture">
+  <!-- spec
+  type: architecture
+  title: OpenClaw 功能图
+  style: claude-official
+  direction: layered feature map
+  regions:
+    - id: entry
+      label: 入口与管理
+      layer_id: entry
+    - id: runtime
+      label: Agent 运行时
+      layer_id: runtime
+    - id: capability
+      label: 能力扩展层
+      layer_id: capability
+    - id: governance
+      label: 安全、数据与运维
+      layer_id: governance
+  nodes:
+    - id: channels
+      label: 渠道接入 50+ Channels
+      layer_id: entry
+    - id: web-api
+      label: Web 与 REST API
+      layer_id: entry
+    - id: cli-config
+      label: 命令配置 CLI
+      layer_id: entry
+    - id: admin
+      label: Agent 管理
+      layer_id: entry
+    - id: adapters
+      label: 渠道适配器 Adapters
+      layer_id: runtime
+    - id: agent-core
+      label: Agent 核心
+      layer_id: runtime
+    - id: lifecycle
+      label: 生命周期管理
+      layer_id: runtime
+    - id: model-gateway
+      label: 模型网关 Model Gateway
+      layer_id: runtime
+    - id: memory
+      label: 记忆与上下文
+      layer_id: capability
+    - id: skill-engine
+      label: 技能引擎 Skill Engine
+      layer_id: capability
+    - id: built-tools
+      label: 内置工具
+      layer_id: capability
+    - id: sandbox
+      label: 沙箱执行器
+      layer_id: capability
+    - id: browser-shell
+      label: 浏览器 / 文件 / Shell
+      layer_id: capability
+    - id: memory-store
+      label: 记忆存储 SQLite / Redis
+      layer_id: governance
+    - id: clawhub
+      label: 技能市场 ClawHub
+      layer_id: governance
+    - id: permissions
+      label: 权限控制
+      layer_id: governance
+    - id: audit
+      label: 审计与限流
+      layer_id: governance
+    - id: network
+      label: 网络控制
+      layer_id: governance
+  -->
+  <title id="diagram-title">OpenClaw 功能图</title>
+  <desc id="diagram-desc">基于 OpenClaw 官方文档，将渠道、Agent Core、模型、记忆、技能、工具、沙箱和安全治理组织成分层功能图。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .region { fill: rgba(244, 228, 193, 0.28); stroke: #b89a6a; stroke-width: 1.5; }
+    .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.1; }
+    .node-body { stroke: #4a4a4a; stroke-width: 2; }
+    .layer-entry { fill: #a8c5e6; }
+    .layer-runtime { fill: #9dd4c7; }
+    .layer-capability { fill: #f4e4c1; }
+    .layer-governance { fill: #e8e6e3; }
+    .routing { fill: #fff7e6; stroke: #8f7350; stroke-width: 1.4; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+    .bus-title { font-size: 10px; font-weight: 700; fill: #4a3924; }
+  </style>
+
+  <rect width="1700" height="1180" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1644" height="1124" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="54" y="118" width="1592" height="970" fill="url(#grid)"/>
+  <text x="70" y="70" class="title">OpenClaw 功能图</text>
+  <text x="70" y="96" class="subtitle">跨渠道 Agent、模型、记忆、技能工具、沙箱执行和安全治理的一体化功能视图</text>
+
+  <rect x="80" y="145" width="1540" height="150" rx="16" class="region" data-layer-id="entry"/>
+  <rect x="100" y="129" width="112" height="24" rx="12" class="pill"/>
+  <text x="156" y="145" class="label" text-anchor="middle">入口与管理</text>
+
+  <rect x="80" y="350" width="1540" height="200" rx="16" class="region" data-layer-id="runtime"/>
+  <rect x="100" y="334" width="128" height="24" rx="12" class="pill"/>
+  <text x="164" y="350" class="label" text-anchor="middle">Agent 运行时</text>
+
+  <rect x="80" y="610" width="1540" height="210" rx="16" class="region" data-layer-id="capability"/>
+  <rect x="100" y="594" width="112" height="24" rx="12" class="pill"/>
+  <text x="156" y="610" class="label" text-anchor="middle">能力扩展层</text>
+
+  <rect x="80" y="900" width="1540" height="160" rx="16" class="region" data-layer-id="governance"/>
+  <rect x="100" y="884" width="144" height="24" rx="12" class="pill"/>
+  <text x="172" y="900" class="label" text-anchor="middle">安全数据运维</text>
+
+  <rect id="channels" x="130" y="185" width="220" height="62" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <text x="240" y="213" class="node-title" text-anchor="middle">渠道接入 50+ Channels</text>
+  <text x="240" y="232" class="node-sub" text-anchor="middle">Slack / Teams / Email</text>
+
+  <rect id="web-api" x="430" y="185" width="220" height="62" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <text x="540" y="213" class="node-title" text-anchor="middle">Web 与 REST API</text>
+  <text x="540" y="232" class="node-sub" text-anchor="middle">Web UI / webhook</text>
+
+  <rect id="cli-config" x="730" y="185" width="220" height="62" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <text x="840" y="213" class="node-title" text-anchor="middle">命令配置 CLI</text>
+  <text x="840" y="232" class="node-sub" text-anchor="middle">agents.yaml / status</text>
+
+  <rect id="admin" x="1030" y="185" width="220" height="62" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <text x="1140" y="213" class="node-title" text-anchor="middle">Agent 管理</text>
+  <text x="1140" y="232" class="node-sub" text-anchor="middle">create / pause / stop</text>
+
+  <rect id="input-bus" x="160" y="305" width="1080" height="32" rx="10" class="routing" data-routing-node="true"/>
+  <text x="700" y="326" class="bus-title" text-anchor="middle">渠道事件总线 Channel Bus</text>
+
+  <rect id="adapters" x="130" y="390" width="220" height="76" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <text x="240" y="422" class="node-title" text-anchor="middle">渠道适配器 Adapters</text>
+  <text x="240" y="444" class="node-sub" text-anchor="middle">auth / webhook / format</text>
+
+  <rect id="agent-core" x="460" y="390" width="260" height="76" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <text x="590" y="422" class="node-title" text-anchor="middle">Agent 核心</text>
+  <text x="590" y="444" class="node-sub" text-anchor="middle">state / plan / skill routing</text>
+
+  <rect id="lifecycle" x="790" y="390" width="240" height="76" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <text x="910" y="422" class="node-title" text-anchor="middle">生命周期管理</text>
+  <text x="910" y="444" class="node-sub" text-anchor="middle">created / running / paused</text>
+
+  <rect id="model-gateway" x="1120" y="390" width="260" height="76" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <text x="1250" y="422" class="node-title" text-anchor="middle">模型网关 Model Gateway</text>
+  <text x="1250" y="444" class="node-sub" text-anchor="middle">OpenAI / Anthropic / Ollama</text>
+
+  <rect id="capability-bus" x="200" y="568" width="1300" height="34" rx="10" class="routing" data-routing-node="true"/>
+  <text x="850" y="590" class="bus-title" text-anchor="middle">Agent 能力总线 Capability Bus</text>
+
+  <rect id="memory" x="130" y="650" width="240" height="76" rx="12" class="node-body layer-capability" data-layer-id="capability"/>
+  <text x="250" y="682" class="node-title" text-anchor="middle">记忆与上下文</text>
+  <text x="250" y="704" class="node-sub" text-anchor="middle">short-term / long-term</text>
+
+  <rect id="skill-engine" x="430" y="650" width="240" height="76" rx="12" class="node-body layer-capability" data-layer-id="capability"/>
+  <text x="550" y="682" class="node-title" text-anchor="middle">技能引擎 Skill Engine</text>
+  <text x="550" y="704" class="node-sub" text-anchor="middle">discover / load / execute</text>
+
+  <rect id="built-tools" x="730" y="650" width="240" height="76" rx="12" class="node-body layer-capability" data-layer-id="capability"/>
+  <text x="850" y="682" class="node-title" text-anchor="middle">内置工具</text>
+  <text x="850" y="704" class="node-sub" text-anchor="middle">search / http / calculator</text>
+
+  <rect id="sandbox" x="1030" y="650" width="240" height="76" rx="12" class="node-body layer-capability" data-layer-id="capability"/>
+  <text x="1150" y="682" class="node-title" text-anchor="middle">沙箱执行器</text>
+  <text x="1150" y="704" class="node-sub" text-anchor="middle">isolated skill execution</text>
+
+  <rect id="browser-shell" x="1330" y="650" width="240" height="76" rx="12" class="node-body layer-capability" data-layer-id="capability"/>
+  <text x="1450" y="682" class="node-title" text-anchor="middle">浏览器 / 文件 / Shell</text>
+  <text x="1450" y="704" class="node-sub" text-anchor="middle">operate web and filesystem</text>
+
+  <rect id="security-bus" x="760" y="845" width="720" height="32" rx="10" class="routing" data-routing-node="true"/>
+  <text x="1120" y="866" class="bus-title" text-anchor="middle">安全控制总线 Security Bus</text>
+
+  <rect id="memory-store" x="130" y="940" width="240" height="70" rx="12" class="node-body layer-governance" data-layer-id="governance"/>
+  <text x="250" y="970" class="node-title" text-anchor="middle">记忆存储 SQLite / Redis</text>
+  <text x="250" y="990" class="node-sub" text-anchor="middle">memory backend</text>
+
+  <rect id="clawhub" x="430" y="940" width="240" height="70" rx="12" class="node-body layer-governance" data-layer-id="governance"/>
+  <text x="550" y="970" class="node-title" text-anchor="middle">技能市场 ClawHub</text>
+  <text x="550" y="990" class="node-sub" text-anchor="middle">5700+ skills</text>
+
+  <rect id="permissions" x="730" y="940" width="240" height="70" rx="12" class="node-body layer-governance" data-layer-id="governance"/>
+  <text x="850" y="970" class="node-title" text-anchor="middle">权限控制</text>
+  <text x="850" y="990" class="node-sub" text-anchor="middle">least privilege</text>
+
+  <rect id="audit" x="1030" y="940" width="240" height="70" rx="12" class="node-body layer-governance" data-layer-id="governance"/>
+  <text x="1150" y="970" class="node-title" text-anchor="middle">审计与限流</text>
+  <text x="1150" y="990" class="node-sub" text-anchor="middle">logs / quota / timeout</text>
+
+  <rect id="network" x="1330" y="940" width="240" height="70" rx="12" class="node-body layer-governance" data-layer-id="governance"/>
+  <text x="1450" y="970" class="node-title" text-anchor="middle">网络控制</text>
+  <text x="1450" y="990" class="node-sub" text-anchor="middle">domain allowlist / TLS</text>
+
+  <path d="M 240 247 V 305" class="edge" id="edge-channels-input-bus" data-from="channels" data-to="input-bus"/>
+  <path d="M 540 247 V 305" class="edge" id="edge-web-api-input-bus" data-from="web-api" data-to="input-bus"/>
+  <path d="M 840 247 V 305" class="edge" id="edge-cli-input-bus" data-from="cli-config" data-to="input-bus"/>
+  <path d="M 1140 247 V 305" class="edge" id="edge-admin-input-bus" data-from="admin" data-to="input-bus"/>
+  <path d="M 240 337 V 390" class="edge" id="edge-input-bus-adapters" data-from="input-bus" data-to="adapters"/>
+
+  <path d="M 350 428 H 460" class="edge" id="edge-adapters-agent-core" data-from="adapters" data-to="agent-core"/>
+  <path d="M 720 428 H 790" class="edge" id="edge-agent-core-lifecycle" data-from="agent-core" data-to="lifecycle"/>
+  <path d="M 1030 428 H 1120" class="edge" id="edge-lifecycle-model-gateway" data-from="lifecycle" data-to="model-gateway"/>
+  <path d="M 590 466 V 568" class="edge" id="edge-agent-core-capability-bus" data-from="agent-core" data-to="capability-bus"/>
+  <path d="M 1250 466 V 568" class="edge" id="edge-model-gateway-capability-bus" data-from="model-gateway" data-to="capability-bus"/>
+
+  <path d="M 250 602 V 650" class="edge" id="edge-capability-bus-memory" data-from="capability-bus" data-to="memory"/>
+  <path d="M 550 602 V 650" class="edge" id="edge-capability-bus-skill-engine" data-from="capability-bus" data-to="skill-engine"/>
+  <path d="M 850 602 V 650" class="edge" id="edge-capability-bus-built-tools" data-from="capability-bus" data-to="built-tools"/>
+  <path d="M 1150 602 V 650" class="edge" id="edge-capability-bus-sandbox" data-from="capability-bus" data-to="sandbox"/>
+  <path d="M 1450 602 V 650" class="edge" id="edge-capability-bus-browser-shell" data-from="capability-bus" data-to="browser-shell"/>
+
+  <path d="M 250 726 V 940" class="edge" id="edge-memory-store" data-from="memory" data-to="memory-store"/>
+  <path d="M 550 726 V 940" class="edge" id="edge-skill-engine-clawhub" data-from="skill-engine" data-to="clawhub"/>
+  <path d="M 850 726 V 845" class="edge" id="edge-built-tools-security-bus" data-from="built-tools" data-to="security-bus"/>
+  <path d="M 1150 726 V 845" class="edge" id="edge-sandbox-security-bus" data-from="sandbox" data-to="security-bus"/>
+  <path d="M 1450 726 V 845" class="edge" id="edge-browser-shell-security-bus" data-from="browser-shell" data-to="security-bus"/>
+  <path d="M 850 877 V 940" class="edge" id="edge-security-bus-permissions" data-from="security-bus" data-to="permissions"/>
+  <path d="M 1150 877 V 940" class="edge" id="edge-security-bus-audit" data-from="security-bus" data-to="audit"/>
+  <path d="M 1450 877 V 940" class="edge" id="edge-security-bus-network" data-from="security-bus" data-to="network"/>
+</svg>

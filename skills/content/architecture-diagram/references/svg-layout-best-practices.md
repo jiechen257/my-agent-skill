@@ -19,6 +19,9 @@ Apply these rules across all types.
 ## Text
 
 - Default output is Chinese
+- In Chinese output, entity titles must be Chinese-first and may append necessary English terms, APIs, product names, acronyms, or code identifiers
+- Avoid pure-English node, bus, layer, phase, and matrix labels when a clear Chinese semantic role exists
+- Use mixed Chinese-English subtitles to explain technical terms; do not let the title and subtitle both be pure English
 - Keep titles on one line when possible
 - Keep node titles, cell labels, and bar labels inside their containers; widen before shrinking the text
 - Keep node subtitles within two lines
@@ -34,9 +37,12 @@ Apply these rules across all types.
 - Do not use one `<path>` with multiple `M` subpaths for a directed edge; split it into separate routes or a dedicated bus plus directed branches
 - Keep arrowheads visually subordinate to nodes and labels; for typical `1.5-2px` edges, start around `4.8 x 4.8` markers and only scale up when density or stroke weight requires it
 - Prefer orthogonal routing unless the type needs direct message arrows
+- In top-down architecture diagrams, ordinary dependency arrows should follow the dominant direction; upward final entries are valid only for explicit feedback paths with dashed styling or clear feedback labeling
+- For one-to-one cross-layer dependencies that are vertically aligned or nearly aligned, align the source and target ports and use one straight vertical segment; short `V-H-V` doglegs under 24px are invalid because they add visual noise without routing value
 - Keep unrelated edges off the same corridor segment
 - Split competing in/out traffic across opposite sides or distinct ports
 - For fan-in or fan-out, draw an `edge-bus` trunk with no arrowhead, then attach short directed `edge` branches with clear ownership
+- For fan-out to 3 or more destinations across a layer, prefer a labeled routing bus / hub shape; stacked parallel long `V-H-V` doglegs from one source are invalid
 - Put every edge label on a chip with an opaque fill
 - Give every labeled edge a stable `id`, then annotate the owning chip and its text with the same `data-edge-id`
 - For text-only relation labels such as `<<include>>` or `<<extend>>`, attach the text to the edge with `data-edge-id` and keep it close to the routed relation

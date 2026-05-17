@@ -22,6 +22,10 @@ EDGE_CLEARANCE_TRIM = 14.0
 LAYER_REGION_INSET = 24.0
 CARD_TEXT_BOTTOM_INSET = 10.0
 TOP_RAIL_GAP = 16.0
+SHORT_DOGLEG_THRESHOLD = 24.0
+STACKED_FANOUT_MIN_EDGES = 3
+STACKED_FANOUT_MAX_Y_SPREAD = 48.0
+STACKED_FANOUT_MIN_HORIZONTAL = 160.0
 TEXT_SIZE_HINTS = {
     "label": 10.0,
     "legend": 11.0,
@@ -431,6 +435,25 @@ def point_on_box_border(box: dict[str, float], point: tuple[float, float], toler
     return on_vertical or on_horizontal
 
 
+def point_on_circle_border(circle: ET.Element, point: tuple[float, float], tolerance: float = LINE_TOLERANCE) -> bool:
+    cx = parse_float(circle.get("cx"))
+    cy = parse_float(circle.get("cy"))
+    radius = parse_float(circle.get("r"))
+    return abs(math.hypot(point[0] - cx, point[1] - cy) - radius) <= tolerance
+
+
+def point_on_polygon_border(polygon: list[tuple[float, float]], point: tuple[float, float], tolerance: float = LINE_TOLERANCE) -> bool:
+    polygon = normalize_polygon(polygon)
+    if len(polygon) < 2:
+        return False
+    for index in range(len(polygon)):
+        edge_start = polygon[index]
+        edge_end = polygon[(index + 1) % len(polygon)]
+        if point_segment_distance(point, edge_start, edge_end) <= tolerance:
+            return True
+    return False
+
+
 def polygon_from_rect(box: dict[str, float]) -> list[tuple[float, float]]:
     return [
         (box["x"], box["y"]),
@@ -821,6 +844,19 @@ def validate_cell_text_fit(root: ET.Element) -> None:
                 fail("cell or bar label exceeds container width; widen or wrap the container")
 
 
+def validate_comparison_matrix_corner(root: ET.Element) -> None:
+    headers = [rect_box(rect) for rect in svg_elements(root, "rect") if "header" in classes(rect)]
+    rowheads = [rect_box(rect) for rect in svg_elements(root, "rect") if "rowhead" in classes(rect)]
+    if not headers or not rowheads:
+        return
+
+    header_y = min(box["y"] for box in headers)
+    rowhead_x = min(box["x"] for box in rowheads)
+    has_corner = any(aligned(box["x"], rowhead_x) and aligned(box["y"], header_y) for box in headers)
+    if not has_corner:
+        fail("comparison matrix is missing the top-left header cell")
+
+
 def validate_container_spacing(root: ET.Element) -> None:
     foreground: list[tuple[str, dict[str, float]]] = []
     node_bodies: list[tuple[str, dict[str, float]]] = []
@@ -898,6 +934,84 @@ def collect_node_polygons(root: ET.Element) -> list[list[tuple[float, float]]]:
         polygons.append(normalize_polygon(parse_polyline_path(path.get("d", ""))))
 
     return polygons
+
+
+def collect_endpoint_shapes(root: ET.Element) -> list[tuple[str, object]]:
+    shapes: list[tuple[str, object]] = []
+
+    for rect in svg_elements(root, "rect"):
+        if is_node_body_rect(rect) or rect.get("data-routing-node") == "true":
+            shapes.append(("rect", rect_box(rect)))
+
+    for ellipse in svg_elements(root, "ellipse"):
+        if "usecase" not in classes(ellipse):
+            continue
+        shapes.append(
+            (
+                "polygon",
+                polygon_from_ellipse(
+                    parse_float(ellipse.get("cx")),
+                    parse_float(ellipse.get("cy")),
+                    parse_float(ellipse.get("rx")),
+                    parse_float(ellipse.get("ry")),
+                    steps=48,
+                ),
+            )
+        )
+
+    for circle in svg_elements(root, "circle"):
+        shapes.append(("circle", circle))
+
+    for path in svg_elements(root, "path"):
+        if "decision" not in classes(path):
+            continue
+        shapes.append(("polygon", normalize_polygon(parse_polyline_path(path.get("d", "")))))
+
+    return shapes
+
+
+def point_on_endpoint_shape(shapes: list[tuple[str, object]], point: tuple[float, float]) -> bool:
+    for kind, shape in shapes:
+        if kind == "rect" and point_on_box_border(shape, point):
+            return True
+        if kind == "circle" and point_on_circle_border(shape, point):
+            return True
+        if kind == "polygon" and point_on_polygon_border(shape, point):
+            return True
+    return False
+
+
+def edge_points(edge: ET.Element) -> list[tuple[float, float]]:
+    if edge.tag == f"{SVG_NS}line":
+        line = line_box(edge)
+        return [(line["x1"], line["y1"]), (line["x2"], line["y2"])]
+    if edge.tag == f"{SVG_NS}path":
+        return parse_polyline_path(edge.get("d", ""))
+    return []
+
+
+def validate_edge_endpoints(root: ET.Element) -> None:
+    shapes = collect_endpoint_shapes(root)
+    if not shapes:
+        return
+
+    for edge in root.iter():
+        if edge.tag not in {f"{SVG_NS}line", f"{SVG_NS}path"}:
+            continue
+        edge_classes = classes(edge)
+        if "edge" not in edge_classes or "edge-bus" in edge_classes:
+            continue
+        if edge.get("data-nonsemantic") == "legend":
+            continue
+
+        points = edge_points(edge)
+        if len(points) < 2:
+            continue
+        edge_name = edge.get("id", "<unnamed>")
+        if not point_on_endpoint_shape(shapes, points[0]):
+            fail(f"edge '{edge_name}' does not start on a node border")
+        if not point_on_endpoint_shape(shapes, points[-1]):
+            fail(f"edge '{edge_name}' does not end on a node border")
 
 
 def validate_edge_clearance(root: ET.Element) -> None:
@@ -1007,7 +1121,7 @@ def validate_architecture_edges(root: ET.Element) -> None:
     node_boxes = {
         rect.get("id"): rect_box(rect)
         for rect in svg_elements(root, "rect")
-        if rect.get("id") and is_node_body_rect(rect)
+        if rect.get("id") and (is_node_body_rect(rect) or rect.get("data-routing-node") == "true")
     }
 
     for edge in root.iter():
@@ -1048,6 +1162,95 @@ def validate_architecture_edges(root: ET.Element) -> None:
             fail(f"architecture edge from '{from_id}' does not start on the node border")
         if not point_on_box_border(node_boxes[to_id], points[-1]):
             fail(f"architecture edge to '{to_id}' does not end on the node border")
+
+
+def is_vertical_horizontal_vertical_route(points: list[tuple[float, float]]) -> bool:
+    if len(points) != 4:
+        return False
+    first, second, third, fourth = points
+    return (
+        aligned(first[0], second[0])
+        and aligned(second[1], third[1])
+        and aligned(third[0], fourth[0])
+    )
+
+
+def validate_architecture_short_doglegs(root: ET.Element) -> None:
+    if root.get("data-diagram-type") != "architecture":
+        return
+
+    for edge in root.iter():
+        if edge.tag != f"{SVG_NS}path":
+            continue
+        edge_classes = classes(edge)
+        if not (edge_classes & EDGE_CLASSES) or "edge-bus" in edge_classes:
+            continue
+        if edge.get("data-nonsemantic") == "legend":
+            continue
+
+        points = parse_polyline_path(edge.get("d", ""))
+        if not is_vertical_horizontal_vertical_route(points):
+            continue
+
+        _, second, third, _ = points
+        horizontal_offset = abs(third[0] - second[0])
+        if 0 < horizontal_offset <= SHORT_DOGLEG_THRESHOLD:
+            edge_name = edge.get("id", "<unnamed>")
+            fail(f"architecture edge '{edge_name}' uses a short dogleg; align ports and use a straight vertical segment")
+
+
+def validate_architecture_stacked_fanout(root: ET.Element) -> None:
+    if root.get("data-diagram-type") != "architecture":
+        return
+
+    routes_by_source: dict[str, list[list[tuple[float, float]]]] = {}
+    for edge in root.iter():
+        if edge.tag != f"{SVG_NS}path":
+            continue
+        edge_classes = classes(edge)
+        if not (edge_classes & EDGE_CLASSES) or "edge-bus" in edge_classes:
+            continue
+        source = edge.get("data-from")
+        if not source:
+            continue
+        points = parse_polyline_path(edge.get("d", ""))
+        if not is_vertical_horizontal_vertical_route(points):
+            continue
+        horizontal_span = abs(points[2][0] - points[1][0])
+        if horizontal_span >= STACKED_FANOUT_MIN_HORIZONTAL:
+            routes_by_source.setdefault(source, []).append(points)
+
+    for source, routes in routes_by_source.items():
+        if len(routes) < STACKED_FANOUT_MIN_EDGES:
+            continue
+        starts = {(round(points[0][0], 1), round(points[0][1], 1)) for points in routes}
+        rail_y = [points[1][1] for points in routes]
+        if len(starts) == 1 and max(rail_y) - min(rail_y) <= STACKED_FANOUT_MAX_Y_SPREAD:
+            fail(f"architecture fan-out from '{source}' uses stacked fan-out doglegs; use an explicit bus or hub")
+
+
+def validate_architecture_upward_entries(root: ET.Element) -> None:
+    if root.get("data-diagram-type") != "architecture":
+        return
+
+    for edge in root.iter():
+        if edge.tag != f"{SVG_NS}path":
+            continue
+        edge_classes = classes(edge)
+        if not (edge_classes & EDGE_CLASSES) or "edge-bus" in edge_classes:
+            continue
+        if edge.get("data-nonsemantic") == "legend":
+            continue
+        if "feedback" in edge_classes or edge.get("data-flow") == "feedback":
+            continue
+
+        points = parse_polyline_path(edge.get("d", ""))
+        if len(points) < 2:
+            continue
+        previous, last = points[-2], points[-1]
+        if aligned(previous[0], last[0]) and last[1] < previous[1]:
+            edge_name = edge.get("id", "<unnamed>")
+            fail(f"architecture edge '{edge_name}' enters the target upward; reroute or mark it as feedback")
 
 
 def validate_common(root: ET.Element, inner_frame: dict[str, float] | None) -> None:
@@ -1254,9 +1457,14 @@ def main() -> None:
     validate_text_fit(root, inner_frame)
     validate_node_text_fit(root)
     validate_cell_text_fit(root)
+    validate_comparison_matrix_corner(root)
     validate_container_spacing(root)
     validate_architecture_layers(root)
     validate_architecture_edges(root)
+    validate_architecture_short_doglegs(root)
+    validate_architecture_stacked_fanout(root)
+    validate_architecture_upward_entries(root)
+    validate_edge_endpoints(root)
     validate_edge_clearance(root)
     validate_sequence(root, inner_frame)
 

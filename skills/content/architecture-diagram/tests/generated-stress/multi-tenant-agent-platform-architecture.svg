@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1120" width="1700" height="1120" role="img" aria-labelledby="diagram-title diagram-desc" data-diagram-type="architecture">
+  <!-- spec
+  type: architecture
+  title: 多租户 Agent 平台分层架构图
+  style: claude-official
+  direction: layered
+  regions:
+    - id: channel
+      label: 渠道层
+      layer_id: channel
+    - id: orchestration
+      label: 编排层
+      layer_id: orchestration
+    - id: runtime
+      label: 工具运行层
+      layer_id: runtime
+    - id: data
+      label: 数据与观测层
+      layer_id: data
+  nodes:
+    - id: slack
+      label: Slack / Teams
+      layer_id: channel
+    - id: web
+      label: Web Console
+      layer_id: channel
+    - id: public-api
+      label: Public API
+      layer_id: channel
+    - id: admin
+      label: Admin Portal
+      layer_id: channel
+    - id: auth
+      label: Auth Gateway
+      layer_id: orchestration
+    - id: router
+      label: Task Router
+      layer_id: orchestration
+    - id: planner
+      label: Planner Agent
+      layer_id: orchestration
+    - id: policy
+      label: Policy Engine
+      layer_id: orchestration
+    - id: dispatcher
+      label: Tool Dispatcher
+      layer_id: orchestration
+    - id: runtime-bus
+      label: Tool Execution Bus
+      role: routing-node
+    - id: sandbox
+      label: Sandbox
+      layer_id: runtime
+    - id: connectors
+      label: Connectors
+      layer_id: runtime
+    - id: workflow
+      label: Workflow Runner
+      layer_id: runtime
+    - id: notify
+      label: Notification
+      layer_id: runtime
+    - id: memory
+      label: Memory Store
+      layer_id: data
+    - id: artifacts
+      label: Artifact Store
+      layer_id: data
+    - id: vector
+      label: Vector Index
+      layer_id: data
+    - id: audit
+      label: Audit Log
+      layer_id: data
+  edges:
+    - id: edge-slack-auth
+      from: slack
+      to: auth
+    - id: edge-web-router
+      from: web
+      to: router
+    - id: edge-api-planner
+      from: public-api
+      to: planner
+    - id: edge-admin-policy
+      from: admin
+      to: policy
+    - id: edge-auth-router
+      from: auth
+      to: router
+    - id: edge-router-planner
+      from: router
+      to: planner
+    - id: edge-planner-policy
+      from: planner
+      to: policy
+    - id: edge-policy-dispatcher
+      from: policy
+      to: dispatcher
+    - id: edge-dispatcher-runtime-bus
+      from: dispatcher
+      to: runtime-bus
+    - id: edge-runtime-bus-sandbox
+      from: runtime-bus
+      to: sandbox
+    - id: edge-runtime-bus-connectors
+      from: runtime-bus
+      to: connectors
+    - id: edge-runtime-bus-workflow
+      from: runtime-bus
+      to: workflow
+    - id: edge-runtime-bus-notify
+      from: runtime-bus
+      to: notify
+    - id: edge-sandbox-memory
+      from: sandbox
+      to: memory
+    - id: edge-connectors-artifacts
+      from: connectors
+      to: artifacts
+    - id: edge-workflow-vector
+      from: workflow
+      to: vector
+    - id: edge-notify-audit
+      from: notify
+      to: audit
+  -->
+  <title id="diagram-title">多租户 Agent 平台分层架构图</title>
+  <desc id="diagram-desc">展示渠道层、编排层、工具运行层和数据观测层之间的多租户 Agent 平台依赖。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .region { fill: rgba(244, 228, 193, 0.30); stroke: #b89a6a; stroke-width: 1.5; }
+    .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.1; }
+    .node-body { stroke: #4a4a4a; stroke-width: 2; }
+    .layer-channel { fill: #a8c5e6; }
+    .layer-orchestration { fill: #9dd4c7; }
+    .layer-runtime { fill: #f4e4c1; }
+    .layer-data { fill: #e8e6e3; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .bus-hub { fill: #fff7e6; stroke: #8f7350; stroke-width: 1.4; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+    .bus-title { font-size: 10px; font-weight: 700; fill: #4a3924; }
+  </style>
+
+  <rect width="1700" height="1120" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1644" height="1064" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="54" y="118" width="1592" height="920" fill="url(#grid)"/>
+  <text x="70" y="70" class="title">多租户 Agent 平台分层架构图</text>
+  <text x="70" y="96" class="subtitle">渠道接入、任务编排、工具运行、记忆与观测的跨层依赖</text>
+
+  <rect x="80" y="150" width="1540" height="120" rx="16" class="region" data-layer-id="channel"/>
+  <rect x="100" y="134" width="96" height="24" rx="12" class="pill"/>
+  <text x="148" y="150" class="label" text-anchor="middle">渠道层</text>
+  <rect x="80" y="340" width="1540" height="190" rx="16" class="region" data-layer-id="orchestration"/>
+  <rect x="100" y="324" width="96" height="24" rx="12" class="pill"/>
+  <text x="148" y="340" class="label" text-anchor="middle">编排层</text>
+  <rect x="80" y="610" width="1540" height="190" rx="16" class="region" data-layer-id="runtime"/>
+  <rect x="100" y="594" width="96" height="24" rx="12" class="pill"/>
+  <text x="148" y="610" class="label" text-anchor="middle">运行层</text>
+  <rect x="80" y="880" width="1540" height="130" rx="16" class="region" data-layer-id="data"/>
+  <rect x="100" y="864" width="116" height="24" rx="12" class="pill"/>
+  <text x="158" y="880" class="label" text-anchor="middle">数据观测层</text>
+
+  <rect id="slack" x="130" y="185" width="180" height="60" rx="12" class="node-body layer-channel" data-layer-id="channel"/>
+  <rect id="web" x="420" y="185" width="180" height="60" rx="12" class="node-body layer-channel" data-layer-id="channel"/>
+  <rect id="public-api" x="710" y="185" width="180" height="60" rx="12" class="node-body layer-channel" data-layer-id="channel"/>
+  <rect id="admin" x="1000" y="185" width="180" height="60" rx="12" class="node-body layer-channel" data-layer-id="channel"/>
+
+  <rect id="auth" x="120" y="390" width="200" height="70" rx="12" class="node-body layer-orchestration" data-layer-id="orchestration"/>
+  <rect id="router" x="410" y="390" width="200" height="70" rx="12" class="node-body layer-orchestration" data-layer-id="orchestration"/>
+  <rect id="planner" x="700" y="390" width="200" height="70" rx="12" class="node-body layer-orchestration" data-layer-id="orchestration"/>
+  <rect id="policy" x="990" y="390" width="200" height="70" rx="12" class="node-body layer-orchestration" data-layer-id="orchestration"/>
+  <rect id="dispatcher" x="1290" y="390" width="200" height="70" rx="12" class="node-body layer-orchestration" data-layer-id="orchestration"/>
+
+  <rect id="sandbox" x="250" y="660" width="200" height="70" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <rect id="connectors" x="570" y="660" width="200" height="70" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <rect id="workflow" x="890" y="660" width="200" height="70" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <rect id="notify" x="1210" y="660" width="200" height="70" rx="12" class="node-body layer-runtime" data-layer-id="runtime"/>
+  <rect id="runtime-bus" x="260" y="548" width="1180" height="32" rx="10" class="bus-hub" data-routing-node="true"/>
+
+  <rect id="memory" x="250" y="920" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+  <rect id="artifacts" x="570" y="920" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+  <rect id="vector" x="890" y="920" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+  <rect id="audit" x="1210" y="920" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+
+  <text x="220" y="211" class="node-title" text-anchor="middle">Slack / Teams</text>
+  <text x="220" y="230" class="node-sub" text-anchor="middle">聊天入口</text>
+  <text x="510" y="211" class="node-title" text-anchor="middle">Web Console</text>
+  <text x="510" y="230" class="node-sub" text-anchor="middle">任务工作台</text>
+  <text x="800" y="211" class="node-title" text-anchor="middle">Public API</text>
+  <text x="800" y="230" class="node-sub" text-anchor="middle">外部调用</text>
+  <text x="1090" y="211" class="node-title" text-anchor="middle">Admin Portal</text>
+  <text x="1090" y="230" class="node-sub" text-anchor="middle">租户配置</text>
+
+  <text x="220" y="418" class="node-title" text-anchor="middle">Auth Gateway</text>
+  <text x="220" y="438" class="node-sub" text-anchor="middle">Tenant / RBAC</text>
+  <text x="510" y="418" class="node-title" text-anchor="middle">Task Router</text>
+  <text x="510" y="438" class="node-sub" text-anchor="middle">Queue / Priority</text>
+  <text x="800" y="418" class="node-title" text-anchor="middle">Planner Agent</text>
+  <text x="800" y="438" class="node-sub" text-anchor="middle">Plan / Reflect</text>
+  <text x="1090" y="418" class="node-title" text-anchor="middle">Policy Engine</text>
+  <text x="1090" y="438" class="node-sub" text-anchor="middle">Tool / Data Rules</text>
+  <text x="1390" y="418" class="node-title" text-anchor="middle">Tool Dispatcher</text>
+  <text x="1390" y="438" class="node-sub" text-anchor="middle">MCP / Executor</text>
+  <text x="850" y="568" class="bus-title" text-anchor="middle">Tool Execution Bus</text>
+
+  <text x="350" y="688" class="node-title" text-anchor="middle">Sandbox</text>
+  <text x="350" y="708" class="node-sub" text-anchor="middle">隔离执行</text>
+  <text x="670" y="688" class="node-title" text-anchor="middle">Connectors</text>
+  <text x="670" y="708" class="node-sub" text-anchor="middle">GitHub / Gmail</text>
+  <text x="990" y="688" class="node-title" text-anchor="middle">Workflow Runner</text>
+  <text x="990" y="708" class="node-sub" text-anchor="middle">Retry / Step</text>
+  <text x="1310" y="688" class="node-title" text-anchor="middle">Notification</text>
+  <text x="1310" y="708" class="node-sub" text-anchor="middle">Email / Slack</text>
+
+  <text x="350" y="946" class="node-title" text-anchor="middle">Memory Store</text>
+  <text x="350" y="965" class="node-sub" text-anchor="middle">User / Project</text>
+  <text x="670" y="946" class="node-title" text-anchor="middle">Artifact Store</text>
+  <text x="670" y="965" class="node-sub" text-anchor="middle">Files / Logs</text>
+  <text x="990" y="946" class="node-title" text-anchor="middle">Vector Index</text>
+  <text x="990" y="965" class="node-sub" text-anchor="middle">RAG / Search</text>
+  <text x="1310" y="946" class="node-title" text-anchor="middle">Audit Log</text>
+  <text x="1310" y="965" class="node-sub" text-anchor="middle">Trace / Metrics</text>
+
+  <path d="M 220 245 V 390" class="edge" id="edge-slack-auth" data-from="slack" data-to="auth"/>
+  <path d="M 510 245 V 390" class="edge" id="edge-web-router" data-from="web" data-to="router"/>
+  <path d="M 800 245 V 390" class="edge" id="edge-api-planner" data-from="public-api" data-to="planner"/>
+  <path d="M 1090 245 V 390" class="edge" id="edge-admin-policy" data-from="admin" data-to="policy"/>
+  <path d="M 320 425 H 410" class="edge" id="edge-auth-router" data-from="auth" data-to="router"/>
+  <path d="M 610 425 H 700" class="edge" id="edge-router-planner" data-from="router" data-to="planner"/>
+  <path d="M 900 425 H 990" class="edge" id="edge-planner-policy" data-from="planner" data-to="policy"/>
+  <path d="M 1190 425 H 1290" class="edge" id="edge-policy-dispatcher" data-from="policy" data-to="dispatcher"/>
+  <path d="M 1390 460 V 548" class="edge" id="edge-dispatcher-runtime-bus" data-from="dispatcher" data-to="runtime-bus"/>
+  <path d="M 350 580 V 660" class="edge" id="edge-runtime-bus-sandbox" data-from="runtime-bus" data-to="sandbox"/>
+  <path d="M 670 580 V 660" class="edge" id="edge-runtime-bus-connectors" data-from="runtime-bus" data-to="connectors"/>
+  <path d="M 990 580 V 660" class="edge" id="edge-runtime-bus-workflow" data-from="runtime-bus" data-to="workflow"/>
+  <path d="M 1310 580 V 660" class="edge" id="edge-runtime-bus-notify" data-from="runtime-bus" data-to="notify"/>
+  <path d="M 350 730 V 920" class="edge" id="edge-sandbox-memory" data-from="sandbox" data-to="memory"/>
+  <path d="M 670 730 V 920" class="edge" id="edge-connectors-artifacts" data-from="connectors" data-to="artifacts"/>
+  <path d="M 990 730 V 920" class="edge" id="edge-workflow-vector" data-from="workflow" data-to="vector"/>
+  <path d="M 1310 730 V 920" class="edge" id="edge-notify-audit" data-from="notify" data-to="audit"/>
+</svg>

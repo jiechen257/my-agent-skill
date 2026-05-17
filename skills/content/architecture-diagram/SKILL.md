@@ -35,6 +35,13 @@ Supported styles:
 
 Technical terms may stay in English when they read better, such as `VNode`, `effect`, `scheduler`, `Fiber`, `queueJob`.
 
+Language contract for Chinese output:
+
+- Entity titles must be Chinese-first: write the semantic role in Chinese, then keep necessary English terms, APIs, product names, acronyms, or code identifiers.
+- Acceptable: `依赖收集 track`, `模型网关 Model Gateway`, `任务队列 job queue`, `Web 与 REST API`.
+- Avoid pure-English entity titles such as `Lifecycle Manager`, `Built-in Tools`, `Renderer Pipeline` unless the entity is a proper noun that has no natural Chinese label.
+- Subtitles can be mixed Chinese-English, but they must clarify meaning rather than repeat a pure-English title.
+
 ## Working Order
 
 Always follow this order:
@@ -50,6 +57,11 @@ Always follow this order:
 9. Walk the **self-review checklist** in [spec-block-and-self-review.md](references/spec-block-and-self-review.md)
 10. Validate with `scripts/validate-svg.sh`
 11. Render a local preview when editing an existing SVG or when density / branching makes visual review necessary
+
+Community research and evaluation guidance live in:
+
+- [community-diagram-skill-research.md](references/community-diagram-skill-research.md)
+- [generation-eval-set.md](tests/generation-eval-set.md)
 
 ## Type Selection
 
@@ -74,6 +86,9 @@ Framework principle diagrams should usually start from `flowchart` or `data-flow
 - Keep labels on chips or dedicated headers; do not let chips read like floating comments
 - For labeled edges, use `edge id + data-edge-id` as the default ownership contract
 - For routed architecture edges, add `data-from` and `data-to`; endpoints must land on the source and target borders
+- In top-down architecture diagrams, ordinary dependency arrows follow the dominant direction; do not route an edge so the final arrow enters a target from below and points upward unless it is an explicit dashed feedback path
+- For one-to-one cross-layer architecture dependencies, align ports and use a straight vertical segment when the horizontal offset is small; do not emit tiny `V-H-V` doglegs
+- For one-to-many architecture fan-out with 3 or more destinations, use a labeled bus / hub node; do not stack parallel long `V-H-V` doglegs from the same source port
 - Every decision branch must carry `data-edge-label`; never leave a forking edge unlabeled
 - Use visible connection ports and keep arrowheads landing on real targets
 - Use explicit bus/trunk segments for fan-in or fan-out; bus paths use `edge-bus` and no arrowhead, directed branches use `edge`
@@ -162,6 +177,11 @@ Use these local scripts:
 
 - `scripts/validate-svg.sh <svg-file>` for layout / semantic checks
 - `scripts/test-templates.sh` for template smoke tests
+- `scripts/test-examples.sh` for example SVG regression checks
+- `scripts/test-generated-complex.sh` for complex generated diagram checks
+- `scripts/test-generated-stress.sh` for high-density stress diagram checks
+- `scripts/test-semantic-negative.sh` for validator regression checks that must fail malformed SVGs
+- `scripts/test-all.sh` for the full local validation suite
 
 Use `rsvg-convert` only for local verification. The canonical deliverable remains the standalone `.svg`.
 

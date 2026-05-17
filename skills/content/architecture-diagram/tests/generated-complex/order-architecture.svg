@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" width="1280" height="900" role="img" aria-labelledby="diagram-title diagram-desc" data-diagram-type="architecture">
+  <!-- spec
+  type: architecture
+  title: 订单系统分层架构图
+  style: claude-official
+  direction: layered
+  regions:
+    - id: entry
+      label: 入口层
+      layer_id: entry
+    - id: processing
+      label: 处理层
+      layer_id: processing
+    - id: data
+      label: 数据层
+      layer_id: data
+  nodes:
+    - id: webapp
+      label: Web / App
+      layer_id: entry
+    - id: gateway
+      label: API Gateway
+      layer_id: entry
+    - id: order
+      label: 订单服务
+      layer_id: processing
+    - id: payment
+      label: 支付服务
+      layer_id: processing
+    - id: inventory
+      label: 库存服务
+      layer_id: processing
+    - id: queue
+      label: 消息队列
+      layer_id: processing
+    - id: orderdb
+      label: 订单库
+      layer_id: data
+    - id: stockdb
+      label: 库存库
+      layer_id: data
+    - id: cache
+      label: 缓存
+      layer_id: data
+  edges:
+    - id: edge-web-gateway
+      from: webapp
+      to: gateway
+      label: 请求
+    - id: edge-gateway-order
+      from: gateway
+      to: order
+      label: 路由
+    - id: edge-order-payment
+      from: order
+      to: payment
+      label: 支付
+    - id: edge-payment-inventory
+      from: payment
+      to: inventory
+      label: 预占
+    - id: edge-order-queue
+      from: order
+      to: queue
+      label: 事件
+    - id: edge-order-orderdb
+      from: order
+      to: orderdb
+      label: 订单状态
+    - id: edge-inventory-stockdb
+      from: inventory
+      to: stockdb
+      label: 库存流水
+    - id: edge-payment-cache
+      from: payment
+      to: cache
+      label: 支付摘要
+    - id: edge-queue-orderdb
+      from: queue
+      to: orderdb
+      label: 异步补偿
+  -->
+  <title id="diagram-title">订单系统分层架构图</title>
+  <desc id="diagram-desc">入口层、处理层、数据层的复杂路由示例，跨层边从节点边界出入。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd6cc" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .region { fill: rgba(244, 228, 193, 0.32); stroke: #b89a6a; stroke-width: 1.5; }
+    .pill { fill: #f4e4c1; stroke: #8f7350; stroke-width: 1.1; }
+    .node-body { stroke: #4a4a4a; stroke-width: 2; }
+    .layer-entry { fill: #a8c5e6; }
+    .layer-processing { fill: #9dd4c7; }
+    .layer-data { fill: #e8e6e3; }
+    .edge { fill: none; stroke: #5a5a5a; stroke-width: 2; marker-end: url(#arrow); }
+    .edge-dashed { stroke-dasharray: 7,5; }
+    .label-bg { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.8; }
+    .label { font-size: 9px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .node-sub { font-size: 9px; fill: #5a5a5a; }
+  </style>
+
+  <rect width="1280" height="900" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1224" height="844" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <rect x="54" y="118" width="1172" height="720" fill="url(#grid)"/>
+  <text x="70" y="70" class="title">订单系统分层架构图</text>
+  <text x="70" y="96" class="subtitle">入口、处理与数据层的同步调用、异步事件和状态写入</text>
+
+  <rect x="80" y="140" width="1120" height="130" rx="16" class="region" data-layer-id="entry"/>
+  <rect x="100" y="124" width="90" height="24" rx="12" class="pill"/>
+  <text x="145" y="140" class="label" text-anchor="middle">入口层</text>
+  <rect x="80" y="330" width="1120" height="260" rx="16" class="region" data-layer-id="processing"/>
+  <rect x="100" y="314" width="90" height="24" rx="12" class="pill"/>
+  <text x="145" y="330" class="label" text-anchor="middle">处理层</text>
+  <rect x="80" y="650" width="1120" height="130" rx="16" class="region" data-layer-id="data"/>
+  <rect x="100" y="634" width="90" height="24" rx="12" class="pill"/>
+  <text x="145" y="650" class="label" text-anchor="middle">数据层</text>
+
+  <rect id="webapp" x="120" y="180" width="170" height="60" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <rect id="gateway" x="400" y="175" width="220" height="70" rx="12" class="node-body layer-entry" data-layer-id="entry"/>
+  <rect id="order" x="150" y="385" width="200" height="76" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="payment" x="430" y="385" width="200" height="76" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="inventory" x="710" y="385" width="200" height="76" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="queue" x="430" y="480" width="200" height="76" rx="12" class="node-body layer-processing" data-layer-id="processing"/>
+  <rect id="orderdb" x="180" y="680" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+  <rect id="stockdb" x="500" y="680" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+  <rect id="cache" x="820" y="680" width="200" height="60" rx="12" class="node-body layer-data" data-layer-id="data"/>
+
+  <text x="205" y="206" class="node-title" text-anchor="middle">Web / App</text>
+  <text x="205" y="225" class="node-sub" text-anchor="middle">用户入口</text>
+  <text x="510" y="204" class="node-title" text-anchor="middle">API Gateway</text>
+  <text x="510" y="223" class="node-sub" text-anchor="middle">Auth / Rate Limit / BFF</text>
+  <text x="250" y="417" class="node-title" text-anchor="middle">订单服务</text>
+  <text x="250" y="438" class="node-sub" text-anchor="middle">下单 / 状态机</text>
+  <text x="530" y="417" class="node-title" text-anchor="middle">支付服务</text>
+  <text x="530" y="438" class="node-sub" text-anchor="middle">支付单 / 回调</text>
+  <text x="810" y="417" class="node-title" text-anchor="middle">库存服务</text>
+  <text x="810" y="438" class="node-sub" text-anchor="middle">预占 / 扣减</text>
+  <text x="530" y="512" class="node-title" text-anchor="middle">消息队列</text>
+  <text x="530" y="533" class="node-sub" text-anchor="middle">Event / Compensation</text>
+  <text x="280" y="706" class="node-title" text-anchor="middle">订单库</text>
+  <text x="280" y="725" class="node-sub" text-anchor="middle">Order DB</text>
+  <text x="600" y="706" class="node-title" text-anchor="middle">库存库</text>
+  <text x="600" y="725" class="node-sub" text-anchor="middle">Stock DB</text>
+  <text x="920" y="706" class="node-title" text-anchor="middle">缓存</text>
+  <text x="920" y="725" class="node-sub" text-anchor="middle">Redis / Summary</text>
+
+  <path d="M 290 210 H 400" class="edge" id="edge-web-gateway" data-edge-id="edge-web-gateway" data-from="webapp" data-to="gateway"/>
+  <path d="M 510 245 V 300 H 250 V 385" class="edge" id="edge-gateway-order" data-edge-id="edge-gateway-order" data-from="gateway" data-to="order"/>
+  <path d="M 350 423 H 430" class="edge" id="edge-order-payment" data-edge-id="edge-order-payment" data-from="order" data-to="payment"/>
+  <path d="M 630 423 H 710" class="edge" id="edge-payment-inventory" data-edge-id="edge-payment-inventory" data-from="payment" data-to="inventory"/>
+  <path d="M 250 461 V 518 H 430" class="edge edge-dashed" id="edge-order-queue" data-edge-id="edge-order-queue" data-from="order" data-to="queue"/>
+  <path d="M 310 461 V 625 H 280 V 680" class="edge" id="edge-order-orderdb" data-edge-id="edge-order-orderdb" data-from="order" data-to="orderdb"/>
+  <path d="M 810 461 V 625 H 600 V 680" class="edge" id="edge-inventory-stockdb" data-edge-id="edge-inventory-stockdb" data-from="inventory" data-to="stockdb"/>
+  <path d="M 630 445 H 650 V 625 H 920 V 680" class="edge" id="edge-payment-cache" data-edge-id="edge-payment-cache" data-from="payment" data-to="cache"/>
+  <path d="M 530 556 V 610 H 410 V 710 H 380" class="edge edge-dashed" id="edge-queue-orderdb" data-edge-id="edge-queue-orderdb" data-from="queue" data-to="orderdb"/>
+
+  <rect x="322" y="194" width="40" height="18" rx="5" class="label-bg" data-edge-id="edge-web-gateway"/>
+  <text x="342" y="207" class="label" text-anchor="middle" data-edge-id="edge-web-gateway">请求</text>
+  <rect x="360" y="284" width="40" height="18" rx="5" class="label-bg" data-edge-id="edge-gateway-order"/>
+  <text x="380" y="297" class="label" text-anchor="middle" data-edge-id="edge-gateway-order">路由</text>
+  <rect x="370" y="407" width="40" height="18" rx="5" class="label-bg" data-edge-id="edge-order-payment"/>
+  <text x="390" y="420" class="label" text-anchor="middle" data-edge-id="edge-order-payment">支付</text>
+  <rect x="650" y="407" width="40" height="18" rx="5" class="label-bg" data-edge-id="edge-payment-inventory"/>
+  <text x="670" y="420" class="label" text-anchor="middle" data-edge-id="edge-payment-inventory">预占</text>
+  <rect x="348" y="502" width="40" height="18" rx="5" class="label-bg" data-edge-id="edge-order-queue"/>
+  <text x="368" y="515" class="label" text-anchor="middle" data-edge-id="edge-order-queue">事件</text>
+  <rect x="318" y="598" width="58" height="18" rx="5" class="label-bg" data-edge-id="edge-order-orderdb"/>
+  <text x="347" y="611" class="label" text-anchor="middle" data-edge-id="edge-order-orderdb">订单状态</text>
+  <rect x="690" y="598" width="58" height="18" rx="5" class="label-bg" data-edge-id="edge-inventory-stockdb"/>
+  <text x="719" y="611" class="label" text-anchor="middle" data-edge-id="edge-inventory-stockdb">库存流水</text>
+  <rect x="830" y="598" width="58" height="18" rx="5" class="label-bg" data-edge-id="edge-payment-cache"/>
+  <text x="859" y="611" class="label" text-anchor="middle" data-edge-id="edge-payment-cache">支付摘要</text>
+  <rect x="418" y="594" width="58" height="18" rx="5" class="label-bg" data-edge-id="edge-queue-orderdb"/>
+  <text x="447" y="607" class="label" text-anchor="middle" data-edge-id="edge-queue-orderdb">异步补偿</text>
+</svg>

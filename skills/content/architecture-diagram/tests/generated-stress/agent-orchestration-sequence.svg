@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1740 1040" width="1740" height="1040" role="img" aria-labelledby="diagram-title diagram-desc">
+  <!-- spec
+  type: sequence
+  title: 多 Agent 工具编排时序图
+  style: claude-official
+  direction: top-to-bottom
+  nodes:
+    - id: ui
+      label: 用户界面
+      shape: participant
+    - id: api
+      label: API 网关
+      shape: participant
+    - id: planner
+      label: Planner Agent
+      shape: participant
+    - id: memory
+      label: 记忆服务
+      shape: participant
+    - id: router
+      label: Tool Router
+      shape: participant
+    - id: sandbox
+      label: Sandbox
+      shape: participant
+    - id: llm
+      label: LLM Gateway
+      shape: participant
+    - id: audit
+      label: 审计与观测
+      shape: participant
+  edges:
+    - id: msg-submit
+      from: ui
+      to: api
+      label: 提交任务
+    - id: msg-plan
+      from: api
+      to: planner
+      label: 生成计划
+    - id: msg-memory-read
+      from: planner
+      to: memory
+      label: 读取上下文
+    - id: msg-llm-plan
+      from: planner
+      to: llm
+      label: 推理计划
+    - id: msg-tool-call
+      from: planner
+      to: router
+      label: 调用工具
+    - id: msg-run
+      from: router
+      to: sandbox
+      label: 执行命令
+    - id: msg-result
+      from: sandbox
+      to: router
+      label: 返回结果
+    - id: msg-success
+      from: router
+      to: planner
+      label: 工具成功
+    - id: msg-fail
+      from: router
+      to: audit
+      label: 失败事件
+    - id: msg-final
+      from: planner
+      to: api
+      label: 汇总答复
+    - id: msg-stream
+      from: api
+      to: ui
+      label: 流式响应
+  -->
+  <title id="diagram-title">多 Agent 工具编排时序图</title>
+  <desc id="diagram-desc">展示用户请求进入后，多 Agent 读取记忆、调用 LLM、路由工具、执行沙箱、记录观测并返回结果的复杂时序。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="4.8" markerHeight="4.8" refX="4.2" refY="2.4" orient="auto">
+      <polygon points="0 0, 4.8 2.4, 0 4.8" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="5.6" markerHeight="5.6" refX="4.8" refY="2.8" orient="auto">
+      <polyline points="0 0, 5.6 2.8, 0 5.6" fill="none" stroke="#5a5a5a" stroke-width="1.1"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 28px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #6a6a6a; }
+    .participant { stroke: #4a4a4a; stroke-width: 2; }
+    .source { fill: #a8c5e6; }
+    .process { fill: #9dd4c7; }
+    .store { fill: #e8e6e3; }
+    .lifeline { stroke: #8f8a83; stroke-width: 1.2; stroke-dasharray: 6,5; }
+    .activation { fill: #f4e4c1; stroke: #4a4a4a; stroke-width: 1.1; }
+    .phase-band { fill: #e9f2fb; stroke: none; }
+    .phase-pill { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 1.1; }
+    .phase-text { font-size: 12px; font-weight: 700; fill: #4c4c4c; }
+    .msg { stroke: #5a5a5a; stroke-width: 1.9; marker-end: url(#arrow); }
+    .async { stroke: #5a5a5a; stroke-width: 1.8; stroke-dasharray: 8,6; marker-end: url(#arrow-open); }
+    .chip { fill: #fffdf8; stroke: #d9d3ca; stroke-width: 0.9; }
+    .label { font-size: 10px; fill: #5a5a5a; }
+    .node-title { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    .frame { fill: none; stroke: #938c81; stroke-width: 1.2; stroke-dasharray: 8,6; }
+    .frame-sep { stroke: #938c81; stroke-width: 1; stroke-dasharray: 8,6; }
+    .frame-pill { fill: #e8e6e3; stroke: #bcb5ab; stroke-width: 0.9; }
+    .frame-title { font-size: 10px; font-weight: 700; fill: #5a5a5a; }
+    .branch-title { font-size: 11px; font-weight: 700; fill: #5a5a5a; }
+    .legend { font-size: 11px; fill: #6a6a6a; }
+  </style>
+
+  <rect width="1740" height="1040" fill="#f8f6f3"/>
+  <rect x="28" y="28" width="1684" height="984" rx="18" fill="#fffdf8" stroke="#d9d3ca" stroke-width="1.4"/>
+  <text x="70" y="70" class="title">多 Agent 工具编排时序图</text>
+  <text x="70" y="96" class="subtitle">请求分解、记忆读取、LLM 推理、工具执行、失败审计与流式响应</text>
+
+  <rect x="70" y="286" width="1600" height="32" rx="14" class="phase-band"/>
+  <rect x="96" y="292" width="194" height="20" rx="10" class="phase-pill"/>
+  <text x="193" y="306" text-anchor="middle" class="phase-text">阶段一：计划与工具编排</text>
+
+  <rect x="70" y="204" width="136" height="50" rx="12" class="participant source"/>
+  <rect x="290" y="204" width="136" height="50" rx="12" class="participant process"/>
+  <rect x="510" y="204" width="150" height="50" rx="12" class="participant process"/>
+  <rect x="750" y="204" width="136" height="50" rx="12" class="participant store"/>
+  <rect x="970" y="204" width="136" height="50" rx="12" class="participant process"/>
+  <rect x="1190" y="204" width="136" height="50" rx="12" class="participant process"/>
+  <rect x="1410" y="204" width="150" height="50" rx="12" class="participant process"/>
+  <rect x="1590" y="204" width="120" height="50" rx="12" class="participant store"/>
+
+  <text x="138" y="234" class="node-title" text-anchor="middle">用户界面</text>
+  <text x="358" y="234" class="node-title" text-anchor="middle">API 网关</text>
+  <text x="585" y="234" class="node-title" text-anchor="middle">Planner Agent</text>
+  <text x="818" y="234" class="node-title" text-anchor="middle">记忆服务</text>
+  <text x="1038" y="234" class="node-title" text-anchor="middle">Tool Router</text>
+  <text x="1258" y="234" class="node-title" text-anchor="middle">Sandbox</text>
+  <text x="1485" y="234" class="node-title" text-anchor="middle">LLM Gateway</text>
+  <text x="1650" y="234" class="node-title" text-anchor="middle">审计观测</text>
+
+  <line x1="138" y1="254" x2="138" y2="970" class="lifeline"/>
+  <line x1="358" y1="254" x2="358" y2="970" class="lifeline"/>
+  <line x1="585" y1="254" x2="585" y2="970" class="lifeline"/>
+  <line x1="818" y1="254" x2="818" y2="970" class="lifeline"/>
+  <line x1="1038" y1="254" x2="1038" y2="970" class="lifeline"/>
+  <line x1="1258" y1="254" x2="1258" y2="970" class="lifeline"/>
+  <line x1="1485" y1="254" x2="1485" y2="970" class="lifeline"/>
+  <line x1="1650" y1="254" x2="1650" y2="970" class="lifeline"/>
+
+  <rect x="350" y="340" width="16" height="500" class="activation"/>
+  <rect x="577" y="400" width="16" height="420" class="activation"/>
+  <rect x="810" y="460" width="16" height="60" class="activation"/>
+  <rect x="1477" y="520" width="16" height="60" class="activation"/>
+  <rect x="1030" y="600" width="16" height="150" class="activation"/>
+  <rect x="1250" y="650" width="16" height="60" class="activation"/>
+  <rect x="1642" y="760" width="16" height="46" class="activation"/>
+
+  <line x1="138" y1="350" x2="358" y2="350" class="msg"/>
+  <rect x="218" y="334" width="60" height="18" rx="5" class="chip"/>
+  <text x="248" y="347" text-anchor="middle" class="label">提交任务</text>
+
+  <line x1="358" y1="410" x2="585" y2="410" class="msg"/>
+  <rect x="442" y="394" width="60" height="18" rx="5" class="chip"/>
+  <text x="472" y="407" text-anchor="middle" class="label">生成计划</text>
+
+  <line x1="585" y1="470" x2="818" y2="470" class="msg"/>
+  <rect x="670" y="454" width="70" height="18" rx="5" class="chip"/>
+  <text x="705" y="467" text-anchor="middle" class="label">读取上下文</text>
+
+  <line x1="585" y1="540" x2="1485" y2="540" class="msg"/>
+  <rect x="1000" y="524" width="62" height="18" rx="5" class="chip"/>
+  <text x="1031" y="537" text-anchor="middle" class="label">推理计划</text>
+
+  <rect x="560" y="584" width="1120" height="250" rx="12" class="frame" data-frame-id="tool-alt"/>
+  <rect x="578" y="592" width="34" height="16" rx="5" class="frame-pill"/>
+  <text x="595" y="603" text-anchor="middle" class="frame-title">alt</text>
+  <text x="628" y="604" class="branch-title" data-frame-id="tool-alt" data-branch="1">[工具调用成功]</text>
+  <line x1="578" y1="728" x2="1658" y2="728" class="frame-sep" data-frame-id="tool-alt"/>
+  <text x="628" y="754" class="branch-title" data-frame-id="tool-alt" data-branch="2">[工具调用失败]</text>
+
+  <line x1="585" y1="620" x2="1038" y2="620" class="msg" data-frame-id="tool-alt" data-branch="1"/>
+  <rect x="782" y="604" width="62" height="18" rx="5" class="chip"/>
+  <text x="813" y="617" text-anchor="middle" class="label">调用工具</text>
+
+  <line x1="1038" y1="670" x2="1258" y2="670" class="msg" data-frame-id="tool-alt" data-branch="1"/>
+  <rect x="1120" y="654" width="60" height="18" rx="5" class="chip"/>
+  <text x="1150" y="667" text-anchor="middle" class="label">执行命令</text>
+
+  <line x1="1258" y1="708" x2="1038" y2="708" class="async" data-frame-id="tool-alt" data-branch="1"/>
+  <rect x="1120" y="692" width="60" height="18" rx="5" class="chip"/>
+  <text x="1150" y="705" text-anchor="middle" class="label">返回结果</text>
+
+  <line x1="1038" y1="778" x2="1650" y2="778" class="async" data-frame-id="tool-alt" data-branch="2"/>
+  <rect x="1312" y="762" width="60" height="18" rx="5" class="chip"/>
+  <text x="1342" y="775" text-anchor="middle" class="label">失败事件</text>
+
+  <line x1="585" y1="870" x2="358" y2="870" class="msg"/>
+  <rect x="436" y="854" width="62" height="18" rx="5" class="chip"/>
+  <text x="467" y="867" text-anchor="middle" class="label">汇总答复</text>
+
+  <line x1="358" y1="920" x2="138" y2="920" class="async"/>
+  <rect x="218" y="904" width="62" height="18" rx="5" class="chip"/>
+  <text x="249" y="917" text-anchor="middle" class="label">流式响应</text>
+
+  <text x="70" y="948" class="legend">图例：实线 = 同步调用，虚线 = 回调 / 事件，alt 框 = 工具成功与失败路径。</text>
+</svg>
