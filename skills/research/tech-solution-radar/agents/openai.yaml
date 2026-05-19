@@ -1,0 +1,4 @@
+interface:
+  display_name: "tech-solution-radar"
+  short_description: "调研技术方案并按功能、热度、维护度生成排名建议"
+  default_prompt: "Use $tech-solution-radar to research technical solution alternatives, compare feature fit and popularity signals, rank candidates, and recommend the best option."

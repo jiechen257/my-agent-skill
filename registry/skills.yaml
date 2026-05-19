@@ -1,0 +1,178 @@
+# Skill registry for repo-managed and vendored skills.
+# Paths are relative to the repository root unless they are source paths.
+#
+# kind:
+# - repo-managed: maintained directly in this repository
+# - vendored: copied from an external source, then exposed through this repository
+#
+# source_type:
+# - local: no external sync source
+# - local-copy: copy from source_path
+# - git: clone source_url and copy source_subdir
+skills:
+  - name: architecture-diagram
+    path: skills/content/architecture-diagram
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: weekly-report-template
+    path: skills/automation/weekly-report-template
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: codex-local-maintenance
+    path: skills/automation/codex-local-maintenance
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: ui-ux-pro-max
+    path: skills/design/ui-ux-pro-max
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: git
+    source_url: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+    source_ref: main
+    source_subdir: .claude/skills/ui-ux-pro-max
+    last_synced_ref: b7e3af80f6e331f6fb456667b82b12cade7c9d35
+
+  - name: trellis-before-dev
+    path: skills/development/trellis-before-dev
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-before-dev
+
+  - name: trellis-brainstorm
+    path: skills/development/trellis-brainstorm
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-brainstorm
+
+  - name: trellis-break-loop
+    path: skills/development/trellis-break-loop
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-break-loop
+
+  - name: trellis-check
+    path: skills/development/trellis-check
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-check
+
+  - name: trellis-continue
+    path: skills/development/trellis-continue
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-continue
+
+  - name: trellis-finish-work
+    path: skills/development/trellis-finish-work
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-finish-work
+
+  - name: trellis-meta
+    path: skills/development/trellis-meta
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-meta
+
+  - name: trellis-start
+    path: skills/development/trellis-start
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-start
+
+  - name: trellis-update-spec
+    path: skills/development/trellis-update-spec
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local-copy
+    source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-update-spec
+
+  - name: colawd-ui-style
+    path: skills/design/colawd-ui-style
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: commit-daily-summary
+    path: skills/automation/commit-daily-summary
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: project-daily-summary
+    path: skills/automation/project-daily-summary
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: research-note-wrap
+    path: skills/research/research-note-wrap
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: dingtalk-yuque-doc-access
+    path: skills/research/dingtalk-yuque-doc-access
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: tech-solution-radar
+    path: skills/research/tech-solution-radar
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: session-handoff
+    path: skills/automation/session-handoff
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: session-wrap
+    path: skills/automation/session-wrap
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: worktree-closeout
+    path: skills/automation/worktree-closeout
+    kind: vendored
+    codex: true
+    claude: true
+    source_type: local

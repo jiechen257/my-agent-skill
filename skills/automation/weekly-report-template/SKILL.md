@@ -1,13 +1,22 @@
 ---
 name: weekly-report-template
-description: Use when the user wants a weekly report generated from git commits for one or more specified repositories, especially for 周报, 周进展, repo-scoped weekly summaries, or when the report should cover only named code repositories within a given week.
+description: Use when the user wants a weekly report generated from git commits and approved supplementary materials for one or more specified repositories, especially for 周报, 周进展, repo-scoped weekly summaries, or when the report should cover only named code repositories within a given week.
 ---
 
 # weekly-report-template
 
-Turn repository activity into a weekly report that matches the required format. Treat git history as the primary evidence source, respect the user-provided repository scope, and default the report owner to `陈洁` unless the user explicitly names someone else.
+Turn repository activity and approved supplementary materials into a weekly report that matches the required format. Treat git history as the primary evidence source, respect the user-provided repository scope, and default the report owner to `陈洁` unless the user explicitly names someone else.
 
 The report is a single integrated narrative organized by **workstream / theme**, not by repository. Multiple repositories can flow into the same workstream when they share a theme; the body must not surface raw commit hashes, file counts, line counts, or copy-pasted commit subject lines.
+
+## Evidence Model
+
+Use a two-layer evidence model:
+
+1. Hard evidence: repository activity inside the requested scope
+2. Supplementary context: user-approved docs, chat notes, Chronicle summaries, and hand-written notes
+
+Hard evidence decides what can be claimed as completed engineering work. Supplementary context can refine theme names, explain decisions, add coordination status, and shape next-week plans.
 
 ## Source Priority
 
@@ -16,26 +25,33 @@ Use sources in this order:
 1. user-specified repository list or absolute repository paths
 2. `git log` within the target date range
 3. `git status --short` and `git diff --stat` for ongoing work
-4. user-provided notes, only as optional supplementary context
+4. user-provided docs or links, such as Yuque / DingTalk / local Markdown
+5. user-provided notes, meeting notes, chat summaries, or Chronicle-derived summaries
 
 Do not depend on `daily/` reports or `projects/` summaries by default.
-Use git evidence as the content boundary. Do not invent progress, milestones, or plans that are not supported by the repository evidence.
+Use git evidence as the completion boundary. Do not invent shipped progress, milestones, or usage outcomes that are not supported by hard evidence or explicit supplementary material.
+
+When sources conflict, prefer hard evidence for completed work and use supplementary context to describe intent, design rationale, blockers, and next steps.
 
 ## Required Inputs
 
 - date range: explicit week range from the user when available
 - repository scope: one or more named repositories or absolute paths
+- optional supplementary scope: document links, chat summaries, Chronicle summaries, local notes, or copied source text
+- optional output mode: chat-only Markdown, local saved Markdown, or paste-ready Yuque / DingTalk Markdown
 
 If the user names repositories such as `qianwen-card-open` or `js-sdk-admin-service`, inspect only those repositories.
 If a repository name is ambiguous, ask for the path only when the path cannot be resolved safely from local context.
 
 If the user does not specify repositories, default to the current repository only.
+If the user provides supplementary materials without a repository scope, ask for the repository scope unless the current repository is clearly the target.
 
 ## Default Scope
 
 - Default report owner: `陈洁`
 - Repository scope follows explicit user input first
 - If the user explicitly names another owner or a different scope, follow the user
+- Supplementary materials are opt-in. Use only the sources the user gives or explicitly approves for the weekly report.
 
 ## Git Collection Workflow
 
@@ -55,6 +71,25 @@ git -C <repo> diff --stat
 ```
 
 If a specified repository has no commits in the target range and no meaningful working tree changes, omit its themes from the workstream list unless the user explicitly wants zero-activity repositories listed.
+
+## Supplementary Material Workflow
+
+Use supplementary materials only after hard evidence collection:
+
+1. Read the user-approved docs, notes, or summaries
+2. Extract only weekly-report-relevant facts: project background, design decisions, coordination status, blockers, next plans
+3. Map each fact to an existing workstream when possible
+4. Create a new workstream only when the material describes a substantial theme that is inside the requested scope
+5. Mark facts as supplementary in your internal notes, then rewrite them into the final report without exposing source plumbing
+
+Supported supplementary sources:
+
+- Yuque / DingTalk docs: use them for solution background, alignment status, next-week plans, and cross-team coordination
+- Chat summaries or copied messages: use them for collaboration progress, feedback, and open confirmations
+- Chronicle summaries: use them for recent-work signals and session context, then verify central claims through repo files, docs, or user-provided text when feasible
+- Local Markdown / notes: use them for design rationale, known risks, or planning context
+
+Do not use noisy OCR text as final factual evidence. Use it only to locate the relevant document, conversation, or local note.
 
 ## Required Format
 
@@ -96,6 +131,8 @@ Read [`references/weekly-format.md`](./references/weekly-format.md) before writi
 - Preserve factual boundaries from the repositories in scope
 - Use the mixed list markers (`1.` / `a.` / `ⅰ.`) consistently
 - Respect the repo filter strictly; do not pull in themes from repositories outside the requested scope
+- Merge supplementary context into the matching workstream instead of creating separate "文档" or "沟通" top-level sections
+- When a claim comes only from supplementary material, phrase it as alignment, design, planning, or coordination status unless the source explicitly proves completion
 
 Use these normalization rules:
 
@@ -104,6 +141,8 @@ Use these normalization rules:
 - If git evidence lacks an adoption or usage signal, write rollout, integration, or validation state instead
 - If git evidence lacks a clear next-week milestone, derive one from the highest-frequency unfinished theme and phrase it as a planned target
 - If git evidence lacks detailed next-week tasks, extract them conservatively from repeated change themes and current working tree signals
+- If supplementary materials contain richer module names than commit messages, use the module names from the supplementary material after confirming they fit the repo evidence
+- If supplementary materials describe cross-team communication, include it only when it changes the workstream status, risk, or next step
 
 ### Anti-Patterns to Avoid
 
@@ -114,6 +153,8 @@ Do not surface raw repository plumbing in the report body:
 - no file path drops without context (`apps/server/app/lib/agent/agent-gateway.ts`); when a path matters, weave it into a sentence about what was added or changed
 - no chronological 流水账 (do not list "周一 → 周二 → 周三")
 - no per-commit bullets (each commit becomes a bullet); cluster commits by theme
+- no separate "资料整理" workstream when the notes only support an engineering theme
+- no claims like "已上线", "已推广", "效果良好" unless the source explicitly supports that status
 
 When you need to reference a path or module, describe it in prose: `新增构建监控模块，承担打包过程的 iTrace 上报`, not `新增 buildItraceMonitor.ts（193 行）`.
 
@@ -179,8 +220,18 @@ Header guidelines:
 
 - `范围` describes the workstream / theme coverage of this week, not a raw repo list
 - `统计口径` documents what evidence drove the report
-- `来源` lists the concrete inputs (git log + key doc paths / module directories)
+- `来源` lists the concrete inputs (git log + key doc paths / module directories / approved summaries)
 - `使用技能` is fixed as `` `weekly-report-template` ``
+
+## Output Modes
+
+Choose the output mode from the user's request:
+
+- Chat-only Markdown: return the finished report directly in the conversation
+- Local saved Markdown: write the report to the resolved weekly-report directory, then report the saved path
+- Paste-ready Yuque / DingTalk Markdown: return plain Markdown optimized for pasting, with no extra commentary around the report body
+
+If the user asks for both local save and paste-ready output, save the Markdown file first and then return the same content in chat.
 
 ## Save Behavior
 
@@ -209,6 +260,7 @@ Do not use this skill when:
 - the user wants a same-day report grouped by project instead of a weekly report
 - the user wants raw commit aggregation instead of a template-constrained weekly rewrite
 - the user only wants the template itself and does not want content rewritten
+- the user wants a research note, architecture explanation, or decision memo instead of a weekly progress report
 
 In those cases, prefer the relevant daily-summary or commit-summary skill, or return the template directly.
 
@@ -223,6 +275,7 @@ Before finishing, verify:
 - [ ] `本周进展明细` is grouped by theme, not chronology, and contains no commit hashes / file counts / raw commit subject quotes
 - [ ] `下周计划明细` lists concrete, verifiable tasks under section `4.`
 - [ ] The header includes `周期 / 范围 / 统计口径 / 来源 / 使用技能` lines
-- [ ] The report does not invent facts beyond the git evidence
+- [ ] The report does not invent facts beyond hard evidence and approved supplementary materials
 - [ ] The report includes only repositories in the requested scope
 - [ ] The report defaults to `陈洁` unless the user requested another owner
+- [ ] Supplementary context is merged into workstreams and does not appear as raw chat/doc/OCR dumps
