@@ -60,6 +60,7 @@ my-agent-skill/
 | --- | --- |
 | [`commit-daily-summary`](skills/automation/commit-daily-summary/SKILL.md) | 基于当天 git commits 生成中文提交总结或日报。 |
 | [`codex-local-maintenance`](skills/automation/codex-local-maintenance/SKILL.md) | 检查、更新和排障本机 Codex CLI / Desktop、代理、日志与首 token 延迟。 |
+| [`mac-system-optimizer`](skills/automation/mac-system-optimizer/SKILL.md) | 诊断和优化 macOS 性能、启动项、浏览器、shell 与开发缓存。 |
 | [`project-daily-summary`](skills/automation/project-daily-summary/SKILL.md) | 汇总当天 Codex 会话、提交和未提交改动，按项目输出工作日报。 |
 | [`session-handoff`](skills/automation/session-handoff/SKILL.md) | 生成可交给新 Agent 继续工作的完整 handoff prompt。 |
 | [`session-wrap`](skills/automation/session-wrap/SKILL.md) | 收尾当前 coding session，整理完成项、遗留问题和后续建议。 |

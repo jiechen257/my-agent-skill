@@ -31,6 +31,13 @@ skills:
     claude: true
     source_type: local
 
+  - name: mac-system-optimizer
+    path: skills/automation/mac-system-optimizer
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   - name: ui-ux-pro-max
     path: skills/design/ui-ux-pro-max
     kind: vendored
