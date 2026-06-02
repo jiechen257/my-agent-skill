@@ -38,6 +38,13 @@ skills:
     claude: true
     source_type: local
 
+  - name: mcp-healthcheck
+    path: skills/automation/mcp-healthcheck
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   - name: ui-ux-pro-max
     path: skills/design/ui-ux-pro-max
     kind: vendored
@@ -121,6 +128,13 @@ skills:
     source_type: local-copy
     source_path: /Users/zhici/per-pro/personal-kb/.agents/skills/trellis-update-spec
 
+  - name: qwork-nano-runbook
+    path: skills/development/qwork-nano-runbook
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   - name: colawd-ui-style
     path: skills/design/colawd-ui-style
     kind: vendored
@@ -151,6 +165,13 @@ skills:
 
   - name: dingtalk-yuque-doc-access
     path: skills/research/dingtalk-yuque-doc-access
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: memory-routing
+    path: skills/research/memory-routing
     kind: repo-managed
     codex: true
     claude: true

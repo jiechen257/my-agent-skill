@@ -61,6 +61,7 @@ my-agent-skill/
 | [`commit-daily-summary`](skills/automation/commit-daily-summary/SKILL.md) | 基于当天 git commits 生成中文提交总结或日报。 |
 | [`codex-local-maintenance`](skills/automation/codex-local-maintenance/SKILL.md) | 检查、更新和排障本机 Codex CLI / Desktop、代理、日志与首 token 延迟。 |
 | [`mac-system-optimizer`](skills/automation/mac-system-optimizer/SKILL.md) | 诊断和优化 macOS 性能、启动项、浏览器、shell 与开发缓存。 |
+| [`mcp-healthcheck`](skills/automation/mcp-healthcheck/SKILL.md) | 只读检查 Codex MCP 可达性、认证状态、代理路径、命令存在性和写工具风险。 |
 | [`project-daily-summary`](skills/automation/project-daily-summary/SKILL.md) | 汇总当天 Codex 会话、提交和未提交改动，按项目输出工作日报。 |
 | [`session-handoff`](skills/automation/session-handoff/SKILL.md) | 生成可交给新 Agent 继续工作的完整 handoff prompt。 |
 | [`session-wrap`](skills/automation/session-wrap/SKILL.md) | 收尾当前 coding session，整理完成项、遗留问题和后续建议。 |
@@ -82,6 +83,7 @@ Trellis 管理的开发流程、任务状态、项目规范注入和质量门禁
 | [`trellis-update-spec`](skills/development/trellis-update-spec/SKILL.md) | 将调试、实现或讨论中获得的规范与契约写回 `.trellis/spec/`。 |
 | [`trellis-finish-work`](skills/development/trellis-finish-work/SKILL.md) | 结束 Trellis 任务，校验提交状态、归档任务并记录 session journal。 |
 | [`trellis-meta`](skills/development/trellis-meta/SKILL.md) | 理解和定制项目内 Trellis 架构、平台文件、hooks、skills 和 workflow。 |
+| [`qwork-nano-runbook`](skills/development/qwork-nano-runbook/SKILL.md) | 执行 QWork / Nano 卡片开发大师 Step 1-4 验证、任务恢复、设计输入和 nanocompose 链路排障。 |
 
 ### Content
 
@@ -107,6 +109,7 @@ Trellis 管理的开发流程、任务状态、项目规范注入和质量门禁
 | Skill | 用途 |
 | --- | --- |
 | [`dingtalk-yuque-doc-access`](skills/research/dingtalk-yuque-doc-access/SKILL.md) | 通过 aone-km / MCP 读取、验证和排障钉钉、AliDocs、语雀内部文档链接。 |
+| [`memory-routing`](skills/research/memory-routing/SKILL.md) | 判断 Codex memories、Basic Memory、repo docs、DingTalk/Yuque、日报和 handoff 的写入边界。 |
 | [`research-note-wrap`](skills/research/research-note-wrap/SKILL.md) | 将当前会话或当天相关会话整理成可读的 Obsidian 中文研究笔记。 |
 | [`tech-solution-radar`](skills/research/tech-solution-radar/SKILL.md) | 调研社区或行业技术方案，按功能匹配、热门度、维护健康度和风险生成排名建议。 |
 
