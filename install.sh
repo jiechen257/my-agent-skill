@@ -1,21 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# install.sh — Bootstrap Claude Code skills from this repo
+# install.sh — Bootstrap skills from this repo to Claude Code and Codex
 # Usage: git clone <repo> && cd my-agent-skill && ./install.sh
 #
 # Behavior:
-#   - Creates symlinks in ~/.claude/skills/ for each skill in this repo
+#   - Creates symlinks in ~/.claude/skills/ and ~/.codex/skills/ for each skill
 #   - Idempotent: safe to run multiple times
 #   - Skips: pithos-* (managed by Pithos), dogfooding (device-specific)
-#   - Also links dingtalk-doc-rw.md command if ~/.claude/commands/ exists
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SRC="$SCRIPT_DIR/skills"
-SKILLS_DST="$HOME/.claude/skills"
 
-# Ensure target directory exists
-mkdir -p "$SKILLS_DST"
+CLAUDE_DST="$HOME/.claude/skills"
+CODEX_DST="$HOME/.codex/skills"
 
 SKIP_PATTERNS=("pithos-" "dogfooding")
 
@@ -29,69 +27,84 @@ should_skip() {
   return 1
 }
 
+link_skill() {
+  local skill_dir="$1"
+  local skill_name="$2"
+  local dest_root="$3"
+  local label="$4"
+
+  local target="$dest_root/$skill_name"
+
+  if [ -L "$target" ]; then
+    local current
+    current="$(readlink "$target")"
+    if [ "$current" = "$skill_dir" ] || [ "$current" = "${skill_dir%/}" ]; then
+      return 1  # already correct
+    else
+      echo "  UPDATE [$label]: $skill_name (was → $current)"
+      rm "$target"
+    fi
+  elif [ -e "$target" ]; then
+    echo "  WARN [$label]: $skill_name exists as regular directory, skipping"
+    return 2
+  fi
+
+  ln -s "${skill_dir%/}" "$target"
+  echo "  LINK [$label]: $skill_name → ${skill_dir%/}"
+  return 0
+}
+
 echo "Installing skills from: $SKILLS_SRC"
-echo "Target directory: $SKILLS_DST"
 echo ""
+
+# Ensure target directories exist
+mkdir -p "$CLAUDE_DST"
+targets=("$CLAUDE_DST|claude")
+if [ -d "$HOME/.codex" ]; then
+  mkdir -p "$CODEX_DST"
+  targets+=("$CODEX_DST|codex")
+fi
 
 installed=0
 skipped=0
-already=0
 
 # Iterate over all skill directories (two levels: category/skill-name)
 for category_dir in "$SKILLS_SRC"/*/; do
   [ -d "$category_dir" ] || continue
   for skill_dir in "$category_dir"*/; do
     [ -d "$skill_dir" ] || continue
-    # Only process directories that contain SKILL.md
     [ -f "$skill_dir/SKILL.md" ] || continue
 
     skill_name="$(basename "$skill_dir")"
 
-    # Skip excluded patterns
     if should_skip "$skill_name"; then
       echo "  SKIP: $skill_name (excluded pattern)"
       ((skipped++))
       continue
     fi
 
-    target="$SKILLS_DST/$skill_name"
-
-    # If symlink already points to the correct location, skip
-    if [ -L "$target" ]; then
-      current="$(readlink "$target")"
-      if [ "$current" = "$skill_dir" ] || [ "$current" = "${skill_dir%/}" ]; then
-        ((already++))
-        continue
-      else
-        # Symlink exists but points elsewhere — update it
-        echo "  UPDATE: $skill_name (was → $current)"
-        rm "$target"
-      fi
-    elif [ -e "$target" ]; then
-      # Regular directory exists — skip with warning
-      echo "  WARN: $skill_name exists as regular directory, skipping (migrate manually)"
-      ((skipped++))
-      continue
-    fi
-
-    # Create symlink
-    ln -s "${skill_dir%/}" "$target"
-    echo "  LINK: $skill_name → ${skill_dir%/}"
-    ((installed++))
+    for entry in "${targets[@]}"; do
+      dest_root="${entry%%|*}"
+      label="${entry##*|}"
+      link_skill "$skill_dir" "$skill_name" "$dest_root" "$label" && ((installed++)) || true
+    done
   done
 done
 
 echo ""
-echo "Done: $installed linked, $already unchanged, $skipped skipped"
+echo "Done: $installed linked, $skipped skipped"
 
-# Verify no broken symlinks among our managed skills
+# Verify no broken symlinks
 broken=0
-for link in "$SKILLS_DST"/*/; do
-  [ -L "${link%/}" ] || continue
-  if [ ! -e "${link%/}" ]; then
-    echo "  BROKEN: ${link%/} → $(readlink "${link%/}")"
-    ((broken++))
-  fi
+for entry in "${targets[@]}"; do
+  dest_root="${entry%%|*}"
+  for link in "$dest_root"/*/; do
+    [ -L "${link%/}" ] || continue
+    if [ ! -e "${link%/}" ]; then
+      echo "  BROKEN: ${link%/} → $(readlink "${link%/}")"
+      ((broken++))
+    fi
+  done
 done
 
 if [ "$broken" -gt 0 ]; then
