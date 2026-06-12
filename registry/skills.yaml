@@ -10,13 +10,6 @@
 # - git: clone source_url and copy source_subdir
 skills:
   # === design ===
-  - name: architecture-diagram
-    path: skills/design/architecture-diagram
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
   - name: colawd-ui-style
     path: skills/design/colawd-ui-style
     kind: repo-managed

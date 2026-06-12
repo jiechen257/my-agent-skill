@@ -289,7 +289,6 @@ GOOD: 这是一个创始人筛选框架
   - 周报：`weekly-report-template`
   - 并行开发 / 多 worktree 协作：`codex-parallel-collab`
   - worktree 收口：`worktree-closeout`
-  - 流程图 / 架构图 / 画图：`architecture-diagram`
   - 钉钉文档：`dingtalk-doc-rw` / `dingtalk-yuque-doc-access`
   - 调研笔记：`research-note-wrap`
   - 会话交接：`session-handoff`

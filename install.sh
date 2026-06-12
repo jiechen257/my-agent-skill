@@ -6,6 +6,8 @@ set -euo pipefail
 #
 # Behavior:
 #   - Creates symlinks in ~/.claude/skills/ and ~/.codex/skills/ for each skill
+#   - Discovers any directory under skills/ that contains SKILL.md
+#   - Optional: EXTRA_SKILL_ROOTS=/path/to/skills[:/path/to/other/skills] ./install.sh
 #   - Idempotent: safe to run multiple times
 #   - Skips: pithos-* (managed by Pithos), dogfooding (device-specific)
 
@@ -54,7 +56,19 @@ link_skill() {
   return 0
 }
 
-echo "Installing skills from: $SKILLS_SRC"
+skill_roots=("$SKILLS_SRC")
+if [ -n "${EXTRA_SKILL_ROOTS:-}" ]; then
+  IFS=':' read -r -a extra_roots <<< "$EXTRA_SKILL_ROOTS"
+  for extra_root in "${extra_roots[@]}"; do
+    [ -n "$extra_root" ] || continue
+    skill_roots+=("$extra_root")
+  done
+fi
+
+echo "Installing skills from:"
+for skill_root in "${skill_roots[@]}"; do
+  echo "  $skill_root"
+done
 echo ""
 
 # Ensure target directories exist
@@ -68,13 +82,18 @@ fi
 installed=0
 skipped=0
 
-# Iterate over all skill directories (two levels: category/skill-name)
-for category_dir in "$SKILLS_SRC"/*/; do
-  [ -d "$category_dir" ] || continue
-  for skill_dir in "$category_dir"*/; do
-    [ -d "$skill_dir" ] || continue
-    [ -f "$skill_dir/SKILL.md" ] || continue
+install_from_root() {
+  local root="$1"
 
+  if [ ! -d "$root" ]; then
+    echo "  WARN: skill root not found, skipping: $root"
+    return
+  fi
+
+  while IFS= read -r -d '' skill_file; do
+    local skill_dir
+    local skill_name
+    skill_dir="$(dirname "$skill_file")"
     skill_name="$(basename "$skill_dir")"
 
     if should_skip "$skill_name"; then
@@ -88,7 +107,11 @@ for category_dir in "$SKILLS_SRC"/*/; do
       label="${entry##*|}"
       link_skill "$skill_dir" "$skill_name" "$dest_root" "$label" && ((installed++)) || true
     done
-  done
+  done < <(find "$root" -mindepth 2 -type f -name SKILL.md -print0 | sort -z)
+}
+
+for skill_root in "${skill_roots[@]}"; do
+  install_from_root "$skill_root"
 done
 
 echo ""
@@ -98,13 +121,12 @@ echo "Done: $installed linked, $skipped skipped"
 broken=0
 for entry in "${targets[@]}"; do
   dest_root="${entry%%|*}"
-  for link in "$dest_root"/*/; do
-    [ -L "${link%/}" ] || continue
-    if [ ! -e "${link%/}" ]; then
-      echo "  BROKEN: ${link%/} → $(readlink "${link%/}")"
+  while IFS= read -r -d '' link; do
+    if [ ! -e "$link" ]; then
+      echo "  BROKEN: $link → $(readlink "$link")"
       ((broken++))
     fi
-  done
+  done < <(find "$dest_root" -maxdepth 1 -type l -print0)
 done
 
 if [ "$broken" -gt 0 ]; then

@@ -52,7 +52,7 @@ git clone <repo> && cd my-agent-skill && ./install.sh
 
 | Domain | 用途 |
 | --- | --- |
-| `design` | UI/UX 设计、架构图、视觉风格 |
+| `design` | UI/UX 设计、视觉风格 |
 | `workflow` | 开发流程辅助：方案设计、代码审查、debug、决策压测 |
 | `harness` | 本机环境维护：Codex/MCP 健康检查、系统优化、worktree 管理 |
 | `research-docs` | 调研、学习、文档生成、报告、会话管理 |
