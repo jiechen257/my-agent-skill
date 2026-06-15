@@ -167,6 +167,14 @@ skills:
     claude: true
     source_type: local
 
+  # === hone ===
+  - name: hone
+    path: skills/hone
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   # === vendored ===
   - name: superpowers
     path: skills/vendored/superpowers
