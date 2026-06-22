@@ -119,15 +119,78 @@ GOOD: 这是一个创始人筛选框架
 - 默认工作流候选只包含 Trellis 和当前会话实际暴露的专项 skills。
 
 ### Trellis 与 Superpowers 优先级
-
-- Trellis 负责流程编排（任务分流、阶段推进、spec 管理、质量门禁）。
-- Superpowers skills 降级为原子工具库：在 Trellis 流程内或轻量任务中按需调用，不作为独立工作流入口。
-- 功能重叠时的路由：
-  - 需求/计划：头脑风暴优先用 `brainstorming`（Superpowers）；Trellis 项目的阶段推进和 spec 管理仍走 `trellis-start` / `trellis-continue`。
-  - 调试：`systematic-debugging` 作为通用原子工具，Trellis 项目中可在其流程内调用。
-  - Review/验证：Trellis 项目用 `trellis-check` + `trellis-finish-work`；非 Trellis 项目用 `requesting-code-review` + `verification-before-completion`。
-  - 执行：Trellis 项目用 `trellis-continue`；轻量任务或非 Trellis 项目可用 `executing-plans`。
-- 不要同时启动两套平行流程；一个任务只走一条路径。
+* Trellis 是中大型实现任务的主工作流，负责任务分流、阶段推进、spec 管理、质量门禁、check 与 finish。
+* Superpowers skills 是原子能力库，只能在已选定的主工作流内部调用，不作为独立 workflow 入口。
+* 一个任务只能有一个 workflow owner：
+  * Trellis 项目：workflow owner 是 Trellis。
+  * 非 Trellis 项目：按当前任务选择 inline、专项 skill 或 Superpowers-style flow。
+* 不要同时启动 `trellis-brainstorm` 和 Superpowers `brainstorming`。
+* 不要在 Trellis 项目中直接进入完整 Superpowers workflow。
+* 不要调用 `using-superpowers` 作为全局主控规则。
+#### Trellis 项目中的 planning 路由
+在存在 `.trellis/` 的项目中，先执行 Trellis 路由，再决定 planning 深度：
+1. Fast Mode
+   * 适用：轻量修复、局部文案、单文件调整、小测试补充、边界清晰的小改动。
+   * 路径：inline 或 Trellis 当前轻量路径。
+   * 不调用 Superpowers `brainstorming`。
+   * 不强制生成 `design.md` / `implement.md`。
+2. Standard Trellis Mode
+   * 适用：普通中型任务，需求较清晰，影响面可控。
+   * 路径：`trellis-start` / `trellis-continue` 按项目 `.trellis/workflow.md` 推进。
+   * 可使用 Trellis 默认 brainstorm。
+   * 不调用 Superpowers `brainstorming`。
+3. Deep Planning Mode
+   * 适用：新功能、跨模块行为变更、共享逻辑、公共 API / schema / 持久化 / 并发、复杂 UI flow、大规模重构、影响面不清晰的修复，或用户明确要求“深度规划 / Superpowers 风格规划”。
+   * 路径：Trellis 仍是主 workflow；Superpowers 只提供 planning checklist。
+   * 目标产物必须写入当前 Trellis task：
+     * `.trellis/tasks/<task>/prd.md`
+     * `.trellis/tasks/<task>/design.md`
+     * `.trellis/tasks/<task>/implement.md`
+   * 在 `design.md` 和 `implement.md` 完成前，不进入 `trellis-implement`。
+   * 不创建 `docs/superpowers/specs/*`，除非用户明确要求外部规划文档。
+   * 不启动完整 Superpowers workflow。
+#### Deep Planning Mode 的最低标准
+执行 Deep Planning Mode 时，使用 Superpowers `brainstorming` 与 `writing-plans` 的方法论，但产物落到 Trellis task 中：
+* 先阅读项目上下文：相关源码、文档、最近提交、已有 `.trellis/spec/` 与 active task。
+* 一次只问一个关键澄清问题；能从代码和文档回答的问题不问用户。
+* 至少提出 2-3 个方案，包含 trade-off 和推荐方案。
+* 分 section 呈现设计，并获得用户确认。
+* `design.md` 至少覆盖：目标、非目标、架构、组件边界、数据流、错误处理、测试策略、风险。
+* `implement.md` 必须包含：
+  * 精确文件路径；
+  * 接口 / 类型 / schema 变更；
+  * 分步任务；
+  * 测试用例或测试代码；
+  * 验证命令与预期结果；
+  * 回滚或风险控制。
+* 禁止 placeholder：`TBD`、`TODO`、`后续补充`、`添加适当错误处理`、`补充测试`、`处理边界情况`。
+* 写完 `design.md` / `implement.md` 后做 self-review：
+  * 每个验收标准是否映射到实现任务；
+  * 是否存在歧义、矛盾、scope creep；
+  * 是否存在未定义的类型、函数、字段或文件；
+  * 是否存在无法验证的声明。
+* self-review 通过后，再回到 Trellis 的 `trellis-continue` / implement / check / finish 流程。
+#### 功能重叠时的路由
+* 需求/计划：
+  * Trellis 项目默认由 Trellis 路由决定。
+  * 只有在 Deep Planning Mode 下，才调用 Superpowers-style brainstorming / writing-plans。
+* 调试：
+  * `systematic-debugging` 可作为 Trellis 流程内的原子工具。
+* Review/验证：
+  * Trellis 项目使用 `trellis-check` + `trellis-finish-work`。
+  * 非 Trellis 项目使用 `requesting-code-review` + `verification-before-completion`。
+* 执行：
+  * Trellis 项目使用 `trellis-continue`。
+  * 轻量任务或非 Trellis 项目可使用 `executing-plans`。
+#### 冲突处理
+当多个 skill 同时匹配时，按以下顺序消解：
+1. 当前用户明确指定的模式优先。
+2. Trellis 项目中的中大型实现任务，Trellis 是 workflow owner。
+3. Superpowers skills 只能作为 Trellis 内部原子工具调用。
+4. `brainstorming` 与 `trellis-brainstorm` 同时匹配时：
+   * Fast Mode / Standard Trellis Mode：使用 Trellis 路径。
+   * Deep Planning Mode：使用 `trellis-deep-planning`，不直接启动完整 Superpowers workflow。
+5. 任何时候都不要让两个 workflow 同时维护任务状态、设计文档、执行计划或验证路径。
 
 ### 流程升级 / 降级
 
