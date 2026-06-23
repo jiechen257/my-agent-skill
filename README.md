@@ -12,6 +12,8 @@ my-agent-skill/
 │   └── skills.yaml        # skill 清单（repo-managed / vendored）
 ├── rules/
 │   └── codex-global.md    # 全局 Codex AGENTS.md 源文件（手动部署）
+├── plugins/
+│   └── ponytail/          # vendored agent plugin（Codex 插件结构）
 ├── scripts/
 │   ├── audit-global-skills.sh
 │   └── sync-vendored-skills.sh
@@ -35,6 +37,7 @@ my-agent-skill/
 - 每个 skill 必须包含一个 `SKILL.md`，可按需附带 `agents/`、`references/`、`scripts/`、`assets/`。
 - `templates/` 只放可复用骨架，不作为 active skill。
 - `prompts/` 存放个人收藏的 prompt 模板，供手动复制使用，不参与 install 或 registry。
+- `plugins/` 存放完整 agent plugin 收录件，保留上游插件结构，不参与 skill 安装脚本。
 - `rules/` 存放全局 agent 规则源文件，手动部署到目标位置（如 `~/.codex/AGENTS.md`）。
 - domain 只表达稳定分类，避免把临时项目名放到 domain 层。
 - skill 文件里不写密钥、token、机器专属凭证。
