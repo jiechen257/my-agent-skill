@@ -1,10 +1,10 @@
 ---
 name: grill-me
-description: Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
+description: "Use only when the user explicitly asks to be grilled or to stress-test a plan before building."
 ---
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+# Grill Me
 
-Ask the questions one at a time.
+Read `../../../vendor/skills/mattpocock/grilling/SKILL.md` relative to this file and follow it.
 
-If a question can be answered by exploring the codebase, explore the codebase instead.
+Resolve any relative references, scripts, or assets from `../../../vendor/skills/mattpocock/grilling/`.

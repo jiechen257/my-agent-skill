@@ -1,24 +1,32 @@
 # Skill 使用手册与白皮书
 
-更新时间：2026-06-17
+更新时间：2026-06-24
 适用仓库：`/Users/zhici/work-pro/my-agent-skill`
 
 ## 1. 定位
 
-本仓库集中维护个人 Codex / Claude Code skills。`skills/` 下的每个 `SKILL.md` 都代表一个可触发的工作能力，覆盖设计、开发流程、调试、代码审查、本机维护、研究文档、会话交接和第三方流程工具。
+本仓库集中维护个人 Codex / Claude Code skills。`skills/` 下的每个 `SKILL.md` 都是会被安装和自动发现的 active 入口；`vendor/skills/` 保存外部同步源快照，供 wrapper 按需读取。
 
-截至本文档更新时，当前项目共有 37 个 active skill：
+截至本文档更新时，`skills/` 下有 33 个 active `SKILL.md`，`vendor/skills/` 下有 26 个上游 source `SKILL.md`。真实安装面固定为 active wrapper；Trellis / Waza / Superpowers 的冲突由 `rules/codex-global.md` 和 `skills/workflow/*` router 在运行时裁决。
 
 | 类别 | 数量 | 说明 |
 | --- | ---: | --- |
-| `design` | 2 | UI/UX、视觉风格、截图驱动打磨 |
-| `workflow` | 4 | 方案、review、debug、决策压测 |
-| `harness` | 5 | 本机、Codex、MCP、worktree、工程健康检查 |
-| `research-docs` | 11 | 链接阅读、调研、日报、周报、写作、会话管理 |
+| `design` | 2 | 本地设计辅助和 Waza design wrapper |
+| `workflow` | 5 | Trellis 深度规划、Waza workflow router、grill-me wrapper |
+| `harness` | 2 | MCP 健康检查和 Waza health wrapper |
+| `research-docs` | 9 | 周报、技术选型、会话交接、Waza 研究读写、leonsong09 日报/笔记 wrapper |
 | `hone` | 1 | frontier AI coding signals 与本地 agent harness 实践 |
-| `vendored/superpowers` | 14 | 外部同步的通用流程 skill |
+| `superpowers` | 14 | 显式点名才使用的 Superpowers wrapper |
 
-`registry/skills.yaml` 把 `vendored/superpowers` 作为一个外部同步来源登记，但目录下有 14 个独立 `SKILL.md`。本文档按实际可触发 skill 逐一说明。
+`registry/skills.yaml` 同时登记 active wrapper 和 vendored source snapshot。`install.sh` 只安装 `codex: true` / `claude: true` 的 active wrapper；`codex: false` 且 `claude: false` 的 source snapshot 只供 `scripts/sync-vendored-skills.sh` 更新。
+
+workflow owner 的选择规则：
+
+| 项目上下文 | workflow owner | 关键效果 |
+| --- | --- | --- |
+| 存在 `.trellis/workflow.md` | Trellis | `think` / `check` / `hunt` wrapper 只做路由，不启动 Waza 或 Superpowers workflow |
+| 不存在 `.trellis/workflow.md` | Waza | `think` / `check` / `hunt` wrapper 读取 `vendor/skills/waza/*` 并执行 |
+| 用户显式点名 Superpowers skill | Superpowers explicit wrapper | 只在明确点名时读取对应 `vendor/skills/superpowers/superpowers/*` |
 
 ## 2. 使用总原则
 
@@ -33,42 +41,33 @@
 5. 修改文件前说明将改什么；修改后运行与风险匹配的验证。
 6. 不还原用户已有改动；脏工作区只处理当前任务相关文件。
 
-不要同时启动两套完整流程。比如一个 bug 修复不要同时走 `hunt`、`systematic-debugging`、`think` 三条主流程；选一个主流程，其他 skill 只作为原子方法参考。
+不要同时启动两套完整流程。比如一个 bug 修复不要同时走 `hunt`、`systematic-debugging`、`think` 三条主流程；选一个 workflow owner，其他 skill 只作为原子方法参考。
 
 ## 3. 场景速查
 
 | 用户意图或场景 | 首选 skill | 可组合 skill | 注意事项 |
 | --- | --- | --- | --- |
-| 做一个新功能、交互、组件或行为变化 | `brainstorming` 或 `think` | `writing-plans`、`test-driven-development` | 需求不清时先收敛目标、影响面、验收方式。 |
+| 做一个新功能、交互、组件或行为变化 | `think` | `grill-me` | 需求不清时先收敛目标、影响面、验收方式。 |
 | 用户要求“出方案”“怎么设计”“有没有必要” | `think` | `grill-me` | 输出决策完整的方案，不直接写代码。 |
 | 用户要被追问、压测方案 | `grill-me` | `think` | 一次问一个问题；能从代码查到的就先查。 |
-| bug、异常、构建失败、测试失败 | `hunt` 或 `systematic-debugging` | `test-driven-development`、`verification-before-completion` | 先复现、追数据流、提出假设，再修复。 |
-| 代码审查、合并前检查、发布前检查 | `check` | `requesting-code-review`、`verification-before-completion` | findings 先行，按严重程度排序。 |
-| 接收 review 意见并准备修改 | `receiving-code-review` | `systematic-debugging` | 不盲从 review，先验证反馈是否成立。 |
+| bug、异常、构建失败、测试失败 | `hunt` | `check` | 先复现、追数据流、提出假设，再修复。 |
+| 代码审查、合并前检查、发布前检查 | `check` | `hunt` | findings 先行，按严重程度排序。 |
 | UI 设计、页面打磨、截图复刻 | `design` | `colawd-ui-style` | 先确认产品语境和现有风格，不做泛化模板页。 |
 | 复刻 colawd 风格工作台 | `colawd-ui-style` | `design` | 保持黑色 shell、浅黄网格、粗边框、硬阴影等风格约束。 |
-| 本机 Codex/Claude/MCP 配置异常 | `codex-local-maintenance`、`mcp-healthcheck` | `health` | 以当前机器证据为准，先诊断再改配置。 |
-| Mac 卡顿、登录项、缓存、shell 慢 | `mac-system-optimizer` | `codex-local-maintenance` | 破坏性清理前必须确认；先分类风险。 |
-| 多 worktree 或并行分支收口 | `worktree-closeout` | `session-handoff` | 先按日期和范围扫描，再给合并/归档顺序。 |
+| MCP 配置异常 | `mcp-healthcheck` | `health` | 以当前机器证据为准，先诊断再改配置。 |
 | 今天做了什么、提交日报 | `commit-daily-summary` | `project-daily-summary` | commit 证据优先，不用记忆替代 git。 |
-| 按项目总结今天所有 Codex 工作 | `project-daily-summary` | `session-wrap` | 同时看会话、提交和未提交变更。 |
+| 按项目总结今天所有 Codex 工作 | `project-daily-summary` | `commit-daily-summary` | 同时看会话、提交和未提交变更。 |
 | 周报 | `weekly-report-template` | `commit-daily-summary` | 只覆盖用户指定 repo 和时间段。 |
 | 读链接、读 PDF、转 Markdown | `read` | `research-note-wrap` | 外部最新信息要实时验证并保留来源。 |
 | 深入研究、整合资料成文章 | `learn` | `tech-solution-radar`、`write` | 适合多来源，不适合单个快速查找。 |
 | 技术选型、工具对比、最佳实践调研 | `tech-solution-radar` | `read`、`research-note-wrap` | 给证据、评分和推荐，不只罗列优缺点。 |
 | 润色、改稿、去 AI 味 | `write` | `read` | 保留原意，不虚构事实。 |
 | 总结调研为 Obsidian 笔记 | `research-note-wrap` | `learn` | 明确输出位置和范围。 |
-| 会话收尾 | `session-wrap` | `commit-daily-summary` | 输出完成项、决策、开放问题和下一步。 |
-| 写交接 prompt 给另一个 agent | `session-handoff` | `worktree-closeout` | 生成自包含交接文件，不泄露密钥。 |
-| 判断知识应该写到哪里 | `memory-routing` | `research-note-wrap` | 区分 Codex memory、repo docs、Yuque/DingTalk、日报。 |
+| 写交接 prompt 给另一个 agent | `session-handoff` | `project-daily-summary` | 生成自包含交接文件，不泄露密钥。 |
 | frontier AI coding / hone 相关讨论 | `hone` | `health` | 聚焦 signals、harness drift 和本地实践映射。 |
-| 多个独立子任务可并行 | `dispatching-parallel-agents` | `subagent-driven-development` | 必须保证子任务边界独立。 |
-| 已有书面计划，需要执行 | `executing-plans` | `subagent-driven-development` | 按计划任务执行，并保留 review checkpoints。 |
-| 开始需要隔离的功能分支 | `using-git-worktrees` | `writing-plans` | 先检查是否已有隔离工作区。 |
-| 完成开发分支，准备合并或 PR | `finishing-a-development-branch` | `verification-before-completion` | 先验证测试，再选择 merge、PR 或清理。 |
-| 创建或修改 skill | `writing-skills` | `test-driven-development` | skill 本身也要有触发场景、流程和验证方式。 |
+| 创建或修改 skill | `hone` | `check` | skill 本身也要有触发场景、流程和验证方式。 |
 
-## 4. 自维护 skills
+## 4. 核心 active skills
 
 ### 4.1 `design`
 
@@ -194,46 +193,6 @@
 - 不要在症状点直接补丁。
 - 多组件问题先确认问题发生在哪一层。
 
-### 4.7 `codex-local-maintenance`
-
-路径：`skills/harness/codex-local-maintenance/SKILL.md`
-
-适用场景：
-
-- 检查、更新、排查本机 Codex CLI/Desktop。
-- 版本、Bun global install、代理、first-token latency、日志、launcher/state 异常。
-
-典型 case：
-
-- Codex 启动慢或连接不稳定。
-- Codex Desktop 和 CLI 行为不一致。
-- 需要确认当前实际加载的全局规则和配置。
-
-注意事项：
-
-- 以当前机器证据为准，不从泛泛文档推断。
-- 修改本机配置前先备份或说明影响面。
-
-### 4.8 `mac-system-optimizer`
-
-路径：`skills/harness/mac-system-optimizer/SKILL.md`
-
-适用场景：
-
-- Mac 性能、响应、开发工作流、shell 启动、浏览器内存、登录项、LaunchAgents、Docker/Homebrew 缓存。
-
-典型 case：
-
-- 找出导致机器卡顿的进程和登录项。
-- 清理开发缓存。
-- 优化 zsh 启动耗时。
-
-注意事项：
-
-- 证据优先诊断。
-- 破坏性动作和禁用登录项前要确认。
-- 每个改动后验证效果。
-
 ### 4.9 `mcp-healthcheck`
 
 路径：`skills/harness/mcp-healthcheck/SKILL.md`
@@ -271,26 +230,6 @@
 
 - 这是工程健康审计，不是具体 bug 修复。
 - 报告要分 PASS、finding、风险和可执行建议。
-
-### 4.11 `worktree-closeout`
-
-路径：`skills/harness/worktree-closeout/SKILL.md`
-
-适用场景：
-
-- 多 Codex session、多 worktree、多分支并行后需要收口。
-- 用户说“worktree 收口”“分支收口”“并行收口”。
-
-典型 case：
-
-- 扫描某天打开的 worktree。
-- 判断哪些可以 merge、哪些需要归档、哪些要继续交接。
-- 给每个未完成分支生成 prompt-ready handoff。
-
-注意事项：
-
-- 先问日期，再问范围。
-- 运行 scanner 后读 artifact，不凭记忆判断。
 
 ### 4.12 `hone`
 
@@ -382,24 +321,6 @@
 - 先决定 scope：当前会话还是跨会话。
 - 先决定输出位置，避免把临时分析文档写进源码目录。
 
-### 4.17 `memory-routing`
-
-路径：`skills/research-docs/memory-routing/SKILL.md`
-
-适用场景：
-
-- 判断长期知识该放到 Codex memory、Basic Memory MCP、repo docs、DingTalk/Yuque、daily reports 还是 project notes。
-
-典型 case：
-
-- 用户要求“记住这个”或“这个应该沉淀在哪里”。
-- 把一次会话里的可复用约定拆成合适的存储位置。
-
-注意事项：
-
-- 区分个人偏好、项目事实、临时结果和外部资料。
-- 只有用户明确要求时才更新 memory。
-
 ### 4.18 `tech-solution-radar`
 
 路径：`skills/research-docs/tech-solution-radar/SKILL.md`
@@ -436,24 +357,6 @@
 - 输出是交接 artifact，不是普通聊天摘要。
 - 必须包含环境、当前任务、历史、下一步、关键文件、验证方法、开放决策。
 - 不泄露 `.env`、token、API key、DSN。
-
-### 4.20 `session-wrap`
-
-路径：`skills/research-docs/session-wrap/SKILL.md`
-
-适用场景：
-
-- 用户要结束会话、总结本次 coding session、决定是否提交、提取 learnings 和 open items。
-
-典型 case：
-
-- 本轮开发收尾。
-- 给用户列出完成项、关键决策、剩余风险、下一步。
-
-注意事项：
-
-- 先确认 scope。
-- 必须检查工作树，避免遗漏未提交改动。
 
 ### 4.21 `learn`
 
@@ -511,31 +414,33 @@
 - 保留原意和事实边界。
 - 不用于代码注释、commit message 或 inline docs 的机械生成。
 
-## 5. Vendored Superpowers skills
+## 5. Explicit Superpowers wrappers
 
-这些 skill 位于 `skills/vendored/superpowers/`，由外部源同步。使用时应遵循其 `SKILL.md`，但不要在本仓库手动修改 vendored 内容。
+这些 active wrapper 位于 `skills/superpowers/`，只在用户显式点名对应 Superpowers skill 时触发。wrapper 会读取 `vendor/skills/superpowers/superpowers/` 下的上游源；不要在本仓库手动修改 vendored 源内容。
 
 ### 5.1 `using-superpowers`
 
-路径：`skills/vendored/superpowers/using-superpowers/SKILL.md`
+路径：`skills/superpowers/using-superpowers/SKILL.md`
 
 适用场景：
 
-- 会话开始时进行 skill 路由自检。
-- 判断是否有任何 skill 应该参与当前任务。
+- 用户明确点名 `using-superpowers`。
+- 临时希望采用完整 Superpowers skill 路由自检。
 
 注意事项：
 
 - 它强调先查 skill 再行动。
+- 不作为全局默认入口；在 Trellis 项目中尤其不能覆盖 Trellis workflow owner。
 - 若与用户明确规则或上层系统规则冲突，以上层规则为准。
 
 ### 5.2 `brainstorming`
 
-路径：`skills/vendored/superpowers/brainstorming/SKILL.md`
+路径：`skills/superpowers/brainstorming/SKILL.md`
 
 适用场景：
 
-- 创意工作、新功能、组件、行为修改前理解用户意图和设计。
+- 用户明确点名 `brainstorming` 或 `$brainstorming`。
+- 临时希望使用 Superpowers 的需求澄清和设计 approval gate。
 
 典型 case：
 
@@ -549,11 +454,12 @@
 
 ### 5.3 `writing-plans`
 
-路径：`skills/vendored/superpowers/writing-plans/SKILL.md`
+路径：`skills/superpowers/writing-plans/SKILL.md`
 
 适用场景：
 
-- 已有 spec 或明确需求，需要写多步骤实施计划。
+- 用户明确点名 `writing-plans`。
+- 已有 spec 或明确需求，需要临时使用 Superpowers 的多步骤实施计划格式。
 
 典型 case：
 
@@ -567,11 +473,12 @@
 
 ### 5.4 `executing-plans`
 
-路径：`skills/vendored/superpowers/executing-plans/SKILL.md`
+路径：`skills/superpowers/executing-plans/SKILL.md`
 
 适用场景：
 
-- 已有书面计划，需要按计划执行，并带 review checkpoints。
+- 用户明确点名 `executing-plans`。
+- 已有书面计划，需要临时使用 Superpowers 的计划执行纪律。
 
 典型 case：
 
@@ -585,11 +492,12 @@
 
 ### 5.5 `test-driven-development`
 
-路径：`skills/vendored/superpowers/test-driven-development/SKILL.md`
+路径：`skills/superpowers/test-driven-development/SKILL.md`
 
 适用场景：
 
-- 实现功能或 bugfix 前能写自动化测试。
+- 用户明确点名 `test-driven-development`。
+- 希望临时使用 Superpowers 的严格 TDD discipline。
 
 典型 case：
 
@@ -603,11 +511,12 @@
 
 ### 5.6 `systematic-debugging`
 
-路径：`skills/vendored/superpowers/systematic-debugging/SKILL.md`
+路径：`skills/superpowers/systematic-debugging/SKILL.md`
 
 适用场景：
 
-- 任何 bug、测试失败、异常行为，在提出修复前使用。
+- 用户明确点名 `systematic-debugging`。
+- 希望临时使用 Superpowers 的系统化调试 discipline。
 
 典型 case：
 
@@ -621,11 +530,12 @@
 
 ### 5.7 `verification-before-completion`
 
-路径：`skills/vendored/superpowers/verification-before-completion/SKILL.md`
+路径：`skills/superpowers/verification-before-completion/SKILL.md`
 
 适用场景：
 
-- 准备声称工作完成、测试通过、问题修复、提交或 PR 前。
+- 用户明确点名 `verification-before-completion`。
+- 希望临时使用 Superpowers 的完成前验证 checklist。
 
 典型 case：
 
@@ -639,11 +549,12 @@
 
 ### 5.8 `requesting-code-review`
 
-路径：`skills/vendored/superpowers/requesting-code-review/SKILL.md`
+路径：`skills/superpowers/requesting-code-review/SKILL.md`
 
 适用场景：
 
-- 完成主要功能、准备合并前请求 review。
+- 用户明确点名 `requesting-code-review`。
+- 希望临时使用 Superpowers 的 review 请求格式。
 
 典型 case：
 
@@ -655,11 +566,12 @@
 
 ### 5.9 `receiving-code-review`
 
-路径：`skills/vendored/superpowers/receiving-code-review/SKILL.md`
+路径：`skills/superpowers/receiving-code-review/SKILL.md`
 
 适用场景：
 
-- 收到 review feedback 后准备处理。
+- 用户明确点名 `receiving-code-review`。
+- 希望临时使用 Superpowers 的 review feedback 处理纪律。
 
 典型 case：
 
@@ -673,11 +585,12 @@
 
 ### 5.10 `dispatching-parallel-agents`
 
-路径：`skills/vendored/superpowers/dispatching-parallel-agents/SKILL.md`
+路径：`skills/superpowers/dispatching-parallel-agents/SKILL.md`
 
 适用场景：
 
-- 有两个以上互不依赖的任务，可并行分派。
+- 用户明确点名 `dispatching-parallel-agents`。
+- 希望临时使用 Superpowers 的并行分派纪律。
 
 典型 case：
 
@@ -691,11 +604,12 @@
 
 ### 5.11 `subagent-driven-development`
 
-路径：`skills/vendored/superpowers/subagent-driven-development/SKILL.md`
+路径：`skills/superpowers/subagent-driven-development/SKILL.md`
 
 适用场景：
 
-- 执行实现计划时，当前 session 内有多个独立 implementation tasks。
+- 用户明确点名 `subagent-driven-development`。
+- 希望临时使用 Superpowers 的子 agent 开发纪律。
 
 典型 case：
 
@@ -708,11 +622,12 @@
 
 ### 5.12 `using-git-worktrees`
 
-路径：`skills/vendored/superpowers/using-git-worktrees/SKILL.md`
+路径：`skills/superpowers/using-git-worktrees/SKILL.md`
 
 适用场景：
 
-- 开始需要隔离的功能工作，或执行 implementation plan 前。
+- 用户明确点名 `using-git-worktrees`。
+- 希望临时使用 Superpowers 的 worktree 隔离流程。
 
 典型 case：
 
@@ -726,11 +641,12 @@
 
 ### 5.13 `finishing-a-development-branch`
 
-路径：`skills/vendored/superpowers/finishing-a-development-branch/SKILL.md`
+路径：`skills/superpowers/finishing-a-development-branch/SKILL.md`
 
 适用场景：
 
-- 实现完成、测试通过，需要决定 merge、PR、cleanup。
+- 用户明确点名 `finishing-a-development-branch`。
+- 希望临时使用 Superpowers 的分支收尾流程。
 
 典型 case：
 
@@ -743,11 +659,12 @@
 
 ### 5.14 `writing-skills`
 
-路径：`skills/vendored/superpowers/writing-skills/SKILL.md`
+路径：`skills/superpowers/writing-skills/SKILL.md`
 
 适用场景：
 
-- 创建新 skill、修改已有 skill、验证 skill 部署前质量。
+- 用户明确点名 `writing-skills`。
+- 希望临时使用 Superpowers 的 skill authoring discipline。
 
 典型 case：
 
@@ -763,22 +680,21 @@
 
 ### 6.1 新功能从想法到落地
 
-1. `think` 或 `brainstorming`：明确目标、影响面、验收方式。
-2. `writing-plans`：把批准方案拆成可执行任务。
-3. `using-git-worktrees`：必要时隔离工作区。
-4. `test-driven-development`：能测试的先写失败用例。
-5. `executing-plans` 或直接实现：按计划执行。
-6. `verification-before-completion`：验证后再声称完成。
-7. `check` 或 `requesting-code-review`：合并前 review。
+1. 项目有 `.trellis/workflow.md`：按 Trellis workflow；需要深度规划时用 `trellis-deep-planning`。
+2. 项目没有 `.trellis/workflow.md`：用 `think` 明确目标、影响面、验收方式。
+3. 必要时显式点名 Superpowers 子能力作为参考 discipline，但不让它维护第二套 plan 或 spec。
+4. 实现后运行最小有效验证。
+5. 用 `check` 做合并前 review 或 release gate。
 
 ### 6.2 Bug 或返工修复
 
-1. `hunt` 或 `systematic-debugging`：复现、收集证据、追数据流。
-2. 提出假设：根因是 X，因为证据 Y；排除 Z，因为证据 W。
-3. `test-driven-development`：能写回归测试就先写失败用例。
-4. 最小修复：只改根因点，不混入无关重构。
-5. `verification-before-completion`：跑最小有效验证。
-6. `check`：影响面较大时做 review。
+1. 项目有 `.trellis/workflow.md`：按 Trellis debugging / break-loop flow。
+2. 项目没有 `.trellis/workflow.md`：用 `hunt` 复现、收集证据、追数据流。
+3. 提出假设：根因是 X，因为证据 Y；排除 Z，因为证据 W。
+4. 能写回归测试就先写失败用例。
+5. 最小修复：只改根因点，不混入无关重构。
+6. 跑最小有效验证。
+7. `check`：影响面较大时做 review。
 
 ### 6.3 设计和前端打磨
 
@@ -797,25 +713,21 @@
 
 ### 6.5 本机和 agent harness 维护
 
-1. `codex-local-maintenance`：Codex CLI/Desktop 或规则加载异常。
-2. `mcp-healthcheck`：MCP server、auth、proxy、tool list 异常。
-3. `mac-system-optimizer`：系统性能和开发环境性能。
-4. `health`：更高层的工程健康审计。
-5. `hone`：把外部 agent coding signals 映射为本地 harness 实践。
+1. `mcp-healthcheck`：MCP server、auth、proxy、tool list 异常。
+2. `health`：更高层的工程健康审计。
+3. `hone`：把外部 agent coding signals 映射为本地 harness 实践。
 
 ### 6.6 会话和分支收尾
 
-1. `session-wrap`：总结当前会话、完成项、决策、开放问题。
-2. `commit-daily-summary` 或 `project-daily-summary`：需要日报时使用。
-3. `worktree-closeout`：多 worktree、多分支需要收口时使用。
-4. `session-handoff`：需要交接给另一个 agent 时使用。
-5. `finishing-a-development-branch`：准备 merge/PR/cleanup 时使用。
+1. `commit-daily-summary` 或 `project-daily-summary`：需要日报时使用。
+2. `session-handoff`：需要交接给另一个 agent 时使用。
+3. 用户显式点名时，`finishing-a-development-branch` 可作为 Superpowers 分支收尾参考。
 
 ## 7. 维护规则
 
 新增或修改 skill 时：
 
-1. 使用 `writing-skills`。
+1. 需要 Superpowers authoring discipline 时显式点名 `writing-skills`；普通 wrapper 调整可直接遵守本文档和 `rules/codex-global.md`。
 2. 在 `skills/<domain>/<skill-name>/SKILL.md` 中写清楚 `name`、`description`、触发场景、流程、验证方式。
 3. 更新 `registry/skills.yaml`。
 4. 若新增 domain，同步更新 `README.md` 和本文档。
@@ -831,10 +743,9 @@ rg --files skills -g 'SKILL.md'
 
 | 误用 | 正确做法 |
 | --- | --- |
-| 为了效率跳过 bug 复现，直接 patch 症状点 | 用 `hunt` 或 `systematic-debugging` 先确认根因。 |
+| 为了效率跳过 bug 复现，直接 patch 症状点 | 默认用 `hunt`，显式点名时再用 `systematic-debugging`。 |
 | 用户只是要 review，却改了代码 | 用 `check` 先输出 findings；只有用户要求才修改。 |
 | 对单链接阅读启动深度研究流程 | 用 `read`，只有多来源整合才用 `learn`。 |
-| 把本机配置问题当成通用文档问题 | 用 `codex-local-maintenance` 或 `mcp-healthcheck` 读取当前机器证据。 |
+| 把 MCP 配置问题当成通用文档问题 | 用 `mcp-healthcheck` 读取当前机器证据。 |
 | 把所有 UI 都套 colawd 风格 | 只有用户要求或项目风格匹配时才用 `colawd-ui-style`。 |
-| vendored skill 里直接手改流程 | 不手改 `skills/vendored/`；需要变更时改同步来源或新增本仓库 wrapper skill。 |
-| memory、日报、repo docs 混用 | 用 `memory-routing` 判断知识归属。 |
+| vendored skill 里直接手改流程 | 不手改 `vendor/skills/`；需要变更时改同步来源或新增本仓库 wrapper skill。 |

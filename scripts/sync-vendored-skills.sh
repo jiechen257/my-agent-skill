@@ -37,7 +37,9 @@ want_skill() {
   shift
   local wanted
   for wanted in "$@"; do
-    [ "$wanted" = "$name" ] && return 0
+    case "$name" in
+      "$wanted"|source-"$wanted"|source-waza-"$wanted") return 0 ;;
+    esac
   done
   return 1
 }
@@ -94,7 +96,18 @@ sync_git() {
     return 1
   fi
   mkdir -p "$target"
-  rsync -aL --delete --exclude '.git' "$tmp/repo/$subdir/" "$target/"
+  local rsync_args=(-aL --delete --exclude '.git')
+  case "$url" in
+    https://github.com/leonsong09/*)
+      rsync_args+=(--exclude '.gitignore' --exclude 'LICENSE')
+      ;;
+  esac
+  rsync "${rsync_args[@]}" "$tmp/repo/$subdir/" "$target/"
+  case "$url" in
+    https://github.com/leonsong09/*)
+      find "$target" -type f \( -name '*.md' -o -name '*.yaml' -o -name '*.yml' \) -exec perl -0pi -e 's/\n+\z/\n/' {} +
+      ;;
+  esac
   local head
   head=$(git -C "$tmp/repo" rev-parse HEAD)
   printf 'SYNC  %-28s git %s %s -> %s\n' "$name" "$url" "$head" "$target"

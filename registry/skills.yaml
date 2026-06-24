@@ -1,15 +1,15 @@
-# Skill registry for repo-managed and vendored skills.
+# Skill registry for active wrappers and vendored source snapshots.
 # Paths are relative to the repository root.
 #
 # kind:
-# - repo-managed: maintained directly in this repository
-# - vendored: copied/synced from an external source
+# - repo-managed: active skill maintained directly in this repository
+# - vendored: upstream source snapshot used by sync scripts, not installed directly
 #
 # source_type:
 # - local: no external sync source
 # - git: clone source_url and copy source_subdir
 skills:
-  # === design ===
+  # === active repo-managed skills ===
   - name: colawd-ui-style
     path: skills/design/colawd-ui-style
     kind: repo-managed
@@ -19,50 +19,6 @@ skills:
 
   - name: design
     path: skills/design/design
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  # === workflow ===
-  - name: think
-    path: skills/workflow/think
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: grill-me
-    path: skills/workflow/grill-me
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: check
-    path: skills/workflow/check
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: hunt
-    path: skills/workflow/hunt
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  # === harness ===
-  - name: codex-local-maintenance
-    path: skills/harness/codex-local-maintenance
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: mac-system-optimizer
-    path: skills/harness/mac-system-optimizer
     kind: repo-managed
     codex: true
     claude: true
@@ -82,44 +38,15 @@ skills:
     claude: true
     source_type: local
 
-  - name: worktree-closeout
-    path: skills/harness/worktree-closeout
+  - name: hone
+    path: skills/hone
     kind: repo-managed
     codex: true
     claude: true
     source_type: local
 
-  # === research-docs ===
   - name: weekly-report-template
     path: skills/research-docs/weekly-report-template
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: commit-daily-summary
-    path: skills/research-docs/commit-daily-summary
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: project-daily-summary
-    path: skills/research-docs/project-daily-summary
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: research-note-wrap
-    path: skills/research-docs/research-note-wrap
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: memory-routing
-    path: skills/research-docs/memory-routing
     kind: repo-managed
     codex: true
     claude: true
@@ -134,13 +61,6 @@ skills:
 
   - name: session-handoff
     path: skills/research-docs/session-handoff
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
-  - name: session-wrap
-    path: skills/research-docs/session-wrap
     kind: repo-managed
     codex: true
     claude: true
@@ -167,20 +87,287 @@ skills:
     claude: true
     source_type: local
 
-  # === hone ===
-  - name: hone
-    path: skills/hone
+  - name: commit-daily-summary
+    path: skills/research-docs/commit-daily-summary
     kind: repo-managed
     codex: true
     claude: true
     source_type: local
 
-  # === vendored ===
-  - name: superpowers
-    path: skills/vendored/superpowers
-    kind: vendored
+  - name: project-daily-summary
+    path: skills/research-docs/project-daily-summary
+    kind: repo-managed
     codex: true
     claude: true
+    source_type: local
+
+  - name: research-note-wrap
+    path: skills/research-docs/research-note-wrap
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: trellis-deep-planning
+    path: skills/workflow/trellis-deep-planning
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: think
+    path: skills/workflow/think
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: check
+    path: skills/workflow/check
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: hunt
+    path: skills/workflow/hunt
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: grill-me
+    path: skills/workflow/grill-me
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  # === explicit-only Superpowers wrappers ===
+  - name: brainstorming
+    path: skills/superpowers/brainstorming
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: dispatching-parallel-agents
+    path: skills/superpowers/dispatching-parallel-agents
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: executing-plans
+    path: skills/superpowers/executing-plans
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: finishing-a-development-branch
+    path: skills/superpowers/finishing-a-development-branch
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: receiving-code-review
+    path: skills/superpowers/receiving-code-review
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: requesting-code-review
+    path: skills/superpowers/requesting-code-review
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: subagent-driven-development
+    path: skills/superpowers/subagent-driven-development
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: systematic-debugging
+    path: skills/superpowers/systematic-debugging
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: test-driven-development
+    path: skills/superpowers/test-driven-development
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: using-git-worktrees
+    path: skills/superpowers/using-git-worktrees
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: using-superpowers
+    path: skills/superpowers/using-superpowers
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: verification-before-completion
+    path: skills/superpowers/verification-before-completion
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: writing-plans
+    path: skills/superpowers/writing-plans
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: writing-skills
+    path: skills/superpowers/writing-skills
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  # === vendored source snapshots; synced but not installed directly ===
+  - name: source-waza-design
+    path: vendor/skills/waza/design
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/design
+
+  - name: source-waza-think
+    path: vendor/skills/waza/think
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/think
+
+  - name: source-waza-check
+    path: vendor/skills/waza/check
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/check
+
+  - name: source-waza-hunt
+    path: vendor/skills/waza/hunt
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/hunt
+
+  - name: source-waza-health
+    path: vendor/skills/waza/health
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/health
+
+  - name: source-waza-learn
+    path: vendor/skills/waza/learn
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/learn
+
+  - name: source-waza-read
+    path: vendor/skills/waza/read
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/read
+
+  - name: source-waza-write
+    path: vendor/skills/waza/write
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/tw93/Waza.git
+    source_ref: main
+    source_subdir: skills/write
+
+  - name: source-grilling
+    path: vendor/skills/mattpocock/grilling
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/productivity/grilling
+
+  - name: source-commit-daily-summary
+    path: vendor/skills/leonsong09/commit-daily-summary
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/commit-daily-summary.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-project-daily-summary
+    path: vendor/skills/leonsong09/project-daily-summary
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/project-daily-summary.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-research-note-wrap
+    path: vendor/skills/leonsong09/research-note-wrap
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/research-note-wrap.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-superpowers
+    path: vendor/skills/superpowers/superpowers
+    kind: vendored
+    codex: false
+    claude: false
     source_type: git
     source_url: https://github.com/obra/superpowers.git
     source_ref: main

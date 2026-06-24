@@ -43,15 +43,36 @@
 
 ## Trellis 与 Superpowers
 
-在存在 `.trellis/` 的项目中，Trellis 是唯一 workflow owner。Superpowers 不作为独立 workflow 入口，只作为原子能力库或 planning discipline 供 Trellis 内部调用。
+在选择 workflow skill 前，先检查当前项目根目录是否存在 `.trellis/workflow.md`。
+
+- 存在 `.trellis/workflow.md`：Trellis 是唯一 workflow owner。
+- 不存在 `.trellis/workflow.md`：默认使用 Waza workflow 处理 planning / review / debugging 等通用工作流。
+- Superpowers 不作为默认 workflow owner，只作为显式点名的能力或 Trellis / Waza 内部参考材料。
+
+### Trellis 项目
 
 - 不同时启动 `trellis-brainstorm` 和 Superpowers `brainstorming`。
+- 不同时启动 Trellis workflow 和 Waza `think` / `check` / `hunt`。
 - 不在 Trellis 项目中启动完整 Superpowers workflow。
 - 不调用 `using-superpowers` 作为全局主控规则。
 - 不让两个 workflow 同时维护任务状态、设计文档、执行计划或验证路径。
 - 复杂任务需要 Superpowers planning discipline 时，使用 `trellis-deep-planning`。
 - `trellis-deep-planning` 可参考读取 Superpowers `brainstorming` / `writing-plans`，但不调用它们的 workflow；读取参考 skill 不等于调用 skill。
 - 在 Trellis 项目中只声明并执行 `trellis-deep-planning`，不声明正在使用 `brainstorming` / `writing-plans`。
+
+### 非 Trellis 项目
+
+- 规划、方案、架构、可行性、价值判断默认走 Waza `think`。
+- Review、release gate、commit / push / publish readiness、项目审计默认走 Waza `check`。
+- bug、报错、回归、失败测试、截图缺陷默认走 Waza `hunt`。
+- 不调用 Trellis workflow，除非用户明确要求初始化或使用 Trellis。
+- Superpowers 可以作为原子方法参考，例如 debugging discipline、TDD、verification checklist，但不维护独立 spec、plan、任务状态或验收路径。
+
+### Vendored Source
+
+- `vendor/skills/*` 是上游同步源，不是默认自动加载的 active skill surface。
+- `skills/*` 中的 wrapper 才是主动入口；wrapper 可按需读取 `vendor/skills/*`。
+- 不手改 `vendor/skills/*` 中的上游内容；需要本地策略时改 wrapper、registry 或本规则。
 
 ### Deep Planning Mode
 
@@ -64,8 +85,9 @@
 
 1. 用户显式指定的模式优先。
 2. Trellis 项目中的中大型实现任务由 Trellis 主控。
-3. Superpowers skills 只能作为 Trellis 内部原子工具或 Deep Planning checklist。
-4. 用户显式点名 Superpowers workflow，且当前项目没有 `.trellis/` 或用户明确要求绕开 Trellis 时，才可选择 Superpowers-style flow。
+3. 非 Trellis 项目的通用 workflow 由 Waza 主控。
+4. Superpowers skills 只能作为显式点名能力、原子工具或 checklist。
+5. 用户显式点名 Superpowers workflow，且当前项目没有 `.trellis/` 或用户明确要求绕开 Trellis 时，才可选择 Superpowers-style flow。
 
 ## 工程底线
 

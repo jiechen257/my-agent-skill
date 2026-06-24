@@ -6,13 +6,15 @@ set -euo pipefail
 #
 # Behavior:
 #   - Creates symlinks in ~/.claude/skills/ and ~/.codex/skills/ for each skill
-#   - Discovers any directory under skills/ that contains SKILL.md
+#   - Installs active skills from registry/skills.yaml
+#   - Skips vendored source snapshots that are marked codex=false and claude=false
 #   - Optional: EXTRA_SKILL_ROOTS=/path/to/skills[:/path/to/other/skills] ./install.sh
 #   - Idempotent: safe to run multiple times
 #   - Skips: pithos-* (managed by Pithos), dogfooding (device-specific)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SRC="$SCRIPT_DIR/skills"
+REGISTRY="$SCRIPT_DIR/registry/skills.yaml"
 
 CLAUDE_DST="$HOME/.claude/skills"
 CODEX_DST="$HOME/.codex/skills"
@@ -81,6 +83,80 @@ fi
 
 installed=0
 skipped=0
+removed=0
+active_skill_dirs=()
+
+list_registry_skills() {
+  awk '
+    function emit() {
+      if (name != "") {
+        print name "|" path "|" codex "|" claude
+      }
+    }
+    /^[[:space:]]*-[[:space:]]name:/ {
+      emit()
+      name=$3
+      path=codex=claude=""
+      next
+    }
+    /^[[:space:]]*path:/ { path=$2; next }
+    /^[[:space:]]*codex:/ { codex=$2; next }
+    /^[[:space:]]*claude:/ { claude=$2; next }
+    END { emit() }
+  ' "$REGISTRY"
+}
+
+remember_active_dir() {
+  active_skill_dirs+=("${1%/}")
+}
+
+is_active_dir() {
+  local target="${1%/}"
+  local active
+  for active in "${active_skill_dirs[@]}"; do
+    [ "$target" = "$active" ] && return 0
+  done
+  return 1
+}
+
+install_registry() {
+  local name path codex claude skill_dir
+
+  while IFS='|' read -r name path codex claude; do
+    [ -n "$name" ] || continue
+    skill_dir="$SCRIPT_DIR/$path"
+
+    if [ "$codex" != "true" ] && [ "$claude" != "true" ]; then
+      echo "  SKIP: $name (sync source only)"
+      ((skipped++))
+      continue
+    fi
+
+    if [ ! -e "$skill_dir/SKILL.md" ]; then
+      echo "  SKIP: $name (sync source, no SKILL.md)"
+      ((skipped++))
+      continue
+    fi
+
+    if should_skip "$name"; then
+      echo "  SKIP: $name (excluded pattern)"
+      ((skipped++))
+      continue
+    fi
+
+    remember_active_dir "$skill_dir"
+
+    for entry in "${targets[@]}"; do
+      dest_root="${entry%%|*}"
+      label="${entry##*|}"
+      case "$label" in
+        codex) [ "$codex" = "true" ] || continue ;;
+        claude) [ "$claude" = "true" ] || continue ;;
+      esac
+      link_skill "$skill_dir" "$name" "$dest_root" "$label" && ((installed++)) || true
+    done
+  done < <(list_registry_skills)
+}
 
 install_from_root() {
   local root="$1"
@@ -102,6 +178,8 @@ install_from_root() {
       continue
     fi
 
+    remember_active_dir "$skill_dir"
+
     for entry in "${targets[@]}"; do
       dest_root="${entry%%|*}"
       label="${entry##*|}"
@@ -110,12 +188,31 @@ install_from_root() {
   done < <(find "$root" -mindepth 2 -type f -name SKILL.md -print0 | sort -z)
 }
 
-for skill_root in "${skill_roots[@]}"; do
+install_registry
+
+for skill_root in "${skill_roots[@]:1}"; do
   install_from_root "$skill_root"
 done
 
+for entry in "${targets[@]}"; do
+  dest_root="${entry%%|*}"
+  label="${entry##*|}"
+  while IFS= read -r -d '' link; do
+    current="$(readlink "$link")"
+    case "$current/" in
+      "$SCRIPT_DIR"/*)
+        if ! is_active_dir "$current"; then
+          echo "  REMOVE [$label]: $(basename "$link") → $current"
+          rm "$link"
+          ((removed++))
+        fi
+        ;;
+    esac
+  done < <(find "$dest_root" -maxdepth 1 -type l -print0)
+done
+
 echo ""
-echo "Done: $installed linked, $skipped skipped"
+echo "Done: $installed linked, $skipped skipped, $removed removed"
 
 # Verify no broken symlinks
 broken=0

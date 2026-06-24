@@ -1,5 +1,0 @@
-interface:
-  display_name: "Mac System Optimizer"
-  short_description: "Diagnose and optimize Mac performance safely"
-  brand_color: "#0EA5E9"
-  default_prompt: "Use $mac-system-optimizer to audit my Mac performance and suggest safe optimizations."

@@ -38,6 +38,10 @@ check_link() {
 
   local dest="$root/$name"
   if [ ! -e "$target/SKILL.md" ]; then
+    if [ -d "$target" ]; then
+      printf 'SKIP %-6s %-28s sync source: %s\n' "$manager" "$name" "$target"
+      return 0
+    fi
     printf 'FAIL %-6s %-28s target missing: %s\n' "$manager" "$name" "$target/SKILL.md"
     return 1
   fi
