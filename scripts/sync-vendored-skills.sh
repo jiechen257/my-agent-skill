@@ -110,6 +110,18 @@ sync_git() {
   esac
   local head
   head=$(git -C "$tmp/repo" rev-parse HEAD)
+  local synced
+  synced=$(date +%F)
+  cat > "$target/SYNC.md" <<EOF
+# Sync Info
+
+- **Name:** \`$name\`
+- **Source:** \`$url\`
+- **Source Ref:** \`$ref\`
+- **Source Subdir:** \`$subdir\`
+- **Git SHA:** \`$head\`
+- **Synced:** $synced
+EOF
   printf 'SYNC  %-28s git %s %s -> %s\n' "$name" "$url" "$head" "$target"
   rm -rf "$tmp"
 }
