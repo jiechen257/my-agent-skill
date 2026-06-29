@@ -1,19 +1,19 @@
 # Skill 使用手册与白皮书
 
-更新时间：2026-06-24
+更新时间：2026-06-29
 适用仓库：`/Users/zhici/work-pro/my-agent-skill`
 
 ## 1. 定位
 
 本仓库集中维护个人 Codex / Claude Code skills。`skills/` 下的每个 `SKILL.md` 都是会被安装和自动发现的 active 入口；`vendor/skills/` 保存外部同步源快照，供 wrapper 按需读取。
 
-截至本文档更新时，`skills/` 下有 33 个 active `SKILL.md`，`vendor/skills/` 下有 26 个上游 source `SKILL.md`。真实安装面固定为 active wrapper；Trellis / Waza / Superpowers 的冲突由 `rules/codex-global.md` 和 `skills/workflow/*` router 在运行时裁决。
+截至本文档更新时，`skills/` 下有 34 个 active `SKILL.md`，`vendor/skills/` 下有 26 个上游 source `SKILL.md`。真实安装面固定为 active wrapper；Trellis / Waza / Superpowers 的冲突由 `rules/codex-global.md` 和 `skills/workflow/*` router 在运行时裁决。
 
 | 类别 | 数量 | 说明 |
 | --- | ---: | --- |
 | `design` | 2 | 本地设计辅助和 Waza design wrapper |
 | `workflow` | 5 | Trellis 深度规划、Waza workflow router、grill-me wrapper |
-| `harness` | 2 | MCP 健康检查和 Waza health wrapper |
+| `harness` | 3 | MCP 健康检查、Codex reset credits 查询和 Waza health wrapper |
 | `research-docs` | 9 | 周报、技术选型、会话交接、Waza 研究读写、leonsong09 日报/笔记 wrapper |
 | `hone` | 1 | frontier AI coding signals 与本地 agent harness 实践 |
 | `superpowers` | 14 | 显式点名才使用的 Superpowers wrapper |
@@ -55,6 +55,7 @@ workflow owner 的选择规则：
 | UI 设计、页面打磨、截图复刻 | `design` | `colawd-ui-style` | 先确认产品语境和现有风格，不做泛化模板页。 |
 | 复刻 colawd 风格工作台 | `colawd-ui-style` | `design` | 保持黑色 shell、浅黄网格、粗边框、硬阴影等风格约束。 |
 | MCP 配置异常 | `mcp-healthcheck` | `health` | 以当前机器证据为准，先诊断再改配置。 |
+| 查询 Codex reset 次数和过期时间 | `codex-reset-credits` | `mcp-healthcheck` | 只读查询本机 Codex 登录态；不打印 token、完整账户 ID 或原始后端响应。 |
 | 今天做了什么、提交日报 | `commit-daily-summary` | `project-daily-summary` | commit 证据优先，不用记忆替代 git。 |
 | 按项目总结今天所有 Codex 工作 | `project-daily-summary` | `commit-daily-summary` | 同时看会话、提交和未提交变更。 |
 | 周报 | `weekly-report-template` | `commit-daily-summary` | 只覆盖用户指定 repo 和时间段。 |
@@ -230,6 +231,26 @@ workflow owner 的选择规则：
 
 - 这是工程健康审计，不是具体 bug 修复。
 - 报告要分 PASS、finding、风险和可执行建议。
+
+### 4.11 `codex-reset-credits`
+
+路径：`skills/harness/codex-reset-credits/SKILL.md`
+
+适用场景：
+
+- 用户要求查询 Codex reset credits、重置机会、reset 次数或过期时间。
+- 用户给出 `codex-reset-credits-skill` 链接并要求直接查询结果。
+
+典型 case：
+
+- 读取本机 Codex Desktop 登录态，调用只读 reset-credit endpoint。
+- 汇总可用次数、每个 credit 的状态、类型和本地/UTC 到期时间。
+
+注意事项：
+
+- 不要求用户粘贴 token。
+- 不打印 access token、完整 `auth.json`、完整账户 ID、完整 credit ID 或原始后端响应。
+- 只查询，不兑换 reset credits，也不调用 mutation/control endpoint。
 
 ### 4.12 `hone`
 
@@ -714,8 +735,9 @@ workflow owner 的选择规则：
 ### 6.5 本机和 agent harness 维护
 
 1. `mcp-healthcheck`：MCP server、auth、proxy、tool list 异常。
-2. `health`：更高层的工程健康审计。
-3. `hone`：把外部 agent coding signals 映射为本地 harness 实践。
+2. `codex-reset-credits`：Codex reset credits 次数和过期时间查询。
+3. `health`：更高层的工程健康审计。
+4. `hone`：把外部 agent coding signals 映射为本地 harness 实践。
 
 ### 6.6 会话和分支收尾
 

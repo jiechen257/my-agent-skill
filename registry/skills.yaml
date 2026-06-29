@@ -38,6 +38,13 @@ skills:
     claude: true
     source_type: local
 
+  - name: codex-reset-credits
+    path: skills/harness/codex-reset-credits
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   - name: hone
     path: skills/hone
     kind: repo-managed
