@@ -1,0 +1,457 @@
+# Skill registry for active wrappers and vendored source snapshots.
+# Paths are relative to the repository root.
+#
+# kind:
+# - repo-managed: active skill maintained directly in this repository
+# - vendored: upstream source snapshot used by sync scripts, not installed directly
+#
+# source_type:
+# - local: no external sync source
+# - git: clone source_url and copy source_subdir
+skills:
+  # === active repo-managed skills ===
+  - name: colawd-ui-style
+    path: skills/design/colawd-ui-style
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: mcp-healthcheck
+    path: skills/harness/mcp-healthcheck
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: codex-reset-credits
+    path: skills/harness/codex-reset-credits
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: hone
+    path: skills/hone
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: forward-deployed-engineer
+    path: skills/forward-deployed-engineer
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: code-cr-handoff
+    path: skills/git/code-cr-handoff
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: weekly-report-template
+    path: skills/research-docs/weekly-report-template
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: biweekly-report-template
+    path: skills/research-docs/biweekly-report-template
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: tech-solution-radar
+    path: skills/research-docs/tech-solution-radar
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: session-handoff
+    path: skills/research-docs/session-handoff
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: commit-daily-summary
+    path: skills/research-docs/commit-daily-summary
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: project-daily-summary
+    path: skills/research-docs/project-daily-summary
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: research-note-wrap
+    path: skills/research-docs/research-note-wrap
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  # === active Matt Pocock wrappers for Codex ===
+  - name: ask-matt
+    path: skills/mattpocock/ask-matt
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: code-review
+    path: skills/mattpocock/code-review
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: codebase-design
+    path: skills/mattpocock/codebase-design
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: diagnosing-bugs
+    path: skills/mattpocock/diagnosing-bugs
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: domain-modeling
+    path: skills/mattpocock/domain-modeling
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: grill-with-docs
+    path: skills/mattpocock/grill-with-docs
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: implement
+    path: skills/mattpocock/implement
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: improve-codebase-architecture
+    path: skills/mattpocock/improve-codebase-architecture
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: prototype
+    path: skills/mattpocock/prototype
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: research
+    path: skills/mattpocock/research
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: resolving-merge-conflicts
+    path: skills/mattpocock/resolving-merge-conflicts
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: tdd
+    path: skills/mattpocock/tdd
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: to-issues
+    path: skills/mattpocock/to-issues
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: to-prd
+    path: skills/mattpocock/to-prd
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: triage
+    path: skills/mattpocock/triage
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: grill-me
+    path: skills/mattpocock/grill-me
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: handoff
+    path: skills/mattpocock/handoff
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: teach
+    path: skills/mattpocock/teach
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  - name: writing-great-skills
+    path: skills/mattpocock/writing-great-skills
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
+  # === vendored source snapshots; synced but not installed directly ===
+  - name: source-mattpocock-ask-matt
+    path: vendor/skills/mattpocock/ask-matt
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/ask-matt
+
+  - name: source-mattpocock-code-review
+    path: vendor/skills/mattpocock/code-review
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/code-review
+
+  - name: source-mattpocock-codebase-design
+    path: vendor/skills/mattpocock/codebase-design
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/codebase-design
+
+  - name: source-mattpocock-diagnosing-bugs
+    path: vendor/skills/mattpocock/diagnosing-bugs
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/diagnosing-bugs
+
+  - name: source-mattpocock-domain-modeling
+    path: vendor/skills/mattpocock/domain-modeling
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/domain-modeling
+
+  - name: source-mattpocock-grill-with-docs
+    path: vendor/skills/mattpocock/grill-with-docs
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/grill-with-docs
+
+  - name: source-mattpocock-implement
+    path: vendor/skills/mattpocock/implement
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/implement
+
+  - name: source-mattpocock-improve-codebase-architecture
+    path: vendor/skills/mattpocock/improve-codebase-architecture
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/improve-codebase-architecture
+
+  - name: source-mattpocock-prototype
+    path: vendor/skills/mattpocock/prototype
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/prototype
+
+  - name: source-mattpocock-research
+    path: vendor/skills/mattpocock/research
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/research
+
+  - name: source-mattpocock-resolving-merge-conflicts
+    path: vendor/skills/mattpocock/resolving-merge-conflicts
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/resolving-merge-conflicts
+
+  - name: source-mattpocock-tdd
+    path: vendor/skills/mattpocock/tdd
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/tdd
+
+  - name: source-mattpocock-to-issues
+    path: vendor/skills/mattpocock/to-issues
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/to-tickets
+
+  - name: source-mattpocock-to-prd
+    path: vendor/skills/mattpocock/to-prd
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/to-spec
+
+  - name: source-mattpocock-triage
+    path: vendor/skills/mattpocock/triage
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/engineering/triage
+
+  - name: source-mattpocock-grill-me
+    path: vendor/skills/mattpocock/grill-me
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/productivity/grill-me
+
+  - name: source-mattpocock-handoff
+    path: vendor/skills/mattpocock/handoff
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/productivity/handoff
+
+  - name: source-mattpocock-teach
+    path: vendor/skills/mattpocock/teach
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/productivity/teach
+
+  - name: source-mattpocock-writing-great-skills
+    path: vendor/skills/mattpocock/writing-great-skills
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/mattpocock/skills.git
+    source_ref: main
+    source_subdir: skills/productivity/writing-for-agents
+
+  - name: source-commit-daily-summary
+    path: vendor/skills/leonsong09/commit-daily-summary
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/commit-daily-summary.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-project-daily-summary
+    path: vendor/skills/leonsong09/project-daily-summary
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/project-daily-summary.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-research-note-wrap
+    path: vendor/skills/leonsong09/research-note-wrap
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/leonsong09/research-note-wrap.git
+    source_ref: main
+    source_subdir: .

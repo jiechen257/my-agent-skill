@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code CR Handoff"
+  short_description: "从本地分支安全创建 Code CR 并停在表单页交接"
+  default_prompt: "Use $code-cr-handoff to push a new source branch and open the Alibaba Code CR form for me to complete."

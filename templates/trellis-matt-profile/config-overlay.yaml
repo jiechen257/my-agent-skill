@@ -1,0 +1,6 @@
+# Merge these keys into the target project's local .trellis/config.yaml.
+# This file is the versioned source; do not commit the installed target copy.
+session_auto_commit: false
+
+codex:
+  dispatch_mode: inline

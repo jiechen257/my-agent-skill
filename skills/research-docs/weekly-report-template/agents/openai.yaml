@@ -1,0 +1,7 @@
+interface:
+  display_name: "周报整理"
+  short_description: "基于本人 Git 证据和获批补充材料整理主题式单周工作周报"
+  default_prompt: "Use $weekly-report-template to generate an evidence-bounded weekly report for the resolved owner and repositories."
+
+policy:
+  allow_implicit_invocation: true
