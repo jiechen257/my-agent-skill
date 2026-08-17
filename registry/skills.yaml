@@ -235,6 +235,42 @@ skills:
     claude: false
     source_type: local
 
+  # === active Trellis lifecycle skills ===
+  - name: trellis-brainstorm
+    path: skills/development/trellis-brainstorm
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: trellis-continue
+    path: skills/development/trellis-continue
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: trellis-finish-work
+    path: skills/development/trellis-finish-work
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: trellis-start
+    path: skills/development/trellis-start
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: trellis-update-spec
+    path: skills/development/trellis-update-spec
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   # === vendored source snapshots; synced but not installed directly ===
   - name: source-mattpocock-ask-matt
     path: vendor/skills/mattpocock/ask-matt
