@@ -1,7 +1,7 @@
 interface:
   display_name: "周报整理"
-  short_description: "基于本人 Git 证据和获批补充材料整理主题式单周工作周报"
-  default_prompt: "Use $weekly-report-template to generate an evidence-bounded weekly report for the resolved owner and repositories."
+  short_description: "基于本人证据整理功能进展、Bug 修复与本周计划"
+  default_prompt: "Use $weekly-report-template to generate an evidence-bounded weekly report whose dashboard contains metrics, weekly progress contains delivered features, requirements, and bug fixes, and current-week plans contain concrete sourced work items."
 
 policy:
   allow_implicit_invocation: true

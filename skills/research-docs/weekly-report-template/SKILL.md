@@ -5,11 +5,11 @@ description: Generate a theme-based weekly report from the named owner's Git evi
 
 # Weekly Report Template
 
-Produce one evidence-bounded weekly narrative. Follow these five steps in order.
+Produce one evidence-bounded weekly narrative. Follow these five steps in order. The default saved report is a strict five-section document: `阶段目标`、`数据看板 & 分析`、`周进展`、`遗留问题`、`本周目标与计划`.
 
 ## 1. Resolve the period and repository scope
 
-Use an explicit date range when supplied. Otherwise resolve “上周” as the most recent completed Monday-through-Sunday interval in the user's timezone.
+Use an explicit date range when supplied. Otherwise resolve “上周” as the most recent completed Monday-through-Sunday interval in the user's timezone. The report uses an inclusive closed date range; if a data service uses half-open timestamps, its end is the following Monday at 00:00.
 
 Resolve business repositories in this order:
 
@@ -43,13 +43,27 @@ Verify commit dates explicitly after collection instead of relying only on trave
 
 For each repository, record completed work from retained commits and approved documents. Inspect `git status --short` and `git diff --stat` only for unfinished-work signals: working-tree changes may support “进行中” or a next-week plan, but never “已完成”, and they are not attributed to the owner without corroboration.
 
-Use user-provided DingTalk, Yuque, local Markdown, chat summaries, or Chronicle context only when approved. Use supplementary material for design, alignment, risks, and plans; do not upgrade engineering or release status without explicit evidence.
+Classify every source-backed fact into exactly one of these buckets before writing prose:
+
+1. **Metric or quality result**: traffic, success/failure rate, latency, error distribution, and trend. These facts belong in `数据看板 & 分析`.
+2. **Delivered work item**: a feature, requirement point, bug fix, integration, investigation deliverable, or validation completed during the report period. These facts belong in `周进展` and must name what changed and its user or system effect.
+3. **Current-week work item**: a concrete feature, requirement point, bug fix, integration, release, or validation action supported by a task document, user commitment, unresolved item, or corroborated worktree signal. These facts belong in `本周目标与计划`.
+
+A metric movement, log-query result, or problem discovery is not a delivered work item by itself. It may explain the priority or effect of a delivered or planned work item, but it must not replace that work item.
+
+Use user-provided DingTalk, Yuque, local Markdown, chat summaries, or Chronicle context only when approved. Use supplementary material for design, alignment, risks, and plans; do not upgrade engineering or release status without explicit evidence. A worktree change can support “进行中” or a plan, never “已完成”.
 
 **Complete when:** every prospective report claim has a source and evidence strength, and unsupported completion, adoption, release, or outcome claims have been removed.
 
 ## 4. Rewrite by theme
 
-Merge related work across repositories into workstreams instead of listing repositories or commits. Allow one or more evidence-backed workstreams; never invent “其他” or extra themes to reach a target count.
+Merge related work across repositories into workstreams instead of listing repositories or commits. Allow one or more evidence-backed workstreams; never invent “其他” or extra themes to reach a target count. Put the narrative into the five required sections:
+
+1. `阶段目标`: state the quality or delivery target for the period.
+2. `数据看板 & 分析`: state the denominator, PV/UV, success or failure rate, trend, top causes, and evidence limits when metrics are available.
+3. `周进展`: lead with the concrete features, requirement points, bug fixes, integrations, or validation deliverables completed during the period, then state their effect. Do not use pure metric trends, log analysis, or failure-rate movements as progress items.
+4. `遗留问题`: list unresolved defects, dependencies, and evidence gaps; write an explicit no-new-issues statement when empty.
+5. `本周目标与计划`: name the concrete features, requirement points, bug fixes, integrations, release actions, or validations to execute in the current week. Every item must contain an object, an action, and a verifiable result; “保持指标稳定” or “跟进异常” alone is not a plan.
 
 Choose next-week plans in this order:
 
@@ -59,11 +73,11 @@ Choose next-week plans in this order:
 
 If a plan is still inferred, use conservative verbs such as “验证”“收口”“推进”, not a promised outcome.
 
-**Complete when:** every detail belongs to a coherent theme, every plan has a traceable basis, and raw hashes, commit subjects, file counts, diff statistics, and chronology have disappeared from the prose.
+**Complete when:** every `周进展` item maps to completion evidence, every `本周目标与计划` item maps to a plan source, metrics are not used as proxies for work items, every detail belongs to a coherent theme, and raw hashes, commit subjects, file counts, diff statistics, and chronology have disappeared from the prose.
 
 ## 5. Render and validate
 
-Before every render, read [`references/weekly-format.md`](./references/weekly-format.md) in full. It is the single source of truth for headings, metadata, list markers, output modes, file naming, and the final skeleton; do not reconstruct the format from this file.
+Before every render, read [`references/weekly-format.md`](./references/weekly-format.md) in full. It is the single source of truth for headings, metadata, list markers, output modes, file naming, and the final skeleton; do not reconstruct the format from memory. The validator rejects the legacy four-section headings and any missing required section.
 
 When saving, follow the repository's `AGENTS.md`, then the format reference. Resolve `SKILL_DIR` to the absolute directory containing this `SKILL.md`; never resolve the validator relative to the current working directory. Run:
 

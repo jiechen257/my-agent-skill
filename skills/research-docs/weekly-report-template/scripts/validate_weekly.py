@@ -12,12 +12,40 @@ from pathlib import Path
 
 META_KEYS = ("周期", "范围", "统计口径", "来源", "使用技能")
 TOP_LABELS = (
-    "本周进展概述",
-    "本周进展明细",
-    "下周里程碑",
-    "下周计划明细",
+    "阶段目标",
+    "数据看板 & 分析",
+    "周进展",
+    "遗留问题",
+    "本周目标与计划",
 )
 ROMAN = ("ⅰ", "ⅱ", "ⅲ", "ⅳ", "ⅴ", "ⅵ", "ⅶ", "ⅷ", "ⅸ", "ⅹ")
+COMPLETION_CLAIMS = (
+    "已完成",
+    "已上线",
+    "已发布",
+    "已推广",
+    "已达标",
+    "效果良好",
+    "采用率提升",
+    "质量提升",
+    "稳定性提升",
+    "异常率下降",
+)
+EVIDENCE_MARKERS = (
+    "Git",
+    "iTrace",
+    "日志",
+    "查询",
+    "测试",
+    "验证",
+    "指标",
+    "PV",
+    "UV",
+    "成功率",
+    "异常率",
+    "提交",
+    "validator",
+)
 FILENAME_RE = re.compile(
     r"^(\d{4}-\d{2}-\d{2})-to-(\d{4}-\d{2}-\d{2})"
     r"(?:-[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)?-weekly-summary\.md$"
@@ -45,66 +73,76 @@ def _continuous_letters(markers: list[str]) -> bool:
     return markers == [chr(ord("a") + index) for index in range(len(markers))]
 
 
-def _validate_body(lines: list[str], errors: list[str]) -> None:
+def _validate_body(lines: list[str], errors: list[str]) -> list[tuple[int, int, str]]:
     all_top_numbers = [int(match.group(1)) for line in lines if (match := re.match(r"^(\d+)\.\s", line))]
-    if all_top_numbers != [1, 2, 3, 4]:
-        errors.append("正文不得包含四个固定章节之外的顶层数字列表")
-    top = []
+    if all_top_numbers != [1, 2, 3, 4, 5]:
+        errors.append("正文不得包含四段式或其他顶层数字列表，必须连续使用 1. 到 5.")
+
+    top: list[tuple[int, int, str]] = []
     for index, line in enumerate(lines):
-        match = re.match(r"^(\d+)\.\s*([^：:]+)[：:]", line)
+        match = re.match(r"^(\d+)\.\s*([^：:]+?)\s*[：:](?:\s*.*)?$", line)
         if match:
             top.append((index, int(match.group(1)), match.group(2).strip()))
 
-    if [number for _, number, _ in top] != [1, 2, 3, 4]:
-        errors.append("正文顶层必须且只能连续使用 1. 到 4.")
-        return
+    if [number for _, number, _ in top] != [1, 2, 3, 4, 5]:
+        errors.append("正文顶层必须且只能连续使用 1. 到 5.")
+        return top
     if [label for _, _, label in top] != list(TOP_LABELS):
-        errors.append("正文四个固定字段的名称或顺序不正确")
-
-    for position in (0, 2):
-        line = lines[top[position][0]]
-        if not re.search(r"[：:]\s*\S", line):
-            errors.append(f"{TOP_LABELS[position]} 不能为空")
+        errors.append("正文五个固定字段的名称或顺序不正确")
 
     section_ranges = {
-        2: (top[1][0] + 1, top[2][0]),
-        4: (top[3][0] + 1, len(lines)),
+        number: (top[position][0] + 1, top[position + 1][0] if position + 1 < len(top) else len(lines))
+        for position, (_, number, _) in enumerate(top)
     }
     for section, (start, end) in section_ranges.items():
-        letters = []
+        letters: list[tuple[int, str, str]] = []
         for index in range(start, end):
             match = re.match(r"^  ([a-z])\.\s*(.*)$", lines[index])
             if match:
                 letters.append((index, match.group(1), match.group(2).strip()))
+            elif re.match(r"^\s+[a-z]\.\s", lines[index]):
+                errors.append(f"第 {section} 节字母列表必须使用两个空格缩进")
+
         if not letters:
             errors.append(f"第 {section} 节至少需要一个字母列表项")
             continue
         if not _continuous_letters([letter for _, letter, _ in letters]):
             errors.append(f"第 {section} 节字母列表必须从 a. 开始连续编号")
-        for _, letter, value in letters:
+        for item_index, (line_index, letter, value) in enumerate(letters):
             if not value:
                 errors.append(f"第 {section} 节 {letter}. 条目不能为空")
-
-        if section == 2:
-            for item_index, (line_index, letter, _) in enumerate(letters):
-                item_end = letters[item_index + 1][0] if item_index + 1 < len(letters) else end
-                numerals = []
-                for line in lines[line_index + 1 : item_end]:
-                    match = re.match(r"^    ([ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ])\.\s*(.*)$", line)
-                    if match:
-                        numerals.append((match.group(1), match.group(2).strip()))
-                if not numerals:
-                    errors.append(f"第 2 节 {letter}. 工作流为空，至少需要一条罗马数字明细")
-                elif [value for value, _ in numerals] != list(ROMAN[: len(numerals)]):
-                    errors.append(f"第 2 节 {letter}. 的罗马数字必须从 ⅰ. 开始连续编号")
-                for numeral, value in numerals:
-                    if not value:
-                        errors.append(f"第 2 节 {letter}. 的 {numeral}. 明细不能为空")
+            item_end = letters[item_index + 1][0] if item_index + 1 < len(letters) else end
+            numerals: list[tuple[str, str]] = []
+            for line in lines[line_index + 1 : item_end]:
+                match = re.match(r"^    ([ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ])\.\s*(.*)$", line)
+                if match:
+                    numerals.append((match.group(1), match.group(2).strip()))
+                elif re.match(r"^\s+(?:[ivxIVX]+|[ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ]+)\.\s", line):
+                    errors.append(f"第 {section} 节 {letter}. 的明细必须使用四个空格和 Unicode 罗马数字")
+            if numerals:
+                if [value for value, _ in numerals] != list(ROMAN[: len(numerals)]):
+                    errors.append(f"第 {section} 节 {letter}. 的罗马数字必须从 ⅰ. 开始连续编号")
+                for numeral, detail in numerals:
+                    if not detail:
+                        errors.append(f"第 {section} 节 {letter}. 的 {numeral}. 明细不能为空")
 
     if any(re.match(r"^\s+(?:[ivxIVX]+)\.\s", line) for line in lines):
         errors.append("罗马数字明细必须使用 Unicode ⅰ. / ⅱ.，不能使用 i. / ii.")
     if any(re.match(r"^\s+-\s", line) for line in lines[top[0][0] :]):
         errors.append("正文必须使用规定的数字、字母和 Unicode 罗马数字标记，不能使用 -")
+    return top
+
+
+def _validate_completion_claims(lines: list[str], top: list[tuple[int, int, str]], errors: list[str]) -> None:
+    if not top:
+        return
+    body_start = top[0][0]
+    if any(
+        any(claim in line for claim in COMPLETION_CLAIMS)
+        and not any(marker in line for marker in EVIDENCE_MARKERS)
+        for line in lines[body_start:]
+    ):
+        errors.append("完成性措辞必须在同一条目中带有 Git、日志、指标或验证等证据标记")
 
 
 def validate(path: Path) -> list[str]:
@@ -150,7 +188,8 @@ def validate(path: Path) -> list[str]:
         if filename_period != report_period:
             errors.append("文件名日期必须与周期元信息一致")
 
-    _validate_body(lines, errors)
+    top = _validate_body(lines, errors)
+    _validate_completion_claims(lines, top, errors)
     return errors
 
 
