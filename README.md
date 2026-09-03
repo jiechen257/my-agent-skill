@@ -21,7 +21,8 @@ my-agent-skill/
 │   ├── design/            # active 本地设计辅助
 │   ├── mattpocock/         # active Matt Pocock engineering/productivity wrapper
 │   ├── harness/           # active agent / MCP 健康检查
-│   └── research-docs/     # active 报告和研究沉淀辅助
+│   ├── research-docs/     # active 报告和研究沉淀辅助
+│   └── writing/           # active 写作编辑辅助
 ├── vendor/
 │   └── skills/            # 外部同步源快照（mattpocock、leonsong09 等）
 ├── prompts/
@@ -69,4 +70,5 @@ git clone <repo> && cd my-agent-skill && ./install.sh
 | `mattpocock` | Matt Pocock engineering/productivity wrapper |
 | `harness` | 本地维护的 agent / MCP 健康检查 |
 | `research-docs` | 本地维护的报告和研究沉淀辅助 |
+| `writing` | 本地维护的写作编辑辅助 |
 | `vendor/skills` | 从外部仓库同步的第三方 skill 源快照，不直接安装 |

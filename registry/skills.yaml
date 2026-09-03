@@ -73,13 +73,6 @@ skills:
     claude: true
     source_type: local
 
-  - name: session-handoff
-    path: skills/research-docs/session-handoff
-    kind: repo-managed
-    codex: true
-    claude: true
-    source_type: local
-
   - name: commit-daily-summary
     path: skills/research-docs/commit-daily-summary
     kind: repo-managed
@@ -96,6 +89,13 @@ skills:
 
   - name: research-note-wrap
     path: skills/research-docs/research-note-wrap
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: technical-writing
+    path: skills/writing/technical-writing
     kind: repo-managed
     codex: true
     claude: true
@@ -489,5 +489,22 @@ skills:
     claude: false
     source_type: git
     source_url: https://github.com/leonsong09/research-note-wrap.git
+    source_ref: main
+    source_subdir: .
+
+  - name: source-humanizer
+    path: vendor/skills/user_ab5ae6ee/unclecheng-reduce-ai-perception-v2
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: local
+
+  - name: source-technical-writing
+    path: vendor/skills/luoling8192/technical-writing
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/luoling8192/technical-writing.git
     source_ref: main
     source_subdir: .

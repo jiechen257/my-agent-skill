@@ -28,7 +28,7 @@
 | 临时验证设计想法 | `prototype` |
 | 技术调研并沉淀资料 | `research` |
 | merge / rebase 冲突 | `resolving-merge-conflicts` |
-| 会话交接 | `handoff` / `session-handoff` |
+| 会话交接 | `handoff` |
 
 ## 安装面
 
