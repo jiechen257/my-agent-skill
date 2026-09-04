@@ -1,0 +1,7 @@
+interface:
+  display_name: "HTML 文档参照风格"
+  short_description: "按 All in Agent 参照页生成带左侧目录的 HTML 文档"
+  default_prompt: "Use $html-document-style when generating a self-contained HTML document, proposal, report, technical plan, or research artifact that should follow the All in Agent reference style and include a functional left table of contents."
+
+policy:
+  allow_implicit_invocation: true

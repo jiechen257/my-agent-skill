@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>业务 &amp; AI Coding 团队沟通会</title>
+  <style>
+    :root{--paper:#fff;--mist:#eef1f6;--ink:#1a1a1a;--muted:#5a5a5a;--line:#e1e6ef;--slate:#334155;--violet:#7c3aed;--violet-pale:#f5f3ff;--blue:#2563eb;--blue-pale:#eff6ff;--cyan:#0891b2;--cyan-pale:#ecfeff;--green:#059669;--green-pale:#ecfdf5;--amber:#d97706;--amber-pale:#fffbeb;--red:#dc2626;--red-pale:#fef2f2}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{padding:26px 16px 52px;background:var(--mist);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+    .layout{display:grid;grid-template-columns:210px minmax(0,1240px);gap:18px;max-width:1510px;margin:auto;align-items:start}
+    .rail{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow:auto;padding:12px 10px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(15,23,42,.07)}
+    .rail h2{padding:2px 8px 10px;color:var(--slate);font-size:13px}.rail h2 small{margin-left:5px;color:var(--muted);font-size:9px;letter-spacing:.16em}.rail nav{display:grid;gap:3px}.rail a{display:grid;grid-template-columns:24px 1fr;gap:6px;align-items:center;padding:7px 8px;color:#475569;border-radius:7px;font-size:12px;line-height:1.35;text-decoration:none}.rail a:hover,.rail a[aria-current=location]{color:#4c1d95;background:var(--violet-pale)}.rail .index{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#ede9fe;color:var(--violet);font-size:10px;font-weight:800}.rail a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .paper{padding:34px 40px 38px;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 32px rgba(15,23,42,.08)}main section[id]{scroll-margin-top:28px}.mast{text-align:center;padding-bottom:18px;border-bottom:1px solid var(--line)}.mast h1{font-size:29px;font-weight:800;letter-spacing:1px;background:linear-gradient(90deg,#1e3a8a,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.mast p{margin-top:6px;color:var(--muted);font-size:12px;letter-spacing:3px}.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}.badges span{padding:4px 12px;border:1px solid #c4b5fd;border-radius:20px;background:var(--violet-pale);color:#5b21b6;font-size:12px;font-weight:600}
+    .block{margin-top:28px}.block-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}.block-number{padding:4px 10px;border-radius:5px;background:var(--slate);color:white;font-size:13.5px;font-weight:800}.block-head h2{font-size:21px}.block-head p{color:var(--muted);font-size:12.5px}.subhead{display:flex;align-items:center;gap:8px;margin:19px 0 10px;font-size:17px;font-weight:700}.subhead:before{content:"";width:4px;height:17px;border-radius:2px;background:var(--blue)}.subhead span{padding:2px 8px;border:1px solid #d0d6e0;border-radius:4px;color:var(--muted);font-size:11.5px;font-weight:600}
+    .ordered{list-style:none;counter-reset:item;padding:2px 0}.ordered li{position:relative;margin-bottom:8px;padding-left:27px;color:#374151;font-size:13px;line-height:1.82;counter-increment:item}.ordered li:before{content:counter(item);position:absolute;left:0;top:5px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#ede9fe;color:var(--violet);font-size:11px;font-weight:800}.ordered b{color:#111827}em{color:var(--red);font-style:normal;font-weight:700}.blue{color:var(--blue);font-weight:700}
+    .grid{display:grid;gap:10px}.cols-2{grid-template-columns:repeat(2,1fr)}.cols-3{grid-template-columns:repeat(3,1fr)}.card,.journey,.flywheel,.challenge,.metric,.note{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#fafbfd,#fff)}.card{padding:12px 14px}.card strong{display:block;margin-bottom:5px;font-size:13.5px}.card p,.journey p,.flywheel p{color:#414b5c;font-size:12px;line-height:1.75}
+    .journey,.flywheel{padding:12px 14px 10px}.journey-top,.flywheel-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}.journey-top b,.flywheel-top b{font-size:13.5px}.journey-top span,.flywheel-top span{padding:2px 8px;border:1px solid #d0d6e0;border-radius:4px;color:var(--muted);font-size:11.5px}.journey-row{display:flex;align-items:stretch}.journey-stage{flex:1;min-width:0;padding:10px 12px;border:1px solid;border-radius:9px}.journey-stage small{font-size:11px;font-weight:800;letter-spacing:.5px}.journey-stage b{display:block;margin:2px 0 5px;font-size:13.5px}.journey-stage p{font-size:12px}.journey-stage footer{margin-top:7px;padding-top:6px;border-top:1px dashed #d0d6e0;color:var(--muted);font-size:11px;line-height:1.55}.journey-stage:nth-child(1){border-color:#cbd5e1;background:#f1f5f9}.journey-stage:nth-child(3){border-color:#93c5fd;background:var(--blue-pale)}.journey-stage:nth-child(5){border-color:#c4b5fd;background:var(--violet-pale)}.journey-arrow{display:grid;place-items:center;width:26px;color:#94a3b8;font-size:15px;font-weight:700}.journey-foot{margin-top:9px;color:#414b5c;font-size:12px;line-height:1.7}.banner{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px 16px;border:1px solid #c4b5fd;border-left:4px solid var(--violet);border-radius:10px;background:linear-gradient(90deg,#faf9ff,#fff)}.banner b{color:#5b21b6;font-size:16px;letter-spacing:1px}.banner span{color:#4b5563;font-size:12.5px}
+    table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:7px 10px;border:1px solid var(--line);text-align:left;line-height:1.62}th{background:#f1f5f9;color:#334155;font-size:11.5px;white-space:nowrap}.challenge{margin-top:10px;padding:12px 15px;border-left:4px solid var(--red);background:#fffdfd}.challenge h3{margin-bottom:6px;color:#991b1b;font-size:14px}.challenge p{color:#374151;font-size:12.5px;line-height:1.75}.note{padding:9px 12px}
+    .score{display:flex;flex-direction:column;gap:8px}.score-row{display:grid;grid-template-columns:132px 1fr;border:1px solid;border-radius:9px;overflow:hidden}.score-label{display:flex;flex-direction:column;justify-content:center;padding:10px 12px;border-right:1px solid;font-size:13.5px;font-weight:700}.score-label small{margin-top:3px;font-size:10.5px;font-weight:500;letter-spacing:1px}.score-value{padding:10px 13px;background:#fff;color:#374151;font-size:12px;line-height:1.85}.s1{border-color:#6ee7b7}.s1 .score-label{background:var(--green-pale);color:#065f46;border-color:#6ee7b7}.s2{border-color:#67e8f9}.s2 .score-label{background:var(--cyan-pale);color:#155e75;border-color:#67e8f9}.s3{border-color:#fcd34d}.s3 .score-label{background:var(--amber-pale);color:#92400e;border-color:#fcd34d}.s4{border-color:#fca5a5}.s4 .score-label{background:var(--red-pale);color:#991b1b;border-color:#fca5a5}
+    .flywheel svg{display:block;width:100%;height:auto;margin-top:2px}.flywheel-key{display:flex;gap:22px;flex-wrap:wrap;margin-top:4px;color:#414b5c;font-size:12px}.flywheel-key span{display:flex;align-items:center;gap:6px}.flywheel-key i{display:grid;place-items:center;width:16px;height:16px;border-radius:50%;color:#fff;font-size:10px;font-style:normal;font-weight:700}
+    .metric{padding:13px 15px}.metric .v{color:var(--violet);font-size:22px;font-weight:800}.metric .t{margin-top:3px;font-size:13px;font-weight:700}.metric .d{margin-top:3px;color:var(--muted);font-size:11.5px}.stack{display:flex;flex-direction:column;gap:6px}.stack-row{display:grid;grid-template-columns:150px 1fr;border:1px solid;border-radius:9px;overflow:hidden}.stack-label{padding:10px 12px;border-right:1px solid;font-size:13px;font-weight:700}.stack-label small{display:block;margin-top:2px;font-size:10.5px;font-weight:400}.stack-items{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:9px 12px;background:white}.chip{padding:4px 10px;border:1px solid;border-radius:6px;font-size:11.5px;font-weight:600}.stack-row:nth-child(1){border-color:#c4b5fd}.stack-row:nth-child(1) .stack-label,.stack-row:nth-child(1) .chip{background:var(--violet-pale);color:#4c1d95;border-color:#c4b5fd}.stack-row:nth-child(2){border-color:#93c5fd}.stack-row:nth-child(2) .stack-label,.stack-row:nth-child(2) .chip{background:var(--blue-pale);color:#1e3a8a;border-color:#93c5fd}.stack-row:nth-child(3){border-color:#67e8f9}.stack-row:nth-child(3) .stack-label,.stack-row:nth-child(3) .chip{background:var(--cyan-pale);color:#155e75;border-color:#67e8f9}.stack-row:nth-child(4){border-color:#6ee7b7}.stack-row:nth-child(4) .stack-label,.stack-row:nth-child(4) .chip{background:var(--green-pale);color:#065f46;border-color:#6ee7b7}.stack-row:nth-child(5){border-color:#fcd34d}.stack-row:nth-child(5) .stack-label,.stack-row:nth-child(5) .chip{background:var(--amber-pale);color:#92400e;border-color:#fcd34d}.stack-row:nth-child(6){border-color:#94a3b8}.stack-row:nth-child(6) .stack-label,.stack-row:nth-child(6) .chip{background:#f1f5f9;color:#1e293b;border-color:#94a3b8}.footnote{margin-top:8px;color:var(--muted);font-size:11.5px;line-height:1.7}.closing{margin-top:28px;padding:18px 22px;border:1px solid var(--line);border-top:3px solid var(--violet);border-radius:11px;background:linear-gradient(180deg,#fbfaff,#fff)}.closing b{font-size:15px}.closing p{margin-top:9px;color:#374151;font-size:13.5px;line-height:1.95}
+    .dark-architecture{margin-top:12px;padding:18px;border:1px solid #1b2440;border-radius:12px;overflow:hidden;background:radial-gradient(620px 330px at 50% 48%,rgba(52,211,153,.12),transparent 70%),radial-gradient(420px 300px at 90% 0,rgba(167,139,250,.10),transparent 70%),#070b16;color:#e8edf7}.dark-architecture .eyebrow{color:#34d399;font-size:10.5px;font-weight:700;letter-spacing:.22em}.dark-architecture h3{margin-top:6px;font-size:17px}.architecture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px;position:relative}.arch-card{min-height:126px;padding:11px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.055)}.arch-card b{display:block;color:#a3e635;font-size:12px}.arch-card strong{display:block;margin:5px 0;color:#fff;font-size:14px}.arch-card p{color:#b3bfd6;font-size:11px;line-height:1.6}.arch-core{grid-column:2;grid-row:2;min-height:142px;border-color:rgba(52,211,153,.6);border-radius:50%;background:radial-gradient(circle at 50% 34%,rgba(52,211,153,.24),rgba(9,15,28,.95) 70%);display:grid;place-items:center;text-align:center}.arch-core b{color:#34d399;font-size:11px;letter-spacing:.16em}.arch-core strong{font-size:19px}.arch-core p{color:#cfe9dd}.architecture-note{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;color:#96a2bb;font-size:11.5px;line-height:1.6}.architecture-note b{display:block;color:#a3e635;font-size:13px}.architecture-note div:last-child{text-align:right}.architecture-note div:last-child b{color:#f472b6}
+    @media(max-width:1024px){.layout{display:block}.rail{top:8px;z-index:5;max-height:none;margin-bottom:12px}.rail nav{display:flex;overflow-x:auto}.rail a{flex:0 0 auto}.paper{padding:26px 22px}.cols-3{grid-template-columns:repeat(2,1fr)}.score-row,.stack-row{grid-template-columns:1fr}.score-label,.stack-label{border-right:0;border-bottom:1px solid}.architecture-grid{grid-template-columns:repeat(2,1fr)}.arch-core{grid-column:1 / -1;grid-row:auto;border-radius:12px}.architecture-note{grid-template-columns:1fr}}
+    @media(max-width:640px){body{padding:10px 8px 30px}.paper{padding:22px 15px}.mast h1{font-size:21px}.cols-2,.cols-3{grid-template-columns:1fr}.journey-row{flex-direction:column}.journey-arrow{width:100%;height:20px;transform:rotate(90deg)}.architecture-grid{grid-template-columns:1fr}.arch-core{grid-column:auto}.flywheel{overflow:auto}.flywheel svg{min-width:540px}}
+    @media print{body{padding:0;background:#fff}.rail{display:none}.paper{border:0;box-shadow:none}.block{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+    /* 与参考页对齐的几何修正：保留左侧目录，但纸张内的排版基线跟随参考页。 */
+    .block{margin-top:26px}.subhead{margin:18px 0 10px}.card p,.journey p,.flywheel p{line-height:1.65}.journey-stage footer{line-height:1.6}.dark-architecture{padding:16px 18px 10px}
+    .timeline .journey-stage:nth-child(1){border-color:#6ee7b7;background:var(--green-pale)}.timeline .journey-stage:nth-child(1) small{color:#065f46}.timeline .journey-stage:nth-child(3){border-color:#93c5fd;background:var(--blue-pale)}.timeline .journey-stage:nth-child(3) small{color:#1e3a8a}.timeline .journey-stage:nth-child(5){border-color:#fcd34d;background:var(--amber-pale)}.timeline .journey-stage:nth-child(5) small{color:#92400e}
+    .diagram-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:9px;color:#8b98b4;font-size:11px}.diagram-legend i{display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:2px}.diagram-svg{display:block;width:680px;max-width:100%;height:504px;margin:10px auto 0}.diagram-svg text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif}.diagram-note{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;color:#96a2bb;font-size:11.5px;line-height:1.6}.diagram-note b{display:block;color:#a3e635;font-size:13px}.diagram-note div:last-child{text-align:right}.diagram-note div:last-child b{color:#f472b6}
+    @media(max-width:1024px){.diagram-svg{width:100%;height:auto}}
+    .cross-diagram{display:block;width:100%;height:auto;margin-top:2px}.cross-diagram text{font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+    .bar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.bar div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;white-space:nowrap}.bar .agent{flex:0 0 40.5%;background:#7c3aed;color:#fff}.bar .chat{flex:0 0 28.2%;background:#2563eb;color:#fff}.bar .pc{flex:0 0 17.1%;background:#0891b2;color:#fff}.bar .remote{flex:1;background:#d97706;color:#fff}
+    .split{display:flex;height:30px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.split div{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700}.split .a{flex:0 0 30%;background:#ecfeff;color:#155e75}.split .b{flex:1;background:repeating-linear-gradient(135deg,#fef2f2,#fef2f2 7px,#fee2e2 7px,#fee2e2 14px);color:#991b1b}
+    .goal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.goal>div{text-align:center;border:1px solid var(--line);border-radius:10px;padding:14px 12px;background:linear-gradient(180deg,#fafbfd,#fff)}.goal .v{font-size:24px;font-weight:800;letter-spacing:-.5px}.goal>div:nth-child(1) .v{color:var(--blue)}.goal>div:nth-child(2) .v{color:var(--green)}.goal>div:nth-child(3) .v{color:var(--violet);font-size:19px}.goal .t{font-size:13px;font-weight:700;margin-top:4px}.goal .d{font-size:11.5px;color:var(--muted);margin-top:3px}
+    .workflow-chip{display:inline-flex;align-items:center;gap:6px}.workflow-arrow{color:#94a3b8;font-size:11px}
+    .dark-architecture>.diagram-svg{display:none}.diagram-flow-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 0}.diagram-flow-notes div{padding:8px 11px;border:1px solid rgba(163,230,53,.28);border-radius:8px;background:rgba(163,230,53,.06);color:#b7c5dc;font-size:11px;line-height:1.5}.diagram-flow-notes div:last-child{text-align:right;border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.06)}.diagram-flow-notes b{color:#d9f99d}.diagram-flow-notes div:last-child b{color:#ffd0e6}.diagram-svg-clean{display:block;width:680px;max-width:100%;height:auto;margin:10px auto 0}.diagram-svg-clean text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif}.flywheel>.cross-diagram{display:none}.cross-diagram-clean{display:block;width:100%;height:auto;margin-top:8px}.cross-diagram-clean text{font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="rail" aria-label="文档目录">
+      <h2>目录 <small>CONTENTS</small></h2>
+      <nav>
+        <a href="#industry"><span class="index">一</span><span>行业与业务</span></a>
+        <a href="#planning"><span class="index">二</span><span>业务规划</span></a>
+        <a href="#judgment"><span class="index">三</span><span>优势与挑战</span></a>
+        <a href="#coding"><span class="index">四</span><span>AI Coding</span></a>
+        <a href="#team"><span class="index">五</span><span>团队要求</span></a>
+      </nav>
+    </aside>
+
+    <main class="paper">
+      <header class="mast">
+        <h1>业务 &amp; AI Coding 团队沟通会</h1>
+        <p>INTERNAL SHARING · 用户平台组</p>
+        <div class="badges"><span>Agent</span><span>Agent 工程师</span><span>AI Coding</span></div>
+      </header>
+
+      <section class="block" id="industry">
+        <div class="block-head"><span class="block-number">一</span><h2>行业和业务进展</h2><p>比赛进入下半场</p></div>
+        <ol class="ordered">
+          <li><b>to C 规模</b>：豆包、千问、DeepSeek 三强确定，比赛进入下半场。竞争从互联网流量模式转向<span class="blue">模型的有效调用</span>，核心是高净值生产力付费用户的争夺。</li>
+          <li><b>模型</b>：Qwen3.8 Max 处于国内第一梯队，国内旗舰模型基本越过可用阶段；用户需求从问答升级成办公等复杂任务。</li>
+          <li><b>办公 Agent 成为竞争核心</b>：海外 GPT 与 Codex 完成融合；国内 WorkBuddy 暂时领先，字节调整大，千问工作助理进展顺利。</li>
+          <li><b>商业化</b>：国内 AI 进入商业化元年，用户愿意为好的模型和 Token 付费——未来 Token 付费会像充电费、充话费一样。</li>
+        </ol>
+      </section>
+
+      <section class="block" id="planning">
+        <div class="block-head"><span class="block-number">二</span><h2>业务规划</h2><p>六条主线</p></div>
+        <div class="journey evolution">
+          <div class="journey-top"><b>形态演进</b><span>智能工具集合 → Chat → Agent</span></div>
+          <div class="journey-row">
+            <div class="journey-stage"><small>STAGE 01</small><b>智能工具集合</b><p>单点 AI 能力被封装成一个个工具：翻译、扫描、PDF、写作。入口要用户自己找、流程要用户自己串，AI 只是一个功能点。</p><footer>行业：工具类 App 与插件市场，比的是功能数量和流量。</footer></div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-stage"><small>STAGE 02</small><b>Chat</b><p>模型走到前台，对话成为统一入口，一问一答生成内容。但规划和执行仍由人完成，产出的是答案不是结果。</p><footer>行业：豆包、千问、DeepSeek 争夺对话入口，三强确定。</footer></div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-stage"><small>STAGE 03</small><b>Agent</b><p>模型自主规划、拆步骤、调用工具、循环执行，直接交付结果。</p><footer><em>运行时成为新的 OS，Skill 套件成为新的 App。</em><br>行业：GPT 与 Codex 融合、WorkBuddy 领先，办公 Agent 成为竞争核心。</footer></div>
+          </div>
+          <div class="journey-foot">演进主线：AI 的角色从<span class="blue">功能 → 入口 → 执行主体</span>；竞争口径从互联网流量转向模型的有效调用，付费方式也从买 App 变成按 Token 结算。</div>
+        </div>
+        <div class="banner"><b>All in Agent</b><span>所有的工作围绕 Agent 展开：Agent 运行时 · PC 与移动端 · 开放平台 · 新的输入输出方式 · 工具和消费容器 · 商业化</span></div>
+        <div class="grid cols-3">
+          <article class="card"><strong>01 · Agent 运行时</strong><p>模型规划、拆步骤、调用工具、循环执行完成任务，含上下文管理、记忆、沙箱。运行时是未来的 OS，Skill 套件是未来的 App。</p></article>
+          <article class="card"><strong>02 · PC 端 &amp; 移动端</strong><p>Agent 的运行环境，建设 AI 友好的框架。</p></article>
+          <article class="card"><strong>03 · 开放平台生态建设</strong><p>行业处于发展孵化期，连接集团内外更多的服务。</p></article>
+          <article class="card"><strong>04 · 新的输入输出方式</strong><p>语音输入渗透 <em>20%</em>；输入法作为新入口，向后连接模型与硬件；识图 VQA、打电话 Live。</p></article>
+          <article class="card"><strong>05 · 工具和消费容器</strong><p>Agent 是 OS 级产品，我们提供运行时和「手和脚」——浏览器工具、网盘 Skill、扫描王 Skill、文档、播放器。</p></article>
+          <article class="card"><strong>06 · 商业化</strong><p>精细化运营，成本优化。</p></article>
+        </div>
+        <div class="subhead">架构大图 <span>Runtime · Tools · Skill · Surfaces · Suites · Open Platform</span></div>
+        <div class="dark-architecture">
+          <div class="eyebrow">AGENT AS AN OPERATING SYSTEM</div>
+          <h3>Agent 运行时 · 工具 / 容器 / 套件 / 开放平台</h3>
+          <div class="diagram-legend"><span><i style="background:#34d399"></i>运行时内核 Runtime</span><span><i style="background:#22d3ee"></i>工具 Tools</span><span><i style="background:#a78bfa"></i>技能 Skill</span><span><i style="background:#fbbf24"></i>消费容器 Surface</span><span><i style="background:#f472b6"></i>专家套件 Expert Suite</span><span><i style="background:#a3e635"></i>开放平台 Open Platform</span></div>
+          <div class="diagram-flow-notes"><div><b>左入 · 供给</b>　MCP / Skill 规范接入 · 安全审核 · 沙箱</div><div><b>右出 · 分发</b>　Agent API · 嵌入 SDK · 套件商店</div></div>
+          <svg class="diagram-svg-clean" viewBox="0 0 1000 742" role="img" aria-label="Agent 运行时生态环形架构图">
+            <defs>
+              <filter id="clean-core-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <marker id="clean-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#a3e635"/></marker>
+            </defs>
+            <text x="500" y="26" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="700">供给与分发 · 协议 / 规范 / 准入 / 计费 / 可观测</text>
+            <text x="500" y="60" text-anchor="middle" fill="#a3e635" font-size="15" font-weight="700">最外层：开放平台（生态边界）</text><text x="500" y="79" text-anchor="middle" fill="#8b98b4" font-size="10" letter-spacing="2">OPEN PLATFORM / DEVELOPER ECOSYSTEM</text>
+            <text x="72" y="106" fill="#a3e635" font-size="11" font-weight="700">供给</text><text x="72" y="122" fill="#96a2bb" font-size="10">三方按 MCP / Skill 规范接入</text><text x="928" y="106" text-anchor="end" fill="#f472b6" font-size="11" font-weight="700">分发</text><text x="928" y="122" text-anchor="end" fill="#96a2bb" font-size="10">Agent API · 嵌入 SDK · 套件商店</text>
+            <ellipse cx="500" cy="392" rx="407" ry="285" fill="none" stroke="#a3e635" stroke-opacity=".34" stroke-width="2" stroke-dasharray="4 10"/>
+            <ellipse cx="500" cy="392" rx="255" ry="184" fill="none" stroke="#f472b6" stroke-opacity=".5" stroke-width="2" stroke-dasharray="2 7"/>
+            <path d="M500 392L278 245A252 181 0 0 0 278 539Z" fill="#22d3ee" fill-opacity=".08" stroke="#22d3ee" stroke-opacity=".35"/><path d="M500 392L722 245A252 181 0 0 1 722 539Z" fill="#a78bfa" fill-opacity=".08" stroke="#a78bfa" stroke-opacity=".35"/><path d="M500 392L278 539A252 181 0 0 0 722 539Z" fill="#fbbf24" fill-opacity=".08" stroke="#fbbf24" stroke-opacity=".35"/>
+            <path d="M322 254Q390 280 410 322M258 392Q352 392 390 392M322 530Q390 502 410 462M678 254Q610 280 590 322M742 392Q648 392 610 392M678 530Q610 502 590 462M410 556Q452 516 468 492M500 590V505M590 556Q548 516 532 492" fill="none" stroke="#8be9c5" stroke-opacity=".7" stroke-width="2" marker-end="url(#clean-arrow)"/>
+            <g transform="translate(500 392)" filter="url(#clean-core-glow)"><circle r="116" fill="#09151c" stroke="#34d399" stroke-opacity=".8" stroke-width="2"/><circle r="93" fill="none" stroke="#34d399" stroke-opacity=".28"/><text y="-38" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2" font-weight="700">AGENT RUNTIME</text><text y="-8" text-anchor="middle" fill="#fff" font-size="23" font-weight="700">Agent 运行时</text><text y="18" text-anchor="middle" fill="#cfe9dd" font-size="12">OS 级内核 · 大脑与中枢</text><g fill="#dff5ea" font-size="10"><text x="-58" y="45">规划</text><text x="-19" y="45">记忆</text><text x="19" y="45">上下文</text><text x="-37" y="63">工具编排</text><text x="21" y="63">沙箱 · 权限</text></g></g>
+            <g transform="translate(500 136)"><rect x="-63" y="-18" width="126" height="42" rx="21" fill="#f472b6" fill-opacity=".12" stroke="#f472b6" stroke-opacity=".6"/><text y="3" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">💻 编码专家</text><text y="18" text-anchor="middle" fill="#96a2bb" font-size="9">EXPERT SUITE</text></g>
+            <g transform="translate(785 245)"><rect x="-65" y="-18" width="130" height="42" rx="21" fill="#f472b6" fill-opacity=".12" stroke="#f472b6" stroke-opacity=".6"/><text y="3" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">🗂 办公专家</text><text y="18" text-anchor="middle" fill="#96a2bb" font-size="9">VERTICAL AGENT</text></g>
+            <g transform="translate(760 610)"><rect x="-65" y="-18" width="130" height="42" rx="21" fill="#f472b6" fill-opacity=".12" stroke="#f472b6" stroke-opacity=".6"/><text y="3" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">💰 理财专家</text><text y="18" text-anchor="middle" fill="#96a2bb" font-size="9">VERTICAL AGENT</text></g>
+            <g transform="translate(500 678)"><rect x="-70" y="-18" width="140" height="42" rx="21" fill="#f472b6" fill-opacity=".12" stroke="#f472b6" stroke-opacity=".6"/><text y="3" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">✨ 更多套件</text><text y="18" text-anchor="middle" fill="#96a2bb" font-size="9">EXPERT SUITES</text></g>
+            <g transform="translate(215 392)"><rect x="-65" y="-18" width="130" height="42" rx="21" fill="#f472b6" fill-opacity=".12" stroke="#f472b6" stroke-opacity=".6"/><text y="3" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">🩺 健康专家</text><text y="18" text-anchor="middle" fill="#96a2bb" font-size="9">VERTICAL AGENT</text></g>
+            <g transform="translate(238 226)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".65"/><text x="12" y="23" fill="#a9f0fb" font-size="13" font-weight="700">🌐 浏览器工具</text><text x="12" y="41" fill="#8b98b4" font-size="9">BROWSER USE</text><text x="12" y="62" fill="#b3bfd6" font-size="11">导航、抓取、表单</text></g>
+            <g transform="translate(202 351)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".65"/><text x="12" y="23" fill="#a9f0fb" font-size="13" font-weight="700">🗂 文件与系统</text><text x="12" y="41" fill="#8b98b4" font-size="9">FILE SYSTEM · SHELL</text><text x="12" y="62" fill="#b3bfd6" font-size="11">读写、命令执行</text></g>
+            <g transform="translate(238 476)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".65"/><text x="12" y="23" fill="#a9f0fb" font-size="13" font-weight="700">🔌 检索与连接</text><text x="12" y="41" fill="#8b98b4" font-size="9">MCP · SEARCH</text><text x="12" y="62" fill="#b3bfd6" font-size="11">数据与 API 接入</text></g>
+            <g transform="translate(614 226)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">☁️ 网盘 Skill</text><text x="12" y="41" fill="#8b98b4" font-size="9">CLOUD DRIVE</text><text x="12" y="62" fill="#b3bfd6" font-size="11">存取、同步分享</text></g>
+            <g transform="translate(650 351)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">📷 扫描王 Skill</text><text x="12" y="41" fill="#8b98b4" font-size="9">SCANNER · OCR</text><text x="12" y="62" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
+            <g transform="translate(614 476)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">🧩 Skill 市场</text><text x="12" y="41" fill="#8b98b4" font-size="9">MARKETPLACE</text><text x="12" y="62" fill="#b3bfd6" font-size="11">三方共建、按需加载</text></g>
+            <g transform="translate(396 536)"><rect width="144" height="78" rx="10" fill="#fff" fill-opacity=".055" stroke="#fbbf24" stroke-opacity=".72"/><text x="12" y="23" fill="#ffe0a3" font-size="13" font-weight="700">📄 文档容器</text><text x="12" y="41" fill="#8b98b4" font-size="9">DOC · ARTIFACT</text><text x="12" y="60" fill="#b3bfd6" font-size="11">可编辑、可协同</text></g>
+            <g transform="translate(428 620)"><rect width="144" height="64" rx="10" fill="#fff" fill-opacity=".055" stroke="#fbbf24" stroke-opacity=".72"/><text x="12" y="22" fill="#ffe0a3" font-size="13" font-weight="700">▶️ 播放器容器</text><text x="12" y="40" fill="#8b98b4" font-size="9">MEDIA PLAYER</text><text x="12" y="56" fill="#b3bfd6" font-size="11">音视频、可回看</text></g>
+            <g transform="translate(570 536)"><rect width="144" height="78" rx="10" fill="#fff" fill-opacity=".055" stroke="#fbbf24" stroke-opacity=".72"/><text x="12" y="23" fill="#ffe0a3" font-size="13" font-weight="700">🖼 画布与预览</text><text x="12" y="41" fill="#8b98b4" font-size="9">CANVAS · PREVIEW</text><text x="12" y="60" fill="#b3bfd6" font-size="11">图表、网页可视</text></g>
+            <text x="500" y="716" text-anchor="middle" fill="#8b98b4" font-size="10">同一套运行时 + 工具 + Skill + 容器，按人群与场景打包分发</text>
+          </svg>
+          <svg class="diagram-svg" viewBox="0 0 1100 570" role="img" aria-label="Agent 运行时、工具、技能、消费容器、专家套件和开放平台关系图">
+            <defs>
+              <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <marker id="diagram-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8be9c5"/></marker>
+            </defs>
+            <ellipse cx="550" cy="300" rx="430" ry="225" fill="none" stroke="#a3e635" stroke-opacity=".38" stroke-width="2" stroke-dasharray="7 10"/>
+            <ellipse cx="550" cy="300" rx="290" ry="165" fill="none" stroke="#f472b6" stroke-opacity=".45" stroke-width="2"/>
+            <path d="M168 155C270 176 340 215 432 263M168 292C280 295 350 295 432 297M168 432C276 404 353 370 432 337M932 155C830 176 760 215 668 263M932 292C820 295 750 295 668 297M932 432C824 404 747 370 668 337" fill="none" stroke="#8be9c5" stroke-opacity=".65" stroke-width="2" marker-end="url(#diagram-arrow)"/>
+            <path d="M550 96V195M550 405V510M320 125C375 155 414 180 447 208M780 125C725 155 686 180 653 208" fill="none" stroke="#9aa8c2" stroke-opacity=".6" stroke-width="1.5"/>
+            <g transform="translate(70 48)"><rect width="960" height="54" rx="12" fill="#a3e635" fill-opacity=".08" stroke="#a3e635" stroke-opacity=".45"/><text x="480" y="22" text-anchor="middle" fill="#d9f99d" font-size="14" font-weight="700">最外层：开放平台（生态边界）</text><text x="480" y="42" text-anchor="middle" fill="#96a2bb" font-size="10" letter-spacing="2">OPEN PLATFORM / DEVELOPER ECOSYSTEM</text></g>
+            <g transform="translate(65 118)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".55"/><text x="14" y="22" fill="#a9f0fb" font-size="13" font-weight="700">🌐 浏览器工具</text><text x="14" y="40" fill="#8b98b4" font-size="10">BROWSER USE</text><text x="14" y="60" fill="#b3bfd6" font-size="11">导航、抓取、表单</text></g>
+            <g transform="translate(65 255)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".55"/><text x="14" y="22" fill="#a9f0fb" font-size="13" font-weight="700">🗂 文件与系统</text><text x="14" y="40" fill="#8b98b4" font-size="10">FILE SYSTEM · SHELL</text><text x="14" y="60" fill="#b3bfd6" font-size="11">读写、命令执行</text></g>
+            <g transform="translate(65 392)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".55"/><text x="14" y="22" fill="#a9f0fb" font-size="13" font-weight="700">🔌 检索与连接</text><text x="14" y="40" fill="#8b98b4" font-size="10">MCP · SEARCH</text><text x="14" y="60" fill="#b3bfd6" font-size="11">数据与 API 接入</text></g>
+            <g transform="translate(860 118)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">🧩 Skill 市场</text><text x="14" y="40" fill="#8b98b4" font-size="10">MARKETPLACE</text><text x="14" y="60" fill="#b3bfd6" font-size="11">三方共建、按需加载</text></g>
+            <g transform="translate(860 255)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">📷 扫描王 Skill</text><text x="14" y="40" fill="#8b98b4" font-size="10">SCANNER · OCR</text><text x="14" y="60" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
+            <g transform="translate(860 392)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">☁️ 网盘 Skill</text><text x="14" y="40" fill="#8b98b4" font-size="10">CLOUD DRIVE</text><text x="14" y="60" fill="#b3bfd6" font-size="11">存取、同步分享</text></g>
+            <g transform="translate(315 480)"><rect width="470" height="58" rx="29" fill="#f472b6" fill-opacity=".10" stroke="#f472b6" stroke-opacity=".65"/><text x="235" y="25" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">💻 编码专家　🗂 办公专家　💰 理财专家　🩺 健康专家　✨ 更多套件</text><text x="235" y="43" text-anchor="middle" fill="#96a2bb" font-size="10">EXPERT SUITES / VERTICAL AGENTS</text></g>
+            <g filter="url(#soft-glow)"><circle cx="550" cy="300" r="104" fill="#09151c" stroke="#34d399" stroke-opacity=".72" stroke-width="2"/><circle cx="550" cy="300" r="85" fill="none" stroke="#34d399" stroke-opacity=".2"/><text x="550" y="268" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2" font-weight="700">AGENT RUNTIME</text><text x="550" y="298" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">运行时内核</text><text x="550" y="322" text-anchor="middle" fill="#cfe9dd" font-size="12">OS 级内核 · 大脑与中枢</text><text x="550" y="348" text-anchor="middle" fill="#a7f3d0" font-size="11">规划 · 记忆 · 上下文 · 工具编排</text></g>
+            <text x="550" y="22" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="700">供给与分发 · 协议 / 规范 / 准入 / 计费 / 可观测</text>
+            <text x="82" y="116" fill="#a3e635" font-size="11" font-weight="700">左入为供给</text><text x="82" y="132" fill="#96a2bb" font-size="10">MCP / Skill 规范接入 · 安全审核 · 签名 · 沙箱</text>
+            <text x="1018" y="116" text-anchor="end" fill="#f472b6" font-size="11" font-weight="700">右出为分发</text><text x="1018" y="132" text-anchor="end" fill="#96a2bb" font-size="10">Agent API · 嵌入 SDK · 套件商店</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="block" id="judgment">
+        <div class="block-head"><span class="block-number">三</span><h2>优势和挑战判断</h2><p>面对的是最强的竞争</p></div>
+        <table><thead><tr><th>维度</th><th>优势</th><th>转型 AI Agent 面临挑战</th></tr></thead><tbody>
+          <tr><td><b>产品 &amp; 端侧</b></td><td>PC / 客户端体验、成熟工具生态（Agent 手脚）、C 端用户理解</td><td>Agent 编排框架从零补齐；传统测试体系失效；成本控制、效果保障</td></tr>
+          <tr><td><b>工程能力</b></td><td>客户端、存储、文件、多媒体工程很强</td><td>大模型推理成本优化、AI 评测体系缺失</td></tr>
+          <tr><td><b>迭代模式</b></td><td>擅长快速发版本、客户端发布流程</td><td>区分「发版本数量」vs「有效能力迭代」，建立 AI 导向反馈闭环</td></tr>
+          <tr><td><b>资产</b></td><td>现成工具、存量用户、场景闭环</td><td>思维转型：从确定性软件，到不确定性 AI 智能体</td></tr>
+        </tbody></table>
+        <div class="challenge"><h3>要打破固有认知、拥抱新的变革</h3><p>我们面对的是最强的竞争，对面基本上都是各家最强的团队。</p></div>
+      </section>
+
+      <section class="block" id="coding">
+        <div class="block-head"><span class="block-number">四</span><h2>AI Coding</h2><p>与千问业务逐步进入相互驱动、相互促进的阶段</p></div>
+        <div class="flywheel"><div class="flywheel-top"><b>两条线交叉上升</b><span>相互驱动 · 相互促进</span></div>
+          <svg class="cross-diagram" viewBox="0 0 1120 262" role="img" aria-label="AI Coding 线与业务线交叉上升示意图">
+            <defs><marker id="cross-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7c3aed"/></marker></defs>
+            <path d="M82 218V30M82 218H1060" stroke="#cbd5e1" stroke-width="1"/><text x="82" y="20" fill="#64748b" font-size="11">能力 · 业务价值</text><text x="1048" y="244" fill="#64748b" font-size="11">时间</text>
+            <path d="M90 205C250 195 315 154 430 125S720 70 1030 38" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#cross-arrow)"/><path d="M90 220C250 208 350 206 470 178S760 126 1030 76" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#cross-arrow)"/>
+            <circle cx="90" cy="205" r="9" fill="#7c3aed"/><circle cx="1030" cy="38" r="9" fill="#7c3aed"/><circle cx="90" cy="220" r="9" fill="#2563eb"/><circle cx="1030" cy="76" r="9" fill="#2563eb"/>
+            <text x="190" y="190" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="190" y="207" fill="#5a5a5a" font-size="11">用 Coding Agent 建千问宝子 Agent，做 Harness 工程</text><text x="820" y="29" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 能力上来</text><text x="820" y="48" fill="#5a5a5a" font-size="11">更快、更稳地交付业务功能</text>
+            <text x="200" y="239" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="292" y="239" fill="#5a5a5a" font-size="11">Chat、二方接入、智能体、Skill、Claw、工作助理、Agent</text><text x="730" y="118" fill="#1d4ed8" font-size="13" font-weight="700">业务真实复杂度</text><text x="730" y="137" fill="#5a5a5a" font-size="11">反哺 Agent 与研发基建的建设</text>
+            <g transform="translate(520 98)"><circle r="13" fill="#7c3aed"/><text y="5" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text></g><g transform="translate(575 151)"><circle r="13" fill="#2563eb"/><text y="5" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text></g>
+          </svg>
+          <svg class="cross-diagram-clean" viewBox="0 0 1120 262" role="img" aria-label="AI Coding 线与业务线交叉上升示意图">
+            <defs><marker id="clean-cross-arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7c3aed"/></marker><marker id="clean-cross-arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2563eb"/></marker></defs>
+            <line x1="72" y1="220" x2="1060" y2="220" stroke="#cbd5e1" stroke-width="1.2"/><line x1="72" y1="220" x2="72" y2="34" stroke="#cbd5e1" stroke-width="1.2"/><path d="M1060 220l-7-4v8zM72 34l-4 7h8z" fill="#94a3b8"/>
+            <text x="72" y="24" fill="#64748b" font-size="11">能力 · 业务价值</text><text x="1040" y="244" fill="#64748b" font-size="11">时间</text>
+            <path d="M90 201C205 112 337 88 478 166S692 229 817 113S970 39 1046 43" fill="none" stroke="#d8c8ff" stroke-width="9" opacity=".55"/><path d="M90 201C205 112 337 88 478 166S692 229 817 113S970 39 1046 43" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#clean-cross-arrow-purple)"/>
+            <path d="M90 201C213 247 350 251 478 166S686 68 817 126S964 165 1046 92" fill="none" stroke="#c8d9ff" stroke-width="9" opacity=".65"/><path d="M90 201C213 247 350 251 478 166S686 68 817 126S964 165 1046 92" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#clean-cross-arrow-blue)"/>
+            <g transform="translate(235 91)"><rect width="235" height="42" rx="9" fill="#fff" stroke="#d8c8ff"/><circle cx="18" cy="21" r="7" fill="#7c3aed"/><text x="34" y="18" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="34" y="33" fill="#64748b" font-size="10">用 Coding Agent 建千问宝子 Agent</text></g>
+            <g transform="translate(566 44)"><rect width="286" height="42" rx="9" fill="#fff" stroke="#bfdbfe"/><circle cx="18" cy="21" r="7" fill="#2563eb"/><text x="34" y="18" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="34" y="33" fill="#64748b" font-size="10">Chat · 二方接入 · 智能体 · Skill · Claw · Agent</text></g>
+            <g transform="translate(465 153)"><circle r="13" fill="#fff" stroke="#7c3aed" stroke-width="2"/><text y="4" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="800">1</text><rect x="20" y="-21" width="128" height="42" rx="8" fill="#faf7ff" stroke="#e9ddff"/><text x="31" y="-3" fill="#5b21b6" font-size="11" font-weight="700">能力上来</text><text x="31" y="12" fill="#64748b" font-size="10">更快、更稳交付</text></g>
+            <g transform="translate(804 121)"><circle r="13" fill="#fff" stroke="#2563eb" stroke-width="2"/><text y="4" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="800">2</text><rect x="20" y="-21" width="158" height="42" rx="8" fill="#f5f9ff" stroke="#dbeafe"/><text x="31" y="-3" fill="#1d4ed8" font-size="11" font-weight="700">真实复杂度</text><text x="31" y="12" fill="#64748b" font-size="10">反哺 Agent 与基建</text></g>
+          </svg>
+          <div class="flywheel-key"><span><i style="background:#7c3aed">1</i>AI Coding 能力上来 → 更快、更稳地交付业务功能</span><span><i style="background:#2563eb">2</i>业务的真实复杂度 → 反哺 Agent 与研发基建</span></div>
+        </div>
+        <div class="subhead">4.1　我们走过的三个阶段 <span>从 Freestyle 到样板间</span></div>
+        <div class="journey timeline"><div class="journey-row">
+          <div class="journey-stage"><small>① 工具先用起来</small><b>Freestyle</b><p>不限制使用方式；两个 AI Coding 交流群共享经验，各团队探索自己的方式（卡片开发、SDD 流程等）。</p></div><div class="journey-arrow">→</div>
+          <div class="journey-stage"><small>② 开始集中建设，但不强制</small><b>集中建设</b><p>千问宝子、QBoz、知识库、验证、Code Review、Monorepo 改造；内外部系统改造成对 AI 友好。</p></div><div class="journey-arrow">→</div>
+          <div class="journey-stage"><small>③ 配套建设样板间</small><b>样板间</b><p>AI Native 工作台、小说样板间、千问输入法。</p></div>
+        </div></div>
+        <div class="subhead">4.2　现状：AI Coding 能力成熟度 <span>裸模型 + 简单 Skill</span></div>
+        <p class="footnote">下面的分类不包括已搭好完善环境下的工作——环境与上下文建设本身，就是把工作项从右往左搬的杠杆。</p>
+        <div class="score">
+          <div class="score-row s1"><div class="score-label">AI 非常擅长<small>可直接托管</small></div><div class="score-value">原型 / Demo、新技术调研、竞对与逆向分析、上下文明确的问题修复、代码解读、内部研测系统开发、脚本与小工具、数据分析（ODPS / SLS / iTrace）、文档总结、单元测试、Git 与分支管理、打包提测等固定流程、抓包分析。</div></div>
+          <div class="score-row s2"><div class="score-label">AI 比较擅长<small>人审 + 迭代</small></div><div class="score-value">需求分析与 PRD 评审、技术方案初稿、模块内开发、前端单页面、设计稿明确的简单 UI、答疑客服、测试用例生成、根因明确的问题修复、目标明确的重构、上下文明确的性能优化、埋点开发与验证、数据 Mock。</div></div>
+          <div class="score-row s3"><div class="score-label">AI 不太擅长<small>基建可改善</small></div><div class="score-value">大型项目跨端多仓联动改动（主仓 + KMP）、多端联调、跨端迁移、UI 还原、上下文不清晰的疑难定位、Code Review、真机端到端验证、UI 自动化、性能真机实测、多机型与弱网异常验证、线上问题与客诉跟进、开发环境配置。</div></div>
+          <div class="score-row s4"><div class="score-label">AI 不擅长<small>人的核心战场</small></div><div class="score-value">多方需求沟通、敏感改动判断（资损 / 合规 / 隐私）、架构决策与技术选型、发布与灰度判断、线上故障决策、排期与上线时间点判断。</div></div>
+        </div>
+        <div class="subhead">4.3　回顾 &amp; 挑战</div>
+        <div class="challenge"><h3>挑战 1｜集中建设力度还不够，个人技能没有变成团队技能</h3><p>好工具在团队的覆盖度不够，AI 技巧共享不够；D2C 效果、功能验证、客户端 AI Native 架构升级都存在分散建设的问题——每个团队各自一套流程，最佳实践没有沉淀下来。</p></div>
+        <div class="challenge"><h3>挑战 2｜高估了 AI Coding 的代码质量</h3><p>对「团队同学都能用 AI Coding 交付高质量代码和功能」评估不足。以千问输入法为例：前期 <em>2 个人几天</em>就做出 Demo，团队信心大增；但真正项目化后版本速度并没有快起来，投入持续增大、代码持续重构、Bug Reopen 率高，最后靠不断增加门禁、熟悉 AI 写的代码才把质量和节奏稳下来。Demo 的速度不等于版本的速度，差的那部分就是门禁、上下文与验证体系。</p></div>
+        <div class="challenge"><h3>挑战 3｜代码量爆发式增长，人的掌控力在下降</h3><p>严口径（仅有效代码，不含生成代码、工程配置、测试代码与文档注释）对比 3.31 与 8.20：</p>
+          <table><thead><tr><th>分支 / 产品</th><th>3.31</th><th>8.20</th><th>净增</th><th>增幅</th></tr></thead><tbody><tr><td>KMP · Android &amp; iOS</td><td>19.98w 行</td><td>39.41w 行</td><td>+19.42w 行</td><td><em>+97.2%</em></td></tr><tr><td>KMP · OHOS</td><td>19.25w 行</td><td>36.80w 行</td><td>+17.57w 行</td><td><em>+91.3%</em></td></tr></tbody></table>
+          <p style="margin-top:8px">千问 PC 累计新增约 <b>52.2 万行</b>（纯新增 <b>45.5 万行</b>），千问输入法约 <b>62.2 万行</b>（纯新增 <b>42.9 万行</b>）。千问 PC Cowork 总计 <b>83.4 万行</b>：</p>
+          <div class="bar"><div class="agent">Agent 33.8w · 40.5%</div><div class="chat">前端 Chat 23.5w · 28.2%</div><div class="pc">PC 端 14.3w · 17.1%</div><div class="remote">遥控器 11.8w · 14.1%</div></div>
+        </div>
+        <div class="challenge"><h3>挑战 4｜编码变快了，验证成本没降，需求吞吐提升不明显</h3><p>编码时间占需求周期<span class="blue">不到 30%</span>，剩下 <em>70% 没有提效</em>；再往下拆一层：编码时间变短了，但 Bugfix 时间明显增加、Reopen 率上升，测试在为 AI Coding 兜底。</p><div class="split"><div class="a">编码 &lt;30%（已提效）</div><div class="b">其余 70%：需求、方案、联调、验证、发布 —— 尚未提效</div></div></div>
+        <div class="challenge"><h3>挑战 5｜上下文缺失 + 系统对 Agent 不友好，卡在最后一公里</h3><p>Spec、规范、领域知识没有沉淀为 AI 可读资产，Agent 每次从零理解仓库，产出质量高度依赖提问者水平，架构持续熵增；同时诺亚埋点、端的模块化、打包速度对 AI 不友好，Mock 与真机验证多为 GUI / 人工流程，Agent 难以自助闭环。</p></div>
+        <div class="subhead">4.4　目标</div><div class="goal"><div><div class="v">+30%~50%</div><div class="t">需求吞吐提升</div><div class="d">单位时间可交付需求量</div></div><div><div class="v">-30%~50%</div><div class="t">缺陷数下降</div><div class="d">交付质量稳定可控</div></div><div><div class="v">双转型</div><div class="t">组织与架构转型</div><div class="d">团队完成 Agent 转型，端与平台完成 AI 友好转型</div></div></div>
+        <div class="subhead">4.5　策略 &amp; 规划</div>
+        <ol class="ordered"><li><b>测试左移</b>：研发是质量的第一责任人，通过优化需求质量、分层单测和 AI 测试降低 Bug 数。</li><li><b>鸿蒙转码</b>：鸿蒙版本比 Android、iOS 晚一个版本，建设可用性高的鸿蒙转码 Agent，同时考虑二级页引入 CMP。</li><li><b>明确团队的 AI Native 工作流</b>：以 AI Native 工作台和 QBoz 为基础，把 Spec、测试用例、验证作为必须项；每个需求由 Owner 把关方案与质量，各团队可做定制。</li><li><b>AI 友好的架构改造</b>：各个工程都要做 AI 友好的架构改造。</li><li><b>擅长的任务做到自动 Loop</b>：Hotfix、卡片开发、Code Review、答疑、告警与自动排查等，做到自动 Loop 并持续提升交付效果。</li><li><b>AI Native 工作台</b>：往 AI Native 工作台升级，在样板间项目试点工作台，解决多团队协作的信息共享，Agent 作为超级大脑承担项目管理和托管执行的能力。</li><li><b>集中建设 Agent 工具</b>：QBoz、知识库、验证、Mock 系统、提 Bug 工具、D2C 等。</li></ol>
+        <div class="subhead">分层建设 · AI 基建架构 <span>六层自下而上层层支撑</span></div>
+        <div class="stack">
+          <div class="stack-row"><div class="stack-label">场景型 LOOP Agent<small>面向高频研发场景的自主循环</small></div><div class="stack-items"><span class="chip">鸿蒙转码</span><span class="chip">Bugfix</span><span class="chip">Hotfix</span><span class="chip">二三方答疑</span><span class="chip">卡片开发</span></div></div>
+          <div class="stack-row"><div class="stack-label">业务工程基建<small>保障 AI 产出质量</small></div><div class="stack-items"><span class="chip">Code Review</span><span class="chip">知识库</span><span class="chip">Orz 验证</span><span class="chip">Bug 规范上报</span><span class="chip">ulog 日志</span></div></div>
+          <div class="stack-row"><div class="stack-label">研发 Workflow<small>Spec 与 TestCase 为必须产物</small></div><div class="stack-items"><span class="chip workflow-chip">需求分析</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">Spec　必须产物</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">TestCase　必须产物</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">代码生成</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">测试验证</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">UI 走查</span></div></div>
+          <div class="stack-row"><div class="stack-label">AI 友好的工程架构<small>可理解、可提交、可协作</small></div><div class="stack-items"><span class="chip">Monorepo</span><span class="chip">模块化</span><span class="chip">统一规范 rules</span><span class="chip">提交门禁 Gate</span><span class="chip">模块化 agents 目录</span></div></div>
+          <div class="stack-row"><div class="stack-label">AI 友好的研发系统<small>AI 可调用、可观测</small></div><div class="stack-items"><span class="chip">超音速打包</span><span class="chip">白龙马平台</span><span class="chip">诺亚日志</span><span class="chip">CMS</span><span class="chip">Mock 系统</span><span class="chip">iTrace</span></div></div>
+          <div class="stack-row"><div class="stack-label">平台基座<small>承载统一工作方式</small></div><div class="stack-items"><span class="chip">千问宝子</span><span class="chip">AI Native 工作台</span><span class="chip">QBoz</span></div></div>
+        </div>
+        <p class="footnote">下层为上层提供支撑，上层沉淀反哺下层；六层一起把工作项从「AI 不太擅长」搬到「AI 擅长」。</p>
+      </section>
+
+      <section class="block" id="team">
+        <div class="block-head"><span class="block-number">五</span><h2>团队要求</h2><p>中短期看，AI 时代对人的要求更高</p></div>
+        <div class="subhead">5.1　工程师的定位</div><div class="note">前提：<b>AI 程序员跟传统程序员已经完全不一样了。</b></div>
+        <table style="margin-top:10px"><thead><tr><th>定位</th><th>说明</th></tr></thead><tbody><tr><td><b>Agent 工程师</b></td><td>建设 Agent 给外部用户使用，对标 WorkBuddy、豆包工作。</td></tr><tr><td><b>AI 程序员</b></td><td>应用 Agent、基于 Agent 交付功能；善于使用 AI，持续优化 Coding Agent 能力，构建 AI 需要的上下文，在领域技能上一专多能。</td></tr><tr><td><b>传统程序员</b></td><td>AI 参与度低，传统流程，传统技能。</td></tr></tbody></table>
+        <div class="subhead">5.2　具体要求 <span>基础、转型、架构</span></div>
+        <ol class="ordered"><li><b>扎实的基础</b>：更好的判断力、架构能力、沟通能力、快速学习能力和技术基础。AI 是一个放大器，人写代码变少后，对代码的熟悉度、敏感度在下降，<em>基础不牢，构建起来的产品和工程就如空中楼阁。</em></li><li><b>全员 Agent 转型</b>：用 AI 重新设计团队和个人的核心流程，<em>新流程以 AI 为前提</em>；熟悉 Agent 运行原理，具备建设和优化 Agent 的能力。</li><li><b>全员具备架构能力</b>：运营业务组做全栈的尝试；客户端做跨端的实践，一人两端、三端。</li></ol>
+      </section>
+
+      <footer class="closing"><b>总结</b><p>大模型是一场<span class="blue">智力革命</span>，是未来最大的确定性，新的产品形态、团队形态甚至社会形态都在围绕它变革。旧时代的复利已经开始下降，新时代的复利开始了。</p></footer>
+    </main>
+  </div>
+  <script>
+    const links=[...document.querySelectorAll('.rail a')];
+    const blocks=[...document.querySelectorAll('main section[id]')];
+    const activate=id=>links.forEach(link=>link.toggleAttribute('aria-current',link.hash==='#'+id));
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)activate(entry.target.id)}),{rootMargin:'-20% 0px -70% 0px',threshold:0});blocks.forEach(block=>observer.observe(block))}else activate(blocks[0]?.id);
+  </script>
+</body>
+</html>

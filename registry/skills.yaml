@@ -101,6 +101,13 @@ skills:
     claude: true
     source_type: local
 
+  - name: html-document-style
+    path: skills/writing/html-document-style
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
   # === active Matt Pocock wrappers for Codex ===
   - name: ask-matt
     path: skills/mattpocock/ask-matt

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>业务 &amp; AI Coding 全员沟通会材料</title>
+<style>
+  :root{
+    --canvas:#ffffff;
+    --page:#eef1f6;
+    --text:#1a1a1a;
+    --sub:#5a5a5a;
+    --line:#e2e6ee;
+    --line-2:#d0d6e0;
+    --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#c4b5fd;
+    --blue:#2563eb;   --blue-bg:#eff6ff;   --blue-bd:#93c5fd;
+    --cyan:#0891b2;   --cyan-bg:#ecfeff;   --cyan-bd:#67e8f9;
+    --green:#059669;  --green-bg:#ecfdf5;  --green-bd:#6ee7b7;
+    --amber:#d97706;  --amber-bg:#fffbeb;  --amber-bd:#fcd34d;
+    --slate:#334155;  --slate-bg:#f1f5f9;  --slate-bd:#94a3b8;
+    --red:#dc2626;    --red-bg:#fef2f2;    --red-bd:#fca5a5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",-apple-system,sans-serif;
+    background:var(--page); color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    padding:26px 16px 48px;
+  }
+  .canvas{
+    max-width:1240px; margin:0 auto;
+    background:var(--canvas);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow:0 8px 32px rgba(15,23,42,.08);
+    padding:34px 40px 38px;
+  }
+
+  /* ===== 头部 ===== */
+  .hd{text-align:center; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .hd h1{
+    font-size:29px; font-weight:800; letter-spacing:1px;
+    background:linear-gradient(90deg,#1e3a8a,#7c3aed);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hd .en{margin-top:6px; font-size:12px; color:var(--sub); letter-spacing:3px;}
+  .kw{margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;}
+  .kw span{
+    font-size:12px; font-weight:600; padding:4px 12px; border-radius:20px;
+    background:var(--purple-bg); color:#5b21b6; border:1px solid var(--purple-bd);
+  }
+
+  /* ===== 章节 ===== */
+  .sec{margin-top:26px;}
+  .sec__hd{display:flex; align-items:baseline; gap:10px; margin-bottom:12px;}
+  .sec__no{
+    font-size:13.5px; font-weight:800; color:#fff; background:var(--slate);
+    padding:4px 10px; border-radius:5px; letter-spacing:1px; flex:none;
+  }
+  .sec__t{font-size:21px; font-weight:800; letter-spacing:.5px;}
+  .sec__d{font-size:12.5px; color:var(--sub);}
+  .sub__hd{
+    display:flex; align-items:center; gap:8px;
+    margin:18px 0 10px; font-size:17px; font-weight:700;
+  }
+  .sub__hd::before{content:""; width:4px; height:17px; border-radius:2px; background:var(--blue);}
+  .sub__hd .tag{
+    font-size:11.5px; font-weight:600; color:var(--sub);
+    border:1px solid var(--line-2); border-radius:4px; padding:2px 8px;
+  }
+
+  /* ===== 通用卡片网格 ===== */
+  .grid{display:grid; gap:10px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .card{
+    border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; background:linear-gradient(180deg,#fafbfd,#fff);
+  }
+  .card > b{display:block; font-size:13.5px; margin-bottom:5px;}
+  .card p{font-size:12px; line-height:1.65; color:#414b5c;}
+  .card p b{display:inline; font-size:inherit; color:#111827;}
+  .card .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; border-radius:50%; margin-right:6px;
+    background:#ede9fe; color:var(--purple); font-size:11px; font-weight:800;
+    vertical-align:1px;
+  }
+  em{font-style:normal; font-weight:700; color:var(--red);}
+  .hl-b{font-weight:700; color:var(--blue);}
+
+  /* ===== All in Agent ===== */
+  .allin{
+    display:flex; align-items:center; gap:12px;
+    border:1px solid var(--purple-bd); border-left:4px solid var(--purple);
+    background:linear-gradient(to right,#faf9ff,#fff);
+    border-radius:10px; padding:12px 16px; margin-bottom:12px;
+  }
+  .allin b{font-size:16px; color:#5b21b6; letter-spacing:1px; flex:none;}
+  .allin span{font-size:12.5px; color:#4b5563;}
+
+  /* ===== 形态演进：智能工具集合 → Chat → Agent ===== */
+  .evo{
+    border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px 11px; margin-bottom:12px;
+    background:linear-gradient(180deg,#fafbfd,#fff);
+  }
+  .evo__hd{display:flex; align-items:center; gap:8px; margin-bottom:9px;}
+  .evo__hd b{font-size:13.5px;}
+  .evo__hd span{
+    font-size:11.5px; color:var(--sub);
+    border:1px solid var(--line-2); border-radius:4px; padding:2px 8px;
+  }
+  .evo__row{display:flex; align-items:stretch;}
+  .evo__s{flex:1 1 0; min-width:0; border:1px solid; border-radius:9px; padding:10px 12px;}
+  .evo__n{font-size:11px; font-weight:800; letter-spacing:.6px;}
+  .evo__s > b{display:block; font-size:13.5px; margin:2px 0 5px; color:#111827;}
+  .evo__s p{font-size:12px; line-height:1.65; color:#414b5c;}
+  .evo__s p b{color:#111827;}
+  .evo__k{
+    margin-top:7px; padding-top:6px; font-size:11.5px; line-height:1.6;
+    color:var(--sub); border-top:1px dashed var(--line-2);
+  }
+  .evo__k b{color:#374151;}
+  .evo__a{
+    flex:none; width:26px; display:flex; align-items:center; justify-content:center;
+    font-size:15px; font-weight:700; color:#94a3b8;
+  }
+  .evo__s--1{background:var(--slate-bg); border-color:#cbd5e1;} .evo__s--1 .evo__n{color:#475569;}
+  .evo__s--2{background:var(--blue-bg);  border-color:var(--blue-bd);} .evo__s--2 .evo__n{color:#1d4ed8;}
+  .evo__s--3{background:var(--purple-bg); border-color:var(--purple-bd);} .evo__s--3 .evo__n{color:#6d28d9;}
+  .evo__ft{margin-top:9px; font-size:12px; line-height:1.7; color:#414b5c;}
+  .evo__ft b{color:#111827;}
+
+  /* ===== 内嵌架构大图（Agent as OS，深色，样式全部限定在 #osmap 内） ===== */
+  #osmap{
+    position:relative; margin-top:12px; border-radius:12px; overflow:hidden;
+    border:1px solid #1b2440; color:#e8edf7; padding:16px 18px 10px;
+    background:
+      radial-gradient(760px 600px at 50% 46%, rgba(52,211,153,.10), transparent 70%),
+      radial-gradient(620px 520px at 10% 80%, rgba(34,211,238,.07), transparent 70%),
+      radial-gradient(620px 520px at 90% 20%, rgba(167,139,250,.07), transparent 70%),
+      #070b16;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;
+  }
+  #osmap em{font-style:normal; font-weight:400; color:inherit;}
+  #osmap .map__kicker{font-size:10.5px; letter-spacing:.22em; color:#34d399; font-weight:700;}
+  #osmap .map__t{font-size:17px; font-weight:800; margin:6px 0 5px; letter-spacing:.3px;}
+  #osmap .map__t span{color:#8b98b4; font-weight:500; font-size:12px; letter-spacing:0;}
+  #osmap .map__lg{display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:#8b98b4; margin-top:9px;}
+  #osmap .map__lg i{display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; vertical-align:1px;}
+
+  #mapwrap{position:relative; width:100%; overflow:hidden;}
+  #stage{position:relative; width:1000px; height:742px; transform-origin:0 0;}
+  #stage svg{position:absolute; inset:0;}
+  #osmap .node{position:absolute; transform:translate(-50%,-50%);}
+  #osmap .core{
+    width:212px; height:212px; border-radius:50%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    background:radial-gradient(circle at 50% 34%, rgba(52,211,153,.24), rgba(9,15,28,.95) 70%);
+    border:1.4px solid rgba(52,211,153,.55);
+    box-shadow:0 0 44px rgba(52,211,153,.20) inset, 0 0 40px rgba(52,211,153,.12);
+  }
+  #osmap .core .en{font-size:11px; letter-spacing:.18em; color:#34d399; font-weight:600;}
+  #osmap .core .cn{font-size:23px; font-weight:700; margin:5px 0 3px; letter-spacing:.5px;}
+  #osmap .core .role{font-size:12.5px; color:#cfe9dd; margin-bottom:9px;}
+  #osmap .core .caps{display:flex; flex-wrap:wrap; gap:4px; justify-content:center; width:180px;}
+  #osmap .core .caps b{
+    font-size:11px; font-weight:500; color:#dff5ea; display:inline-block; margin:0;
+    border:1px solid rgba(52,211,153,.30); border-radius:999px; padding:2px 6px;
+    background:rgba(52,211,153,.10);
+  }
+  #osmap .card{
+    width:122px; padding:9px 11px; border-radius:10px;
+    background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.10);
+  }
+  #osmap .card .t{font-size:13.5px; font-weight:700; display:flex; align-items:center; gap:4px; line-height:1.25;}
+  #osmap .card .t em{font-size:13px;}
+  #osmap .card .en{font-size:9px; letter-spacing:.05em; color:#8b98b4; margin:2px 0 3px; text-transform:uppercase;}
+  #osmap .card .d{font-size:11.5px; color:#b3bfd6; line-height:1.5;}
+  #osmap .card.tool{border-color:rgba(34,211,238,.40);}    #osmap .card.tool .t{color:#a9f0fb;}
+  #osmap .card.skill{border-color:rgba(167,139,250,.40);}  #osmap .card.skill .t{color:#d6c9ff;}
+  #osmap .card.surface{border-color:rgba(251,191,36,.40);} #osmap .card.surface .t{color:#ffe0a3;}
+  #osmap .pill{
+    width:126px; padding:9px 10px; border-radius:999px; text-align:center;
+    border:1px solid rgba(244,114,182,.45);
+    background:linear-gradient(180deg,rgba(244,114,182,.16),rgba(244,114,182,.05));
+    box-shadow:0 4px 16px rgba(244,114,182,.12);
+  }
+  #osmap .pill .t{font-size:15px; font-weight:700; color:#ffd0e6;}
+  #osmap .open-cap,#osmap .ring-cap{position:absolute; top:6px; width:322px;}
+  #osmap .open-cap{left:8px; text-align:left;}
+  #osmap .ring-cap{right:8px; width:318px; text-align:right;}
+  #osmap .open-cap .cn{font-size:15px; font-weight:700; color:#a3e635; letter-spacing:.5px;}
+  #osmap .ring-cap .cn{font-size:15px; font-weight:700; color:#f472b6; letter-spacing:.5px;}
+  #osmap .open-cap .en,#osmap .ring-cap .en{font-size:10.5px; letter-spacing:.14em; color:#8b98b4; margin-top:3px;}
+  #osmap .open-cap .d,#osmap .ring-cap .d{font-size:12px; color:#96a2bb; margin-top:4px; line-height:1.6;}
+  #osmap .open-cap .d b,#osmap .ring-cap .d b{color:#cbd5e1;}
+
+  /* ===== 成熟度 ===== */
+  .mat{display:flex; flex-direction:column; gap:8px;}
+  .mat__row{display:grid; grid-template-columns:132px 1fr; border:1px solid; border-radius:9px; overflow:hidden;}
+  .mat__k{
+    display:flex; flex-direction:column; justify-content:center; gap:3px;
+    padding:10px 12px; font-size:13.5px; font-weight:700; border-right:1px solid;
+  }
+  .mat__k small{font-size:10.5px; font-weight:600; letter-spacing:1px; opacity:.8;}
+  .mat__v{padding:10px 13px; font-size:12px; line-height:1.85; color:#374151; background:#fff;}
+  .m1{border-color:var(--green-bd);} .m1 .mat__k{background:var(--green-bg); color:#065f46; border-color:var(--green-bd);}
+  .m2{border-color:var(--cyan-bd);}  .m2 .mat__k{background:var(--cyan-bg);  color:#155e75; border-color:var(--cyan-bd);}
+  .m3{border-color:var(--amber-bd);} .m3 .mat__k{background:var(--amber-bg); color:#92400e; border-color:var(--amber-bd);}
+  .m4{border-color:var(--red-bd);}   .m4 .mat__k{background:var(--red-bg);   color:#991b1b; border-color:var(--red-bd);}
+  .note{
+    font-size:11.5px; color:var(--sub); background:var(--slate-bg);
+    border-radius:7px; padding:7px 11px; margin-bottom:9px;
+  }
+
+  /* ===== 表格 ===== */
+  table{width:100%; border-collapse:collapse; font-size:12px;}
+  th,td{border:1px solid var(--line); padding:7px 10px; text-align:left; line-height:1.6;}
+  th{background:var(--slate-bg); font-size:11.5px; font-weight:700; color:#334155; white-space:nowrap;}
+  td.n{font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td.k{font-weight:700; white-space:nowrap;}
+  td.up{color:var(--red); font-weight:700; white-space:nowrap;}
+
+  /* ===== 纯列表 ===== */
+  .plist{list-style:none; counter-reset:pl; padding:2px 0 0;}
+  .plist li{
+    counter-increment:pl;
+    position:relative; padding-left:26px; margin-bottom:7px;
+    font-size:13px; line-height:1.8; color:#374151;
+  }
+  .plist li::before{
+    content:counter(pl);
+    position:absolute; left:0; top:4px;
+    width:18px; height:18px; border-radius:50%;
+    background:#ede9fe; color:var(--purple);
+    font-size:11px; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .plist li b{color:#111827;}
+
+  /* ===== 两条线交叉上升 ===== */
+  .cross{
+    border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px 10px; background:linear-gradient(180deg,#fafbfd,#fff);
+  }
+  .cross__hd{display:flex; align-items:center; gap:8px;}
+  .cross__hd b{font-size:13.5px;}
+  .cross__hd span{
+    font-size:11.5px; color:var(--sub);
+    border:1px solid var(--line-2); border-radius:4px; padding:2px 8px;
+  }
+  .cross svg{display:block; width:100%; height:auto; margin-top:2px;}
+  .cross__ft{display:flex; gap:22px; flex-wrap:wrap; font-size:12px; color:#414b5c;}
+  .cross__ft span{display:flex; align-items:center; gap:6px;}
+  .cross__ft i{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:16px; height:16px; border-radius:50%;
+    font-size:10.5px; font-weight:700; font-style:normal; color:#fff;
+  }
+  .cross__ft b{color:#111827;}
+
+  /* ===== 阶段时间线 ===== */
+  .tl{display:flex; align-items:stretch; gap:0;}
+  .tl__s{flex:1 1 0; min-width:0; border:1px solid; border-radius:9px; padding:9px 11px;}
+  .tl__k{display:block; font-size:12px; font-weight:700; margin-bottom:4px;}
+  .tl__s p{font-size:12px; line-height:1.65; color:#374151;}
+  .tl__a{
+    flex:none; width:24px; display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:700; color:#94a3b8;
+  }
+  .tl__s--good{background:var(--green-bg); border-color:var(--green-bd);} .tl__s--good .tl__k{color:#065f46;}
+  .tl__s--warn{background:var(--amber-bg); border-color:var(--amber-bd);} .tl__s--warn .tl__k{color:#92400e;}
+  .tl__s--bad{background:var(--red-bg);   border-color:var(--red-bd);}    .tl__s--bad .tl__k{color:#991b1b;}
+  .tl__s--ok{background:var(--blue-bg);   border-color:var(--blue-bd);}   .tl__s--ok .tl__k{color:#1e3a8a;}
+
+  /* ===== 挑战 ===== */
+  .ch{
+    border:1px solid var(--line); border-left:4px solid var(--red);
+    border-radius:9px; padding:12px 15px; margin-top:10px; background:#fffdfd;
+  }
+  .ch__t{font-size:14px; font-weight:700; color:#991b1b; margin-bottom:7px;}
+  .ch__p{font-size:12.5px; line-height:1.75; color:#374151;}
+  .ch__p + .ch__p{margin-top:7px;}
+
+  /* ===== 条形/占比 ===== */
+  .bar{display:flex; height:26px; border-radius:7px; overflow:hidden; margin-top:9px; border:1px solid var(--line);}
+  .bar div{
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; color:#fff; white-space:nowrap;
+  }
+  .split{display:flex; height:30px; border-radius:7px; overflow:hidden; margin-top:9px; border:1px solid var(--line);}
+  .split .a{flex:0 0 30%; background:#ecfeff; color:#155e75;}
+  .split .b{flex:1; background:repeating-linear-gradient(135deg,#fef2f2,#fef2f2 7px,#fee2e2 7px,#fee2e2 14px); color:#991b1b;}
+  .split div{display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700;}
+
+  /* ===== 目标 ===== */
+  .goal{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .goal > div{
+    text-align:center; border:1px solid var(--line); border-radius:10px;
+    padding:14px 12px; background:linear-gradient(180deg,#fafbfd,#fff);
+  }
+  .goal .v{font-size:24px; font-weight:800; letter-spacing:-.5px;}
+  .goal > div:nth-child(1) .v{color:var(--blue);}
+  .goal > div:nth-child(2) .v{color:var(--green);}
+  .goal > div:nth-child(3) .v{color:var(--purple); font-size:19px;}
+  .goal .t{font-size:13px; font-weight:700; margin-top:4px;}
+  .goal .d{font-size:11.5px; color:var(--sub); margin-top:3px;}
+
+  /* ===== 六层基建 ===== */
+  .stack{display:flex; flex-direction:column; gap:6px;}
+  .lay{display:grid; grid-template-columns:150px 1fr; border:1px solid; border-radius:9px; overflow:hidden;}
+  .lay__k{padding:10px 12px; font-size:13px; font-weight:700; border-right:1px solid;}
+  .lay__k small{display:block; font-size:10.5px; font-weight:400; margin-top:2px; opacity:.85;}
+  .lay__v{padding:9px 12px; background:#fff; display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+  .chip{font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:6px; border:1px solid;}
+  .chip--must{background:var(--red-bg); border-color:var(--red-bd); color:var(--red);}
+  .arw{font-size:11px; color:#94a3b8;}
+  .L-agent{border-color:var(--purple-bd);} .L-agent .lay__k{background:var(--purple-bg); color:#4c1d95; border-color:var(--purple-bd);} .L-agent .chip{background:var(--purple-bg); border-color:var(--purple-bd); color:#4c1d95;}
+  .L-biz{border-color:var(--blue-bd);}     .L-biz .lay__k{background:var(--blue-bg); color:#1e3a8a; border-color:var(--blue-bd);}     .L-biz .chip{background:var(--blue-bg); border-color:var(--blue-bd); color:#1e3a8a;}
+  .L-flow{border-color:var(--cyan-bd);}    .L-flow .lay__k{background:var(--cyan-bg); color:#155e75; border-color:var(--cyan-bd);}    .L-flow .chip{background:var(--cyan-bg); border-color:var(--cyan-bd); color:#155e75;}
+  .L-arch{border-color:var(--green-bd);}   .L-arch .lay__k{background:var(--green-bg); color:#065f46; border-color:var(--green-bd);}  .L-arch .chip{background:var(--green-bg); border-color:var(--green-bd); color:#065f46;}
+  .L-sys{border-color:var(--amber-bd);}    .L-sys .lay__k{background:var(--amber-bg); color:#92400e; border-color:var(--amber-bd);}   .L-sys .chip{background:var(--amber-bg); border-color:var(--amber-bd); color:#92400e;}
+  .L-base{border-color:var(--slate-bd);}   .L-base .lay__k{background:var(--slate-bg); color:#1e293b; border-color:var(--slate-bd);}  .L-base .chip{background:var(--slate-bg); border-color:var(--slate-bd); color:#1e293b;}
+  .stack-note{font-size:11.5px; color:var(--sub); margin-top:7px;}
+
+  /* ===== 收尾 ===== */
+  .end{
+    margin-top:26px; padding:18px 22px; border-radius:11px;
+    border:1px solid var(--line); border-top:3px solid var(--purple);
+    background:linear-gradient(180deg,#fbfaff,#fff);
+  }
+  .end b{font-size:15px; letter-spacing:1px;}
+  .end p{margin-top:9px; font-size:13.5px; line-height:1.95; color:#374151;}
+  .end p em{font-size:14.5px;}
+
+  @media (max-width:1024px){
+    .canvas{padding:26px 22px;}
+    .g4,.g3,.goal{grid-template-columns:repeat(2,1fr);}
+    .mat__row,.lay{grid-template-columns:1fr;}
+    .mat__k,.lay__k{border-right:none; border-bottom:1px solid;}
+  }
+  @media (max-width:640px){
+    .hd h1{font-size:21px;}
+    .g2,.g3,.g4,.goal{grid-template-columns:1fr;}
+    .allin{flex-wrap:wrap;}
+    .tl{flex-direction:column;}
+    .tl__a{width:100%; height:20px; transform:rotate(90deg);}
+  }
+  @media print{
+    body{background:#fff; padding:0;}
+    .canvas{box-shadow:none; border:none; max-width:none;}
+    .sec{break-inside:avoid;}
+    *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- ============ 头部 ============ -->
+  <div class="hd">
+    <h1>业务 &amp; AI Coding 团队沟通会</h1>
+    <p class="en">INTERNAL SHARING &nbsp;·&nbsp; 用户平台组</p>
+    <div class="kw">
+      <span>Agent</span><span>Agent 工程师</span><span>AI Coding</span>
+    </div>
+  </div>
+
+  <!-- ============ 一、行业和业务进展 ============ -->
+  <div class="sec">
+    <div class="sec__hd">
+      <span class="sec__no">一</span>
+      <span class="sec__t">行业和业务进展</span>
+      <span class="sec__d">比赛进入下半场</span>
+    </div>
+
+    <ol class="plist">
+      <li><b>to C 规模</b>：豆包、千问、DeepSeek <em>三强确定</em>，比赛进入下半场。竞争从<em>互联网流量模式</em>转向<em>模型的有效调用</em>，核心是高净值生产力付费用户的争夺。</li>
+      <li><b>模型</b>：Qwen3.8 Max 处于国内第一梯队，国内旗舰模型基本越过可用阶段；用户需求从问答升级成<span class="hl-b">办公等复杂任务</span>。</li>
+      <li><b>办公 Agent 成为竞争核心</b>：海外 GPT 与 Codex 完成融合；国内 WorkBuddy 暂时领先，字节调整大，千问工作助理进展顺利。</li>
+      <li><b>商业化</b>：国内 AI 进入<em>商业化元年</em>，用户愿意为好的模型和 Token 付费——未来 Token 付费会像充电费、充话费一样。</li>
+    </ol>
+  </div>
+
+  <!-- ============ 二、业务规划 ============ -->
+  <div class="sec">
+    <div class="sec__hd">
+      <span class="sec__no">二</span>
+      <span class="sec__t">业务规划</span>
+      <span class="sec__d">六条主线</span>
+    </div>
+
+    <div class="evo">
+      <div class="evo__hd"><b>形态演进</b><span>智能工具集合 → Chat → Agent</span></div>
+      <div class="evo__row">
+        <div class="evo__s evo__s--1">
+          <span class="evo__n">STAGE 01</span>
+          <b>智能工具集合</b>
+          <p>单点 AI 能力被封装成一个个工具：翻译、扫描、PDF、写作。入口要用户自己找、流程要用户自己串，<b>AI 只是一个功能点</b>。</p>
+          <div class="evo__k">行业：工具类 App 与插件市场，比的是<b>功能数量和流量</b>。</div>
+        </div>
+        <div class="evo__a">→</div>
+        <div class="evo__s evo__s--2">
+          <span class="evo__n">STAGE 02</span>
+          <b>Chat</b>
+          <p>模型走到前台，对话成为统一入口，一问一答生成内容。但<b>规划和执行仍然由人完成</b>，产出的是答案不是结果。</p>
+          <div class="evo__k">行业：豆包、千问、DeepSeek 争夺对话入口，<b>三强确定</b>。</div>
+        </div>
+        <div class="evo__a">→</div>
+        <div class="evo__s evo__s--3">
+          <span class="evo__n">STAGE 03</span>
+          <b>Agent</b>
+          <p>模型自主规划、拆步骤、调用工具、循环执行，<em>直接交付结果</em>。运行时成为新的 OS，Skill 套件成为新的 App。</p>
+          <div class="evo__k">行业：GPT 与 Codex 融合、WorkBuddy 领先，<b>办公 Agent 成为竞争核心</b>。</div>
+        </div>
+      </div>
+      <div class="evo__ft">演进主线：AI 的角色从<b>功能</b> → <b>入口</b> → <b>执行主体</b>；竞争口径从<b>互联网流量</b>转向<em>模型的有效调用</em>，付费方式也从买 App 变成按 Token 结算。</div>
+    </div>
+
+    <div class="allin">
+      <b>All in Agent</b>
+      <span>所有的工作围绕 Agent 展开</span>
+    </div>
+
+    <div class="grid g3">
+      <div class="card">
+        <b><span class="num">1</span>Agent 运行时</b>
+        <p>模型规划、拆步骤、调用工具、循环执行完成任务，含上下文管理、记忆、沙箱。<em>运行时是未来的 OS，Skill 套件是未来的 App。</em></p>
+      </div>
+      <div class="card">
+        <b><span class="num">2</span>PC 端 &amp; 移动端</b>
+        <p>Agent 的运行环境，<span class="hl-b">AI 友好的框架</span>。</p>
+      </div>
+      <div class="card">
+        <b><span class="num">3</span>开放平台生态建设</b>
+        <p>行业处于发展孵化期，连接集团内外更多的服务。</p>
+      </div>
+      <div class="card">
+        <b><span class="num">4</span>新的输入输出方式</b>
+        <p>语音输入渗透 <em>20%</em>；输入法作为新入口，向后连接模型与硬件；识图 VQA、打电话 Live。</p>
+      </div>
+      <div class="card">
+        <b><span class="num">5</span>工具和消费容器</b>
+        <p>Agent 是 <span class="hl-b">OS 级产品</span>，我们提供运行时和「手和脚」——浏览器工具、网盘 Skill、扫描王 Skill、文档、播放器。</p>
+      </div>
+      <div class="card">
+        <b><span class="num">6</span>商业化</b>
+        <p>精细化运营，成本优化。</p>
+      </div>
+    </div>
+
+    <!-- 架构大图（内嵌） -->
+    <div class="sub__hd">架构大图 <span class="tag">运行时 · 工具 / Skill / 消费容器 / 专家套件 / 开放平台</span></div>
+    <div id="osmap">
+      <div class="map__kicker">AGENT AS AN OPERATING SYSTEM</div>
+      <div class="map__t">Agent 运行时 · 工具 / 容器 / 套件 / 开放平台 <span>Runtime · Tools · Surfaces · Suites · Open Platform</span></div>
+      <div class="map__lg">
+        <span><i style="background:#34d399"></i>运行时内核 Runtime</span>
+        <span><i style="background:#22d3ee"></i>工具 Tools</span>
+        <span><i style="background:#a78bfa"></i>技能 Skill</span>
+        <span><i style="background:#fbbf24"></i>消费容器 Surface</span>
+        <span><i style="background:#f472b6"></i>专家套件 Expert Suite</span>
+        <span><i style="background:#a3e635"></i>开放平台 Open Platform</span>
+      </div>
+      <div id="mapwrap">
+        <div id="stage">
+          <div class="open-cap">
+            <div class="cn">最外层：开放平台（生态边界）</div>
+            <div class="en">OPEN PLATFORM / DEVELOPER ECOSYSTEM</div>
+            <div class="d">左入为<b>供给</b>：三方按 MCP / Skill 规范接入；右出为<b>分发</b>：Agent API、嵌入 SDK、套件商店。准入、计费、可观测由平台统一治理。</div>
+          </div>
+          <div class="ring-cap">
+            <div class="cn">中圈：面向人群的专家套件</div>
+            <div class="en">EXPERT SUITES / VERTICAL AGENTS</div>
+            <div class="d">同一套运行时 + 工具 + Skill + 容器，按人群与场景打包分发</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 三、优势和挑战判断 ============ -->
+  <div class="sec">
+    <div class="sec__hd">
+      <span class="sec__no">三</span>
+      <span class="sec__t">优势和挑战判断</span>
+      <span class="sec__d">面对的是最强的竞争</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:110px;">维度</th>
+          <th style="width:42%;">优势</th>
+          <th>转型 AI Agent 面临挑战</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">产品 &amp; 端侧</td>
+          <td>PC / 客户端体验、成熟工具生态（Agent 手脚）、C 端用户理解</td>
+          <td>Agent 编排框架从零补齐；传统测试体系失效；<em>成本控制、效果保障</em></td>
+        </tr>
+        <tr>
+          <td class="k">工程能力</td>
+          <td>客户端、存储、文件、多媒体工程很强</td>
+          <td>大模型推理成本优化、<em>AI 评测体系缺失</em></td>
+        </tr>
+        <tr>
+          <td class="k">迭代模式</td>
+          <td>擅长快速发版本、客户端发布流程</td>
+          <td>区分「发版本数量」vs「<em>有效能力迭代</em>」，建立 AI 导向反馈闭环</td>
+        </tr>
+        <tr>
+          <td class="k">资产</td>
+          <td>现成工具、存量用户、场景闭环</td>
+          <td>思维转型：从<b>确定性软件</b>，到<em>不确定性 AI 智能体</em></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:10px; margin-bottom:0;">
+      要<b>打破固有认知、拥抱新的变革</b>：我们面对的是最强的竞争，对面基本上都是各家最强的团队。
+    </div>
+  </div>
+
+  <!-- ============ 四、AI Coding ============ -->
+  <div class="sec">
+    <div class="sec__hd">
+      <span class="sec__no">四</span>
+      <span class="sec__t">AI Coding</span>
+      <span class="sec__d">与千问业务逐步进入相互驱动、相互促进的阶段</span>
+    </div>
+
+    <div class="cross">
+      <div class="cross__hd"><b>两条线交叉上升</b><span>相互驱动 · 相互促进</span></div>
+      <svg viewBox="0 0 1120 262" role="img" aria-label="AI Coding 线与业务线交叉上升示意图">
+        <defs>
+          <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"></path>
+          </marker>
+          <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"></path>
+          </marker>
+          <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"></path>
+          </marker>
+        </defs>
+
+        <!-- 坐标轴：时间 / 能力与业务价值 -->
+        <line x1="46" y1="244" x2="1080" y2="244" stroke="#cbd5e1" stroke-width="1" marker-end="url(#ag)"></line>
+        <line x1="46" y1="244" x2="46" y2="30" stroke="#cbd5e1" stroke-width="1" marker-end="url(#ag)"></line>
+        <text x="1076" y="259" font-size="11" fill="#94a3b8" text-anchor="end">时间</text>
+        <text x="34" y="136" font-size="11" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 34 136)">能力 · 业务价值</text>
+
+        <!-- AI Coding 线 -->
+        <polyline points="70,205 80,199 89,194 99,189 109,183 119,178 128,173 138,168 148,164 157,159 167,155 177,152 187,148 196,145 206,142 216,140 225,138 235,136 245,135 255,134 264,133 274,133 284,133 293,134 303,135 313,136 322,137 332,139 342,141 352,143 361,146 371,148 381,151 390,154 400,156 410,159 420,162 429,165 439,168 449,170 458,173 468,175 478,177 488,179 497,180 507,181 517,182 526,183 536,183 546,183 556,183 565,182 575,181 585,179 594,178 604,175 614,173 624,170 633,166 643,163 653,159 662,154 672,150 682,145 692,140 701,135 711,130 721,124 730,119 740,114 750,108 760,103 769,97 779,92 789,87 798,81 808,77 818,72 828,67 837,63 847,59 857,56 866,53 876,50 886,47 895,45 905,43 915,42 925,41 934,40 944,40 954,40 963,40 973,41 983,42 993,44 1002,45 1012,47"
+          fill="none" stroke="#7c3aed" stroke-opacity=".16" stroke-width="9" stroke-linecap="round"></polyline>
+        <polyline points="70,205 80,199 89,194 99,189 109,183 119,178 128,173 138,168 148,164 157,159 167,155 177,152 187,148 196,145 206,142 216,140 225,138 235,136 245,135 255,134 264,133 274,133 284,133 293,134 303,135 313,136 322,137 332,139 342,141 352,143 361,146 371,148 381,151 390,154 400,156 410,159 420,162 429,165 439,168 449,170 458,173 468,175 478,177 488,179 497,180 507,181 517,182 526,183 536,183 546,183 556,183 565,182 575,181 585,179 594,178 604,175 614,173 624,170 633,166 643,163 653,159 662,154 672,150 682,145 692,140 701,135 711,130 721,124 730,119 740,114 750,108 760,103 769,97 779,92 789,87 798,81 808,77 818,72 828,67 837,63 847,59 857,56 866,53 876,50 886,47 895,45 905,43 915,42 925,41 934,40 944,40 954,40 963,40 973,41 983,42 993,44 1002,45 1012,47"
+          fill="none" stroke="#7c3aed" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ap)"></polyline>
+
+        <!-- 业务线 -->
+        <polyline points="70,205 80,208 89,211 99,213 109,216 119,218 128,221 138,223 148,225 157,226 167,228 177,229 187,230 196,230 206,230 216,230 225,229 235,228 245,227 255,225 264,223 274,220 284,217 293,214 303,211 313,207 322,203 332,198 342,193 352,189 361,183 371,178 381,173 390,167 400,162 410,156 420,151 429,146 439,140 449,135 458,130 468,125 478,120 488,116 497,111 507,107 517,104 526,100 536,97 546,95 556,92 565,91 575,89 585,88 594,87 604,87 614,87 624,87 633,88 643,89 653,90 662,91 672,93 682,95 692,97 701,100 711,102 721,105 730,108 740,111 750,114 760,116 769,119 779,122 789,124 798,127 808,129 818,131 828,133 837,134 847,135 857,136 866,137 876,137 886,137 895,136 905,135 915,134 925,132 934,130 944,128 954,125 963,122 973,118 983,115 993,111 1002,106 1012,102"
+          fill="none" stroke="#2563eb" stroke-opacity=".16" stroke-width="9" stroke-linecap="round"></polyline>
+        <polyline points="70,205 80,208 89,211 99,213 109,216 119,218 128,221 138,223 148,225 157,226 167,228 177,229 187,230 196,230 206,230 216,230 225,229 235,228 245,227 255,225 264,223 274,220 284,217 293,214 303,211 313,207 322,203 332,198 342,193 352,189 361,183 371,178 381,173 390,167 400,162 410,156 420,151 429,146 439,140 449,135 458,130 468,125 478,120 488,116 497,111 507,107 517,104 526,100 536,97 546,95 556,92 565,91 575,89 585,88 594,87 604,87 614,87 624,87 633,88 643,89 653,90 662,91 672,93 682,95 692,97 701,100 711,102 721,105 730,108 740,111 750,114 760,116 769,119 779,122 789,124 798,127 808,129 818,131 828,133 837,134 847,135 857,136 866,137 876,137 886,137 895,136 905,135 915,134 925,132 934,130 944,128 954,125 963,122 973,118 983,115 993,111 1002,106 1012,102"
+          fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ab)"></polyline>
+
+        <!-- 交叉点 -->
+        <circle cx="407" cy="158" r="9" fill="#fff" stroke="#7c3aed" stroke-width="1.6"></circle>
+        <text x="407" y="162" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">1</text>
+        <circle cx="743" cy="112" r="9" fill="#fff" stroke="#2563eb" stroke-width="1.6"></circle>
+        <text x="743" y="116" font-size="11" font-weight="700" fill="#2563eb" text-anchor="middle">2</text>
+
+        <!-- 线标注 -->
+        <text x="274" y="102" font-size="14" font-weight="700" fill="#7c3aed" text-anchor="middle">AI Coding 线</text>
+        <text x="274" y="118" font-size="11.5" fill="#6b7280" text-anchor="middle">用 Coding Agent 建千问宝子 Agent，做 Harness 工程</text>
+        <text x="614" y="56" font-size="14" font-weight="700" fill="#2563eb" text-anchor="middle">业务线</text>
+        <text x="614" y="72" font-size="11.5" fill="#6b7280" text-anchor="middle">Chat、二方接入、智能体、Skill、Claw、工作助理、Agent</text>
+      </svg>
+      <div class="cross__ft">
+        <span><i style="background:#7c3aed">1</i>AI Coding 能力上来 → <b>更快、更稳地交付业务功能</b></span>
+        <span><i style="background:#2563eb">2</i>业务的真实复杂度 → <b>反哺 Agent 与研发基建的建设</b></span>
+      </div>
+    </div>
+
+    <!-- 4.1 三个阶段 -->
+    <div class="sub__hd">4.1　我们走过的三个阶段</div>
+    <div class="tl">
+      <div class="tl__s tl__s--good">
+        <span class="tl__k">① 工具先用起来</span>
+        <p>Freestyle，不限制使用方式；两个 AI Coding 交流群共享经验，各团队探索自己的方式（卡片开发、SDD 流程等）。</p>
+      </div>
+      <div class="tl__a">→</div>
+      <div class="tl__s tl__s--ok">
+        <span class="tl__k">② 开始集中建设，但不强制</span>
+        <p>千问宝子、QBoz、知识库、验证、Code Review、Monorepo 改造；内外部系统改造成对 AI 友好。</p>
+      </div>
+      <div class="tl__a">→</div>
+      <div class="tl__s tl__s--warn">
+        <span class="tl__k">③ 配套建设样板间</span>
+        <p>AI Native 工作台、小说样板间、千问输入法。</p>
+      </div>
+    </div>
+
+    <!-- 4.2 成熟度 -->
+    <div class="sub__hd">4.2　现状：AI Coding 能力成熟度 <span class="tag">口径：裸模型 + 简单 Skill</span></div>
+    <div class="note">下面的分类<b>不包括</b>已搭好完善环境下的工作——环境与上下文建设本身，就是把工作项从右往左搬的杠杆。</div>
+    <div class="mat">
+      <div class="mat__row m1">
+        <div class="mat__k">AI 非常擅长<small>可直接托管</small></div>
+        <div class="mat__v">原型 / Demo、新技术调研、竞对与逆向分析、上下文明确的问题修复、代码解读、内部研测系统开发、脚本与小工具、数据分析（ODPS / SLS / iTrace）、文档总结、单元测试、Git 与分支管理、打包提测等固定流程、抓包分析</div>
+      </div>
+      <div class="mat__row m2">
+        <div class="mat__k">AI 比较擅长<small>人审 + 迭代</small></div>
+        <div class="mat__v">需求分析与 PRD 评审、技术方案初稿、模块内开发、前端单页面、设计稿明确的简单 UI、答疑客服、测试用例生成、根因明确的问题修复、目标明确的重构、上下文明确的性能优化、埋点开发与验证、数据 Mock</div>
+      </div>
+      <div class="mat__row m3">
+        <div class="mat__k">AI 不太擅长<small>基建可改善</small></div>
+        <div class="mat__v">大型项目跨端多仓联动改动（主仓 + KMP）、多端联调、跨端迁移、UI 还原、上下文不清晰的疑难定位、Code Review、真机端到端验证、UI 自动化、性能真机实测、多机型与弱网异常验证、线上问题与客诉跟进、开发环境配置</div>
+      </div>
+      <div class="mat__row m4">
+        <div class="mat__k">AI 不擅长<small>人的核心战场</small></div>
+        <div class="mat__v">多方需求沟通、敏感改动判断（资损 / 合规 / 隐私）、架构决策与技术选型、发布与灰度判断、线上故障决策、排期与上线时间点判断</div>
+      </div>
+    </div>
+
+    <!-- 4.3 回顾与挑战 -->
+    <div class="sub__hd">4.3　回顾 &amp; 挑战</div>
+
+    <div class="ch">
+      <div class="ch__t">挑战 1｜集中建设力度还不够，个人技能没有变成团队技能</div>
+      <p class="ch__p">好工具在团队的<em>覆盖度不够</em>，AI 技巧共享不够；D2C 效果、功能验证、客户端 AI Native 架构升级都存在<em>分散建设</em>的问题——每个团队各自一套流程，最佳实践没有沉淀下来。</p>
+    </div>
+
+    <div class="ch">
+      <div class="ch__t">挑战 2｜高估了 AI Coding 的代码质量</div>
+      <p class="ch__p">对「团队同学都能用 AI Coding 交付高质量代码和功能」评估不足。以<b>千问输入法</b>为例：前期 <em>2 个人几天</em>就做出 Demo，团队信心大增；但真正项目化后<em>版本速度并没有快起来</em>，投入持续增大、代码持续重构、<em>Bug Reopen 率高</em>，最后靠<b>不断增加门禁</b>、<b>熟悉 AI 写的代码</b>才把质量和节奏稳下来。</p>
+      <p class="ch__p"><b>Demo 的速度不等于版本的速度</b>，差的那部分就是门禁、上下文与验证体系。</p>
+    </div>
+
+    <div class="ch">
+      <div class="ch__t">挑战 3｜代码量爆发式增长，人的掌控力在下降</div>
+      <p class="ch__p">严口径（仅有效代码，不含生成代码、工程配置、测试代码与文档注释）对比 3.31 与 8.20：</p>
+      <table style="margin-top:8px;">
+        <thead><tr><th>分支 / 产品</th><th>3.31</th><th>8.20</th><th>净增</th><th>增幅</th></tr></thead>
+        <tbody>
+          <tr><td class="k">KMP · Android &amp; iOS</td><td class="n">19.98w 行</td><td class="n">39.41w 行</td><td class="n">+19.42w 行</td><td class="up">+97.2%</td></tr>
+          <tr><td class="k">KMP · OHOS</td><td class="n">19.25w 行</td><td class="n">36.80w 行</td><td class="n">+17.57w 行</td><td class="up">+91.3%</td></tr>
+        </tbody>
+      </table>
+      <p class="ch__p">千问 PC 累计新增约 <b>52.2 万行</b>（纯新增 45.5 万行），千问输入法约 <b>62.2 万行</b>（纯新增 42.9 万行）。千问 PC Cowork 总计 <b>83.4 万行</b>：</p>
+      <div class="bar">
+        <div style="flex:40.5; background:#7c3aed;">Agent 33.8w · 40.5%</div>
+        <div style="flex:28.2; background:#2563eb;">前端 Chat 23.5w · 28.2%</div>
+        <div style="flex:17.1; background:#0891b2;">PC 端 14.3w · 17.1%</div>
+        <div style="flex:14.1; background:#d97706;">遥控器 11.8w · 14.1%</div>
+      </div>
+    </div>
+
+    <div class="ch">
+      <div class="ch__t">挑战 4｜编码变快了，验证成本没降，需求吞吐提升不明显</div>
+      <p class="ch__p">编码时间占需求周期<em>不到 30%</em>，剩下 <em>70% 没有提效</em>；再往下拆一层：编码时间变短了，但 <b>Bugfix 时间明显增加、Reopen 率上升，测试在为 AI Coding 兜底</b>。</p>
+      <div class="split">
+        <div class="a">编码 &lt;30%（已提效）</div>
+        <div class="b">其余 70%：需求、方案、联调、验证、发布 —— 尚未提效</div>
+      </div>
+    </div>
+
+    <div class="ch">
+      <div class="ch__t">挑战 5｜上下文缺失 + 系统对 Agent 不友好，卡在最后一公里</div>
+      <p class="ch__p">Spec、规范、领域知识没有沉淀为 AI 可读资产，Agent 每次从零理解仓库，<b>产出质量高度依赖提问者水平</b>，架构持续熵增；同时诺亚埋点、端的模块化、打包速度对 AI 不友好，Mock 与真机验证多为 GUI / 人工流程，Agent 难以自助闭环。</p>
+    </div>
+
+    <!-- 4.4 目标 -->
+    <div class="sub__hd">4.4　目标</div>
+    <div class="goal">
+      <div><div class="v">+30%~50%</div><div class="t">需求吞吐提升</div><div class="d">单位时间可交付需求量</div></div>
+      <div><div class="v">-30%~50%</div><div class="t">缺陷数下降</div><div class="d">交付质量稳定可控</div></div>
+      <div><div class="v">双转型</div><div class="t">组织与架构转型</div><div class="d">团队完成 Agent 转型，端与平台完成 AI 友好转型</div></div>
+    </div>
+
+    <!-- 4.5 策略 -->
+    <div class="sub__hd">4.5　策略 &amp; 规划</div>
+    <ol class="plist">
+      <li><b>测试左移</b>：<em>研发是质量的第一责任人</em>，通过优化需求质量、分层单测和 AI 测试降低 Bug 数。</li>
+      <li><b>鸿蒙转码</b>：鸿蒙版本比 Android、iOS <em>晚一个版本</em>，建设可用性高的鸿蒙转码 Agent，同时考虑二级页引入 CMP。</li>
+      <li><b>明确团队的 AI Native 工作流</b>：以 AI Native 工作台和 QBoz 为基础，把 <em>Spec、测试用例、验证</em>作为必须项；每个需求由 Owner 把关方案与质量，各团队可做定制。</li>
+      <li><b>AI 友好的架构改造</b>：各个工程都要做 AI 友好的架构改造。</li>
+      <li><b>擅长的任务做到自动 Loop</b>：Hotfix、卡片开发、Code Review、答疑、告警与自动排查等，做到<em>自动 Loop</em>并持续提升交付效果。</li>
+      <li><b>AI Native 工作台</b>：往 AI Native 工作台升级，在<em>样板间项目试点</em>工作台，解决多团队协作的信息共享，Agent 作为<em>超级大脑</em>承担项目管理和托管执行的能力。</li>
+      <li><b>集中建设 Agent 工具</b>：QBoz、知识库、验证、Mock 系统、提 Bug 工具、D2C 等。</li>
+    </ol>
+
+    <div class="sub__hd">分层建设 · AI 基建架构 <span class="tag">六层自下而上层层支撑</span></div>
+    <div class="stack">
+      <div class="lay L-agent">
+        <div class="lay__k">场景型 LOOP Agent<small>面向高频研发场景的自主循环</small></div>
+        <div class="lay__v"><span class="chip">鸿蒙转码</span><span class="chip">Bugfix</span><span class="chip">Hotfix</span><span class="chip">二三方答疑</span><span class="chip">卡片开发</span></div>
+      </div>
+      <div class="lay L-biz">
+        <div class="lay__k">业务工程基建<small>保障 AI 产出质量</small></div>
+        <div class="lay__v"><span class="chip">Code Review</span><span class="chip">知识库</span><span class="chip">Orz 验证</span><span class="chip">Bug 规范上报</span><span class="chip">ulog 日志</span></div>
+      </div>
+      <div class="lay L-flow">
+        <div class="lay__k">研发 Workflow<small>Spec 与 TestCase 为必须产物</small></div>
+        <div class="lay__v">
+          <span class="chip">需求分析</span><span class="arw">→</span>
+          <span class="chip chip--must">Spec　必须产物</span><span class="arw">→</span>
+          <span class="chip chip--must">TestCase　必须产物</span><span class="arw">→</span>
+          <span class="chip">代码生成</span><span class="arw">→</span>
+          <span class="chip">测试验证</span><span class="arw">→</span>
+          <span class="chip">UI 走查</span>
+        </div>
+      </div>
+      <div class="lay L-arch">
+        <div class="lay__k">AI 友好的工程架构<small>可理解、可提交、可协作</small></div>
+        <div class="lay__v"><span class="chip">Monorepo</span><span class="chip">模块化</span><span class="chip">统一规范 rules</span><span class="chip">提交门禁 Gate</span><span class="chip">模块化 agents 目录</span></div>
+      </div>
+      <div class="lay L-sys">
+        <div class="lay__k">AI 友好的研发系统<small>AI 可调用、可观测</small></div>
+        <div class="lay__v"><span class="chip">超音速打包</span><span class="chip">白龙马平台</span><span class="chip">诺亚日志</span><span class="chip">CMS</span><span class="chip">Mock 系统</span><span class="chip">iTrace</span></div>
+      </div>
+      <div class="lay L-base">
+        <div class="lay__k">平台基座<small>承载统一工作方式</small></div>
+        <div class="lay__v"><span class="chip">千问宝子</span><span class="chip">AI Native 工作台</span><span class="chip">QBoz</span></div>
+      </div>
+    </div>
+    <p class="stack-note">下层为上层提供支撑，上层沉淀反哺下层；六层一起把工作项从「AI 不太擅长」搬到「AI 擅长」。</p>
+  </div>
+
+  <!-- ============ 五、团队要求 ============ -->
+  <div class="sec">
+    <div class="sec__hd">
+      <span class="sec__no">五</span>
+      <span class="sec__t">团队要求</span>
+      <span class="sec__d">中短期看，AI 时代对人的要求更高</span>
+    </div>
+
+    <div class="sub__hd">5.1　工程师的定位</div>
+    <div class="note">前提：<b>AI 程序员跟传统程序员已经完全不一样了</b>。</div>
+    <table>
+      <thead><tr><th style="width:150px;">定位</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td class="k" style="color:var(--purple);">Agent 工程师</td><td>建设 Agent 给外部用户使用，对标 WorkBuddy、豆包工作</td></tr>
+        <tr><td class="k" style="color:var(--blue);">AI 程序员</td><td>应用 Agent、基于 Agent 交付功能；善于使用 AI，持续优化 Coding Agent 能力，构建 AI 需要的上下文，在领域技能上一专多能</td></tr>
+        <tr><td class="k" style="color:var(--sub);">传统程序员</td><td>AI 参与度低，传统流程，传统技能</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub__hd">5.2　具体要求</div>
+    <ol class="plist">
+      <li><b>扎实的基础</b>：更好的判断力、架构能力、沟通能力、快速学习能力和技术基础。<span class="hl-b">AI 是一个放大器</span>，人写代码变少后，对代码的熟悉度、敏感度在下降，<em>基础不牢，构建起来的产品和工程就如空中楼阁</em>。</li>
+      <li><b>全员 Agent 转型</b>：用 AI 重新设计团队和个人的核心流程，<em>新流程以 AI 为前提</em>；熟悉 Agent 运行原理，具备建设和优化 Agent 的能力。</li>
+      <li><b>全员具备架构能力</b>；<b>运营业务组</b>做全栈的尝试；<b>客户端</b>做跨端的实践，一人两端、三端。</li>
+    </ol>
+  </div>
+
+  <!-- ============ 收尾 ============ -->
+  <div class="end">
+    <b>总结</b>
+    <p>大模型是一场<em>智力革命</em>，是未来最大的确定性，新的产品形态、团队形态甚至社会形态都在围绕它变革。<br>
+    在技术交替的节点上，<b>旧时代的复利已经开始下降，新时代的复利开始了</b>。</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const CX = 500, CY = 358, KY = 0.80;
+  const R_IN = 140, R_OUT = 290, R_CARD = 222, R_PILL = 368;
+  const R_OPEN = 408;
+
+  const OPEN_FLOWS = [
+    { a:136, dir:'in',  t:'供给' },
+    { a:352, dir:'out', t:'分发' },
+  ];
+  const OPEN_NOTES = [
+    { a:64,  cn:'协议与规范', en:'MCP · SKILL SPEC' },
+    { a:208, cn:'准入与安全', en:'审核 · 签名 · 沙箱' },
+    { a:280, cn:'计费与分成', en:'BILLING · REV-SHARE' },
+  ];
+
+  const SECTORS = [
+    { key:'tool', cn:'工具', color:'34,211,238', a1:103, a2:217, la:141, lr:275,
+      items:[
+        { icon:'🌐', t:'浏览器工具', en:'Browser Use', d:'导航、抓取、表单' },
+        { icon:'🗂', t:'文件与系统', en:'File System · Shell', d:'读写、命令执行' },
+        { icon:'🔌', t:'检索与连接', en:'MCP · Search', d:'数据与 API 接入' },
+      ]},
+    { key:'skill', cn:'技能', color:'167,139,250', a1:-17, a2:97, la:59, lr:275,
+      items:[
+        { icon:'🧩', t:'Skill 市场', en:'Marketplace', d:'三方共建、按需加载' },
+        { icon:'📷', t:'扫描王 Skill', en:'Scanner · OCR', d:'纠偏、结构化' },
+        { icon:'☁️', t:'网盘 Skill', en:'Cloud Drive', d:'存取、同步分享' },
+      ]},
+    { key:'surface', cn:'消费容器', color:'251,191,36', a1:223, a2:337, la:255, lr:275,
+      items:[
+        { icon:'📄', t:'文档容器', en:'Doc · Artifact', d:'可编辑、可协同' },
+        { icon:'▶️', t:'播放器容器', en:'Media Player', d:'音视频、可回看' },
+        { icon:'🖼', t:'画布与预览', en:'Canvas · Preview', d:'图表、网页可视' },
+      ]},
+  ];
+
+  const EXPERTS = [
+    { a:100, icon:'💻', t:'编码专家', en:'Coding',  d:'仓库理解、写码、评审' },
+    { a:28,  icon:'🗂', t:'办公专家', en:'Work',    d:'会议、汇报、审批' },
+    { a:316, icon:'💰', t:'理财专家', en:'Finance', d:'账单、持仓、风险' },
+    { a:244, icon:'✨', t:'更多套件', en:'More',    d:'教育、出行、创作…' },
+    { a:172, icon:'🩺', t:'健康专家', en:'Health',  d:'报告解读、用药、运动' },
+  ];
+
+  const rad = d => d * Math.PI / 180;
+  const P = (a, r) => [CX + r * Math.cos(rad(a)), CY - r * KY * Math.sin(rad(a))];
+
+  const stage = document.getElementById('stage');
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 1000 742');
+  function el(tag, attrs, text){
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function tangentRot(a){
+    const dx = -Math.sin(rad(a)), dy = -KY * Math.cos(rad(a));
+    let rot = (Math.atan2(dy, dx) * 180 / Math.PI % 360 + 360) % 360;
+    return (rot > 90 && rot < 270) ? rot - 180 : rot;
+  }
+
+  const defs = el('defs');
+  const marker = el('marker', { id:'ah', viewBox:'0 0 10 10', refX:9, refY:5,
+    markerWidth:5.5, markerHeight:5.5, orient:'auto' });
+  marker.appendChild(el('path', { d:'M0,0 L10,5 L0,10 z', fill:'rgb(163,230,53)' }));
+  defs.appendChild(marker);
+  svg.appendChild(defs);
+
+  const ring = (r, attrs) => el('ellipse', Object.assign({ cx:CX, cy:CY, rx:r, ry:r * KY, fill:'none' }, attrs));
+  svg.appendChild(ring(R_IN,  { stroke:'rgba(255,255,255,.09)' }));
+  svg.appendChild(ring(R_OUT, { stroke:'rgba(255,255,255,.09)' }));
+  svg.appendChild(ring(R_PILL, { stroke:'rgba(244,114,182,.30)', 'stroke-dasharray':'3 7' }));
+
+  SECTORS.forEach(s => {
+    const [ox1,oy1] = P(s.a1, R_OUT), [ox2,oy2] = P(s.a2, R_OUT);
+    const [ix1,iy1] = P(s.a1, R_IN),  [ix2,iy2] = P(s.a2, R_IN);
+    svg.appendChild(el('path', {
+      d:`M ${ox1} ${oy1} A ${R_OUT} ${R_OUT * KY} 0 0 0 ${ox2} ${oy2} L ${ix2} ${iy2} A ${R_IN} ${R_IN * KY} 0 0 1 ${ix1} ${iy1} Z`,
+      fill:`rgba(${s.color},.055)`, stroke:`rgba(${s.color},.28)`
+    }));
+
+    const al = s.la, [tx, ty] = P(al, s.lr);
+    svg.appendChild(el('text', {
+      x:0, y:0, transform:`translate(${tx} ${ty}) rotate(${tangentRot(al)})`,
+      fill:`rgb(${s.color})`, 'font-size':14.5, 'font-weight':700, 'letter-spacing':1.5,
+      'text-anchor':'middle', 'dominant-baseline':'middle',
+      'font-family':'-apple-system,PingFang SC,sans-serif'
+    }, s.cn));
+
+    s.items.forEach((it, i) => {
+      const a = s.a1 + (s.a2 - s.a1) * (i + .5) / s.items.length;
+      const [x1,y1] = P(a, 158), [x2,y2] = P(a, 180);
+      svg.appendChild(el('line', { x1, y1, x2, y2, stroke:`rgba(${s.color},.55)`, 'stroke-width':1.2 }));
+      svg.appendChild(el('circle', { cx:x2, cy:y2, r:3, fill:`rgb(${s.color})` }));
+
+      const [cx, cy] = P(a, R_CARD);
+      const card = document.createElement('div');
+      card.className = 'node card ' + s.key;
+      card.style.left = cx + 'px';
+      card.style.top = cy + 'px';
+      card.innerHTML = `<div class="t"><em>${it.icon}</em>${it.t}</div><div class="en">${it.en}</div><div class="d">${it.d}</div>`;
+      stage.appendChild(card);
+    });
+  });
+
+  EXPERTS.forEach(e => {
+    const [x1,y1] = P(e.a, R_OUT + 4), [x2,y2] = P(e.a, R_PILL - 36);
+    svg.appendChild(el('line', { x1, y1, x2, y2,
+      stroke:'rgba(244,114,182,.45)', 'stroke-width':1.2, 'stroke-dasharray':'4 5' }));
+
+    const [cx, cy] = P(e.a, R_PILL);
+    const pill = document.createElement('div');
+    pill.className = 'node pill';
+    pill.style.left = cx + 'px';
+    pill.style.top = cy + 'px';
+    pill.innerHTML = `<div class="t">${e.icon} ${e.t}</div>`;
+    stage.appendChild(pill);
+  });
+
+  svg.appendChild(ring(R_OPEN, { stroke:'rgba(163,230,53,.34)', 'stroke-dasharray':'2 9' }));
+
+  OPEN_FLOWS.forEach(f => {
+    const rNear = R_OUT + 12, rFar = R_OPEN + 22;
+    const [sx, sy] = P(f.a, f.dir === 'in' ? rFar : rNear);
+    const [ex, ey] = P(f.a, f.dir === 'in' ? rNear : rFar);
+    svg.appendChild(el('line', { x1:sx, y1:sy, x2:ex, y2:ey,
+      stroke:'rgba(163,230,53,.75)', 'stroke-width':1.8, 'marker-end':'url(#ah)' }));
+
+    const [lx, ly] = P(f.a + 5, (rNear + rFar) / 2);
+    svg.appendChild(el('text', {
+      transform:`translate(${lx} ${ly}) rotate(${tangentRot(f.a + 5)})`,
+      fill:'rgb(163,230,53)', 'font-size':13.5, 'font-weight':700, 'letter-spacing':1,
+      'text-anchor':'middle', 'dominant-baseline':'middle',
+      'font-family':'-apple-system,PingFang SC,sans-serif'
+    }, f.t));
+  });
+
+  OPEN_NOTES.forEach(n => {
+    const [x, y] = P(n.a, R_OPEN - 24);
+    const g = el('text', {
+      transform:`translate(${x} ${y}) rotate(${tangentRot(n.a)})`,
+      'text-anchor':'middle', 'font-family':'-apple-system,PingFang SC,sans-serif'
+    });
+    g.appendChild(el('tspan', { x:0, dy:'-1', fill:'rgba(163,230,53,.92)',
+      'font-size':12.5, 'font-weight':700, 'letter-spacing':.8 }, n.cn));
+    g.appendChild(el('tspan', { x:0, dy:'14', fill:'rgba(163,230,53,.55)',
+      'font-size':10, 'letter-spacing':.6 }, n.en));
+    svg.appendChild(g);
+  });
+
+  stage.appendChild(svg);
+
+  const core = document.createElement('div');
+  core.className = 'node core';
+  core.style.left = CX + 'px';
+  core.style.top = CY + 'px';
+  core.innerHTML = `
+    <div class="en">AGENT RUNTIME</div>
+    <div class="cn">Agent 运行时</div>
+    <div class="role">OS 级内核 · 大脑与中枢</div>
+    <div class="caps"><b>规划</b><b>记忆</b><b>上下文</b><b>工具编排</b><b>沙箱</b><b>权限</b><b>模型路由</b></div>`;
+  stage.appendChild(core);
+
+  // 固定 1000x742 画布按容器宽度等比缩放，最大 0.68 以便整页放下
+  const wrap = document.getElementById('mapwrap');
+  const MAX = 0.68;
+  function fit(){
+    const s = Math.min(MAX, wrap.clientWidth / 1000);
+    stage.style.transform = 'scale(' + s + ')';
+    stage.style.marginLeft = Math.max(0, (wrap.clientWidth - 1000 * s) / 2) + 'px';
+    wrap.style.height = (742 * s) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>
