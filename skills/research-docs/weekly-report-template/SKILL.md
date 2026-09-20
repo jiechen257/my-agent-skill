@@ -46,10 +46,12 @@ For each repository, record completed work from retained commits and approved do
 Classify every source-backed fact into exactly one of these buckets before writing prose:
 
 1. **Metric or quality result**: traffic, success/failure rate, latency, error distribution, and trend. These facts belong in `数据看板 & 分析`.
-2. **Delivered work item**: a feature, requirement point, bug fix, integration, investigation deliverable, or validation completed during the report period. These facts belong in `周进展` and must name what changed and its user or system effect.
+2. **Work item activity**: a feature, requirement point, bug fix, integration, investigation deliverable, or validation actually completed or advanced during the report period. These facts belong in `周进展`; they must name the work item, its current status, the concrete actions performed this week, and any verified result. An unfinished work item may appear as `开发中` or `联调中`, but a future schedule with no activity in the report period is not progress.
 3. **Current-week work item**: a concrete feature, requirement point, bug fix, integration, release, or validation action supported by a task document, user commitment, unresolved item, or corroborated worktree signal. These facts belong in `本周目标与计划`.
 
 A metric movement, log-query result, or problem discovery is not a delivered work item by itself. It may explain the priority or effect of a delivered or planned work item, but it must not replace that work item.
+
+When metric or quality data is available, read [`references/weekly-metric-analysis.md`](./references/weekly-metric-analysis.md) in full before calculating or writing `数据看板 & 分析`. The default comparison unit is the immediately preceding equal-length period under the same dimensions, filters, environment, and status definition. If a comparable baseline cannot be recovered, state that gap instead of borrowing an unrelated dashboard percentage.
 
 Use user-provided DingTalk, Yuque, local Markdown, chat summaries, or Chronicle context only when approved. Use supplementary material for design, alignment, risks, and plans; do not upgrade engineering or release status without explicit evidence. A worktree change can support “进行中” or a plan, never “已完成”.
 
@@ -61,7 +63,7 @@ Merge related work across repositories into workstreams instead of listing repos
 
 1. `阶段目标`: state the quality or delivery target for the period.
 2. `数据看板 & 分析`: state the denominator, PV/UV, success or failure rate, trend, top causes, and evidence limits when metrics are available.
-3. `周进展`: lead with the concrete features, requirement points, bug fixes, integrations, or validation deliverables completed during the period, then state their effect. Do not use pure metric trends, log analysis, or failure-rate movements as progress items.
+3. `周进展`: organize by concrete features, requirement points, bug fixes, integrations, or validation deliverables actually worked on during the period. Prefer `【事项】进度：已完成/开发中/联调中/待验证` followed by the actions and verified results from that week. Do not use pure metric trends, log analysis, future schedules, or failure-rate movements as progress items.
 4. `遗留问题`: list unresolved defects, dependencies, and evidence gaps; write an explicit no-new-issues statement when empty.
 5. `本周目标与计划`: name the concrete features, requirement points, bug fixes, integrations, release actions, or validations to execute in the current week. Every item must contain an object, an action, and a verifiable result; “保持指标稳定” or “跟进异常” alone is not a plan.
 
@@ -73,7 +75,7 @@ Choose next-week plans in this order:
 
 If a plan is still inferred, use conservative verbs such as “验证”“收口”“推进”, not a promised outcome.
 
-**Complete when:** every `周进展` item maps to completion evidence, every `本周目标与计划` item maps to a plan source, metrics are not used as proxies for work items, every detail belongs to a coherent theme, and raw hashes, commit subjects, file counts, diff statistics, and chronology have disappeared from the prose.
+**Complete when:** every `周进展` item maps to evidence of work performed in the report period and carries an honest status, every `本周目标与计划` item maps to a plan source, metrics are not used as proxies for work items, every detail belongs to a coherent theme, and raw hashes, commit subjects, file counts, diff statistics, and commit chronology have disappeared from the prose.
 
 ## 5. Render and validate
 

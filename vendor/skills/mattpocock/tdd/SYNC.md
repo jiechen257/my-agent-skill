@@ -4,5 +4,5 @@
 - **Source:** `https://github.com/mattpocock/skills.git`
 - **Source Ref:** `main`
 - **Source Subdir:** `skills/engineering/tdd`
-- **Git SHA:** `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76`
-- **Synced:** 2026-09-03
+- **Git SHA:** `c55ee46073ed923f86ce59a5eb3b6d895095d1b7`
+- **Synced:** 2026-09-20
