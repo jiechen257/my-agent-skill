@@ -12,7 +12,7 @@
 
 | 场景 | 默认 skill |
 | --- | --- |
-| 不知道该走哪个 Matt flow | `ask-matt` |
+| 不知道该走哪个 Matt flow | 按全局规则和下表选择；`ask-matt` 已停用 |
 | Trellis 需求探索 | `trellis-brainstorm` |
 | Trellis 方案完成后的压力 review | `grill-me` |
 | 非 Trellis 需求或设计需要拷问 | `grill-with-docs` / `grill-me` |
@@ -22,7 +22,7 @@
 | 行为变更或 bugfix 先写测试 | `tdd` |
 | bug、报错、回归、性能问题 | `diagnosing-bugs` |
 | review 本地变更或 PR | `code-review` |
-| issue / PR 队列分流 | `triage` |
+| issue / PR 队列分流 | 手动调用 `$triage` |
 | 模块边界、接口、可测试性 | `codebase-design` |
 | 领域词汇、ADR、业务概念 | `domain-modeling` |
 | 临时验证设计想法 | `prototype` |
@@ -39,6 +39,19 @@
 - `vendored`：只供 `scripts/sync-vendored-skills.sh` 同步，不直接安装。
 
 Matt Pocock wrapper 当前只打开 `codex: true`，避免本次 Codex 重构顺手改 Claude。
+
+## 默认发现与手动调用
+
+2026-10-09 精简入口后，Codex 的仓库安装面为 59 个 skill：30 个允许自动匹配，29 个仅允许手动调用。
+
+- 已删除 active 入口：`finance-skill-creator`、`generative-ui`、`colawd-ui-style`。金融类上游镜像保留为同步来源。
+- 已停用安装：`hone`、`ask-matt`，保留仓库文件；启用前先核对用途，`ask-matt` 还需要修正上游路由。
+- 仅手动调用：`teach`、`forward-deployed-engineer`、`triage`、`improve-codebase-architecture`、`commit-daily-summary`、`project-daily-summary`、`research-note-wrap`。
+- 金融类：`tradingview-mcp`、`sepa-strategy` 允许自动匹配，其余 22 个仅手动调用。
+
+手动入口保留安装链接，并在 wrapper 的 `agents/openai.yaml` 中设置 `policy.allow_implicit_invocation: false`。在 Codex 输入 `$skill-name` 仍可调用；该策略不控制 Claude 的自动匹配。
+
+停用安装使用 registry 中 `codex: false`、`claude: false`，同时清理指向本仓库的全局旧链接。重新安装不会恢复这两个停用入口。
 
 ## Trellis 使用方式
 

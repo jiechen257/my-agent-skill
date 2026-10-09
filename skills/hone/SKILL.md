@@ -1,6 +1,6 @@
 ---
 name: hone
-description: Use when the user mentions hone or asks about frontier AI coding signals, local agent harness practices, Codex skills/rules/hooks/MCP config, or Codex/Claude harness drift.
+description: Use explicit Hone workflows to discover AI coding practices, shape practice briefs, draft harness assets, or check harness drift.
 ---
 
 # Hone

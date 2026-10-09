@@ -11,14 +11,15 @@ my-agent-skill/
 ├── registry/
 │   └── skills.yaml        # skill 清单（repo-managed / vendored）
 ├── rules/
-│   └── codex-global.md    # 全局 Codex AGENTS.md 源文件（手动部署）
-├── plugins/
-│   └── ponytail/          # vendored agent plugin（Codex 插件结构）
+│   ├── codex-global.md    # 全局 Codex AGENTS.md 源文件（手动部署）
+│   ├── claude-global.md   # Claude Code 全局规则源
+│   ├── gemini-global.md   # Gemini CLI 全局规则源
+│   └── opencode-global.md # OpenCode 全局规则源
 ├── scripts/
 │   ├── audit-global-skills.sh
 │   └── sync-vendored-skills.sh
 ├── skills/
-│   ├── design/            # active 本地设计辅助
+│   ├── finance/           # Finance Skills 本地兼容 wrapper
 │   ├── mattpocock/         # active Matt Pocock engineering/productivity wrapper
 │   ├── harness/           # active agent / MCP 健康检查
 │   ├── research-docs/     # active 报告和研究沉淀辅助
@@ -40,13 +41,14 @@ my-agent-skill/
 - `vendor/skills/` 只存上游同步源快照，不直接安装，不作为默认自动发现面。
 - `templates/` 只放可复用骨架，不作为 active skill。
 - `prompts/` 存放个人收藏的 prompt 模板，供手动复制使用，不参与 install 或 registry。
-- `plugins/` 存放完整 agent plugin 收录件，保留上游插件结构，不参与 skill 安装脚本。
-- `rules/` 存放全局 agent 规则源文件，手动部署到目标位置（如 `~/.codex/AGENTS.md`）。
+- `rules/` 存放各客户端全局规则源文件，手动部署到目标位置；用 `~/.agents/rules-sync/check-drift.sh` 检查源与实际副本。
+- `scripts/audit-global-skills.sh` 同时检查 registry 安装、全局失效链接，以及 Codex 个人/共享入口的重复名称。
 - domain 只表达稳定分类，避免把临时项目名放到 domain 层。
 - skill 文件里不写密钥、token、机器专属凭证。
 - `vendor/skills/` 下的源快照由 `sync-vendored-skills.sh` 从外部源同步，不应手动修改。
 - `install.sh` 只安装 `registry/skills.yaml` 中 `codex: true` / `claude: true` 的 active skill；`codex: false` 且 `claude: false` 的 source snapshot 只用于同步。
 - 通用工程 workflow 默认使用 Matt Pocock skills；Trellis 只作为 start / continue / finish 上下文记录层。
+- Codex 的低频专用 skill 保留 `$skill-name` 手动调用，关闭自动匹配；停用的 skill 保留源码但不安装。具体名单见 [Skill 使用指南](docs/skill-usage-whitepaper.md)。
 
 ## 安装
 
@@ -66,7 +68,7 @@ git clone <repo> && cd my-agent-skill && ./install.sh
 
 | Domain | 用途 |
 | --- | --- |
-| `design` | 本地维护的 UI/UX 设计辅助 |
+| `finance` | 金融分析、数据读取和可视化 wrapper，安装说明见 [Finance Skills](docs/finance-skills-installation.md) |
 | `mattpocock` | Matt Pocock engineering/productivity wrapper |
 | `harness` | 本地维护的 agent / MCP 健康检查 |
 | `research-docs` | 本地维护的报告和研究沉淀辅助 |

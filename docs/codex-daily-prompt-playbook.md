@@ -238,7 +238,7 @@ Review 当前分支的本地变更，结合 [需求、Spec 或任务描述] 判�
 1. **先观察，无 hook**：使用本文快速入口和现有 skill descriptions，记录实际误路由案例。
 2. **只补 measured gaps**：如果某个短前缀反复误路由，先调整对应 skill description 或增加一个轻量 router skill。
 3. **最后考虑 hook**：只有需要跨项目、确定性前缀路由且 skills 仍不能稳定覆盖时，才 draft `prompt-router`。
-4. **安装前验收**：验证未命中零输出、命中内容长度、耗时、fail-open、与 Trellis/ponytail/guard hooks 的叠加结果。
+4. **安装前验收**：验证未命中零输出、命中内容长度、耗时、fail-open、与 Trellis/guard hooks 的叠加结果。
 
 ### Hook 方案验收标准
 

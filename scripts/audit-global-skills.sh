@@ -74,4 +74,46 @@ while IFS='|' read -r name path kind codex claude source_type; do
   check_link claude "$HOME/.claude/skills" "$name" "$target" "$claude" || status=1
 done < <(list_skills)
 
+# The registry covers repository-owned skills; other installers also maintain
+# global discovery directories. Catch dangling links without following caches.
+python3 - <<'PY_AUDIT' || status=1
+from pathlib import Path
+import re
+home = Path.home()
+roots = [home / relative for relative in (
+    ".codex/skills", ".agents/skills", ".claude/skills", ".cursor/skills",
+    ".gemini/skills", ".gemini/antigravity/global_skills",
+    ".config/opencode/skills", ".opencode/skills", ".qoder/skills",
+)]
+failed = False
+for root in roots:
+    if not root.is_dir():
+        continue
+    broken = [entry for entry in root.iterdir()
+              if entry.is_symlink() and not entry.exists()]
+    for entry in broken:
+        print(f"FAIL dangling skill: {entry}")
+    failed |= bool(broken)
+    print(f"{'FAIL' if broken else 'OK  '} global skills: {root}")
+# Codex loads both personal and shared entries. Same canonical SKILL.md is
+# legitimate sharing; the same name in separate source files is ambiguous.
+names = {}
+for root in roots[:2]:
+    if not root.is_dir():
+        continue
+    for entry in root.iterdir():
+        skill = entry / "SKILL.md"
+        if entry.name.startswith(".") or not skill.is_file():
+            continue
+        text = skill.read_text(encoding="utf-8")
+        match = re.search(r"^name:\s*[\"']?([^\"'\n]+)", text, re.MULTILINE)
+        if match:
+            names.setdefault(match.group(1).strip(), set()).add(skill.resolve())
+for name, files in names.items():
+    if len(files) > 1:
+        print(f"FAIL duplicate skill name: {name}: {', '.join(map(str, sorted(files)))}")
+        failed = True
+raise SystemExit(1 if failed else 0)
+PY_AUDIT
+
 exit "$status"

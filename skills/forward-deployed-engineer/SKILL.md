@@ -1,6 +1,6 @@
 ---
 name: forward-deployed-engineer
-description: "Use when evaluating or delivering enterprise AI work as an FDE: discovering the real workflow, selecting a valuable problem, auditing a codebase or roadmap for 增值区/贬值区 investments, defining a minimum viable deployment, activating adoption, protecting renewal, expanding value, or turning field solutions into reusable product capabilities."
+description: "Evaluate enterprise AI deployments as an FDE: customer value, adoption, renewal, and reusable field solutions. Use for explicit FDE or AI investment audits."
 ---
 
 # Forward Deployed Engineer

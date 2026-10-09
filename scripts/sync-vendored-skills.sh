@@ -76,7 +76,11 @@ sync_git() {
 
   tmp=$(mktemp -d "/tmp/${name}.sync.XXXXXX")
   git clone --depth 1 --branch "$ref" --filter=blob:none --sparse "$url" "$tmp/repo" >/dev/null
-  git -C "$tmp/repo" sparse-checkout set "$subdir" >/dev/null
+  if [ "$subdir" = "." ]; then
+    git -C "$tmp/repo" sparse-checkout disable >/dev/null
+  else
+    git -C "$tmp/repo" sparse-checkout set "$subdir" >/dev/null
+  fi
   while IFS= read -r -d '' link; do
     local link_target
     link_target=$(readlink "$link")

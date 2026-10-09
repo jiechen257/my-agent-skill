@@ -127,20 +127,20 @@ install_registry() {
     skill_dir="$SCRIPT_DIR/$path"
 
     if [ "$codex" != "true" ] && [ "$claude" != "true" ]; then
-      echo "  SKIP: $name (sync source only)"
-      ((skipped++))
+      echo "  SKIP: $name (disabled or sync source only)"
+      ((skipped+=1))
       continue
     fi
 
     if [ ! -e "$skill_dir/SKILL.md" ]; then
       echo "  SKIP: $name (sync source, no SKILL.md)"
-      ((skipped++))
+      ((skipped+=1))
       continue
     fi
 
     if should_skip "$name"; then
       echo "  SKIP: $name (excluded pattern)"
-      ((skipped++))
+      ((skipped+=1))
       continue
     fi
 
@@ -153,7 +153,7 @@ install_registry() {
         codex) [ "$codex" = "true" ] || continue ;;
         claude) [ "$claude" = "true" ] || continue ;;
       esac
-      link_skill "$skill_dir" "$name" "$dest_root" "$label" && ((installed++)) || true
+      link_skill "$skill_dir" "$name" "$dest_root" "$label" && ((installed+=1)) || true
     done
   done < <(list_registry_skills)
 }
@@ -174,7 +174,7 @@ install_from_root() {
 
     if should_skip "$skill_name"; then
       echo "  SKIP: $skill_name (excluded pattern)"
-      ((skipped++))
+      ((skipped+=1))
       continue
     fi
 
@@ -183,7 +183,7 @@ install_from_root() {
     for entry in "${targets[@]}"; do
       dest_root="${entry%%|*}"
       label="${entry##*|}"
-      link_skill "$skill_dir" "$skill_name" "$dest_root" "$label" && ((installed++)) || true
+      link_skill "$skill_dir" "$skill_name" "$dest_root" "$label" && ((installed+=1)) || true
     done
   done < <(find "$root" -mindepth 2 -type f -name SKILL.md -print0 | sort -z)
 }
@@ -204,7 +204,7 @@ for entry in "${targets[@]}"; do
         if ! is_active_dir "$current"; then
           echo "  REMOVE [$label]: $(basename "$link") → $current"
           rm "$link"
-          ((removed++))
+          ((removed+=1))
         fi
         ;;
     esac
@@ -221,7 +221,7 @@ for entry in "${targets[@]}"; do
   while IFS= read -r -d '' link; do
     if [ ! -e "$link" ]; then
       echo "  BROKEN: $link → $(readlink "$link")"
-      ((broken++))
+      ((broken+=1))
     fi
   done < <(find "$dest_root" -maxdepth 1 -type l -print0)
 done

@@ -5,7 +5,8 @@
 ## 受管内容
 
 - `config-overlay.yaml`：需要合并到本地 `.trellis/config.yaml` 的配置。
-- `workflow-policy.md`：需要体现在本地 `.trellis/workflow.md` 的行为边界。
+- `workflow-policy.md`：需要体现在本地 `.trellis/workflow.md` 的行为边界，包含实际注入的 Inline 状态块。
+- `hooks.json`：安装到 `.codex/hooks.json` 的最小注册；只保留活动任务的 per-turn 状态注入。合并时保留项目独立 hooks。
 - `agents/trellis-matt-implement.toml`：保留的可选实现 agent，默认不派发。
 - `agents/trellis-matt-check.toml`：保留的可选 review agent，默认不派发。
 
@@ -33,3 +34,15 @@ git status --short --untracked-files=all -- .trellis .codex
 ```
 
 local-only 项目的期望结果：Profile 文件保持本地生效，但不会出现在目标项目的待提交文件中。明确允许版本化的项目则应看到配置、workflow 和 agent 定义进入正常 diff。
+
+## Hook 兼容修正
+
+现有 Trellis 的 `inject-workflow-state.py` 来自项目安装版本，不整体覆盖：
+
+- Codex 解析活动任务后，没有任务时直接返回，不重复输出 bootstrap 和 no-task breadcrumb。
+- 默认 dispatch 为 `inline`；显式启用子 agent 的兼容路径保留。活动任务、过期指针和其他客户端的响应格式继续按原脚本处理。
+- 删除旧 `trellis-implement|trellis-check|trellis-research` 的 `SubagentStart` 注册。保留 agent 定义和脚本作为显式使用时的兼容资料。
+- `trellis update` 可能重新生成脚本和注册。升级后复查这些修正，确认当前 Profile 和 hooks，再由 Codex 重新加载并审核实际 hash。
+- 验证无任务、planning、in_progress、completed、stale 指针五种行为；验证活动上下文仍在主会话恢复。
+
+各项目 `.trellis/workflow.md` 的 `<!-- local-trellis-matt-profile -->` 后应与 `workflow-policy.md` 一致。源模板不承载项目任务、spec 或 journal。
