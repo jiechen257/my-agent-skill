@@ -2,7 +2,7 @@
 
 本参考用于代码库、产品架构、AI workflow、roadmap 和研发投入组合审计。它综合了“下一代 SOTA 到来时，这项投入会获益还是作废”的判断与 FDE 的现场复利原则。
 
-来源概念：[《从 Spec 驱动转向环境与验证驱动》](https://ata.atatech.org/articles/11020723634)；FDE 的现场到产品复利框架见 [FDE Guidance Book](https://github.com/xdash/FDE-the-Guidance-Book-of-Forward-Deployed-Engineer)。这里是面向工程审计的重新组织，不替代原文。
+本参考采用环境能力、结果验证与资产复用的通用分析视角；FDE 的现场到产品复利框架参考公开资料 [FDE Guidance Book](https://github.com/xdash/FDE-the-Guidance-Book-of-Forward-Deployed-Engineer)。这里是面向工程审计的整理，不替代所链接的公开资料。
 
 ## 审计单位
 

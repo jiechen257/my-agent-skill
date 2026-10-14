@@ -1,6 +1,6 @@
-# All in Agent HTML 视觉规范
+# HTML 文档视觉规范（虚构参考页）
 
-来源：`https://61e92d00-8080.boz.alibaba-inc.com/artifacts/all-in-agent-share-v2.html`。本 skill 中的 `assets/reference.html` 是在 2026-09-04 下载的自包含源文件；网页内容可变化，生成时以本地副本和本规范为准。
+本规范描述本地 `assets/reference.html` 的视觉语言。参考页已使用虚构的纸舟工坊案例，人物、项目、指标与计划均为自行编写，仅用于排版演示；它不是业务事实来源。生成时以本地参考页和本规范为准，不依赖外部页面。
 
 ## 页面骨架
 

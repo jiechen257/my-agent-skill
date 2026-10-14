@@ -14,7 +14,7 @@
 - Codex 默认在主会话应用 Matt 的 implement/TDD/review 方法；`trellis-matt-*` 仅保留为显式启用的回滚资产。
 - 保留的 Trellis hook 只注入紧凑的任务状态和索引，不把完整工作流反复塞进每轮上下文。
 
-这是一套 **Trellis + Matt Profile**，不是 Trellis 的零配置默认模式。版本化模板源统一由当前 `my-agent-skill/templates/trellis-matt-profile/` 管理；业务项目默认只保留本机安装副本，只有明确允许的项目才提交 `.trellis/` 和 Profile agent。当前 personal-kb 允许版本化，qianwen、nexview-devtools 保持本地-only。Trellis 升级后需要在模板源复核 workflow policy、skills、agents 和 hooks，再更新各项目副本。
+这是一套 **Trellis + Matt Profile**，不是 Trellis 的零配置默认模式。版本化模板源统一由当前 `my-agent-skill/templates/trellis-matt-profile/` 管理；业务项目默认只保留本机安装副本，只有明确允许的项目才提交 `.trellis/` 和 Profile agent。具体项目的版本化授权以目标项目本地约定为准。Trellis 升级后需要在模板源复核 workflow policy、skills、agents 和 hooks，再更新各项目副本。
 
 因此，local-only 项目中的 task、journal 和 active-task 恢复只是本机持久状态，不天然具备 Git 团队共享能力；允许版本化的项目则可以继续共享 task/spec 历史。需要团队长期共享的稳定知识仍应优先进入项目正常文档体系。
 

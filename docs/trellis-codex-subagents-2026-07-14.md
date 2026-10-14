@@ -35,8 +35,8 @@ brainstorm、plan review、research、implement、check、最终验收和 spec p
 - `trellis --version`：`0.6.6`
 - `codex --version`：`codex-cli 0.144.1`
 - 全局规则已改为不主动调用子 agent；Profile 模板默认 `codex.dispatch_mode: inline`。
-- qianwen、nexview-devtools 已同步为 `inline` 和主会话 implement/check；保留的 `trellis-matt-*` 文件不再自动使用。
-- personal-kb 中已安装的 agent 定义仍可作为回滚参考，但不构成主动派发授权。
+- 目标项目采用 `inline` 和主会话 implement/check 时，保留的 `trellis-matt-*` 文件不构成自动派发授权。
+- 已安装的 agent 定义可作为回滚参考；具体项目安装清单不在本仓库保存。
 - Profile 的版本化源文件统一由 `templates/trellis-matt-profile/` 管理。
 - Agent Space 仍维持先前的 Lite/inline 定制，不在本轮首批改造范围内。
 

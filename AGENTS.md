@@ -15,7 +15,7 @@
 
 - 更新 wrapper 时保留上游来源关系；需要改变上游行为时在 wrapper 中覆盖并说明原因。
 - 不把密钥、登录态、机器凭证或目标业务项目的运行数据写入本仓库。
-- qianwen、nexview-devtools 的 Trellis Profile 保持本地-only；personal-kb 明确允许版本化。
+- 目标业务项目的 Trellis Profile 默认保持本地-only；只有项目明确允许时才版本化。
 - 目标项目已有脏改动不属于本仓库工作，安装或同步时只触碰明确的 Profile 文件。
 - 新增或大改 skill 后运行 quick validation；涉及模板时验证源文件与目标副本一致。
 - 只有用户明确要求时才执行 commit、push 或 PR。

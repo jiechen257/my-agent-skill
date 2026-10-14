@@ -1,7 +1,8 @@
-# 陈洁项目双周报
+# 林澈（虚构）项目双周报
 
+<!-- 虚构测试样例：人物、项目、工作描述与数据均为合成内容，不代表真实业务记录。 -->
 - 周期：2026-07-01 至 2026-07-14
-- 范围：qianwen、nexview-devtools
+- 范围：paper-notes-demo、sample-inspector-demo
 - 统计口径：基于两份周报合并整理，按项目重新归并双周进展
 - 来源：`2026-07-01-to-2026-07-07-weekly-summary.md`、`2026-07-08-to-2026-07-14-weekly-summary.md`
 - 使用技能：`biweekly-report-template`
@@ -12,7 +13,7 @@
 
 ## 项目/仓库总结
 
-### 项目：qianwen
+### 项目：paper-notes-demo
 
 **双周进展概述：** 完成产物预览主链路。
 

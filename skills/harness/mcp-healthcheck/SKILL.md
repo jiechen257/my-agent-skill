@@ -26,7 +26,7 @@ Do not use this skill to install new MCP servers. Do not print tokens, headers, 
       -> read ~/.codex/config.toml and identify remote HTTP endpoints plus local stdio commands
 
 [2] Run read-only probes
-      -> use scripts/check-mcp-health.sh for command checks, endpoint HEAD/initialize probes, and proxy comparison
+      -> use scripts/check-mcp-health.sh for command checks and endpoint HEAD/initialize probes; enable proxy comparison when diagnosing proxy behavior
 
 [3] Classify each result
       -> reachable/auth-needed, wrong route, missing command, timeout, or config-risk
@@ -42,7 +42,7 @@ Do not use this skill to install new MCP servers. Do not print tokens, headers, 
 
 - Treat `401` on an initialize probe as an auth-required but reachable endpoint.
 - Treat `405` on a HEAD/GET probe as a useful reachability signal for MCP HTTP endpoints that only accept POST.
-- For Alibaba internal MCPs, compare current proxy env with a proxy-stripped run before blaming auth or the service.
+- When diagnosing proxy behavior, compare the current proxy env with a proxy-stripped run before blaming auth or the service. Enable this explicitly with `MCP_HEALTHCHECK_NO_PROXY=1`; the default keeps the current proxy settings and does not add direct requests. The helper does not hard-code organization hosts.
 - For local stdio MCPs, verify command existence first. Launch only when the user asks for deeper runtime debugging.
 - For write tools, prefer disabling high-risk tools in config or adding approval gates.
 - Keep `basic-memory.write_note` behind approval unless the user explicitly changes the policy.
@@ -61,11 +61,17 @@ Optional:
 CODEX_CONFIG=/path/to/config.toml scripts/check-mcp-health.sh
 ```
 
+For proxy diagnosis, enable a comparison for the endpoints in the selected config:
+
+```bash
+MCP_HEALTHCHECK_NO_PROXY=1 CODEX_CONFIG=/path/to/config.toml scripts/check-mcp-health.sh
+```
+
 ## Verification
 
 Minimum completion evidence:
 
 - list the checked MCP server names
 - include endpoint status classes or command availability
-- state whether proxy/no-proxy behavior differs for internal endpoints
+- when proxy comparison is enabled, state whether proxy/no-proxy behavior differs; otherwise state that it was not run
 - state any skipped checks and why

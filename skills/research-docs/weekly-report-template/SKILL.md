@@ -23,7 +23,7 @@ Never select the `daily-report` repository as the default business scope. Includ
 
 ## 2. Resolve the owner and usable refs
 
-Use the owner named by the user. Otherwise default the report owner to `陈洁`, and resolve that person's Git author names and emails from repository history and local Git configuration. Do not treat commits from other authors as the owner's work.
+Use the owner named by the user. Otherwise identify the current user from local Git configuration and confirm the matching author identities in repository history; if the owner remains ambiguous, ask one focused question. Never use the fictional fixture owner as a real report default. Do not treat commits from other authors as the owner's work.
 
 Inspect ordinary business refs needed to recover rebased or merged work. Treat refs whose names contain `backup`, `archive`, or `before-squash` as attribution clues only; commits found only on those refs cannot prove completion.
 

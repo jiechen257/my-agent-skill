@@ -1,18 +1,20 @@
 ---
 name: html-document-style
-description: "Use when generating or independently reconstructing a self-contained HTML document, proposal, report, technical plan, research note, or presentation-like artifact from the All in Agent reference page: pale gray canvas, centered white paper, blue-purple title, compact numbered sections, pastel cards and tables, red-blue emphasis, inline SVG diagrams, and a sticky left table of contents; use the reference's content and visual language without copying its source code."
+description: "Use when generating or independently reconstructing a self-contained HTML document, proposal, report, technical plan, research note, or presentation-like artifact from the bundled fictional reference page: pale gray canvas, centered white paper, blue-purple title, compact numbered sections, pastel cards and tables, red-blue emphasis, inline SVG diagrams, and a sticky left table of contents; use the reference's content and visual language without copying its source code."
 ---
 
 # HTML Document Style
 
-Generate HTML documents with the visual language of the saved All in Agent reference page. The output is a readable document artifact, not a generic landing page: content density, hierarchy, evidence blocks, and scanability come first.
+Generate HTML documents with the visual language of the saved fictional reference page. The output is a readable document artifact, not a generic landing page: content density, hierarchy, evidence blocks, and scanability come first.
 
 ## Reference boundary
 
 Before implementing, read these files from this skill directory:
 
-- `assets/reference.html` — the downloaded, self-contained source page and canonical CSS/SVG treatment.
+- `assets/reference.html` — the self-contained fictional demo page and canonical CSS/SVG treatment.
 - `references/style-spec.md` — the distilled tokens, layout rules, component mapping, and required left navigation extension.
+
+The bundled reference and examples use fictional people, projects, metrics, and plans. Use them for visual structure only; never present their content as real business evidence.
 
 Treat the local source as the visual source of truth. Reuse its values and component ideas, adapting copy and structure to the requested document. Do not claim the generated page is pixel-identical when the content, viewport, or diagram geometry differs.
 

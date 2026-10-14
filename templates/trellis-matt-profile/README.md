@@ -1,6 +1,6 @@
 # Trellis + Matt Profile
 
-这里是本机 Trellis + Matt Profile 的统一模板源。目标业务项目默认只安装本地副本；只有项目被明确允许时，才提交 `.trellis/` 和 `.codex/agents/trellis-matt-*.toml`。当前 personal-kb 属于明确允许版本化的项目，qianwen、nexview-devtools 仍保持本地-only。
+这里是本机 Trellis + Matt Profile 的统一模板源。目标业务项目默认只安装本地副本；只有项目被明确允许时，才提交 `.trellis/` 和 `.codex/agents/trellis-matt-*.toml`。具体项目的安装状态与版本化授权在目标项目本地维护，不在本仓库登记。
 
 ## 受管内容
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>业务 &amp; AI Coding 团队沟通会</title>
+  <title>纸舟工坊 · Agent 文档演示（虚构）</title>
   <style>
     :root{--paper:#fff;--mist:#eef1f6;--ink:#1a1a1a;--muted:#5a5a5a;--line:#e1e6ef;--slate:#334155;--violet:#7c3aed;--violet-pale:#f5f3ff;--blue:#2563eb;--blue-pale:#eff6ff;--cyan:#0891b2;--cyan-pale:#ecfeff;--green:#059669;--green-pale:#ecfdf5;--amber:#d97706;--amber-pale:#fffbeb;--red:#dc2626;--red-pale:#fef2f2}
     *{box-sizing:border-box;margin:0;padding:0}
@@ -33,8 +33,8 @@
     .diagram-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:9px;color:#8b98b4;font-size:11px}.diagram-legend i{display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:2px}.diagram-svg{display:block;width:680px;max-width:100%;height:504px;margin:10px auto 0}.diagram-svg text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif}.diagram-note{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;color:#96a2bb;font-size:11.5px;line-height:1.6}.diagram-note b{display:block;color:#a3e635;font-size:13px}.diagram-note div:last-child{text-align:right}.diagram-note div:last-child b{color:#f472b6}
     @media(max-width:1024px){.diagram-svg{width:100%;height:auto}}
     .cross-diagram{display:block;width:100%;height:auto;margin-top:2px}.cross-diagram text{font-family:"PingFang SC","Microsoft YaHei",sans-serif}
-    .bar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.bar div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;white-space:nowrap}.bar .agent{flex:0 0 40.5%;background:#7c3aed;color:#fff}.bar .chat{flex:0 0 28.2%;background:#2563eb;color:#fff}.bar .pc{flex:0 0 17.1%;background:#0891b2;color:#fff}.bar .remote{flex:1;background:#d97706;color:#fff}
-    .split{display:flex;height:30px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.split div{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700}.split .a{flex:0 0 30%;background:#ecfeff;color:#155e75}.split .b{flex:1;background:repeating-linear-gradient(135deg,#fef2f2,#fef2f2 7px,#fee2e2 7px,#fee2e2 14px);color:#991b1b}
+    .bar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.bar div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;white-space:nowrap}.bar .agent{flex:0 0 40%;background:#7c3aed;color:#fff}.bar .chat{flex:0 0 30%;background:#2563eb;color:#fff}.bar .pc{flex:0 0 20%;background:#0891b2;color:#fff}.bar .remote{flex:1;background:#d97706;color:#fff}
+    .split{display:flex;height:30px;border-radius:7px;overflow:hidden;margin-top:9px;border:1px solid var(--line)}.split div{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700}.split .a{flex:0 0 45%;background:#ecfeff;color:#155e75}.split .b{flex:1;background:repeating-linear-gradient(135deg,#fef2f2,#fef2f2 7px,#fee2e2 7px,#fee2e2 14px);color:#991b1b}
     .goal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.goal>div{text-align:center;border:1px solid var(--line);border-radius:10px;padding:14px 12px;background:linear-gradient(180deg,#fafbfd,#fff)}.goal .v{font-size:24px;font-weight:800;letter-spacing:-.5px}.goal>div:nth-child(1) .v{color:var(--blue)}.goal>div:nth-child(2) .v{color:var(--green)}.goal>div:nth-child(3) .v{color:var(--violet);font-size:19px}.goal .t{font-size:13px;font-weight:700;margin-top:4px}.goal .d{font-size:11.5px;color:var(--muted);margin-top:3px}
     .workflow-chip{display:inline-flex;align-items:center;gap:6px}.workflow-arrow{color:#94a3b8;font-size:11px}
     .dark-architecture>.diagram-svg{display:none}.diagram-flow-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 0}.diagram-flow-notes div{padding:8px 11px;border:1px solid rgba(163,230,53,.28);border-radius:8px;background:rgba(163,230,53,.06);color:#b7c5dc;font-size:11px;line-height:1.5}.diagram-flow-notes div:last-child{text-align:right;border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.06)}.diagram-flow-notes b{color:#d9f99d}.diagram-flow-notes div:last-child b{color:#ffd0e6}.diagram-svg-clean{display:block;width:680px;max-width:100%;height:auto;margin:10px auto 0}.diagram-svg-clean text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif}.flywheel>.cross-diagram{display:none}.cross-diagram-clean{display:block;width:100%;height:auto;margin-top:8px}.cross-diagram-clean text{font-family:"PingFang SC","Microsoft YaHei",sans-serif}
@@ -45,52 +45,52 @@
     <aside class="rail" aria-label="文档目录">
       <h2>目录 <small>CONTENTS</small></h2>
       <nav>
-        <a href="#industry"><span class="index">一</span><span>行业与业务</span></a>
-        <a href="#planning"><span class="index">二</span><span>业务规划</span></a>
-        <a href="#judgment"><span class="index">三</span><span>优势与挑战</span></a>
+        <a href="#industry"><span class="index">一</span><span>演示场景</span></a>
+        <a href="#planning"><span class="index">二</span><span>演示能力规划</span></a>
+        <a href="#judgment"><span class="index">三</span><span>示例基础与待验证项</span></a>
         <a href="#coding"><span class="index">四</span><span>AI Coding</span></a>
-        <a href="#team"><span class="index">五</span><span>团队要求</span></a>
+        <a href="#team"><span class="index">五</span><span>演示协作约定</span></a>
       </nav>
     </aside>
 
     <main class="paper">
       <header class="mast">
-        <h1>业务 &amp; AI Coding 团队沟通会</h1>
-        <p>INTERNAL SHARING · 用户平台组</p>
-        <div class="badges"><span>Agent</span><span>Agent 工程师</span><span>AI Coding</span></div>
+        <h1>纸舟工坊 · Agent 文档演示（虚构）</h1>
+        <p>FICTIONAL DEMO · 纸舟工坊 · 人物、项目、数据与计划均为虚构</p>
+        <div class="badges"><span>Agent</span><span>任务设计角色</span><span>AI Coding</span></div>
       </header>
 
       <section class="block" id="industry">
-        <div class="block-head"><span class="block-number">一</span><h2>行业和业务进展</h2><p>比赛进入下半场</p></div>
+        <div class="block-head"><span class="block-number">一</span><h2>演示场景与设定</h2><p>虚构案例，仅用于样式演示</p></div>
         <ol class="ordered">
-          <li><b>to C 规模</b>：豆包、千问、DeepSeek 三强确定，比赛进入下半场。竞争从互联网流量模式转向<span class="blue">模型的有效调用</span>，核心是高净值生产力付费用户的争夺。</li>
-          <li><b>模型</b>：Qwen3.8 Max 处于国内第一梯队，国内旗舰模型基本越过可用阶段；用户需求从问答升级成办公等复杂任务。</li>
-          <li><b>办公 Agent 成为竞争核心</b>：海外 GPT 与 Codex 完成融合；国内 WorkBuddy 暂时领先，字节调整大，千问工作助理进展顺利。</li>
-          <li><b>商业化</b>：国内 AI 进入商业化元年，用户愿意为好的模型和 Token 付费——未来 Token 付费会像充电费、充话费一样。</li>
+          <li><b>演示场景</b>：虚构的纸舟工坊提供资料整理工具，本页展示搜索、摘录与任务编排三类能力。</li>
+          <li><b>演示引擎</b>：虚构的 PaperEngine D1 仅用于界面说明，不代表任何真实模型能力或排名。</li>
+          <li><b>资料助手</b>：纸舟助手在模拟环境中整理阅读清单、生成摘要并保存草稿，所有任务使用合成资料。</li>
+          <li><b>资源预算</b>：演示采用虚构积分计量，每项任务展示预计用量；不涉及真实价格或支付。</li>
         </ol>
       </section>
 
       <section class="block" id="planning">
-        <div class="block-head"><span class="block-number">二</span><h2>业务规划</h2><p>六条主线</p></div>
+        <div class="block-head"><span class="block-number">二</span><h2>演示能力规划</h2><p>六类模拟能力</p></div>
         <div class="journey evolution">
           <div class="journey-top"><b>形态演进</b><span>智能工具集合 → Chat → Agent</span></div>
           <div class="journey-row">
-            <div class="journey-stage"><small>STAGE 01</small><b>智能工具集合</b><p>单点 AI 能力被封装成一个个工具：翻译、扫描、PDF、写作。入口要用户自己找、流程要用户自己串，AI 只是一个功能点。</p><footer>行业：工具类 App 与插件市场，比的是功能数量和流量。</footer></div>
+            <div class="journey-stage"><small>STAGE 01</small><b>智能工具集合</b><p>初始原型分别提供搜索、摘录和导出入口，演示用户需要手动连接这些步骤。</p><footer>演示：先完成单条资料的检索与摘录。</footer></div>
             <div class="journey-arrow">→</div>
-            <div class="journey-stage"><small>STAGE 02</small><b>Chat</b><p>模型走到前台，对话成为统一入口，一问一答生成内容。但规划和执行仍由人完成，产出的是答案不是结果。</p><footer>行业：豆包、千问、DeepSeek 争夺对话入口，三强确定。</footer></div>
+            <div class="journey-stage"><small>STAGE 02</small><b>Chat</b><p>第二版演示增加对话入口，可以生成阅读建议；资料确认和保存仍由演示用户操作。</p><footer>演示：对话生成建议，用户确认资料。</footer></div>
             <div class="journey-arrow">→</div>
-            <div class="journey-stage"><small>STAGE 03</small><b>Agent</b><p>模型自主规划、拆步骤、调用工具、循环执行，直接交付结果。</p><footer><em>运行时成为新的 OS，Skill 套件成为新的 App。</em><br>行业：GPT 与 Codex 融合、WorkBuddy 领先，办公 Agent 成为竞争核心。</footer></div>
+            <div class="journey-stage"><small>STAGE 03</small><b>Agent</b><p>第三版演示把检索、摘要和草稿保存串成任务，并在模拟环境中显示每一步的结果。</p><footer><em>任务引擎连接模拟工具，草稿面板展示演示结果。</em><br>演示：在模拟环境中运行多步资料任务。</footer></div>
           </div>
-          <div class="journey-foot">演进主线：AI 的角色从<span class="blue">功能 → 入口 → 执行主体</span>；竞争口径从互联网流量转向模型的有效调用，付费方式也从买 App 变成按 Token 结算。</div>
+          <div class="journey-foot">演示主线：资料处理从<span class="blue">功能 → 入口 → 执行主体</span>；用合成输入展示从资料检索到草稿保存的步骤。</div>
         </div>
-        <div class="banner"><b>All in Agent</b><span>所有的工作围绕 Agent 展开：Agent 运行时 · PC 与移动端 · 开放平台 · 新的输入输出方式 · 工具和消费容器 · 商业化</span></div>
+        <div class="banner"><b>纸舟任务演示</b><span>资料检索 → 书目摘录 → 草稿保存；全部使用合成输入与模拟工具。</span></div>
         <div class="grid cols-3">
-          <article class="card"><strong>01 · Agent 运行时</strong><p>模型规划、拆步骤、调用工具、循环执行完成任务，含上下文管理、记忆、沙箱。运行时是未来的 OS，Skill 套件是未来的 App。</p></article>
-          <article class="card"><strong>02 · PC 端 &amp; 移动端</strong><p>Agent 的运行环境，建设 AI 友好的框架。</p></article>
-          <article class="card"><strong>03 · 开放平台生态建设</strong><p>行业处于发展孵化期，连接集团内外更多的服务。</p></article>
-          <article class="card"><strong>04 · 新的输入输出方式</strong><p>语音输入渗透 <em>20%</em>；输入法作为新入口，向后连接模型与硬件；识图 VQA、打电话 Live。</p></article>
-          <article class="card"><strong>05 · 工具和消费容器</strong><p>Agent 是 OS 级产品，我们提供运行时和「手和脚」——浏览器工具、网盘 Skill、扫描王 Skill、文档、播放器。</p></article>
-          <article class="card"><strong>06 · 商业化</strong><p>精细化运营，成本优化。</p></article>
+          <article class="card"><strong>01 · Agent 运行时</strong><p>纸舟任务引擎负责拆分资料整理步骤、调用模拟工具和保存任务状态；本图是虚构系统的概念设计。</p></article>
+          <article class="card"><strong>02 · PC 端 &amp; 移动端</strong><p>纸舟桌面端和星灯网页端共用一套演示任务协议，展示不同窗口中的阅读与批注流程。</p></article>
+          <article class="card"><strong>03 · 演示插件库</strong><p>虚构插件库连接本地示例资料、合成目录和模拟检索服务，所有接口均为演示设计。</p></article>
+          <article class="card"><strong>04 · 检索与朗读</strong><p>演示设置 <em>12%</em> 的朗读入口使用占比，用于展示比例样式；该数值不来自真实用户。</p></article>
+          <article class="card"><strong>05 · 阅读与批注</strong><p>演示工具包括资料检索、纸页识别和草稿存取，阅读器展示内容，批注面板接收用户反馈。</p></article>
+          <article class="card"><strong>06 · 资源预算</strong><p>使用合成积分与模拟任务记录展示资源预算。</p></article>
         </div>
         <div class="subhead">架构大图 <span>Runtime · Tools · Skill · Surfaces · Suites · Open Platform</span></div>
         <div class="dark-architecture">
@@ -120,7 +120,7 @@
             <g transform="translate(202 351)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".65"/><text x="12" y="23" fill="#a9f0fb" font-size="13" font-weight="700">🗂 文件与系统</text><text x="12" y="41" fill="#8b98b4" font-size="9">FILE SYSTEM · SHELL</text><text x="12" y="62" fill="#b3bfd6" font-size="11">读写、命令执行</text></g>
             <g transform="translate(238 476)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".65"/><text x="12" y="23" fill="#a9f0fb" font-size="13" font-weight="700">🔌 检索与连接</text><text x="12" y="41" fill="#8b98b4" font-size="9">MCP · SEARCH</text><text x="12" y="62" fill="#b3bfd6" font-size="11">数据与 API 接入</text></g>
             <g transform="translate(614 226)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">☁️ 网盘 Skill</text><text x="12" y="41" fill="#8b98b4" font-size="9">CLOUD DRIVE</text><text x="12" y="62" fill="#b3bfd6" font-size="11">存取、同步分享</text></g>
-            <g transform="translate(650 351)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">📷 扫描王 Skill</text><text x="12" y="41" fill="#8b98b4" font-size="9">SCANNER · OCR</text><text x="12" y="62" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
+            <g transform="translate(650 351)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">📷 纸页识别 Skill</text><text x="12" y="41" fill="#8b98b4" font-size="9">SCANNER · OCR</text><text x="12" y="62" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
             <g transform="translate(614 476)"><rect width="148" height="82" rx="10" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".7"/><text x="12" y="23" fill="#d6c9ff" font-size="13" font-weight="700">🧩 Skill 市场</text><text x="12" y="41" fill="#8b98b4" font-size="9">MARKETPLACE</text><text x="12" y="62" fill="#b3bfd6" font-size="11">三方共建、按需加载</text></g>
             <g transform="translate(396 536)"><rect width="144" height="78" rx="10" fill="#fff" fill-opacity=".055" stroke="#fbbf24" stroke-opacity=".72"/><text x="12" y="23" fill="#ffe0a3" font-size="13" font-weight="700">📄 文档容器</text><text x="12" y="41" fill="#8b98b4" font-size="9">DOC · ARTIFACT</text><text x="12" y="60" fill="#b3bfd6" font-size="11">可编辑、可协同</text></g>
             <g transform="translate(428 620)"><rect width="144" height="64" rx="10" fill="#fff" fill-opacity=".055" stroke="#fbbf24" stroke-opacity=".72"/><text x="12" y="22" fill="#ffe0a3" font-size="13" font-weight="700">▶️ 播放器容器</text><text x="12" y="40" fill="#8b98b4" font-size="9">MEDIA PLAYER</text><text x="12" y="56" fill="#b3bfd6" font-size="11">音视频、可回看</text></g>
@@ -129,7 +129,7 @@
           </svg>
           <svg class="diagram-svg" viewBox="0 0 1100 570" role="img" aria-label="Agent 运行时、工具、技能、消费容器、专家套件和开放平台关系图">
             <defs>
-              <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="soft-glow" x="-8%（模拟）" y="-8%（模拟）" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
               <marker id="diagram-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8be9c5"/></marker>
             </defs>
             <ellipse cx="550" cy="300" rx="430" ry="225" fill="none" stroke="#a3e635" stroke-opacity=".38" stroke-width="2" stroke-dasharray="7 10"/>
@@ -141,7 +141,7 @@
             <g transform="translate(65 255)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".55"/><text x="14" y="22" fill="#a9f0fb" font-size="13" font-weight="700">🗂 文件与系统</text><text x="14" y="40" fill="#8b98b4" font-size="10">FILE SYSTEM · SHELL</text><text x="14" y="60" fill="#b3bfd6" font-size="11">读写、命令执行</text></g>
             <g transform="translate(65 392)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#22d3ee" stroke-opacity=".55"/><text x="14" y="22" fill="#a9f0fb" font-size="13" font-weight="700">🔌 检索与连接</text><text x="14" y="40" fill="#8b98b4" font-size="10">MCP · SEARCH</text><text x="14" y="60" fill="#b3bfd6" font-size="11">数据与 API 接入</text></g>
             <g transform="translate(860 118)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">🧩 Skill 市场</text><text x="14" y="40" fill="#8b98b4" font-size="10">MARKETPLACE</text><text x="14" y="60" fill="#b3bfd6" font-size="11">三方共建、按需加载</text></g>
-            <g transform="translate(860 255)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">📷 扫描王 Skill</text><text x="14" y="40" fill="#8b98b4" font-size="10">SCANNER · OCR</text><text x="14" y="60" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
+            <g transform="translate(860 255)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">📷 纸页识别 Skill</text><text x="14" y="40" fill="#8b98b4" font-size="10">SCANNER · OCR</text><text x="14" y="60" fill="#b3bfd6" font-size="11">纠偏、结构化</text></g>
             <g transform="translate(860 392)"><rect width="175" height="76" rx="11" fill="#fff" fill-opacity=".055" stroke="#a78bfa" stroke-opacity=".65"/><text x="14" y="22" fill="#d6c9ff" font-size="13" font-weight="700">☁️ 网盘 Skill</text><text x="14" y="40" fill="#8b98b4" font-size="10">CLOUD DRIVE</text><text x="14" y="60" fill="#b3bfd6" font-size="11">存取、同步分享</text></g>
             <g transform="translate(315 480)"><rect width="470" height="58" rx="29" fill="#f472b6" fill-opacity=".10" stroke="#f472b6" stroke-opacity=".65"/><text x="235" y="25" text-anchor="middle" fill="#ffd0e6" font-size="13" font-weight="700">💻 编码专家　🗂 办公专家　💰 理财专家　🩺 健康专家　✨ 更多套件</text><text x="235" y="43" text-anchor="middle" fill="#96a2bb" font-size="10">EXPERT SUITES / VERTICAL AGENTS</text></g>
             <g filter="url(#soft-glow)"><circle cx="550" cy="300" r="104" fill="#09151c" stroke="#34d399" stroke-opacity=".72" stroke-width="2"/><circle cx="550" cy="300" r="85" fill="none" stroke="#34d399" stroke-opacity=".2"/><text x="550" y="268" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="2" font-weight="700">AGENT RUNTIME</text><text x="550" y="298" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">运行时内核</text><text x="550" y="322" text-anchor="middle" fill="#cfe9dd" font-size="12">OS 级内核 · 大脑与中枢</text><text x="550" y="348" text-anchor="middle" fill="#a7f3d0" font-size="11">规划 · 记忆 · 上下文 · 工具编排</text></g>
@@ -153,26 +153,26 @@
       </section>
 
       <section class="block" id="judgment">
-        <div class="block-head"><span class="block-number">三</span><h2>优势和挑战判断</h2><p>面对的是最强的竞争</p></div>
+        <div class="block-head"><span class="block-number">三</span><h2>示例基础与待验证项</h2><p>只评估合成任务的演示结果</p></div>
         <table><thead><tr><th>维度</th><th>优势</th><th>转型 AI Agent 面临挑战</th></tr></thead><tbody>
-          <tr><td><b>产品 &amp; 端侧</b></td><td>PC / 客户端体验、成熟工具生态（Agent 手脚）、C 端用户理解</td><td>Agent 编排框架从零补齐；传统测试体系失效；成本控制、效果保障</td></tr>
-          <tr><td><b>工程能力</b></td><td>客户端、存储、文件、多媒体工程很强</td><td>大模型推理成本优化、AI 评测体系缺失</td></tr>
-          <tr><td><b>迭代模式</b></td><td>擅长快速发版本、客户端发布流程</td><td>区分「发版本数量」vs「有效能力迭代」，建立 AI 导向反馈闭环</td></tr>
-          <tr><td><b>资产</b></td><td>现成工具、存量用户、场景闭环</td><td>思维转型：从确定性软件，到不确定性 AI 智能体</td></tr>
+          <tr><td><b>产品 &amp; 端侧</b></td><td>示例已具备阅读列表、笔记编辑器和本地演示文件。</td><td>模拟多步骤任务的失败与恢复，并明确草稿保存的完成条件。</td></tr>
+          <tr><td><b>工程能力</b></td><td>示例模块包含目录索引、文本切片和草稿导出。</td><td>补充不同合成资料长度下的任务耗时与结果检查。</td></tr>
+          <tr><td><b>迭代模式</b></td><td>按演示批次更新样例，每次保留可重复使用的合成输入。</td><td>检查示例任务是否完成阅读清单和草稿保存，不以页面更新次数判断效果。</td></tr>
+          <tr><td><b>资产</b></td><td>使用自行编写的资料片段、虚构书目和模拟任务记录。</td><td>区分固定的文件操作与需要人工复核的摘要建议。</td></tr>
         </tbody></table>
-        <div class="challenge"><h3>要打破固有认知、拥抱新的变革</h3><p>我们面对的是最强的竞争，对面基本上都是各家最强的团队。</p></div>
+        <div class="challenge"><h3>要打破固有认知、拥抱新的变革</h3><p>本例只检查虚构阅读任务的清晰度与可重复性，不涉及真实团队、竞品排名或项目进展。</p></div>
       </section>
 
       <section class="block" id="coding">
-        <div class="block-head"><span class="block-number">四</span><h2>AI Coding</h2><p>与千问业务逐步进入相互驱动、相互促进的阶段</p></div>
+        <div class="block-head"><span class="block-number">四</span><h2>AI Coding</h2><p>用纸舟工坊的虚构阅读任务演示工具与场景的反馈关系</p></div>
         <div class="flywheel"><div class="flywheel-top"><b>两条线交叉上升</b><span>相互驱动 · 相互促进</span></div>
           <svg class="cross-diagram" viewBox="0 0 1120 262" role="img" aria-label="AI Coding 线与业务线交叉上升示意图">
             <defs><marker id="cross-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7c3aed"/></marker></defs>
             <path d="M82 218V30M82 218H1060" stroke="#cbd5e1" stroke-width="1"/><text x="82" y="20" fill="#64748b" font-size="11">能力 · 业务价值</text><text x="1048" y="244" fill="#64748b" font-size="11">时间</text>
             <path d="M90 205C250 195 315 154 430 125S720 70 1030 38" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#cross-arrow)"/><path d="M90 220C250 208 350 206 470 178S760 126 1030 76" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#cross-arrow)"/>
             <circle cx="90" cy="205" r="9" fill="#7c3aed"/><circle cx="1030" cy="38" r="9" fill="#7c3aed"/><circle cx="90" cy="220" r="9" fill="#2563eb"/><circle cx="1030" cy="76" r="9" fill="#2563eb"/>
-            <text x="190" y="190" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="190" y="207" fill="#5a5a5a" font-size="11">用 Coding Agent 建千问宝子 Agent，做 Harness 工程</text><text x="820" y="29" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 能力上来</text><text x="820" y="48" fill="#5a5a5a" font-size="11">更快、更稳地交付业务功能</text>
-            <text x="200" y="239" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="292" y="239" fill="#5a5a5a" font-size="11">Chat、二方接入、智能体、Skill、Claw、工作助理、Agent</text><text x="730" y="118" fill="#1d4ed8" font-size="13" font-weight="700">业务真实复杂度</text><text x="730" y="137" fill="#5a5a5a" font-size="11">反哺 Agent 与研发基建的建设</text>
+            <text x="190" y="190" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="190" y="207" fill="#5a5a5a" font-size="11">用合成书目演示纸舟助手的检索与摘录</text><text x="820" y="29" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 能力上来</text><text x="820" y="48" fill="#5a5a5a" font-size="11">更快、更稳地交付业务功能</text>
+            <text x="200" y="239" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="292" y="239" fill="#5a5a5a" font-size="11">阅读清单、资料摘录、草稿整理、模拟导出</text><text x="730" y="118" fill="#1d4ed8" font-size="13" font-weight="700">模拟任务种类</text><text x="730" y="137" fill="#5a5a5a" font-size="11">反哺 Agent 与研发基建的建设</text>
             <g transform="translate(520 98)"><circle r="13" fill="#7c3aed"/><text y="5" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text></g><g transform="translate(575 151)"><circle r="13" fill="#2563eb"/><text y="5" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text></g>
           </svg>
           <svg class="cross-diagram-clean" viewBox="0 0 1120 262" role="img" aria-label="AI Coding 线与业务线交叉上升示意图">
@@ -181,61 +181,61 @@
             <text x="72" y="24" fill="#64748b" font-size="11">能力 · 业务价值</text><text x="1040" y="244" fill="#64748b" font-size="11">时间</text>
             <path d="M90 201C205 112 337 88 478 166S692 229 817 113S970 39 1046 43" fill="none" stroke="#d8c8ff" stroke-width="9" opacity=".55"/><path d="M90 201C205 112 337 88 478 166S692 229 817 113S970 39 1046 43" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#clean-cross-arrow-purple)"/>
             <path d="M90 201C213 247 350 251 478 166S686 68 817 126S964 165 1046 92" fill="none" stroke="#c8d9ff" stroke-width="9" opacity=".65"/><path d="M90 201C213 247 350 251 478 166S686 68 817 126S964 165 1046 92" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#clean-cross-arrow-blue)"/>
-            <g transform="translate(235 91)"><rect width="235" height="42" rx="9" fill="#fff" stroke="#d8c8ff"/><circle cx="18" cy="21" r="7" fill="#7c3aed"/><text x="34" y="18" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="34" y="33" fill="#64748b" font-size="10">用 Coding Agent 建千问宝子 Agent</text></g>
-            <g transform="translate(566 44)"><rect width="286" height="42" rx="9" fill="#fff" stroke="#bfdbfe"/><circle cx="18" cy="21" r="7" fill="#2563eb"/><text x="34" y="18" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="34" y="33" fill="#64748b" font-size="10">Chat · 二方接入 · 智能体 · Skill · Claw · Agent</text></g>
+            <g transform="translate(235 91)"><rect width="235" height="42" rx="9" fill="#fff" stroke="#d8c8ff"/><circle cx="18" cy="21" r="7" fill="#7c3aed"/><text x="34" y="18" fill="#5b21b6" font-size="13" font-weight="700">AI Coding 线</text><text x="34" y="33" fill="#64748b" font-size="10">用 Coding Agent 建纸舟助手 Agent</text></g>
+            <g transform="translate(566 44)"><rect width="286" height="42" rx="9" fill="#fff" stroke="#bfdbfe"/><circle cx="18" cy="21" r="7" fill="#2563eb"/><text x="34" y="18" fill="#1d4ed8" font-size="13" font-weight="700">业务线</text><text x="34" y="33" fill="#64748b" font-size="10">书目 · 摘录 · 摘要 · 草稿 · 导出</text></g>
             <g transform="translate(465 153)"><circle r="13" fill="#fff" stroke="#7c3aed" stroke-width="2"/><text y="4" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="800">1</text><rect x="20" y="-21" width="128" height="42" rx="8" fill="#faf7ff" stroke="#e9ddff"/><text x="31" y="-3" fill="#5b21b6" font-size="11" font-weight="700">能力上来</text><text x="31" y="12" fill="#64748b" font-size="10">更快、更稳交付</text></g>
-            <g transform="translate(804 121)"><circle r="13" fill="#fff" stroke="#2563eb" stroke-width="2"/><text y="4" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="800">2</text><rect x="20" y="-21" width="158" height="42" rx="8" fill="#f5f9ff" stroke="#dbeafe"/><text x="31" y="-3" fill="#1d4ed8" font-size="11" font-weight="700">真实复杂度</text><text x="31" y="12" fill="#64748b" font-size="10">反哺 Agent 与基建</text></g>
+            <g transform="translate(804 121)"><circle r="13" fill="#fff" stroke="#2563eb" stroke-width="2"/><text y="4" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="800">2</text><rect x="20" y="-21" width="158" height="42" rx="8" fill="#f5f9ff" stroke="#dbeafe"/><text x="31" y="-3" fill="#1d4ed8" font-size="11" font-weight="700">模拟任务</text><text x="31" y="12" fill="#64748b" font-size="10">反哺 Agent 与基建</text></g>
           </svg>
-          <div class="flywheel-key"><span><i style="background:#7c3aed">1</i>AI Coding 能力上来 → 更快、更稳地交付业务功能</span><span><i style="background:#2563eb">2</i>业务的真实复杂度 → 反哺 Agent 与研发基建</span></div>
+          <div class="flywheel-key"><span><i style="background:#7c3aed">1</i>AI Coding 能力上来 → 更快、更稳地交付业务功能</span><span><i style="background:#2563eb">2</i>业务的模拟任务 → 反哺 Agent 与研发基建</span></div>
         </div>
         <div class="subhead">4.1　我们走过的三个阶段 <span>从 Freestyle 到样板间</span></div>
         <div class="journey timeline"><div class="journey-row">
-          <div class="journey-stage"><small>① 工具先用起来</small><b>Freestyle</b><p>不限制使用方式；两个 AI Coding 交流群共享经验，各团队探索自己的方式（卡片开发、SDD 流程等）。</p></div><div class="journey-arrow">→</div>
-          <div class="journey-stage"><small>② 开始集中建设，但不强制</small><b>集中建设</b><p>千问宝子、QBoz、知识库、验证、Code Review、Monorepo 改造；内外部系统改造成对 AI 友好。</p></div><div class="journey-arrow">→</div>
-          <div class="journey-stage"><small>③ 配套建设样板间</small><b>样板间</b><p>AI Native 工作台、小说样板间、千问输入法。</p></div>
+          <div class="journey-stage"><small>① 工具先用起来</small><b>Freestyle</b><p>演示第 1 阶段：制作阅读清单和摘录原型，使用同一组虚构书目验证交互。</p></div><div class="journey-arrow">→</div>
+          <div class="journey-stage"><small>② 开始集中建设，但不强制</small><b>集中建设</b><p>演示第 2 阶段：为纸舟助手接入合成资料库、草稿检查器和模拟任务日志。</p></div><div class="journey-arrow">→</div>
+          <div class="journey-stage"><small>③ 配套建设样板间</small><b>样板间</b><p>演示第 3 阶段：在纸舟桌面端和星灯网页端展示同一组模拟阅读任务。</p></div>
         </div></div>
-        <div class="subhead">4.2　现状：AI Coding 能力成熟度 <span>裸模型 + 简单 Skill</span></div>
-        <p class="footnote">下面的分类不包括已搭好完善环境下的工作——环境与上下文建设本身，就是把工作项从右往左搬的杠杆。</p>
+        <div class="subhead">4.2　现状：模拟任务覆盖范围 <span>合成输入 + 模拟工具</span></div>
+        <p class="footnote">下面仅列出本案例的模拟覆盖范围，不构成真实系统的能力结论。</p>
         <div class="score">
-          <div class="score-row s1"><div class="score-label">AI 非常擅长<small>可直接托管</small></div><div class="score-value">原型 / Demo、新技术调研、竞对与逆向分析、上下文明确的问题修复、代码解读、内部研测系统开发、脚本与小工具、数据分析（ODPS / SLS / iTrace）、文档总结、单元测试、Git 与分支管理、打包提测等固定流程、抓包分析。</div></div>
-          <div class="score-row s2"><div class="score-label">AI 比较擅长<small>人审 + 迭代</small></div><div class="score-value">需求分析与 PRD 评审、技术方案初稿、模块内开发、前端单页面、设计稿明确的简单 UI、答疑客服、测试用例生成、根因明确的问题修复、目标明确的重构、上下文明确的性能优化、埋点开发与验证、数据 Mock。</div></div>
-          <div class="score-row s3"><div class="score-label">AI 不太擅长<small>基建可改善</small></div><div class="score-value">大型项目跨端多仓联动改动（主仓 + KMP）、多端联调、跨端迁移、UI 还原、上下文不清晰的疑难定位、Code Review、真机端到端验证、UI 自动化、性能真机实测、多机型与弱网异常验证、线上问题与客诉跟进、开发环境配置。</div></div>
-          <div class="score-row s4"><div class="score-label">AI 不擅长<small>人的核心战场</small></div><div class="score-value">多方需求沟通、敏感改动判断（资损 / 合规 / 隐私）、架构决策与技术选型、发布与灰度判断、线上故障决策、排期与上线时间点判断。</div></div>
+          <div class="score-row s1"><div class="score-label">演示已覆盖<small>可直接托管</small></div><div class="score-value">演示已覆盖：按标题检索虚构书目、提取预设段落、生成阅读清单，并把结果保存为本地样例。</div></div>
+          <div class="score-row s2"><div class="score-label">需要复核<small>人审 + 迭代</small></div><div class="score-value">需要人工复核：摘要措辞、资料分类建议和重复条目的合并；演示用户确认后再保存草稿。</div></div>
+          <div class="score-row s3"><div class="score-label">暂未覆盖<small>基建可改善</small></div><div class="score-value">本例尚未覆盖：扫描歪斜页、跨文档冲突和多窗口同时编辑；这些只作为后续模拟任务。</div></div>
+          <div class="score-row s4"><div class="score-label">人工决定<small>人的核心战场</small></div><div class="score-value">始终由演示用户决定：选择保留哪些摘录、如何组织阅读主题，以及是否接受生成的摘要。</div></div>
         </div>
         <div class="subhead">4.3　回顾 &amp; 挑战</div>
-        <div class="challenge"><h3>挑战 1｜集中建设力度还不够，个人技能没有变成团队技能</h3><p>好工具在团队的覆盖度不够，AI 技巧共享不够；D2C 效果、功能验证、客户端 AI Native 架构升级都存在分散建设的问题——每个团队各自一套流程，最佳实践没有沉淀下来。</p></div>
-        <div class="challenge"><h3>挑战 2｜高估了 AI Coding 的代码质量</h3><p>对「团队同学都能用 AI Coding 交付高质量代码和功能」评估不足。以千问输入法为例：前期 <em>2 个人几天</em>就做出 Demo，团队信心大增；但真正项目化后版本速度并没有快起来，投入持续增大、代码持续重构、Bug Reopen 率高，最后靠不断增加门禁、熟悉 AI 写的代码才把质量和节奏稳下来。Demo 的速度不等于版本的速度，差的那部分就是门禁、上下文与验证体系。</p></div>
-        <div class="challenge"><h3>挑战 3｜代码量爆发式增长，人的掌控力在下降</h3><p>严口径（仅有效代码，不含生成代码、工程配置、测试代码与文档注释）对比 3.31 与 8.20：</p>
-          <table><thead><tr><th>分支 / 产品</th><th>3.31</th><th>8.20</th><th>净增</th><th>增幅</th></tr></thead><tbody><tr><td>KMP · Android &amp; iOS</td><td>19.98w 行</td><td>39.41w 行</td><td>+19.42w 行</td><td><em>+97.2%</em></td></tr><tr><td>KMP · OHOS</td><td>19.25w 行</td><td>36.80w 行</td><td>+17.57w 行</td><td><em>+91.3%</em></td></tr></tbody></table>
-          <p style="margin-top:8px">千问 PC 累计新增约 <b>52.2 万行</b>（纯新增 <b>45.5 万行</b>），千问输入法约 <b>62.2 万行</b>（纯新增 <b>42.9 万行</b>）。千问 PC Cowork 总计 <b>83.4 万行</b>：</p>
-          <div class="bar"><div class="agent">Agent 33.8w · 40.5%</div><div class="chat">前端 Chat 23.5w · 28.2%</div><div class="pc">PC 端 14.3w · 17.1%</div><div class="remote">遥控器 11.8w · 14.1%</div></div>
+        <div class="challenge"><h3>演示问题 1｜书目字段不一致</h3><p>虚构试用组发现两个样例使用了不同的书目字段，导致摘录无法互换；本例计划统一为一份演示字段表。</p></div>
+        <div class="challenge"><h3>演示问题 2｜批量摘录排序错误</h3><p>虚构案例中，纸舟摘录器用 <em>3 天</em>完成原型；随后加入重复标题和空段落等合成输入，发现草稿排序错误。示例通过固定输入与预期输出展示修复方法。</p></div>
+        <div class="challenge"><h3>演示数据 3｜合成模块规模</h3><p>以下为自拟的示例模块规模，比较演示第 1 周与第 4 周；单位为行，不对应真实仓库。</p>
+          <table><thead><tr><th>分支 / 产品</th><th>第 1 周</th><th>第 4 周</th><th>净增</th><th>增幅</th></tr></thead><tbody><tr><td>纸舟桌面模块</td><td>1,200 行</td><td>1,800 行</td><td>+600 行</td><td><em>+50%</em></td></tr><tr><td>星灯网页模块</td><td>900 行</td><td>1,350 行</td><td>+450 行</td><td><em>+50%</em></td></tr></tbody></table>
+          <p style="margin-top:8px">虚构的纸舟演示工程共 <b>2,000 行</b>，按任务引擎、阅读界面、资料适配和示例脚本分为四部分：</p>
+          <div class="bar"><div class="agent">任务引擎 800 · 40%</div><div class="chat">阅读界面 600 · 30%</div><div class="pc">资料适配 400 · 20%</div><div class="remote">示例脚本 200 · 10%</div></div>
         </div>
-        <div class="challenge"><h3>挑战 4｜编码变快了，验证成本没降，需求吞吐提升不明显</h3><p>编码时间占需求周期<span class="blue">不到 30%</span>，剩下 <em>70% 没有提效</em>；再往下拆一层：编码时间变短了，但 Bugfix 时间明显增加、Reopen 率上升，测试在为 AI Coding 兜底。</p><div class="split"><div class="a">编码 &lt;30%（已提效）</div><div class="b">其余 70%：需求、方案、联调、验证、发布 —— 尚未提效</div></div></div>
-        <div class="challenge"><h3>挑战 5｜上下文缺失 + 系统对 Agent 不友好，卡在最后一公里</h3><p>Spec、规范、领域知识没有沉淀为 AI 可读资产，Agent 每次从零理解仓库，产出质量高度依赖提问者水平，架构持续熵增；同时诺亚埋点、端的模块化、打包速度对 AI 不友好，Mock 与真机验证多为 GUI / 人工流程，Agent 难以自助闭环。</p></div>
-        <div class="subhead">4.4　目标</div><div class="goal"><div><div class="v">+30%~50%</div><div class="t">需求吞吐提升</div><div class="d">单位时间可交付需求量</div></div><div><div class="v">-30%~50%</div><div class="t">缺陷数下降</div><div class="d">交付质量稳定可控</div></div><div><div class="v">双转型</div><div class="t">组织与架构转型</div><div class="d">团队完成 Agent 转型，端与平台完成 AI 友好转型</div></div></div>
+        <div class="challenge"><h3>演示数据 4｜模拟时间分配</h3><p>虚构时间分配中，编写示例占 <em>45%</em>，资料准备与结果检查占 <em>55%</em>。这些比例仅用于展示拆分图，不是实际研发效率统计。</p><div class="split"><div class="a">示例编写 45%（合成）</div><div class="b">资料准备与检查 55%（合成）</div></div></div>
+        <div class="challenge"><h3>演示问题 5｜缺少样例说明</h3><p>虚构案例中，书目字段和草稿命名规则尚未写入示例说明。计划补充合成输入、预期结果和模拟失败记录，使演示任务可以重复运行。</p></div>
+        <div class="subhead">4.4　目标</div><div class="goal"><div><div class="v">+12%（模拟）</div><div class="t">模拟任务量目标</div><div class="d">单位时间可交付需求量</div></div><div><div class="v">-8%（模拟）</div><div class="t">模拟失败量目标</div><div class="d">交付质量稳定可控</div></div><div><div class="v">双转型</div><div class="t">示例数据与工具维护</div><div class="d">书目样例和模拟工具共同维护</div></div></div>
         <div class="subhead">4.5　策略 &amp; 规划</div>
-        <ol class="ordered"><li><b>测试左移</b>：研发是质量的第一责任人，通过优化需求质量、分层单测和 AI 测试降低 Bug 数。</li><li><b>鸿蒙转码</b>：鸿蒙版本比 Android、iOS 晚一个版本，建设可用性高的鸿蒙转码 Agent，同时考虑二级页引入 CMP。</li><li><b>明确团队的 AI Native 工作流</b>：以 AI Native 工作台和 QBoz 为基础，把 Spec、测试用例、验证作为必须项；每个需求由 Owner 把关方案与质量，各团队可做定制。</li><li><b>AI 友好的架构改造</b>：各个工程都要做 AI 友好的架构改造。</li><li><b>擅长的任务做到自动 Loop</b>：Hotfix、卡片开发、Code Review、答疑、告警与自动排查等，做到自动 Loop 并持续提升交付效果。</li><li><b>AI Native 工作台</b>：往 AI Native 工作台升级，在样板间项目试点工作台，解决多团队协作的信息共享，Agent 作为超级大脑承担项目管理和托管执行的能力。</li><li><b>集中建设 Agent 工具</b>：QBoz、知识库、验证、Mock 系统、提 Bug 工具、D2C 等。</li></ol>
-        <div class="subhead">分层建设 · AI 基建架构 <span>六层自下而上层层支撑</span></div>
+        <ol class="ordered"><li><b>示例先行</b>：先写合成书目和预期草稿，再检查检索、摘录与导出行为。</li><li><b>格式适配</b>：用两组虚构资料检查纯文本与 Markdown 导出，不涉及真实平台的发布进度。</li><li><b>统一演示步骤</b>：纸舟工坊采用资料输入、任务运行、结果检查三个步骤，每步都保留样例记录。</li><li><b>模块划分</b>：把示例索引、任务引擎和草稿存储拆开，便于逐项展示输入与输出。</li><li><b>重复任务演示</b>：在模拟环境中重复整理同一组书目，并展示任务去重与失败重试。</li><li><b>演示工作台</b>：在一个窗口展示阅读清单、任务状态和草稿预览，所有状态来自合成记录。</li><li><b>示例工具集</b>：维护纸页识别器、虚构目录库、草稿检查器和模拟日志查看器。</li></ol>
+        <div class="subhead">分层建设 · 纸舟演示模块 <span>六层自下而上层层支撑</span></div>
         <div class="stack">
-          <div class="stack-row"><div class="stack-label">场景型 LOOP Agent<small>面向高频研发场景的自主循环</small></div><div class="stack-items"><span class="chip">鸿蒙转码</span><span class="chip">Bugfix</span><span class="chip">Hotfix</span><span class="chip">二三方答疑</span><span class="chip">卡片开发</span></div></div>
-          <div class="stack-row"><div class="stack-label">业务工程基建<small>保障 AI 产出质量</small></div><div class="stack-items"><span class="chip">Code Review</span><span class="chip">知识库</span><span class="chip">Orz 验证</span><span class="chip">Bug 规范上报</span><span class="chip">ulog 日志</span></div></div>
+          <div class="stack-row"><div class="stack-label">场景型 LOOP Agent<small>面向高频研发场景的自主循环</small></div><div class="stack-items"><span class="chip">格式适配</span><span class="chip">Bugfix</span><span class="chip">Hotfix</span><span class="chip">二三方答疑</span><span class="chip">卡片开发</span></div></div>
+          <div class="stack-row"><div class="stack-label">业务工程基建<small>保障 AI 产出质量</small></div><div class="stack-items"><span class="chip">Code Review</span><span class="chip">知识库</span><span class="chip">草稿检查</span><span class="chip">Bug 规范上报</span><span class="chip">模拟日志</span></div></div>
           <div class="stack-row"><div class="stack-label">研发 Workflow<small>Spec 与 TestCase 为必须产物</small></div><div class="stack-items"><span class="chip workflow-chip">需求分析</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">Spec　必须产物</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">TestCase　必须产物</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">代码生成</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">测试验证</span><span class="workflow-arrow">→</span><span class="chip workflow-chip">UI 走查</span></div></div>
           <div class="stack-row"><div class="stack-label">AI 友好的工程架构<small>可理解、可提交、可协作</small></div><div class="stack-items"><span class="chip">Monorepo</span><span class="chip">模块化</span><span class="chip">统一规范 rules</span><span class="chip">提交门禁 Gate</span><span class="chip">模块化 agents 目录</span></div></div>
-          <div class="stack-row"><div class="stack-label">AI 友好的研发系统<small>AI 可调用、可观测</small></div><div class="stack-items"><span class="chip">超音速打包</span><span class="chip">白龙马平台</span><span class="chip">诺亚日志</span><span class="chip">CMS</span><span class="chip">Mock 系统</span><span class="chip">iTrace</span></div></div>
-          <div class="stack-row"><div class="stack-label">平台基座<small>承载统一工作方式</small></div><div class="stack-items"><span class="chip">千问宝子</span><span class="chip">AI Native 工作台</span><span class="chip">QBoz</span></div></div>
+          <div class="stack-row"><div class="stack-label">AI 友好的研发系统<small>AI 可调用、可观测</small></div><div class="stack-items"><span class="chip">示例构建器</span><span class="chip">模拟任务板</span><span class="chip">演示日志</span><span class="chip">CMS</span><span class="chip">Mock 系统</span><span class="chip">演示观测</span></div></div>
+          <div class="stack-row"><div class="stack-label">平台基座<small>承载统一工作方式</small></div><div class="stack-items"><span class="chip">纸舟助手</span><span class="chip">纸舟演示工作台</span><span class="chip">PaperDesk</span></div></div>
         </div>
-        <p class="footnote">下层为上层提供支撑，上层沉淀反哺下层；六层一起把工作项从「AI 不太擅长」搬到「AI 擅长」。</p>
+        <p class="footnote">下层为上层提供支撑，上层沉淀反哺下层；六层一起把工作项从「暂未覆盖」搬到「AI 擅长」。</p>
       </section>
 
       <section class="block" id="team">
-        <div class="block-head"><span class="block-number">五</span><h2>团队要求</h2><p>中短期看，AI 时代对人的要求更高</p></div>
-        <div class="subhead">5.1　工程师的定位</div><div class="note">前提：<b>AI 程序员跟传统程序员已经完全不一样了。</b></div>
-        <table style="margin-top:10px"><thead><tr><th>定位</th><th>说明</th></tr></thead><tbody><tr><td><b>Agent 工程师</b></td><td>建设 Agent 给外部用户使用，对标 WorkBuddy、豆包工作。</td></tr><tr><td><b>AI 程序员</b></td><td>应用 Agent、基于 Agent 交付功能；善于使用 AI，持续优化 Coding Agent 能力，构建 AI 需要的上下文，在领域技能上一专多能。</td></tr><tr><td><b>传统程序员</b></td><td>AI 参与度低，传统流程，传统技能。</td></tr></tbody></table>
+        <div class="block-head"><span class="block-number">五</span><h2>演示协作约定</h2><p>虚构角色与任务分工</p></div>
+        <div class="subhead">5.1　工程师的定位</div><div class="note">前提：<b>下方角色仅为演示分工，不对应真实人员或组织要求。</b></div>
+        <table style="margin-top:10px"><thead><tr><th>定位</th><th>说明</th></tr></thead><tbody><tr><td><b>任务设计角色</b></td><td>负责纸舟助手的演示任务和结果检查，不对应真实产品岗位。</td></tr><tr><td><b>资料编写角色</b></td><td>负责虚构书目、模拟输入和预期草稿，保持演示数据可重复使用。</td></tr><tr><td><b>页面校对角色</b></td><td>负责示例页面排版与说明文案，检查图表和目录的可读性。</td></tr></tbody></table>
         <div class="subhead">5.2　具体要求 <span>基础、转型、架构</span></div>
-        <ol class="ordered"><li><b>扎实的基础</b>：更好的判断力、架构能力、沟通能力、快速学习能力和技术基础。AI 是一个放大器，人写代码变少后，对代码的熟悉度、敏感度在下降，<em>基础不牢，构建起来的产品和工程就如空中楼阁。</em></li><li><b>全员 Agent 转型</b>：用 AI 重新设计团队和个人的核心流程，<em>新流程以 AI 为前提</em>；熟悉 Agent 运行原理，具备建设和优化 Agent 的能力。</li><li><b>全员具备架构能力</b>：运营业务组做全栈的尝试；客户端做跨端的实践，一人两端、三端。</li></ol>
+        <ol class="ordered"><li><b>资料检查</b>：确认示例书目、文件名和草稿内容都由本案例自行编写，不引用真实业务资料。</li><li><b>结果复核</b>：每次演示检查阅读清单和保存的草稿，不把模拟结果描述为真实用户效果。</li><li><b>协作分工</b>：由虚构角色林澈整理样例，许禾检查输出；角色与任务安排均为虚构。</li></ol>
       </section>
 
-      <footer class="closing"><b>总结</b><p>大模型是一场<span class="blue">智力革命</span>，是未来最大的确定性，新的产品形态、团队形态甚至社会形态都在围绕它变革。旧时代的复利已经开始下降，新时代的复利开始了。</p></footer>
+      <footer class="closing"><b>总结</b><p>本页用虚构的纸舟工坊展示文档排版、架构图和演示指标。人物、项目、数值、进展与计划均为自行编写，仅供样式与交互演示。</p></footer>
     </main>
   </div>
   <script>

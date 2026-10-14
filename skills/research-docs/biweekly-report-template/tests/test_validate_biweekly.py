@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -131,21 +132,22 @@ class BiweeklyValidatorTest(unittest.TestCase):
 
     def test_cli_works_outside_skill_directory(self) -> None:
         report = FIXTURES / "2026-07-01-to-2026-07-14-biweekly-summary.md"
-        result = subprocess.run(
-            [
-                sys.executable,
-                str(ROOT / "scripts" / "validate_biweekly.py"),
-                str(report),
-                "--source",
-                str(FIXTURES / self.sources[0]),
-                "--source",
-                str(FIXTURES / self.sources[1]),
-            ],
-            cwd=Path("/Users/zhici/work-pro/daily-report"),
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        with tempfile.TemporaryDirectory(prefix="report-validator-") as outside_dir:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts" / "validate_biweekly.py"),
+                    str(report),
+                    "--source",
+                    str(FIXTURES / self.sources[0]),
+                    "--source",
+                    str(FIXTURES / self.sources[1]),
+                ],
+                cwd=Path(outside_dir),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_skill_keeps_status_and_okr_evidence_gates(self) -> None:

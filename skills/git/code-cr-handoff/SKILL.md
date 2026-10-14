@@ -1,6 +1,6 @@
 ---
 name: code-cr-handoff
-description: Use when the user asks to open a new Alibaba Code CR/PR from a local Git branch, especially when a refs/for push would update an existing review or the user wants to complete the web form themselves.
+description: Use when the user asks to open a new Code CR/PR from a local Git branch, especially when a refs/for push would update an existing review or the user wants to complete the web form themselves.
 ---
 
 # Code CR Handoff
@@ -52,22 +52,24 @@ git rev-parse HEAD origin/<source-branch>
 
 The two SHAs must match before continuing.
 
-For an independent CR, do not push `HEAD:refs/for/<target-branch>`. Alibaba Code can reuse the current user's open review for that target and update the old CR instead of creating a new one. Standard GitLab `merge_request.create` push options may also be ignored by this Code instance.
+For an independent CR, do not push `HEAD:refs/for/<target-branch>`. Code can reuse the current user's open review for that target and update the old CR instead of creating a new one. Standard GitLab `merge_request.create` push options may also be ignored by this Code instance.
 
 Completion criterion: the named source branch exists on `origin` and points to local `HEAD`.
 
 ### 3. Build the Code creation URL
 
-Convert an SSH remote such as:
+The hosts below are fictional examples. Derive the real Git and review hosts from the user-selected repository and its authenticated web UI; never open or push to these example hosts.
+
+For a service using this review route, convert an SSH remote such as:
 
 ```text
-git@gitlab.alibaba-inc.com:<group>/<repo>.git
+git@git.example.com:<group>/<repo>.git
 ```
 
 to this URL, URL-encoding both branch values:
 
 ```text
-https://code.alibaba-inc.com/<group>/<repo>/codereview/new?from=<target-branch>&to=<source-branch>
+https://review.example.com/<group>/<repo>/codereview/new?from=<target-branch>&to=<source-branch>
 ```
 
 In Code, `from` is the target branch and `to` is the source branch. Do not trust a server-generated link that defaults `from=master`; replace it with the user's exact target.

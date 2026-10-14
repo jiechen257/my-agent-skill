@@ -3,6 +3,12 @@ set -euo pipefail
 
 CONFIG=${CODEX_CONFIG:-"$HOME/.codex/config.toml"}
 TIMEOUT=${MCP_HEALTHCHECK_TIMEOUT:-8}
+COMPARE_NO_PROXY=${MCP_HEALTHCHECK_NO_PROXY:-0}
+
+case "$COMPARE_NO_PROXY" in
+  0|1) ;;
+  *) printf 'ERROR MCP_HEALTHCHECK_NO_PROXY must be 0 or 1\n' >&2; exit 2 ;;
+esac
 
 if [ ! -f "$CONFIG" ]; then
   printf 'ERROR config missing: %s\n' "$CONFIG" >&2
@@ -112,7 +118,7 @@ else
     printf '%s %s\n' "$name" "$endpoint"
     printf '  current HEAD       %s\n' "$(curl_status head "$endpoint")"
     printf '  current initialize %s\n' "$(curl_status post "$endpoint")"
-    if [[ "$endpoint" == *"mcp.alibaba-inc.com"* ]]; then
+    if [ "$COMPARE_NO_PROXY" = "1" ]; then
       printf '  no-proxy HEAD      %s\n' "$(no_proxy_status head "$endpoint")"
       printf '  no-proxy init      %s\n' "$(no_proxy_status post "$endpoint")"
     fi

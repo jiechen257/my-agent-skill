@@ -92,7 +92,7 @@ Review 当前分支的本地变更，结合 [需求、Spec 或任务描述] 判�
 - Nano 配置和 MCP 注册
 - 生成目录及产物
 - build/preview 输出
-- 真实 QWork/千问 UI
+- 目标客户端的真实 UI
 - DevTools 日志和网络请求
 
 成功标准：
@@ -184,7 +184,7 @@ Review 当前分支的本地变更，结合 [需求、Spec 或任务描述] 判�
 ### 当前本机约束
 
 - 全局 `UserPromptSubmit` 已运行 `guard-prompt.sh`，用于安全检测并刻意保持 stdout 静默。
-- qianwen、nexview-devtools、agent-space、daily-report 等项目已有 `UserPromptSubmit`，用于注入 Trellis workflow state。
+- 使用 Trellis 的项目可通过 `UserPromptSubmit` 注入 workflow state；是否已安装应检查目标项目的本地配置。
 - 多个 matching hooks 会并行启动，新增 hook 不能阻止其他 hook 启动。
 - 修改 hook 定义后需要重新 review/trust 对应 hash。
 

@@ -33,7 +33,8 @@ COMPLETION_CLAIMS = (
 )
 EVIDENCE_MARKERS = (
     "Git",
-    "iTrace",
+    "Trace",
+    "观测",
     "日志",
     "查询",
     "测试",

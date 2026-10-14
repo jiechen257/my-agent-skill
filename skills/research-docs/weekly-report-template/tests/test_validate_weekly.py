@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -19,6 +20,21 @@ class WeeklyValidatorTest(unittest.TestCase):
     def test_valid_report(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
         self.assertEqual(MODULE.validate(report), [])
+
+    def test_completion_claim_accepts_trace_evidence_and_rejects_missing_evidence(self) -> None:
+        text = (FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md").read_text(encoding="utf-8")
+        original = "通过 Git 提交和日志验证整理预览路径与反馈体验的证据。"
+        with tempfile.TemporaryDirectory(prefix="report-evidence-") as directory:
+            report = Path(directory) / "2026-07-06-to-2026-07-12-weekly-summary.md"
+            for evidence in ("OpenTrace", "通用观测", ""):
+                with self.subTest(evidence=evidence):
+                    claim = f"已完成示例草稿，依据 {evidence} 记录。" if evidence else "已完成示例草稿。"
+                    report.write_text(text.replace(original, claim), encoding="utf-8")
+                    errors = MODULE.validate(report)
+                    if evidence:
+                        self.assertEqual(errors, [])
+                    else:
+                        self.assertTrue(any("完成性措辞" in error for error in errors))
 
     def test_rejects_report_repository_and_ambiguous_author_scope(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-daily-report-weekly-summary.md"
@@ -43,13 +59,14 @@ class WeeklyValidatorTest(unittest.TestCase):
 
     def test_cli_works_outside_skill_directory(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
-        result = subprocess.run(
-            [sys.executable, str(ROOT / "scripts" / "validate_weekly.py"), str(report)],
-            cwd=Path("/Users/zhici/work-pro/daily-report"),
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        with tempfile.TemporaryDirectory(prefix="report-validator-") as outside_dir:
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_weekly.py"), str(report)],
+                cwd=Path(outside_dir),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_rejects_empty_workflow_and_noncontinuous_markers(self) -> None:
