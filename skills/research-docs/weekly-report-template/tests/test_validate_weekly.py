@@ -17,6 +17,36 @@ SPEC.loader.exec_module(MODULE)
 
 
 class WeeklyValidatorTest(unittest.TestCase):
+    def test_combined_metrics_stay_in_main_table_with_comparison_and_analysis(self) -> None:
+        text = (FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md").read_text(encoding="utf-8")
+        text = text.replace("- 范围：产物预览与反馈体验", "- 范围：产物链路与商业会员")
+        table = (
+            "| 模块 | 目标值 | 当前达成（上期 → 本期） | 环比变化 | 分析 |\n"
+            "| --- | --- | --- | --- | --- |\n"
+            "| 产物链路 - 流量 | — | 示例上期 → 本期 | +1% | 示例分析 |\n"
+            "| 商业会员 - 流量 | — | 示例上期 → 本期 | +1% | 示例分析 |\n"
+            "| 商业会员 - 转换率 | — | 示例上期 → 本期 | +0.1pt | 阶段 UV 比值 |"
+        )
+        cases = {
+            "complete": (table, True),
+            "prose_only": (table.split("| 商业会员 - 流量")[0] + "\n\n  b. 商业会员流量与转换率见说明。", False),
+            "separate_table": (table.replace("| 商业会员 - 流量", "\n\n" + "\n".join(table.splitlines()[:2]) + "\n| 商业会员 - 流量"), False),
+            "missing_conversion": ("\n".join(table.splitlines()[:-1]), False),
+            "missing_change": (table.replace("+0.1pt", ""), False),
+            "missing_analysis": (table.replace("阶段 UV 比值", ""), False),
+            "explicit_gap": (table.replace("示例上期 → 本期", "数据暂缺，等待补取").replace("+1%", "基线暂缺"), True),
+        }
+        with tempfile.TemporaryDirectory(prefix="report-main-table-") as directory:
+            report = Path(directory) / "2026-07-06-to-2026-07-12-weekly-summary.md"
+            for name, (content, valid) in cases.items():
+                with self.subTest(name=name):
+                    report.write_text(text.replace("3. 周进展：", "\n" + content + "\n\n3. 周进展："), encoding="utf-8")
+                    errors = MODULE.validate(report)
+                    if valid:
+                        self.assertEqual(errors, [])
+                    else:
+                        self.assertTrue(any("主表" in error for error in errors), errors)
+
     def test_valid_report(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
         self.assertEqual(MODULE.validate(report), [])

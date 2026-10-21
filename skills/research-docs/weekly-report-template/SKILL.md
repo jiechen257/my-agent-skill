@@ -62,7 +62,7 @@ Use user-provided DingTalk, Yuque, local Markdown, chat summaries, or Chronicle 
 Merge related work across repositories into workstreams instead of listing repositories or commits. Allow one or more evidence-backed workstreams; never invent “其他” or extra themes to reach a target count. Put the narrative into the five required sections:
 
 1. `阶段目标`: state the quality or delivery target for the period.
-2. `数据看板 & 分析`: state the denominator, PV/UV, success or failure rate, trend, top causes, and evidence limits when metrics are available.
+2. `数据看板 & 分析`: state the denominator, PV/UV, success or failure rate, trend, top causes, and evidence limits when metrics are available. When both artifact-chain and commercial membership metrics are in scope, put both in the same main table using the columns specified in the format reference. Include `商业会员 - 流量` and `商业会员 - 转换率`, with previous/current values, signed changes, and analysis; prose outside the table cannot replace either row. Use `商业会员` consistently as the report's display name.
 3. `周进展`: organize by concrete features, requirement points, bug fixes, integrations, or validation deliverables actually worked on during the period. Prefer `【事项】进度：已完成/开发中/联调中/待验证` followed by the actions and verified results from that week. Do not use pure metric trends, log analysis, future schedules, or failure-rate movements as progress items.
 4. `遗留问题`: list unresolved defects, dependencies, and evidence gaps; write an explicit no-new-issues statement when empty.
 5. `本周目标与计划`: name the concrete features, requirement points, bug fixes, integrations, release actions, or validations to execute in the current week. Every item must contain an object, an action, and a verifiable result; “保持指标稳定” or “跟进异常” alone is not a plan.
@@ -90,4 +90,4 @@ python3 "$SKILL_DIR/scripts/validate_weekly.py" <report-file>
 
 Fix every reported error before claiming completion.
 
-**Complete when:** the validator exits zero, the saved path matches the requested output mode, and the report contains only evidence-backed repositories and claims.
+**Complete when:** the validator exits zero, the saved path matches the requested output mode, and the report contains only evidence-backed repositories and claims. If both artifact-chain and commercial membership metrics are in scope, verify that the same main table retains both commercial membership rows and their comparisons after every edit.

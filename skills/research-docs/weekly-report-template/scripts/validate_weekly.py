@@ -146,6 +146,33 @@ def _validate_completion_claims(lines: list[str], top: list[tuple[int, int, str]
         errors.append("完成性措辞必须在同一条目中带有 Git、日志、指标或验证等证据标记")
 
 
+def _validate_combined_metrics_table(
+    lines: list[str], top: list[tuple[int, int, str]], scope: str, errors: list[str]
+) -> None:
+    if [number for _, number, _ in top] != [1, 2, 3, 4, 5]:
+        return
+    metrics = lines[top[1][0] + 1 : top[2][0]]
+    context = scope + "\n" + "\n".join(metrics)
+    if "产物" not in context or "商业会员" not in context:
+        return
+    table: list[list[str]] = []
+    for line in metrics:
+        if line.strip().startswith("|"):
+            table.append([cell.strip() for cell in line.strip().strip("|").split("|")])
+        elif table:
+            break
+    header = ["模块", "目标值", "当前达成（上期 → 本期）", "环比变化", "分析"]
+    if not table or table[0] != header:
+        errors.append("产物链路与商业会员必须使用包含上期、本期、环比变化和分析列的同一主表")
+        return
+    for label in ("产物链路 - 流量", "商业会员 - 流量", "商业会员 - 转换率"):
+        row = next((row for row in table[2:] if row and row[0] == label), None)
+        if row is None:
+            errors.append(f"数据主表缺少 {label}，表后段落或其他表格不能替代")
+        elif len(row) != 5 or any(not row[index] for index in (2, 3, 4)):
+            errors.append(f"数据主表 {label} 必须保留上期/本期、环比变化和分析；暂缺时标明缺口")
+
+
 def validate(path: Path) -> list[str]:
     errors: list[str] = []
     if not path.is_file():
@@ -191,6 +218,7 @@ def validate(path: Path) -> list[str]:
 
     top = _validate_body(lines, errors)
     _validate_completion_claims(lines, top, errors)
+    _validate_combined_metrics_table(lines, top, values["范围"] or "", errors)
     return errors
 
 
