@@ -7,4 +7,6 @@ description: "Compare a private SaaS company ARR valuation multiples across fund
 
 Repository routing wrapper for `himself65/finance-skills` (`saas-valuation-compression`).
 
-Read `../../../vendor/skills/himself65/finance-skills/plugins/market-analysis/skills/saas-valuation-compression/SKILL.md` completely and follow it. Resolve upstream bundled files from `../../../vendor/skills/himself65/finance-skills/plugins/market-analysis/skills/saas-valuation-compression/`, relative to this wrapper. Keep upstream snapshots unchanged; local compatibility overrides belong here.
+Read [.upstream/SKILL.md](.upstream/SKILL.md) completely and follow it; local rules below take precedence.
+
+Resolve upstream references, scripts and assets under `.upstream/` relative to this installed skill directory. Resolve wrapper-local files beside this file. Pass the full installed path to file tools; resolve symlinks first when a canonical path is needed. Keep upstream snapshots unchanged; local overrides belong in this wrapper.

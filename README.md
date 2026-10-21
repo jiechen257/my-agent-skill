@@ -42,7 +42,8 @@ my-agent-skill/
 - `templates/` 只放可复用骨架，不作为 active skill。
 - `prompts/` 存放个人收藏的 prompt 模板，供手动复制使用，不参与 install 或 registry。
 - `rules/` 存放各客户端全局规则源文件，手动部署到目标位置；用 `~/.agents/rules-sync/check-drift.sh` 检查源与实际副本。
-- `scripts/audit-global-skills.sh` 同时检查 registry 安装、全局失效链接，以及 Codex 个人/共享入口的重复名称。
+- `scripts/audit-global-skills.sh` 检查 registry 安装、全局失效链接、Codex 个人/共享入口的重复名称，并从安装入口读取正文及递归引用的资源。
+- wrapper 统一通过目录内隐藏的 `.upstream/` 相对软链接访问上游，避免 Codex 把上游正文重复发现为独立 skill：正文为 `.upstream/SKILL.md`，上游资源相对于 `.upstream/`，本地覆盖文件相对于 wrapper。传给文件工具时保留完整安装路径；需要规范路径时先解析软链接，避免手动化简 `../../../vendor/...`。
 - domain 只表达稳定分类，避免把临时项目名放到 domain 层。
 - skill 文件里不写密钥、token、机器专属凭证。
 - `vendor/skills/` 下的源快照由 `sync-vendored-skills.sh` 从外部源同步，不应手动修改。
@@ -57,6 +58,23 @@ git clone <repo> && cd my-agent-skill && ./install.sh
 ```
 
 脚本会将 `registry/skills.yaml` 中的 active skill 符号链接到 `~/.claude/skills/` 和 `~/.codex/skills/`（如果 `~/.codex/` 存在），并清理指向本仓库但已不在 active registry 中的旧链接。
+
+安装或修改 wrapper 后运行：
+
+```bash
+./scripts/audit-global-skills.sh
+python3 -m unittest discover -s scripts/tests -v
+```
+
+解析器依赖声明在 `scripts/requirements-audit.txt`。当前 Python 未安装时，可用 `uv run --with-requirements scripts/requirements-audit.txt ./scripts/audit-global-skills.sh` 隔离运行审计；测试同样可通过 `uv run --with-requirements scripts/requirements-audit.txt python -m unittest discover -s scripts/tests -v` 运行。
+
+引用检查也可单独运行 `python3 scripts/audit-skill-references.py`，默认递归发现 `~/.codex/skills/` 和 `~/.agents/skills/` 下的入口，跳过隐藏目录（包括 `.upstream/`），并按真实目录防止软链接循环。缺失的默认目录会跳过，显式 `--root` 指定的目录缺失仍报错；可用 `--entry` 单独验证一个入口。
+
+可见软链接的断链在任意深度都会导致审计失败，包括未被正文直接引用的嵌套链接。隐藏目录仍不参与发现；wrapper 正文显式引用的 `.upstream/` 则通过引用链检查。
+
+检查使用 `markdown-it-py` 的 CommonMark 规则识别链接，再实际打开正文及递归依赖；支持标题、括号文件名，以及完整／折叠／简写引用式写法。行内 `scripts/...`、`references/...` 等资源路径相对于文档所属的最近一个真实 `SKILL.md` 目录，Markdown 链接和显式 `./`、`../` 则相对于当前文档。忽略代码块示例、URL、占位符和行内输出目录。它验证文件可读性，不执行资源脚本，也不代表业务流程通过；诊断行号定位到链接所在的段落或列表项首行。
+
+行内代码中的资源路径按字面文件名读取，保留 `%`、`#`、`?`、`=` 等字符；含空白的行内命令示例不作为资源路径。只有 Markdown 链接按 URI 规则去除查询和片段并解码一次，再识别 `<name>`、`{name}`、`${name}` 占位符及 `*` 通配模式。文件级软链接的相对引用保留其逻辑所在目录，去重同时考虑真实文件、所属 skill、相对引用基准和是否按 Markdown 解析，因此不同别名不会相互漏查。
 
 安装后无需按项目切换 profile：
 

@@ -38,10 +38,6 @@ check_link() {
 
   local dest="$root/$name"
   if [ ! -e "$target/SKILL.md" ]; then
-    if [ -d "$target" ]; then
-      printf 'SKIP %-6s %-28s sync source: %s\n' "$manager" "$name" "$target"
-      return 0
-    fi
     printf 'FAIL %-6s %-28s target missing: %s\n' "$manager" "$name" "$target/SKILL.md"
     return 1
   fi
@@ -76,9 +72,12 @@ done < <(list_skills)
 
 # The registry covers repository-owned skills; other installers also maintain
 # global discovery directories. Catch dangling links without following caches.
-python3 - <<'PY_AUDIT' || status=1
+python3 - "$SCRIPT_DIR/audit-skill-references.py" <<'PY_AUDIT' || status=1
 from pathlib import Path
 import re
+import runpy
+import sys
+discover_entries = runpy.run_path(sys.argv[1])["discover_entries"]
 home = Path.home()
 roots = [home / relative for relative in (
     ".codex/skills", ".agents/skills", ".claude/skills", ".cursor/skills",
@@ -101,9 +100,8 @@ names = {}
 for root in roots[:2]:
     if not root.is_dir():
         continue
-    for entry in root.iterdir():
-        skill = entry / "SKILL.md"
-        if entry.name.startswith(".") or not skill.is_file():
+    for skill in discover_entries(root):
+        if not skill.is_file():
             continue
         text = skill.read_text(encoding="utf-8")
         match = re.search(r"^name:\s*[\"']?([^\"'\n]+)", text, re.MULTILINE)
@@ -115,5 +113,9 @@ for name, files in names.items():
         failed = True
 raise SystemExit(1 if failed else 0)
 PY_AUDIT
+
+# Exercise the paths Codex actually receives, including chained shared links,
+# wrapper bodies and recursively linked references/scripts/assets.
+python3 "$SCRIPT_DIR/audit-skill-references.py" || status=1
 
 exit "$status"

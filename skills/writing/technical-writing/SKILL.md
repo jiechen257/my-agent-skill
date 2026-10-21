@@ -8,6 +8,6 @@ description: "Use when drafting or revising internal technical design docs, revi
 This is the repository routing wrapper for the upstream skill
 `luoling8192/technical-writing`.
 
-Read `../../../vendor/skills/luoling8192/technical-writing/SKILL.md` relative to this file completely and follow it.
+Read [.upstream/SKILL.md](.upstream/SKILL.md) completely and follow it; local rules below take precedence.
 
-Resolve bundled files from `../../../vendor/skills/luoling8192/technical-writing/`.
+Resolve upstream references, scripts and assets under `.upstream/` relative to this installed skill directory. Resolve wrapper-local files beside this file. Pass the full installed path to file tools; resolve symlinks first when a canonical path is needed. Keep upstream snapshots unchanged; local overrides belong in this wrapper.

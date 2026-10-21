@@ -5,6 +5,6 @@ description: "Compact the current conversation into a handoff document for anoth
 
 # Handoff
 
-Read `../../../vendor/skills/mattpocock/handoff/SKILL.md` relative to this file and follow it.
+Read [.upstream/SKILL.md](.upstream/SKILL.md) completely and follow it; local rules below take precedence.
 
-Resolve relative references, scripts, or assets from `../../../vendor/skills/mattpocock/handoff/`.
+Resolve upstream references, scripts and assets under `.upstream/` relative to this installed skill directory. Resolve wrapper-local files beside this file. Pass the full installed path to file tools; resolve symlinks first when a canonical path is needed. Keep upstream snapshots unchanged; local overrides belong in this wrapper.
