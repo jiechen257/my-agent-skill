@@ -19,7 +19,6 @@ my-agent-skill/
 │   ├── audit-global-skills.sh
 │   └── sync-vendored-skills.sh
 ├── skills/
-│   ├── finance/           # Finance Skills 本地兼容 wrapper
 │   ├── mattpocock/         # active Matt Pocock engineering/productivity wrapper
 │   ├── harness/           # active agent / MCP 健康检查
 │   ├── research-docs/     # active 报告和研究沉淀辅助
@@ -86,7 +85,6 @@ python3 -m unittest discover -s scripts/tests -v
 
 | Domain | 用途 |
 | --- | --- |
-| `finance` | 金融分析、数据读取和可视化 wrapper，安装说明见 [Finance Skills](docs/finance-skills-installation.md) |
 | `mattpocock` | Matt Pocock engineering/productivity wrapper |
 | `harness` | 本地维护的 agent / MCP 健康检查 |
 | `research-docs` | 本地维护的报告和研究沉淀辅助 |

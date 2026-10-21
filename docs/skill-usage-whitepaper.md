@@ -42,12 +42,11 @@ Matt Pocock wrapper 当前只打开 `codex: true`，避免本次 Codex 重构顺
 
 ## 默认发现与手动调用
 
-2026-10-09 精简入口后，Codex 的仓库安装面为 59 个 skill：30 个允许自动匹配，29 个仅允许手动调用。
+2026-10-21 移除 finance 域后，Codex 的仓库安装面为 35 个 skill：28 个允许自动匹配，7 个仅允许手动调用。
 
-- 已删除 active 入口：`finance-skill-creator`、`generative-ui`、`colawd-ui-style`。金融类上游镜像保留为同步来源。
+- 已删除 active 入口：finance 域全部 24 个技能，以及此前移除的 `finance-skill-creator`、`generative-ui`、`colawd-ui-style`。金融类上游镜像仍仅保留为同步来源，不参与安装或发现。
 - 已停用安装：`hone`、`ask-matt`，保留仓库文件；启用前先核对用途，`ask-matt` 还需要修正上游路由。
 - 仅手动调用：`teach`、`forward-deployed-engineer`、`triage`、`improve-codebase-architecture`、`commit-daily-summary`、`project-daily-summary`、`research-note-wrap`。
-- 金融类：`tradingview-mcp`、`sepa-strategy` 允许自动匹配，其余 22 个仅手动调用。
 
 手动入口保留安装链接，并在 wrapper 的 `agents/openai.yaml` 中设置 `policy.allow_implicit_invocation: false`。在 Codex 输入 `$skill-name` 仍可调用；该策略不控制 Claude 的自动匹配。
 
