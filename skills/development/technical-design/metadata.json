@@ -11,7 +11,7 @@
         {
             "trigger": "/technical-design-draft",
             "description": "Draft Arch",
-            "template": "架构方案起草: 我需要为[业务需求]设计一套高可用的系统架构,请参考 references/guide.md 中的架构设计示例,提供组件选型、核心拓扑及异常容灾方案。",
+            "template": "架构方案起草: 我需要为[业务需求]设计一套高可用的系统架构,请参考 references/examples/architecture-sample.md,提供组件选型、核心拓扑及异常容灾方案。",
             "parameters": {
                 "architecture": {
                     "description": "架构类型",
@@ -74,5 +74,21 @@
                 }
             }
         }
-    ]
+    ],
+    "upstream": {
+        "repository": "https://github.com/TaylorChen/super-skills",
+        "ref": "master",
+        "commit": "39c241820a7f0e378f2eb52b887ea44a78242f6e",
+        "license": "MIT",
+        "bundled_resources": {
+            "resources/examples/technical-design/architecture-sample.md": "references/examples/architecture-sample.md",
+            "CURSOR.md": "references/tools/CURSOR.md",
+            "TRAE.md": "references/tools/TRAE.md",
+            "ANTIGRAVITY.md": "references/tools/ANTIGRAVITY.md",
+            "CODEX.md": "references/tools/CODEX.md"
+        },
+        "missing_resources": [
+            "CLAUDE.md"
+        ]
+    }
 }

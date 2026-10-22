@@ -56,7 +56,7 @@ graph TD
 - **database-schema**, **api-design**, **deployment-guide**
 
 ## 示例
-- [架构设计示例](references/guide.md#2-架构设计)（随 skill 附带的指南）
+- [architecture-sample.md](references/examples/architecture-sample.md)（上游原始架构示例）
 
 ## 检查清单
 - [ ] 设计满足吞吐量及响应时延要求
@@ -222,6 +222,14 @@ A: 基于业务场景和用户体验，参考业界标准，制定具体的性�
 
 通过遵循以上原则和实施建议，我们可以确保 AI 工具能够有效使用技能，发挥最大作用，为用户提供高质量的服务。
 
-## 宿主工具
+## AI 工具参考
 
-本 skill 使用目录内附带的规则和指南。原始仓库中的 Claude、Cursor、Trae、Antigravity 和 Codex 工具指南未随包提供，不作为本 skill 的依赖；调用方式以当前宿主工具为准。
+以下工具指南保留上游原文，仅在需要对应工具的使用说明时读取。实际可用命令和加载方式以当前宿主工具为准。
+
+- Claude：上游当前版本及可获取的历史中均未提供 `CLAUDE.md`，不保留悬空链接。
+- [Cursor 使用指南](references/tools/CURSOR.md)
+- [Trae 使用指南](references/tools/TRAE.md)
+- [Antigravity 使用指南](references/tools/ANTIGRAVITY.md)
+- [Codex 使用指南](references/tools/CODEX.md)
+
+来源：[TaylorChen/super-skills](https://github.com/TaylorChen/super-skills/tree/39c241820a7f0e378f2eb52b887ea44a78242f6e)。原始资源以 MIT 许可证分发，见 [LICENSE](LICENSE)；文件对应关系记录在 `metadata.json` 中。
