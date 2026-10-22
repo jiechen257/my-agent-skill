@@ -87,8 +87,8 @@ skills:
     claude: true
     source_type: local
 
-  - name: technical-writing
-    path: skills/writing/technical-writing
+  - name: technical-design
+    path: skills/development/technical-design
     kind: repo-managed
     codex: true
     claude: true
