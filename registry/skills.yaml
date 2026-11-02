@@ -10,6 +10,13 @@
 # - git: clone source_url and copy source_subdir
 skills:
   # === active repo-managed skills ===
+  - name: unslop
+    path: skills/design/unslop
+    kind: repo-managed
+    codex: true
+    claude: false
+    source_type: local
+
   - name: mcp-healthcheck
     path: skills/harness/mcp-healthcheck
     kind: repo-managed
@@ -272,6 +279,16 @@ skills:
     source_type: local
 
   # === vendored source snapshots; synced but not installed directly ===
+  - name: source-unslop
+    path: vendor/skills/heydamir/unslop
+    kind: vendored
+    codex: false
+    claude: false
+    source_type: git
+    source_url: https://github.com/heydamir/unslop.git
+    source_ref: main
+    source_subdir: skills/unslop
+
   - name: source-finance-skills
     path: vendor/skills/himself65/finance-skills
     kind: vendored
