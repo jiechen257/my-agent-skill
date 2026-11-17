@@ -18,6 +18,17 @@ TOP_LABELS = (
     "遗留问题",
     "本周目标与计划",
 )
+PERSONAL_TOP_LABELS = (
+    "阶段目标",
+    "业务 & 研发核心指标数据",
+    "与 OKR 关联的目标进展",
+    "周进展",
+    "问题与风险",
+    "周目标与计划",
+)
+PERSONAL_METRICS = ("Agent 任务交付成功率", "Query 分析问题回收情况", "无效工具调用比例")
+PERSONAL_PROGRESS = ("录音纪要", "Query 抽检平台", "其他")
+PERSONAL_PLANS = ("Query 分析与问题治理", "夸克会议纪要需求")
 ROMAN = ("ⅰ", "ⅱ", "ⅲ", "ⅳ", "ⅴ", "ⅵ", "ⅶ", "ⅷ", "ⅸ", "ⅹ")
 COMPLETION_CLAIMS = (
     "已完成",
@@ -173,11 +184,113 @@ def _validate_combined_metrics_table(
             errors.append(f"数据主表 {label} 必须保留上期/本期、环比变化和分析；暂缺时标明缺口")
 
 
-def validate(path: Path) -> list[str]:
+def _validate_period_and_filename(path: Path, period: str | None, errors: list[str]) -> None:
+    report_period = _period(period)
+    if not report_period:
+        errors.append("周期必须使用 YYYY-MM-DD 至 YYYY-MM-DD 的有效闭区间")
+    elif report_period[0] > report_period[1]:
+        errors.append("周期开始日期不能晚于结束日期")
+
+    filename = FILENAME_RE.fullmatch(path.name)
+    if not filename:
+        errors.append("文件名必须是 <start>-to-<end>[-scope]-weekly-summary.md")
+    elif period and period != f"{filename.group(1)} 至 {filename.group(2)}":
+        errors.append("文件名日期必须与周期元信息一致")
+
+
+def _table_rows(lines: list[str]) -> list[list[str]]:
+    return [
+        [cell.strip() for cell in re.split(r"(?<!\\)\|", line.strip()[1:-1])]
+        for line in lines
+        if line.strip().startswith("|") and line.strip().endswith("|")
+    ]
+
+
+def _check_data_rows(
+    rows: list[list[str]], labels: tuple[str, ...], columns: int, section: str, errors: list[str],
+) -> None:
+    if len(rows) != len(labels) + 2 or any(
+        len(row) != columns or not all(row) for row in rows
+    ):
+        errors.append(f"{section}必须保留完整表头及 {len(labels)} 行数据，缺失时标明缺口")
+        return
+    if not all(re.fullmatch(r":?-{3,}:?", cell) for cell in rows[1]):
+        errors.append(f"{section}表格分隔行无效")
+    names = [re.sub(r"[（(].*$", "", row[0].replace("**", "")).strip() for row in rows[2:]]
+    if names != list(labels):
+        errors.append(f"{section}的行名和顺序应为 {'、'.join(labels)}")
+
+
+def _validate_personal(path: Path, text: str) -> list[str]:
+    errors: list[str] = []
+    lines = text.splitlines()
+    headings = [line for line in lines if re.match(r"^#{1,6}\s", line)]
+    first_line = next((line for line in lines if line.strip()), "")
+    if headings != [first_line] or not re.fullmatch(r"# 之瓷周报(?:｜.+)?", first_line):
+        errors.append("个人周报应以 # 之瓷周报 开头，可用 ｜ 加主题")
+    period = re.search(r"^\*\*统计周期：\*\*\s*(\d{4}-\d{2}-\d{2} 至 \d{4}-\d{2}-\d{2})", text, re.M)
+    _validate_period_and_filename(path, period.group(1) if period else None, errors)
+
+    top = [
+        (i, number, label)
+        for i, line in enumerate(lines)
+        if (match := re.fullmatch(r"(\d+)\. \*\*(.+?)\*\*", line))
+        for number, label in [match.groups()]
+    ]
+    expected = [(str(i), label) for i, label in enumerate(PERSONAL_TOP_LABELS, start=1)]
+    if [(number, label) for _, number, label in top] != expected or sum(
+        bool(re.match(r"^\d+\.\s", line)) for line in lines
+    ) != len(expected):
+        errors.append("个人周报必须依次包含六个章节：" + "、".join(PERSONAL_TOP_LABELS))
+        return errors
+
+    sections = {}
+    for pos, (start, _, label) in enumerate(top):
+        end = top[pos + 1][0] if pos + 1 < len(top) else len(lines)
+        sections[label] = lines[start + 1:end]
+        if not any(line.strip() for line in sections[label]):
+            errors.append(f"{label}不能为空")
+
+    metrics = _table_rows(sections["业务 & 研发核心指标数据"])
+    if not metrics or metrics[0] != ["指标", "OKR 目标", "正式基线", "本期回收与分析"]:
+        errors.append("指标表必须包含指标、OKR 目标、正式基线、本期回收与分析")
+    _check_data_rows(metrics, PERSONAL_METRICS, 4, "指标表", errors)
+
+    progress = sections["周进展"]
+    groups = [
+        (i, match.group(1), match.group(2))
+        for i, line in enumerate(progress)
+        if (match := re.match(r"^   (\d+)\. \*\*【([^】]+)】", line))
+    ]
+    if [(number, label) for _, number, label in groups] != [
+        (str(i), label) for i, label in enumerate(PERSONAL_PROGRESS, start=1)
+    ] or sum(bool(re.match(r"^   \d+\.\s", line)) for line in progress) != len(PERSONAL_PROGRESS):
+        errors.append("周进展必须依次包含录音纪要、Query 抽检平台、其他")
+    for pos, (start, _, label) in enumerate(groups):
+        end = groups[pos + 1][0] if pos + 1 < len(groups) else len(progress)
+        if not any(re.match(r"^      1\.\s+\S", line) for line in progress[start + 1:end]):
+            errors.append(f"周进展中的{label}至少应有一条说明")
+
+    plans = _table_rows(sections["周目标与计划"])
+    if (
+        not plans or len(plans[0]) != 3 or plans[0][0] != "核心目标"
+        or not re.fullmatch(r"本周（\d{1,2} 月 \d{1,2} 日当周）", plans[0][1])
+        or not re.fullmatch(r"下周（\d{1,2} 月 \d{1,2} 日当周）", plans[0][2])
+    ):
+        errors.append("计划表必须分为核心目标、本周（M 月 D 日当周）、下周（M 月 D 日当周）")
+    _check_data_rows(plans, PERSONAL_PLANS, 3, "计划表", errors)
+    return errors
+
+
+def validate(path: Path, *, report_format: str = "personal") -> list[str]:
     errors: list[str] = []
     if not path.is_file():
         return [f"文件不存在：{path}"]
     text = path.read_text(encoding="utf-8")
+    if report_format == "personal":
+        return _validate_personal(path, text)
+    if report_format != "general":
+        raise ValueError(f"Unknown weekly report format: {report_format}")
     lines = text.splitlines()
     nonempty = [line for line in lines if line.strip()]
 
@@ -202,19 +315,7 @@ def validate(path: Path) -> list[str]:
         if re.search(r"他人|非本人|未按本人|未过滤|不区分作者|全部作者|混入", values["统计口径"]):
             errors.append("Git 统计口径包含他人提交或作者过滤冲突表述")
 
-    report_period = _period(values["周期"])
-    if values["周期"] and not report_period:
-        errors.append("周期必须使用 YYYY-MM-DD 至 YYYY-MM-DD 的有效闭区间")
-    elif report_period and report_period[0] > report_period[1]:
-        errors.append("周期开始日期不能晚于结束日期")
-
-    filename = FILENAME_RE.fullmatch(path.name)
-    if not filename:
-        errors.append("文件名必须是 <start>-to-<end>[-scope]-weekly-summary.md")
-    elif report_period:
-        filename_period = (date.fromisoformat(filename.group(1)), date.fromisoformat(filename.group(2)))
-        if filename_period != report_period:
-            errors.append("文件名日期必须与周期元信息一致")
+    _validate_period_and_filename(path, values["周期"], errors)
 
     top = _validate_body(lines, errors)
     _validate_completion_claims(lines, top, errors)
@@ -225,8 +326,9 @@ def validate(path: Path) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", type=Path, help="weekly Markdown file to validate")
+    parser.add_argument("--format", choices=("personal", "general"), default="personal")
     args = parser.parse_args(argv)
-    errors = validate(args.report)
+    errors = validate(args.report, report_format=args.format)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)

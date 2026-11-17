@@ -1,7 +1,7 @@
 interface:
   display_name: "周报整理"
-  short_description: "基于本人证据整理功能进展、Bug 修复与本周计划"
-  default_prompt: "Use $weekly-report-template to generate an evidence-bounded weekly report whose dashboard contains metrics, weekly progress contains delivered features, requirements, and bug fixes, and current-week plans contain concrete sourced work items."
+  short_description: "按 OKR 核对三项指标，整理三块进展与本周、下周计划"
+  default_prompt: "用 $weekly-report-template 生成我的上周周报，按 OKR 核对三项指标，整理三块进展和本周、下周计划。"
 
 policy:
   allow_implicit_invocation: true

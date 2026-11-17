@@ -1,6 +1,6 @@
 # 周报格式唯一规范
 
-本文件是 `weekly-report-template` 的格式唯一来源。它只规定最终产物，不负责采集证据。
+本文件规定 `weekly-report-template` 的通用报告格式。之瓷的默认格式见 [之瓷周报格式](personal-weekly-format.md)。
 
 ## 固定结构
 

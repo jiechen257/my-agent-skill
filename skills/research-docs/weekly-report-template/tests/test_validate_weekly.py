@@ -16,6 +16,48 @@ assert SPEC.loader
 SPEC.loader.exec_module(MODULE)
 
 
+class PersonalWeeklyValidatorTest(unittest.TestCase):
+    report = FIXTURES / "2026-07-07-to-2026-07-13-personal-weekly-summary.md"
+
+    def test_personal_report_is_cli_default(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="report-validator-") as outside_dir:
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "validate_weekly.py"), str(self.report)],
+                cwd=Path(outside_dir),
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_personal_report_enforces_requested_structure(self) -> None:
+        original = self.report.read_text(encoding="utf-8")
+        cases = {
+            "extra_metric": (
+                "本期暂无同口径复测 |",
+                "本期暂无同口径复测 |\n   | 预览容器 | — | — | — |",
+                "指标表",
+            ),
+            "empty_baseline": ("尚未建立", "", "指标表"),
+            "missing_progress_group": ("【其他】", "【发布】", "周进展"),
+            "missing_next_week": ("下周（7 月 20 日当周）", "备注", "计划表"),
+            "missing_plan_cell": ("回收样本并核对复验结果。", "", "计划表"),
+            "filename_period_mismatch": ("至 2026-07-13", "至 2026-07-14", "文件名日期"),
+        }
+        with tempfile.TemporaryDirectory(prefix="personal-weekly-") as directory:
+            report = Path(directory) / self.report.name
+            for name, (before, after, expected) in cases.items():
+                with self.subTest(name=name):
+                    report.write_text(original.replace(before, after), encoding="utf-8")
+                    errors = MODULE.validate(report)
+                    self.assertTrue(any(expected in error for error in errors), errors)
+
+    def test_general_report_requires_explicit_format(self) -> None:
+        report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
+        self.assertTrue(MODULE.validate(report))
+        self.assertEqual(MODULE.validate(report, report_format="general"), [])
+
+
 class WeeklyValidatorTest(unittest.TestCase):
     def test_combined_metrics_stay_in_main_table_with_comparison_and_analysis(self) -> None:
         text = (FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md").read_text(encoding="utf-8")
@@ -41,7 +83,7 @@ class WeeklyValidatorTest(unittest.TestCase):
             for name, (content, valid) in cases.items():
                 with self.subTest(name=name):
                     report.write_text(text.replace("3. 周进展：", "\n" + content + "\n\n3. 周进展："), encoding="utf-8")
-                    errors = MODULE.validate(report)
+                    errors = MODULE.validate(report, report_format="general")
                     if valid:
                         self.assertEqual(errors, [])
                     else:
@@ -49,7 +91,7 @@ class WeeklyValidatorTest(unittest.TestCase):
 
     def test_valid_report(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
-        self.assertEqual(MODULE.validate(report), [])
+        self.assertEqual(MODULE.validate(report, report_format="general"), [])
 
     def test_completion_claim_accepts_trace_evidence_and_rejects_missing_evidence(self) -> None:
         text = (FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md").read_text(encoding="utf-8")
@@ -60,7 +102,7 @@ class WeeklyValidatorTest(unittest.TestCase):
                 with self.subTest(evidence=evidence):
                     claim = f"已完成示例草稿，依据 {evidence} 记录。" if evidence else "已完成示例草稿。"
                     report.write_text(text.replace(original, claim), encoding="utf-8")
-                    errors = MODULE.validate(report)
+                    errors = MODULE.validate(report, report_format="general")
                     if evidence:
                         self.assertEqual(errors, [])
                     else:
@@ -68,30 +110,30 @@ class WeeklyValidatorTest(unittest.TestCase):
 
     def test_rejects_report_repository_and_ambiguous_author_scope(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-daily-report-weekly-summary.md"
-        errors = MODULE.validate(report)
+        errors = MODULE.validate(report, report_format="general")
         self.assertTrue(any("daily-report" in error for error in errors))
         self.assertTrue(any("他人提交" in error for error in errors))
 
     def test_rejects_hyphen_only_filename_suffix(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12----weekly-summary.md"
-        errors = MODULE.validate(report)
+        errors = MODULE.validate(report, report_format="general")
         self.assertTrue(any("文件名" in error for error in errors))
 
     def test_rejects_legacy_four_section_format(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-legacy-weekly-summary.md"
-        errors = MODULE.validate(report)
+        errors = MODULE.validate(report, report_format="general")
         self.assertTrue(any("四段式" in error or "1. 到 5." in error for error in errors))
 
     def test_rejects_period_filename_mismatch(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-13-weekly-summary.md"
-        errors = MODULE.validate(report)
+        errors = MODULE.validate(report, report_format="general")
         self.assertTrue(any("文件名日期" in error for error in errors))
 
     def test_cli_works_outside_skill_directory(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-weekly-summary.md"
         with tempfile.TemporaryDirectory(prefix="report-validator-") as outside_dir:
             result = subprocess.run(
-                [sys.executable, str(ROOT / "scripts" / "validate_weekly.py"), str(report)],
+                [sys.executable, str(ROOT / "scripts" / "validate_weekly.py"), "--format", "general", str(report)],
                 cwd=Path(outside_dir),
                 capture_output=True,
                 text=True,
@@ -101,7 +143,7 @@ class WeeklyValidatorTest(unittest.TestCase):
 
     def test_rejects_empty_workflow_and_noncontinuous_markers(self) -> None:
         report = FIXTURES / "2026-07-06-to-2026-07-12-broken-weekly-summary.md"
-        errors = MODULE.validate(report)
+        errors = MODULE.validate(report, report_format="general")
         self.assertTrue(any("字母列表" in error for error in errors))
         self.assertTrue(any("不能为空" in error for error in errors))
         self.assertTrue(any("Unicode" in error for error in errors))
