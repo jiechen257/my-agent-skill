@@ -10,8 +10,15 @@
 # - git: clone source_url and copy source_subdir
 skills:
   # === active repo-managed skills ===
-  - name: unslop
-    path: skills/design/unslop
+  - name: frontend-design
+    path: skills/design/frontend-design
+    kind: repo-managed
+    codex: true
+    claude: true
+    source_type: local
+
+  - name: eli5
+    path: skills/eli5
     kind: repo-managed
     codex: true
     claude: false
@@ -71,6 +78,13 @@ skills:
     kind: repo-managed
     codex: true
     claude: true
+    source_type: local
+
+  - name: x-market-watchlist
+    path: skills/research-docs/x-market-watchlist
+    kind: repo-managed
+    codex: true
+    claude: false
     source_type: local
 
   - name: commit-daily-summary
@@ -279,15 +293,15 @@ skills:
     source_type: local
 
   # === vendored source snapshots; synced but not installed directly ===
-  - name: source-unslop
-    path: vendor/skills/heydamir/unslop
+  - name: source-frontend-design
+    path: vendor/skills/anthropics/frontend-design
     kind: vendored
     codex: false
     claude: false
     source_type: git
-    source_url: https://github.com/heydamir/unslop.git
+    source_url: https://github.com/anthropics/skills.git
     source_ref: main
-    source_subdir: skills/unslop
+    source_subdir: skills/frontend-design
 
   - name: source-finance-skills
     path: vendor/skills/himself65/finance-skills

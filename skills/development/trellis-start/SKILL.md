@@ -7,6 +7,10 @@ description: "Initialize or resume a Trellis-managed session, load project conte
 
 Initialize a Trellis-managed development session. This platform has no session-start hook, so manually load the equivalent context by following these steps (each one mirrors a section the hook would otherwise inject).
 
+## Task creation boundary
+
+Do not create a Trellis task or child task unless the user explicitly requests its creation. Task complexity, cross-session work, an existing `.trellis/` directory, or selecting a Trellis skill does not grant that authorization. Reuse a clearly matching existing task; otherwise work directly with the matching Matt method without creating Trellis artifacts or routinely asking whether to create a task. If `.trellis/` is absent, do not initialize it unless the user explicitly requests initialization.
+
 ---
 
 ## Step 1: Current state
@@ -40,7 +44,7 @@ Index files list the specific guideline docs to read when you actually start cod
 From Step 1, route by task status and artifact state:
 
 - **No durable task needed** → work Inline; do not create Trellis artifacts.
-- **No active task + durable work** → first run `python3 ./.trellis/scripts/task.py list --mine` and inspect unfinished tasks. If one clearly matches the request, resume that task instead of creating a duplicate: for `planning`, keep its path explicit while editing artifacts and do not run `task.py start` until the review gate passes; for `in_progress`, run `task.py start <task-path>` to restore the current session pointer. If several tasks could match, ask the user which one to resume. Only when none matches should you load `trellis-brainstorm` and create a task.
+- **No active task** → inspect unfinished tasks with `python3 ./.trellis/scripts/task.py list --mine`. Resume a clear match: for `planning`, keep its path explicit and do not run `task.py start` until the review gate passes; for `in_progress`, run `task.py start <task-path>` to restore the session pointer. If several tasks could match, ask which one to resume. If none matches, create a task through `trellis-brainstorm` only when the user explicitly requested creation; otherwise work directly without a task.
 - **`status=planning`** → finish `trellis-brainstorm`, then load `grill-me`. Resolve blocking findings, curate sub-agent context, obtain user confirmation, and run `task.py start`.
 - **`status=in_progress` + implementation pending** → when the project has `.codex/agents/trellis-matt-implement.toml` and `codex.dispatch_mode: sub-agent`, dispatch it with an `Active task: <path>` first line; otherwise run the matching Matt method in the main session.
 - **Implementation complete** → when `.codex/agents/trellis-matt-check.toml` is available, dispatch it after implement finishes; otherwise run the matching review method in the main session.
@@ -52,7 +56,7 @@ From Step 1, route by task status and artifact state:
 
 | User intent | Skill |
 |---|---|
-| New durable feature / unclear requirements | `trellis-brainstorm` |
+| Existing task needs planning, or user explicitly requests a new Trellis task | `trellis-brainstorm` |
 | Planning artifacts ready for pressure review | `grill-me` |
 | Implement an active task on configured Codex projects | `trellis-matt-implement` sub-agent |
 | Review an implementation on configured Codex projects | `trellis-matt-check` sub-agent |

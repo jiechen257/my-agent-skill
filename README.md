@@ -20,6 +20,7 @@ my-agent-skill/
 │   └── sync-vendored-skills.sh
 ├── skills/
 │   ├── mattpocock/         # active Matt Pocock engineering/productivity wrapper
+│   ├── design/             # active frontend design wrapper
 │   ├── harness/           # active agent / MCP 健康检查
 │   ├── research-docs/     # active 报告和研究沉淀辅助
 │   └── writing/           # active 写作编辑辅助
@@ -86,6 +87,7 @@ python3 -m unittest discover -s scripts/tests -v
 | Domain | 用途 |
 | --- | --- |
 | `mattpocock` | Matt Pocock engineering/productivity wrapper |
+| `design` | 前端界面设计 wrapper；Anthropic 源快照通过 `./scripts/sync-vendored-skills.sh frontend-design` 同步 |
 | `harness` | 本地维护的 agent / MCP 健康检查 |
 | `research-docs` | 本地维护的报告和研究沉淀辅助 |
 | `writing` | 本地维护的写作编辑辅助 |

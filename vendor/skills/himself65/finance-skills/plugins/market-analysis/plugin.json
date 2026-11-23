@@ -1,7 +1,8 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "finance-market-analysis",
   "description": "Stock analysis, earnings, estimates, correlations, liquidity, ETFs, options payoff, and trading strategies via yfinance.",
-  "version": "11.0.0",
+  "version": "11.2.1",
   "author": {
     "name": "himself65"
   },
@@ -19,5 +20,20 @@
     "trading",
     "liquidity",
     "sepa"
-  ]
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Finance Market Analysis",
+        "shortDescription": "Stocks, earnings and options",
+        "longDescription": "Stock analysis, earnings, estimates, correlations, liquidity, ETFs, options payoff, and trading strategies via yfinance.",
+        "developerName": "himself65",
+        "category": "Productivity",
+        "websiteURL": "https://github.com/himself65/finance-skills",
+        "defaultPrompt": [
+          "Analyze NVDA earnings and valuation using current market data."
+        ]
+      }
+    }
+  }
 }

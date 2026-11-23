@@ -37,12 +37,16 @@ local-only 项目的期望结果：Profile 文件保持本地生效，但不会�
 
 ## Hook 兼容修正
 
+`hooks.json` 中的脚本路径通过 `git rev-parse --show-toplevel` 从项目根目录解析；从仓库子目录启动 Codex 时也能找到脚本。路径保留双引号，以兼容包含空格的仓库目录。同步到目标项目时，仅替换对应 hook 的命令，保留 matcher、timeout、其他 hooks 与已有启用状态。
+
 现有 Trellis 的 `inject-workflow-state.py` 来自项目安装版本，不整体覆盖：
 
-- Codex 解析活动任务后，没有任务时直接返回，不重复输出 bootstrap 和 no-task breadcrumb。
+- per-turn hook 解析活动任务后，没有任务时直接返回，输出为空；不输出 bootstrap、no-task breadcrumb，也不询问是否创建任务。任务和子任务只在用户明确要求创建时创建，复杂度或调用 skill 不构成授权。
 - 默认 dispatch 为 `inline`；显式启用子 agent 的兼容路径保留。活动任务、过期指针和其他客户端的响应格式继续按原脚本处理。
 - 删除旧 `trellis-implement|trellis-check|trellis-research` 的 `SubagentStart` 注册。保留 agent 定义和脚本作为显式使用时的兼容资料。
 - `trellis update` 可能重新生成脚本和注册。升级后复查这些修正，确认当前 Profile 和 hooks，再由 Codex 重新加载并审核实际 hash。
 - 验证无任务、planning、in_progress、completed、stale 指针五种行为；验证活动上下文仍在主会话恢复。
+
+同步后可运行 `python3 scripts/check-trellis-hooks.py <项目绝对路径> ...`。该命令读取实际安装的 hook 和 workflow，在替换任务发现结果的受控环境中检查输出，不修改项目 task 或 session 数据；它验证状态注入行为，不代表模型执行效果已验收。无任务时，即使用户明确要求创建，hook 也保持静默，创建授权由全局规则和 skill 处理。`session-start.py` 的无任务提示、项目 workflow 和项目内 Trellis skill 也不得要求例行询问或自动创建。
 
 各项目 `.trellis/workflow.md` 的 `<!-- local-trellis-matt-profile -->` 后应与 `workflow-policy.md` 一致。源模板不承载项目任务、spec 或 journal。

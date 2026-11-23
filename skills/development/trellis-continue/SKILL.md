@@ -17,7 +17,7 @@ python3 ./.trellis/scripts/get_context.py
 
 Confirms: current task, git state, recent commits.
 
-If no active task is reported, run `python3 ./.trellis/scripts/task.py list --mine` before creating anything. Resume a clearly matching unfinished task instead of duplicating it. Keep a `planning` task path explicit until the grill and user-confirmation gate allows `task.py start`; for an `in_progress` task, `task.py start <task-path>` restores this session's pointer without changing its phase. Ask one question if several tasks plausibly match.
+If no active task is reported, run `python3 ./.trellis/scripts/task.py list --mine` and resume a clearly matching unfinished task instead of duplicating it. Keep a `planning` task path explicit until the grill and user-confirmation gate allows `task.py start`; for an `in_progress` task, `task.py start <task-path>` restores this session's pointer without changing its phase. Ask one question if several tasks plausibly match. If none matches, work directly with the matching Matt method; do not create a task or child task unless the user explicitly requests its creation, and do not routinely ask whether to create one. Continuing work or invoking this skill is not a request to create a task.
 
 ## Step 2: Load the Phase Index
 

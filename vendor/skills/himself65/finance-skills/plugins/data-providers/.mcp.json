@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/atilaahmettaner/tradingview-mcp@d77db101edc1b57b260450ddda5ca4f7f0211ecd",
+        "git+https://github.com/atilaahmettaner/tradingview-mcp@099090e15fb71857dcb6b8bb4f5d41faeb9968cf",
         "tradingview-mcp"
       ]
     }

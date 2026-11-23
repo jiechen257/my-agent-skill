@@ -4,5 +4,5 @@
 - **Source:** `https://github.com/mattpocock/skills.git`
 - **Source Ref:** `main`
 - **Source Subdir:** `skills/engineering/diagnosing-bugs`
-- **Git SHA:** `c55ee46073ed923f86ce59a5eb3b6d895095d1b7`
-- **Synced:** 2026-09-20
+- **Git SHA:** `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`
+- **Synced:** 2026-11-11

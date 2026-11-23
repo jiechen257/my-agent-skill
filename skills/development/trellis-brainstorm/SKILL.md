@@ -1,6 +1,6 @@
 ---
 name: trellis-brainstorm
-description: "Guides collaborative requirements discovery before implementation. Creates task directory, seeds PRD, asks high-value questions one at a time, researches technical choices, and converges on MVP scope. Use when requirements are unclear, there are multiple valid approaches, or the user describes a new feature or complex task."
+description: "Discover requirements and plan an existing Trellis task, or create and plan one when the user explicitly requests creation. Ask focused questions, research technical choices, and converge on MVP scope."
 ---
 
 # Brainstorm - Requirements Discovery (AI Coding Enhanced)
@@ -15,7 +15,7 @@ If a question can be answered by exploring the codebase, explore the codebase in
 
 Guide AI through collaborative requirements discovery **before implementation**, optimized for AI coding workflows:
 
-* **Task-first** (capture ideas immediately)
+* **Explicit creation only** (reuse an existing task; create only at the user's explicit request)
 * **Action-before-asking** (reduce low-value questions)
 * **Research-first** for technical choices (avoid asking users to invent options)
 * **Diverge → Converge** (expand thinking, then lock MVP)
@@ -24,7 +24,7 @@ Guide AI through collaborative requirements discovery **before implementation**,
 
 ## When to Use
 
-Triggered from `start` (Trellis command) when the user describes a development task, especially when:
+Use for an existing Trellis task that needs planning, or when the user explicitly requests creation of a new Trellis task. Within that scope, it is especially useful when:
 
 * requirements are unclear or evolving
 * there are multiple valid implementation paths
@@ -35,8 +35,8 @@ Triggered from `start` (Trellis command) when the user describes a development t
 
 ## Core Principles (Non-negotiable)
 
-1. **Task-first (capture early)**
-   Always ensure a task exists at the start so the user's ideas are recorded immediately.
+1. **Explicit creation only**
+   Reuse a clearly matching existing task. Create a task or child task only when the user explicitly requests its creation. Complexity, cross-session work, an existing `.trellis/` directory, or selecting this skill does not grant creation authorization. Without a matching task or explicit creation request, clarify requirements directly in the conversation without creating Trellis artifacts or routinely asking whether to create a task.
 
 2. **Action before asking**
    If you can derive the answer from repo code, docs, configs, conventions, or quick research — do that first.
@@ -59,9 +59,11 @@ Triggered from `start` (Trellis command) when the user describes a development t
 
 ---
 
-## Step 0: Ensure Task Exists (ALWAYS)
+## Step 0: Reuse a Task or Check Explicit Creation Authorization
 
-Before any Q&A, ensure a task exists. If none exists, create one immediately.
+Inspect unfinished tasks and reuse a clear match. If no task matches and the user has not explicitly requested creation, continue requirements discovery directly in the conversation outside this task-based workflow; do not follow the remaining task-specific steps. Do not create a task directory, seed a PRD, or initialize `.trellis/` automatically.
+
+Only when the user explicitly requests a new task and no existing task matches, create it and seed its PRD:
 
 * Use a **temporary working title** derived from the user's message.
 * It's OK if the title is imperfect — refine later in PRD.
@@ -145,7 +147,7 @@ Write findings into PRD:
 
 ---
 
-## Step 2: Classify Complexity (still useful, not gating task creation)
+## Step 2: Classify Complexity (does not authorize task creation)
 
 | Complexity   | Criteria                                               | Action                                      |
 | ------------ | ------------------------------------------------------ | ------------------------------------------- |
@@ -154,7 +156,7 @@ Write findings into PRD:
 | **Moderate** | Multiple files, some ambiguity                         | Light brainstorm (2–3 high-value questions) |
 | **Complex**  | Vague goal, architectural choices, multiple approaches | Full brainstorm                             |
 
-> Note: Task already exists from Step 0. Classification only affects depth of brainstorming.
+> Classification only affects brainstorming depth. Persist findings only in an existing or explicitly requested task; otherwise keep them in the conversation.
 
 ---
 
@@ -450,7 +452,9 @@ Does this look correct? If yes, I'll run the final plan review before implementa
 
 ### Subtask Decomposition (Complex Tasks)
 
-For complex tasks with multiple independent work items, create subtasks:
+Create child tasks only when the user explicitly requests child-task creation. Authorization to create a parent task does not automatically authorize child tasks. Otherwise describe the work items in the parent task's implementation plan without creating separate tasks.
+
+When explicitly requested:
 
 ```bash
 # Create child tasks
@@ -521,7 +525,7 @@ After brainstorm completes (Step 8 confirmation approved), run `grill-me` as an 
 
 ```text
 Brainstorm
-  Step 0: Create task directory + seed PRD
+  Step 0: Reuse an existing task, or create and seed one only at the user's explicit request
   Step 1–7: Discover requirements, research, converge
   Step 8: Final confirmation → user approves
   ↓

@@ -1,123 +1,66 @@
 ---
 name: tech-solution-radar
-description: Use when researching community or industry best practices, open-source alternatives, libraries, frameworks, SaaS products, architecture patterns, or technical solutions that need evidence-backed comparison, popularity signals, functional fit scoring, ranking, and a recommendation.
+description: Research and compare technical solutions or product competitors to support a selection or product-improvement decision. Use for framework, library, architecture, tool or SaaS selection, industry best practices, and evidence-backed competitor experience, positioning and differentiation analysis.
 ---
 
 # tech-solution-radar
 
-Use this skill to turn broad technical research into a ranked decision table. It is for solution discovery, best-practice research, library/framework selection, open-source alternative comparison, vendor/tool shortlist creation, and technology radar style recommendations.
+Turn research into a decision supported by traceable evidence. Preserve the user's goal: choosing a solution and learning from competitors require different conclusions, even when they concern the same products.
 
-## Scope
+## Choose the branch
 
-Best fit:
-- community or industry best-practice research
-- technical solution comparison and ranking
-- open-source/library/framework/tool/vendor shortlist
-- "which option should I use" questions with feature and popularity criteria
+Choose by the decision the user needs, rather than by whether the candidates are libraries, tools or SaaS products.
 
-Use `research-note-wrap` after this skill when the user wants the final research saved as a reusable Markdown note.
+| Decision | Branch | Read before analysis | Deliverable |
+| --- | --- | --- | --- |
+| Which solution should we adopt, buy or integrate? What technical practice should we follow? | Technical selection | [Technical selection](references/technical-selection.md) | Recommendation, fit, tradeoffs and adoption risks |
+| How do competitors serve users, and what should our product learn or improve? | Product competitor analysis | [Product competitor analysis](references/competitive-analysis.md) | Task and experience comparison, differentiation and testable opportunities |
+| Both adoption and product-improvement decisions are requested | Mixed | Both references | Shared evidence, separate selection and product recommendations |
+
+Load only the reference needed for the chosen branch. For a mixed task, keep procurement or integration suitability separate from product lessons; one product can be a poor adoption choice and still provide a useful design example.
 
 ## Inputs
 
 | Input | Meaning |
 | --- | --- |
-| `topic` | The technical problem, domain, or solution category |
-| `scenario` | The user's actual usage context, product constraints, stack, scale, or team needs |
-| `must_have` | Required capabilities or hard constraints |
-| `nice_to_have` | Optional capabilities that affect ranking |
-| `time_window` | Recency scope for popularity and maintenance signals; default to current state |
-| `output_depth` | `quick`, `standard`, or `deep`; default to `standard` |
+| `topic` | Problem, category or products to investigate |
+| `scenario` | Intended users, user task, environment, stack, scale and constraints |
+| `decision` | What the user needs to choose or improve; infer the branch from this |
+| `must_have` | Hard requirements and exclusion rules |
+| `nice_to_have` | Preferences that influence the recommendation |
+| `time_window` | Recency scope; use current evidence unless a historical comparison is requested |
+| `output_depth` | `quick`, `standard` or `deep`; default to `standard` |
 
-Ask at most one clarification question when the scenario or hard constraints are missing and the ranking would otherwise be misleading. If a safe assumption exists, state it and proceed.
+Use context already provided. Ask at most one clarification question when the missing goal or constraints would materially change the recommendation; otherwise state a reasonable assumption and continue. Respect named candidates and the requested depth.
 
-## Workflow
+## Shared workflow
 
-```text
-[1] Frame the decision
-      -> define scenario, hard constraints, exclusion rules, and ranking objective
+1. **Frame the decision.** Identify the user task, branch, baseline, hard constraints and comparison criteria. For product improvement, establish the user's current product or workflow as the baseline when evidence is available; otherwise label it unknown.
+2. **Build a relevant candidate set.** Include direct substitutes first, then indirect alternatives or emerging competitors when they can change the decision. Expand discovery as needed; keep a user-specified shortlist intact.
+3. **Collect and verify evidence.** Prefer official documentation, source repositories, release notes, pricing and plan pages for documented capabilities. Use authorized hands-on observations for experience claims, and community feedback for reported issues and adoption signals. Verify time-sensitive facts live unless the task is explicitly limited to supplied or historical material; state that boundary when it limits the conclusion.
+4. **Analyze with the selected reference.** Apply its criteria to comparable evidence. Preserve unknowns and distinguish established findings from hypotheses. Select scoring, qualitative tiers or a comparison matrix according to evidence quality and the decision.
+5. **Recommend and bound the conclusion.** Lead with what to adopt or improve and why. Link material findings to their sources, explain tradeoffs and evidence gaps, state confidence based on evidence coverage, and identify the next validation that could change the decision.
 
-[2] Build candidate set
-      -> collect 5-10 plausible options from official docs, source repos, package registries, credible community posts, and known industry references
-      -> include direct substitutes first, then adjacent patterns only when useful
+## Evidence rules
 
-[3] Verify sources
-      -> prefer primary sources: official docs, GitHub repos, release notes, package registries, standards, vendor docs
-      -> use community content for adoption signals and practical tradeoffs
-      -> browse for current facts when popularity, versions, maintenance, pricing, or product status matters
+- Label material claims as **documented** (officially stated), **observed** (actually exercised), **reported** (third-party feedback) or **inferred** (analysis). An official feature claim alone supports availability as documented, not observed usability, reliability or performance.
+- Record the source and evidence date. For context-sensitive claims, also identify the version, platform, plan or configuration. Keep conflicting observations attached to their contexts instead of flattening them into one verdict.
+- Compare the same user task and success condition. Record completion, output quality, failure recovery and user effort where evidence permits. Use comparable conditions for measured performance claims.
+- Use existing authorized access. Unavailable access or an unexecuted test is an evidence gap: label it **unverified**, rather than calling the feature absent or defective.
+- Preserve hard gates. A failed requirement excludes an adoption candidate; an unverified requirement makes adoption conditional on verification. Popularity or a weighted total cannot override either status.
+- Separate facts, inferences and preferences. Missing data stays unknown, and weak evidence calls for a qualified conclusion rather than invented numbers or a precise ranking.
 
-[4] Score candidates
-      -> score each option on functional fit, popularity/adoption, maintenance health, ecosystem maturity, implementation cost, and risk
-      -> normalize volatile metrics instead of comparing raw numbers blindly
+## Output and completion
 
-[5] Rank and recommend
-      -> produce a ranked table, explain the top recommendation, and state boundary conditions
-      -> include confidence and evidence gaps
-```
+Use Simplified Chinese by default. Match detail to the requested decision and depth, using the selected reference's output guidance. Quick research may remain qualitative; deep research should include the evidence needed to inspect each material comparison.
 
-## Default Scoring Model
+Before finishing, check that:
 
-Use this default when the user does not provide weights:
+- the conclusion answers the selected decision, including both decisions in mixed mode;
+- adoption recommendations account for every hard requirement, including unknown ones;
+- important claims have sources and appropriate evidence labels and context;
+- experience or performance claims reflect the actual observations available;
+- product recommendations identify their baseline, expected user benefit and a way to validate the improvement;
+- remaining gaps and conditions that could change the recommendation are explicit.
 
-| Dimension | Weight | What to check |
-| --- | ---: | --- |
-| Functional fit | 45% | Covers must-have capabilities, integration shape, extensibility, operational fit |
-| Popularity/adoption | 25% | GitHub stars, forks, downloads, dependents, community mentions, ecosystem usage |
-| Maintenance health | 20% | Recent releases, commit activity, issue/PR response, maintainer or vendor stability |
-| Implementation risk | 10% | Migration cost, complexity, lock-in, security/compliance risk, learning curve |
-
-Adjust weights explicitly when the scenario makes another dimension dominant. For internal infrastructure and long-lived systems, increase maintenance health and risk. For exploratory prototypes, increase functional fit and implementation cost. For ecosystem bets, increase adoption and integration maturity.
-
-## Popularity Signals
-
-Use multiple signals because each one can be gamed or biased:
-- GitHub: stars, star growth when available, forks, contributors, releases, issue/PR activity
-- Package registries: npm/PyPI/Maven/Go/Rust downloads, dependents, version freshness
-- Ecosystem: framework integrations, plugin count, docs quality, examples, Stack Overflow/community mentions
-- Industry: official adoption stories, standardization, cloud/vendor support, enterprise references
-
-State the snapshot date for volatile signals. Avoid treating stars alone as quality.
-
-## Output Format
-
-Start with the recommendation, then show the evidence.
-
-```md
-## 推荐结论
-推荐：<option>
-理由：<1-2 sentences>
-适用边界：<when this recommendation holds>
-
-## 排名表
-| Rank | 方案 | 总分 | 功能匹配 | 热门度 | 维护健康 | 风险 | 结论 |
-| ---: | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | ... | ... | ... | ... | ... | ... | ... |
-
-## 证据表
-| 方案 | 关键能力 | 热度信号 | 维护信号 | 主要风险 | 来源 |
-| --- | --- | --- | --- | --- | --- |
-| ... | ... | ... | ... | ... | ... |
-
-## 选择建议
-- 直接采用：...
-- 谨慎试点：...
-- 暂不采用：...
-```
-
-## Rules
-
-- Use Simplified Chinese by default.
-- Lead with a clear recommendation.
-- Keep direct substitutes ahead of adjacent alternatives.
-- Separate facts, inference, and preference.
-- Include source links for ranked claims when browsing was used.
-- Treat popularity and maintenance facts as time-sensitive.
-- Do not over-rank candidates when evidence is weak; use tiers when scores are too close.
-- Do not recommend a solution that misses a hard constraint, regardless of popularity.
-
-## Verification
-
-Before finalizing:
-- Check every top-ranked option against all hard constraints.
-- Confirm volatile facts with current sources when they affect ranking.
-- Mark assumptions and evidence gaps explicitly.
-- If the output will be saved, hand off the final result to `research-note-wrap`.
+When the user requests a saved research note, use `research-note-wrap` if available and follow the requested destination and format. Otherwise deliver the findings in chat.
